@@ -1,8 +1,8 @@
 # Object classes from AP that represent different types of options that you can create
-from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
-from ..Helpers import is_option_enabled, get_option_value
 from typing import Type
+
+from Options import Choice, Option, OptionGroup, PerGameCommonOptions, Range, Toggle
 
 
 ####################################################################
@@ -21,21 +21,21 @@ from typing import Type
 # Then, to see if the option is set, you can call is_option_enabled or get_option_value.
 #####################################################################
 class WishHuntRequired(Range):
-    """If the goal is set to Wish Hunt, sets the amount of Lost Wishes required for beating it. Must be a number between 1 and 100."""
+    """If the goal is set to Wish Hunt, sets the amount of Lost Wishes required for beating it."""
 
     display_name = "Amount of Lost Wishes required"
     range_start = 1
-    range_end = 100
+    range_end = 200
     default = 30
 
 
 class WishHuntTotal(Range):
-    """If the goal is set to Wish Hunt, sets the amount of Lost Wishes that will be added to the item pool. Must be a number between 1 and 100.
+    """If the goal is set to Wish Hunt, sets the amount of Lost Wishes that will be added to the item pool.
     Cannot be smaller than the required amount."""
 
     display_name = "Amount of Lost Wishes in total"
     range_start = 1
-    range_end = 100
+    range_end = 200
     default = 50
 
 
@@ -81,6 +81,75 @@ class IncludeDLC(Toggle):
     default = True
 
 
+class AllowProgressionInFashionBonuses(Toggle):
+    """Toggles whether or not to allow placing progression items in the Hairdressing, Clothes Dyeing and Mystery Fairy Bliss bonuses."""
+
+    display_name = "Allow progression on Fashion bonuses?"
+    default = False
+
+
+class AllowProgressionInMediaBonuses(Toggle):
+    """Toggles whether or not to allow placing progression items in the Happy Audio and Happy Movies Bliss bonuses."""
+
+    display_name = "Allow progression on Media bonuses?"
+    default = False
+
+
+class IncludeExtraLevelChecks(Choice):
+    """Sets whether to include extra level checks and how many of them.
+
+    [none] Only the vanilla level checks will be present (those awarding bliss for the first level up and every 10th level)
+    [multiples_five] Adds extra checks for levels 5, 15, 25, all the way up to 195
+    [every] Every level above 1 is a check"""
+
+    display_name = "Extra level checks?"
+    choice_none = 0
+    choice_multiples_five = 1
+    choice_every = 2
+    default = 1
+
+
+class ProgressionLevelLimit(Range):
+    """Limits placement of progression after the level indicated.
+    Set to 1 to disable progression placed on any levels,
+    99 for any level up to the base game max to be able to have progression,
+    or 200 for any level including the DLC to be able to have it.
+    Careful as some values may cause generation to fail."""
+
+    display_name = "Progression level cap"
+    range_start = 1
+    range_end = 200
+    default = 50
+
+
+class IncludeExtraSkillLevelChecks(Choice):
+    """Sets whether to include extra skill level checks and how many of them.
+
+    [none] Only the vanilla skill level checks will be present (those awarding bliss for 1, 5, 15 and 25 skills to reach 15th level)
+    [multiples_five] Adds extra checks for having 1, 5, 15 and 25 skills at levels 5, 10 and 20 (if DLC)
+    [every] Adds extra checks for every skill level above 1"""
+
+    display_name = "Extra level checks?"
+    choice_none = 0
+    choice_multiples_five = 1
+    choice_every = 2
+    default = 1
+
+
+class ProgressionSkillLevelLimit(Range):
+    """Limits placement of progression after the skill level indicated.
+
+    Set to 1 to disable progression placed on any levels,
+    15 for any skill level up to the base game max to be able to have progression,
+    or 20 for any level including the DLC to be able to have it.
+    Careful as some values may cause generation to fail."""
+
+    display_name = "Progression level cap"
+    range_start = 1
+    range_end = 20
+    default = 5
+
+
 class IncludeStreetPassChecks(Toggle):
     """Toggles whether or not to include StreetPass Bliss quests. Recommended to leave it off."""
 
@@ -100,7 +169,7 @@ class ProgressiveLicenses(Choice):
 
     [disabled] None will be placed in the pool and you may pick whichever Lives you want.
     [single] One of each License will be added to the pool. Receiving a License unlocks everything that Life can do.
-    [condensed] 4 (or 5 with DLC) Progressive Licenses will be added for each Life, and each rank will have the following requirements:
+    [fast] 4 (or 5 with DLC) Fast Progressive Licenses will be added for each Life, and each rank will have the following requirements:
         1 license: Novice, Fledgeling, Apprentice
         2 licenses: Adept, Expert
         3 licenses: Master
@@ -120,7 +189,7 @@ class ProgressiveLicenses(Choice):
     display_name = "Progressive Licenses?"
     option_disabled = 0
     option_single = 1
-    option_condensed = 2
+    option_fast = 2
     option_full = 3
     default = 3
 
@@ -170,18 +239,6 @@ class StartingLife(Choice):
     default = 13
 
 
-# To add an option, use the before_options_defined hook below and something like this:
-#   options["total_characters_to_win_with"] = TotalCharactersToWinWith
-#
-class TotalCharactersToWinWith(Range):
-    """Instead of having to beat the game with all characters, you can limit locations to a subset of character victory locations."""
-
-    display_name = "Number of characters to beat the game with before victory"
-    range_start = 10
-    range_end = 50
-    default = 50
-
-
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict) -> dict:
     options["wish_hunt_required"] = WishHuntRequired
@@ -190,6 +247,12 @@ def before_options_defined(options: dict) -> dict:
     options["life_mastery_count"] = LifeMasteryCount
     options["passwords"] = IncludePasswords
     options["dlc"] = IncludeDLC
+    options["allow_fashion_progression"] = AllowProgressionInFashionBonuses
+    options["allow_media_progression"] = AllowProgressionInMediaBonuses
+    options["extra_level_checks"] = IncludeExtraLevelChecks
+    options["progression_level_limit"] = ProgressionLevelLimit
+    options["extra_skill_checks"] = IncludeExtraSkillLevelChecks
+    options["progression_skill_limit"] = ProgressionSkillLevelLimit
     options["streetpass_checks"] = IncludeStreetPassChecks
     options["playtime_checks"] = IncludePlaytimeChecks
     options["progressive_licenses"] = ProgressiveLicenses
@@ -209,10 +272,28 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 
     pass
 
+
 # Use this Hook if you want to add your Option to an Option group (existing or not)
-def before_option_groups_created(groups: dict[str, list[Option]]) -> dict[str, list[Option]]:
+def before_option_groups_created(
+    groups: dict[str, list[Option]],
+) -> dict[str, list[Option]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
+    groups["Wish Hunt Goal"] = [WishHuntRequired, WishHuntTotal]
+    groups["Life Mastery Goal"] = [LifeMasteryRank, LifeMasteryCount]
+    groups["Extra Checks"] = [
+        IncludeExtraLevelChecks,
+        ProgressionLevelLimit,
+        IncludeExtraSkillLevelChecks,
+        ProgressionSkillLevelLimit,
+    ]
+    groups["Location Tweaks"] = [
+        AllowProgressionInFashionBonuses,
+        AllowProgressionInMediaBonuses,
+        IncludeStreetPassChecks,
+        IncludePlaytimeChecks,
+    ]
     return groups
+
 
 def after_option_groups_created(groups: list[OptionGroup]) -> list[OptionGroup]:
     return groups

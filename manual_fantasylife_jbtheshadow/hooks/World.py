@@ -1,24 +1,20 @@
 # Object classes from AP core, to represent an entire MultiWorld and this individual World that's part of it
-from worlds.AutoWorld import World
-from BaseClasses import MultiWorld, CollectionState
-
-# Object classes from Manual -- extending AP core -- representing items and locations that are used in generation
-from ..Items import ManualItem
-from ..Locations import ManualLocation
-
-from ..hooks import Lives
+# calling logging.info("message") anywhere below in this file will output the message to both console and log file
+import logging
 import random
+
+from BaseClasses import CollectionState, LocationProgressType, MultiWorld
+from worlds.AutoWorld import World
 
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
 #
-from ..Data import game_table, item_table, location_table, region_table
-
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
-from ..Helpers import is_option_enabled, get_option_value
+from ..Helpers import get_option_value, is_option_enabled
+from ..hooks import Lives, Options
 
-# calling logging.info("message") anywhere below in this file will output the message to both console and log file
-import logging
+# Object classes from Manual -- extending AP core -- representing items and locations that are used in generation
+from ..Items import ManualItem
 
 ########################################################################################
 ## Order of method calls when the world generates:
@@ -50,14 +46,60 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
     locationNamesToRemove = []  # List of location names
+    locationNamesToLimitProgression = []
 
     # Add your code here to calculate which locations to remove
+    progressionLevelLimit = get_option_value(
+        multiworld, player, "progression_level_limit"
+    )
+    if progressionLevelLimit < 2:
+        locationNamesToLimitProgression.append("Levelled up for the first time")
+    locationNamesToLimitProgression.append += [
+        f"Reached Level {level}" for level in range(progressionLevelLimit + 1, 201)
+    ]
+
+    progressionSkillLimit = get_option_value(
+        multiworld, player, "progression_skill_limit"
+    )
+    for level in range(progressionSkillLimit + 1, 21):
+        locationNamesToLimitProgression.append += [
+            f"Reached Level {level} with one skill",
+            f"Reached Level {level} with five skills",
+            f"Reached Level {level} with 15 skills",
+            f"Reached Level {level} with 25 skills",
+        ]
+
+    progressionInFashion = is_option_enabled(
+        multiworld, player, "allow_fashion_progression"
+    )
+    if not progressionInFashion:
+        locationNamesToLimitProgression += [
+            "Unlock Hairdressing",
+            "Unlock Hairdressing (2)",
+            "Unlock Clothes Dyeing",
+            "Unlock Clothes Dyeing (2)",
+            "Unlock Mystery Fairy",
+            "Unlock Mystery Fairy (2)",
+        ]
+
+    progressionInMedia = is_option_enabled(
+        multiworld, player, "allow_media_progression"
+    )
+    if not progressionInMedia:
+        locationNamesToLimitProgression += [
+            "Unlock Happy Audio",
+            "Unlock Happy Audio (2)",
+            "Unlock Happy Movies",
+            "Unlock Happy Movies (2)",
+        ]
 
     for region in multiworld.regions:
         if region.player == player:
             for location in list(region.locations):
                 if location.name in locationNamesToRemove:
                     region.locations.remove(location)
+                elif location.name in locationNamesToLimitProgression:
+                    location.progress_type = LocationProgressType.EXCLUDED
     if hasattr(multiworld, "clear_location_cache"):
         multiworld.clear_location_cache()
 
@@ -80,70 +122,76 @@ def before_create_items_filler(
     #
     # Because multiple copies of an item can exist, you need to add an item name
     # to the list multiple times if you want to remove multiple copies of it.
-    dlc = get_option_value(multiworld, player, "dlc") > 0
-    progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
+
+    # Wish Hunt goal
     goal = get_option_value(multiworld, player, "goal")
     wishHuntRequired = get_option_value(multiworld, player, "wish_hunt_required")
     wishHuntTotal = get_option_value(multiworld, player, "wish_hunt_total")
-
-    # Wish Hunt goal
     if goal == 0:
-        for _ in range(0, 100):
+        for _ in range(0, Options.WishHuntTotal.range_end):
             itemNamesToRemove.append("Lost Wish")
     else:
         if wishHuntRequired > wishHuntTotal:
-            logging.warning(f"Total of Lost Wishes cannot be lower than the amount required. Utilizing total as {wishHuntRequired} instead.")
+            logging.warning(
+                f"Total of Lost Wishes cannot be lower than the amount required. Utilizing total as {wishHuntRequired} instead."
+            )
             wishHuntTotal = wishHuntRequired
-        for _ in range(0, 100 - wishHuntTotal):
+        for _ in range(0, Options.WishHuntTotal.range_end - wishHuntTotal):
             itemNamesToRemove.append("Lost Wish")
 
-    # Progressive Licenses
-    match progressiveLicenses:
-        case 0:
-            for life in Lives.ALL_LIVES:
-                itemNamesToRemove += [x.name for x in item_pool if x.name == f"{life} License"]
-                itemNamesToRemove += [x.name for x in item_pool if x.name == f"Progressive {life} License"]
-        case 1:
-            for life in Lives.ALL_LIVES:
-                itemNamesToRemove += [x.name for x in item_pool if x.name == f"Progressive {life} License"]
-        case 2:
-            for life in Lives.ALL_LIVES:
-                itemNamesToRemove += [x.name for x in item_pool if x.name == f"{life} License"]
-                itemName = f"Progressive {life} License"
-                for _ in range(0, 4 if dlc else 5):
-                    itemNamesToRemove.append(itemName)
-        case 3:
-            for life in Lives.ALL_LIVES:
-                itemNamesToRemove += [x.name for x in item_pool if x.name == f"{life} License"]
-                itemName = f"Progressive {life} License"
-                for _ in range(0, 0 if dlc else 2):
-                    itemNamesToRemove.append(itemName)
+    # Progressive Licenses and DLC
+    dlc = is_option_enabled(multiworld, player, "dlc")
+    if not dlc:
+        for life in Lives.ALL_LIVES:
+            for _ in range(0, 2):
+                itemNamesToRemove.append(f"{life} Rank")
 
-    for itemName in itemNamesToRemove:
-        item = next(i for i in item_pool if i.name == itemName)
-        item_pool.remove(item)
+    progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
+    match progressiveLicenses:
+        case Options.ProgressiveLicenses.option_fast:
+            for life in Lives.ALL_LIVES:
+                if not dlc:
+                    itemNamesToRemove.append(f"Fast Progressive {life} License")
+        case Options.ProgressiveLicenses.option_full:
+            for life in Lives.ALL_LIVES:
+                if not dlc:
+                    for _ in range(0, 2):
+                        itemNamesToRemove.append(f"Progressive {life} License")
 
     # Starting Life
     if progressiveLicenses > 0:
         startingLife = get_option_value(multiworld, player, "starting_life")
         life = ""
         match startingLife:
-            case 0 | 17:
+            case Options.StartingLife.option_disabled | Options.StartingLife.option_any:
                 life = random.choice(Lives.ALL_LIVES)
+            case Options.StartingLife.option_combat_easy:
+                life = random.choice(Lives.EASY_COMBAT_LIVES)
+            case Options.StartingLife.option_combat:
+                life = random.choice(Lives.COMBAT_LIVES)
+            case Options.StartingLife.option_gathering:
+                life = random.choice(Lives.GATHERING_LIVES)
+            case Options.StartingLife.option_crafting:
+                life = random.choice(Lives.CRAFTING_LIVES)
             case x if 0 < x and x < 13:
                 life = Lives.ALL_LIVES[x - 1]
-            case 13:
-                life = random.choice(Lives.EASY_COMBAT_LIVES)
-            case 14:
-                life = random.choice(Lives.COMBAT_LIVES)
-            case 15:
-                life = random.choice(Lives.GATHERING_LIVES)
-            case 16:
-                life = random.choice(Lives.CRAFTING_LIVES)
         if life and len(life) > 0:
-            item = next(x for x in item_pool if x.name == f"{life} License" or x.name == f"Progressive {life} License")
-            item_pool.remove(item)
-            world.start_inventory.update({item.name: 1})
+            itemName = next(
+                x.name
+                for x in item_pool
+                if x.name
+                in [
+                    f"{life} License",
+                    f"Progressive {life} License",
+                    f"Fast Progressive {life} License",
+                ]
+            )
+            itemNamesToRemove.append(itemName)
+            world.start_inventory.update({itemName: 1})
+
+    for itemName in itemNamesToRemove:
+        item = next(i for i in item_pool if i.name == itemName)
+        item_pool.remove(item)
 
     return item_pool
 

@@ -1,20 +1,13 @@
 {
-    "Passwords": {
-        "yaml_option": ["passwords"]
-    },
-    "DLC": {
-        "yaml_option": ["dlc"]
-    },
-    "StreetPass": {
-        "yaml_option": ["streetpass_checks"]
-    },
-    "Playtime": {
-        "yaml_option": ["playtime_checks"]
-    },
-    "Progressive Licenses": {
-        "hidden": true
-    },
-    "Single Licenses": {
-        "hidden": true
-    }
+    "Passwords": { "yaml_option": ["passwords"] },
+    "DLC": { "yaml_option": ["dlc"] },
+    "StreetPass": { "yaml_option": ["streetpass_checks"] },
+    "Playtime": { "yaml_option": ["playtime_checks"] },
+    "Single Licenses": { "hidden": true },
+    "Fast Licenses": { "hidden": true },
+    "Progressive Licenses": { "hidden": true },
+    "Extra Levels (1)": { "hidden": true },
+    "Extra Levels (5)": { "hidden": true },
+    "Extra Skills (1)": { "hidden": true },
+    "Extra Skills (5)": { "hidden": true }
 }
