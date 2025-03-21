@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Optional
 
 from BaseClasses import MultiWorld
 
-from ..Helpers import get_option_value
+from .. import Helpers
 from ..hooks import Options
 
 if TYPE_CHECKING:
@@ -15,9 +15,15 @@ if TYPE_CHECKING:
 def before_is_category_enabled(
     multiworld: MultiWorld, player: int, category_name: str
 ) -> Optional[bool]:
-    progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
-    extraLevelChecks = get_option_value(multiworld, player, "extra_level_checks")
-    extraSkillChecks = get_option_value(multiworld, player, "extra_skill_checks")
+    progressiveLicenses = Helpers.get_option_value(
+        multiworld, player, "progressive_licenses"
+    )
+    extraLevelChecks = Helpers.get_option_value(
+        multiworld, player, "extra_level_checks"
+    )
+    extraSkillChecks = Helpers.get_option_value(
+        multiworld, player, "extra_skill_checks"
+    )
     match category_name:
         case "Single Licenses" if (
             progressiveLicenses != Options.ProgressiveLicenses.option_single
