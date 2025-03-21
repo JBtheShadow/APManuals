@@ -54,7 +54,7 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     )
     if progressionLevelLimit < 2:
         locationNamesToLimitProgression.append("Levelled up for the first time")
-    locationNamesToLimitProgression.append += [
+    locationNamesToLimitProgression += [
         f"Reached Level {level}" for level in range(progressionLevelLimit + 1, 201)
     ]
 
@@ -62,7 +62,7 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
         multiworld, player, "progression_skill_limit"
     )
     for level in range(progressionSkillLimit + 1, 21):
-        locationNamesToLimitProgression.append += [
+        locationNamesToLimitProgression += [
             f"Reached Level {level} with one skill",
             f"Reached Level {level} with five skills",
             f"Reached Level {level} with 15 skills",
