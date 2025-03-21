@@ -38,19 +38,19 @@ def before_is_category_enabled(
         ):
             return False
         case "Extra Level Checks (5)" if (
-            extraLevelChecks == Options.IncludeExtraLevelChecks.choice_none
+            extraLevelChecks == Options.IncludeExtraLevelChecks.option_disabled
         ):
             return False
         case "Extra Level Checks (1)" if (
-            extraLevelChecks != Options.IncludeExtraLevelChecks.choice_every
+            extraLevelChecks != Options.IncludeExtraLevelChecks.option_every
         ):
             return False
         case "Extra Skill Checks (5)" if (
-            extraSkillChecks == Options.IncludeExtraSkillLevelChecks.choice_none
+            extraSkillChecks == Options.IncludeExtraSkillLevelChecks.option_disabled
         ):
             return False
         case "Extra Skill Checks (1)" if (
-            extraSkillChecks != Options.IncludeExtraSkillLevelChecks.choice_every
+            extraSkillChecks != Options.IncludeExtraSkillLevelChecks.option_every
         ):
             return False
     return None

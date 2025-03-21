@@ -98,14 +98,14 @@ class AllowProgressionInMediaBonuses(Toggle):
 class IncludeExtraLevelChecks(Choice):
     """Sets whether to include extra level checks and how many of them.
 
-    [none] Only the vanilla level checks will be present (those awarding bliss for the first level up and every 10th level)
+    [disabled] Only the vanilla level checks will be present (those awarding bliss for the first level up and every 10th level)
     [multiples_five] Adds extra checks for levels 5, 15, 25, all the way up to 195
     [every] Every level above 1 is a check"""
 
     display_name = "Extra level checks?"
-    choice_none = 0
-    choice_multiples_five = 1
-    choice_every = 2
+    option_disabled = 0
+    option_multiples_five = 1
+    option_every = 2
     default = 1
 
 
@@ -125,14 +125,14 @@ class ProgressionLevelLimit(Range):
 class IncludeExtraSkillLevelChecks(Choice):
     """Sets whether to include extra skill level checks and how many of them.
 
-    [none] Only the vanilla skill level checks will be present (those awarding bliss for 1, 5, 15 and 25 skills to reach 15th level)
+    [disabled] Only the vanilla skill level checks will be present (those awarding bliss for 1, 5, 15 and 25 skills to reach 15th level)
     [multiples_five] Adds extra checks for having 1, 5, 15 and 25 skills at levels 5, 10 and 20 (if DLC)
     [every] Adds extra checks for every skill level above 1"""
 
     display_name = "Extra level checks?"
-    choice_none = 0
-    choice_multiples_five = 1
-    choice_every = 2
+    option_disabled = 0
+    option_multiples_five = 1
+    option_every = 2
     default = 1
 
 
