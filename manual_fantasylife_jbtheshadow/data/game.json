@@ -1,0 +1,9 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
+  "game": "FantasyLife",
+  "creator": "JBtheShadow",
+  "filler_item_name": "Some Dosh",
+  "starting_items": [],
+  "death_link": false,
+  "starting_index": 1
+}
