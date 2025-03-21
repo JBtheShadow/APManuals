@@ -1,4 +1,4 @@
-CONDENSED_REQUIRED = {
+FAST_REQUIRED = {
     "Novice": 1,
     "Fledgeling": 1,
     "Apprentice": 1,

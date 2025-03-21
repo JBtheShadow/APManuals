@@ -1,10 +1,8 @@
-from typing import Optional
+from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
-from ..Helpers import clamp, get_items_with_value, get_option_value
-from BaseClasses import MultiWorld, CollectionState
 
-import re
-from ..hooks import Lives, Licenses
+from ..Helpers import get_option_value
+from ..hooks import Licenses, Lives
 
 
 # Sometimes you have a requirement that is just too messy or repetitive to write out with boolean logic.
@@ -87,8 +85,8 @@ def hasLicense(
         case 1:
             required = 1
         case 2:
-            prefix = "Progressive "
-            required = Licenses.CONDENSED_REQUIRED[rank]
+            prefix = "Fast Progressive "
+            required = Licenses.FAST_REQUIRED[rank]
         case 3:
             prefix = "Progressive "
             required = Licenses.FULL_REQUIRED[rank]
@@ -125,6 +123,54 @@ def hasLicense(
                 livesToTest = Lives.CRAFTING_LIVES
         for life in livesToTest:
             if state.count(f"{prefix}{life} License", player) < required:
+                return False
+        return True
+
+    return False
+
+
+def hasRank(
+    world: World,
+    multiworld: MultiWorld,
+    state: CollectionState,
+    player: int,
+    rank: str,
+    life: str,
+    lifeCount: str = "1",
+):
+    required = Licenses.FULL_REQUIRED[rank]
+    if life not in Lives.GOALS:
+        return state.count(f"{life} Rank", player) >= required
+
+    if life.startswith("Any"):
+        match life:
+            case "Any":
+                livesToTest = Lives.ALL_LIVES
+            case "Any Combat":
+                livesToTest = Lives.COMBAT_LIVES
+            case "Any Gathering":
+                livesToTest = Lives.GATHERING_LIVES
+            case "Any Crafting":
+                livesToTest = Lives.CRAFTING_LIVES
+        matches = 0
+        for life in livesToTest:
+            if state.count(f"{life} Rank", player) >= required:
+                matches += 1
+            if matches >= lifeCount:
+                return True
+
+    if life.startswith("All"):
+        match life:
+            case "All":
+                livesToTest = Lives.ALL_LIVES
+            case "All Combat":
+                livesToTest = Lives.COMBAT_LIVES
+            case "All Gathering":
+                livesToTest = Lives.GATHERING_LIVES
+            case "All Crafting":
+                livesToTest = Lives.CRAFTING_LIVES
+        for life in livesToTest:
+            if state.count(f"{life} Rank", player) < required:
                 return False
         return True
 
