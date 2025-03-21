@@ -1,9 +1,9 @@
 from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
 
+from .. import Rules
 from ..Helpers import get_option_value
 from ..hooks import Licenses, Lives, Options
-from ..Rules import ItemValue
 
 
 # Sometimes you have a requirement that is just too messy or repetitive to write out with boolean logic.
@@ -88,7 +88,9 @@ def hasLicense(
             required = Licenses.FULL_REQUIRED[rank]
 
     if life not in Lives.GOALS:
-        return ItemValue(world, multiworld, state, player, f"{life} License:{required}")
+        return Rules.ItemValue(
+            world, multiworld, state, player, f"{life} License:{required}"
+        )
 
     if life.startswith("Any"):
         match life:
@@ -102,7 +104,7 @@ def hasLicense(
                 livesToTest = Lives.CRAFTING_LIVES
         matches = 0
         for life in livesToTest:
-            if ItemValue(
+            if Rules.ItemValue(
                 world, multiworld, state, player, f"{life} License:{required}"
             ):
                 matches += 1
@@ -120,7 +122,7 @@ def hasLicense(
             case "All Crafting":
                 livesToTest = Lives.CRAFTING_LIVES
         for life in livesToTest:
-            if not ItemValue(
+            if not Rules.ItemValue(
                 world, multiworld, state, player, f"{life} License:{required}"
             ):
                 return False
