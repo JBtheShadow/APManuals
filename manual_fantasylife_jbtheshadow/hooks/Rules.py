@@ -66,7 +66,7 @@ def hasGoalRanks(
     return hasRank(world, multiworld, state, player, rankRequired, "Any", countRequired)
 
 
-def hasLicense(
+def canRankTo(
     world: World,
     multiworld: MultiWorld,
     state: CollectionState,
@@ -108,7 +108,7 @@ def hasLicense(
                 world, multiworld, state, player, f"{life} License:{required}"
             ):
                 matches += 1
-            if matches >= lifeCount:
+            if matches >= int(lifeCount):
                 return True
 
     if life.startswith("All"):
@@ -158,7 +158,7 @@ def hasRank(
         for life in livesToTest:
             if state.count(f"{life} Rank", player) >= required:
                 matches += 1
-            if matches >= lifeCount:
+            if matches >= int(lifeCount):
                 return True
 
     if life.startswith("All"):
