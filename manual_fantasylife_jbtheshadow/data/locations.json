@@ -1,5 +1,5 @@
 [
-  { "name": "Life Mastery", "category": [ "Goal" ], "victory": true, "requires": "|Final Chapter End| and {hasGoalLicenses()}" },
+  { "name": "Life Mastery", "category": [ "Goal" ], "victory": true, "requires": "|Final Chapter End| and {hasGoalRanks()}" },
   { "name": "Wish Hunt", "category": [ "Goal" ], "victory": true, "requires": "|Final Chapter End| and {foundRequiredWishes()}" },
   
   { "name": "Unlock Bigger Bag", "category": [ "Bliss Bonuses" ], "place_item": ["Bag Bonus"], "requires": "" },

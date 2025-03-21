@@ -2,7 +2,8 @@ from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
 
 from ..Helpers import get_option_value
-from ..hooks import Licenses, Lives
+from ..hooks import Licenses, Lives, Options
+from ..Rules import ItemValue
 
 
 # Sometimes you have a requirement that is just too messy or repetitive to write out with boolean logic.
@@ -55,16 +56,14 @@ def foundRequiredWishes(
     return state.count("Lost Wish", player) >= required
 
 
-def hasGoalLicenses(
+def hasGoalRanks(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int
 ):
     rankRequired = Licenses.ALL_LICENSES[
         get_option_value(multiworld, player, "life_mastery_rank")
     ]
     countRequired = get_option_value(multiworld, player, "life_mastery_count")
-    return hasLicense(
-        world, multiworld, state, player, rankRequired, "Any", countRequired
-    )
+    return hasRank(world, multiworld, state, player, rankRequired, "Any", countRequired)
 
 
 def hasLicense(
@@ -78,21 +77,18 @@ def hasLicense(
 ):
     progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
     required = 0
-    prefix = ""
     match progressiveLicenses:
-        case 0:
+        case Options.ProgressiveLicenses.option_disabled:
             return True
-        case 1:
+        case Options.ProgressiveLicenses.option_single:
             required = 1
-        case 2:
-            prefix = "Fast Progressive "
+        case Options.ProgressiveLicenses.option_fast:
             required = Licenses.FAST_REQUIRED[rank]
-        case 3:
-            prefix = "Progressive "
+        case Options.ProgressiveLicenses.option_full:
             required = Licenses.FULL_REQUIRED[rank]
 
     if life not in Lives.GOALS:
-        return state.count(f"{prefix}{life} License", player) >= required
+        return ItemValue(world, multiworld, state, player, f"{life} License:{required}")
 
     if life.startswith("Any"):
         match life:
@@ -106,7 +102,9 @@ def hasLicense(
                 livesToTest = Lives.CRAFTING_LIVES
         matches = 0
         for life in livesToTest:
-            if state.count(f"{prefix}{life} License", player) >= required:
+            if ItemValue(
+                world, multiworld, state, player, f"{life} License:{required}"
+            ):
                 matches += 1
             if matches >= lifeCount:
                 return True
@@ -122,7 +120,9 @@ def hasLicense(
             case "All Crafting":
                 livesToTest = Lives.CRAFTING_LIVES
         for life in livesToTest:
-            if state.count(f"{prefix}{life} License", player) < required:
+            if not ItemValue(
+                world, multiworld, state, player, f"{life} License:{required}"
+            ):
                 return False
         return True
 
