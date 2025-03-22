@@ -1,6 +1,18 @@
 {
-  "undefined": {
-    "connects_to": [],
-    "requires": []
-  }
+  "Bliss Bonuses": { "connects_to": [], "requires": "|First Bliss Check|", "starting": true },
+  
+  "Butterfly Requests": { "connects_to": ["Chapter 1 Butterfly Requests"], "requires": "|Other Requests Tutorial|", "starting": true },
+  "Chapter 1 Butterfly Requests": { "connects_to": ["Chapter 2 Butterfly Requests"], "requires": "|Prologue End|" },
+  "Chapter 2 Butterfly Requests": { "connects_to": ["Chapter 3 Butterfly Requests"], "requires": "|Chapter 1 End|" },
+  "Chapter 3 Butterfly Requests": { "connects_to": ["Chapter 4 Butterfly Requests"], "requires": "|Chapter 2 End|" },
+  "Chapter 4 Butterfly Requests": { "connects_to": ["Chapter 5 Butterfly Requests"], "requires": "|Chapter 3 End|" },
+  "Chapter 5 Butterfly Requests": { "connects_to": ["Chapter 6 Butterfly Requests"], "requires": "|Chapter 4 End|" },
+  "Chapter 6 Butterfly Requests": { "connects_to": ["Final Chapter Butterfly Requests"], "requires": "|Chapter 5 End|" },
+  "Final Chapter Butterfly Requests": { "connects_to": ["Post Game Butterfly Requests"], "requires": "|Chapter 6 End|" },
+  "Post Game Butterfly Requests": { "connects_to": ["DLC Chapter 1 Butterfly Requests"], "requires": "|Final Chapter End|" },
+  "DLC Chapter 1 Butterfly Requests": { "connects_to": ["DLC Chapter 2 Butterfly Requests"], "requires": "|Invited for Teatime|" },
+  "DLC Chapter 2 Butterfly Requests": { "connects_to": ["Post DLC Butterfly Requests"], "requires": "|DLC Chapter 1 End|" },
+  "Post DLC Butterfly Requests": { "connects_to": [], "requires": "|DLC Chapter 2 End|" },
+
+  "Other Requests": { "connects_to": [], "requires": "|Other Requests Tutorial|", "starting": true }
 }

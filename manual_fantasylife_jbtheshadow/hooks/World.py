@@ -141,11 +141,6 @@ def before_create_items_filler(
 
     # Progressive Licenses and DLC
     dlc = is_option_enabled(multiworld, player, "dlc")
-    if not dlc:
-        for life in Lives.ALL_LIVES:
-            for _ in range(0, 2):
-                itemNamesToRemove.append(f"{life} Rank")
-
     progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
     match progressiveLicenses:
         case Options.ProgressiveLicenses.option_fast:
