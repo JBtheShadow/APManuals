@@ -107,5 +107,5 @@
   { "count": 9, "name": "Progressive Tailor License", "category": [ "Progressive Licenses", "Crafting License", "Tailor License", "License" ], "progression": true, "value": { "Tailor License": 1} },
   { "count": 9, "name": "Progressive Alchemist License", "category": [ "Progressive Licenses", "Crafting License", "Alchemist License", "License" ], "progression": true, "value": { "Alchemist License": 1} },
 
-  { "count": 200, "name": "Lost Wish", "category": [ "Lost Wish" ], "progression": true }
+  { "count": 200, "name": "Lost Wish", "category": [ "Wish Hunt" ], "progression": true }
 ]

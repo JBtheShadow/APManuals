@@ -8,18 +8,20 @@ from ..hooks import Licenses, Lives, Options
 def foundRequiredWishes(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int
 ):
+    goal = get_option_value(multiworld, player, "goal")
     required = get_option_value(multiworld, player, "wish_hunt_required")
-    return state.count("Lost Wish", player) >= required
+    return goal != "0" or state.count("Lost Wish", player) >= required
 
 
 def canReachLifeMasteryGoal(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int
 ):
+    goal = get_option_value(multiworld, player, "goal")
     rankRequired = Licenses.ALL_LICENSES[
         get_option_value(multiworld, player, "life_mastery_rank")
     ]
     countRequired = get_option_value(multiworld, player, "life_mastery_count")
-    return canRankTo(world, multiworld, state, player, rankRequired, "Any", countRequired)
+    return goal != "1" or canRankTo(world, multiworld, state, player, rankRequired, "Any", countRequired)
 
 
 def canRankTo(
