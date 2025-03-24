@@ -127,7 +127,7 @@ def before_create_items_filler(
     goal = get_option_value(multiworld, player, "goal")
     wishHuntRequired = get_option_value(multiworld, player, "wish_hunt_required")
     wishHuntTotal = get_option_value(multiworld, player, "wish_hunt_total")
-    if goal == 0:
+    if goal == "1":
         for _ in range(0, Options.WishHuntTotal.range_end):
             itemNamesToRemove.append("Lost Wish")
     else:
