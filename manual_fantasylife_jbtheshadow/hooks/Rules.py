@@ -5,6 +5,7 @@ from .. import Rules
 from ..Helpers import get_option_value
 from ..hooks import Licenses, Lives, Options
 
+
 def foundRequiredWishes(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int
 ):
@@ -21,7 +22,29 @@ def canReachLifeMasteryGoal(
         get_option_value(multiworld, player, "life_mastery_rank")
     ]
     countRequired = get_option_value(multiworld, player, "life_mastery_count")
-    return goal != "1" or canRankTo(world, multiworld, state, player, rankRequired, "Any", countRequired)
+    return goal != "1" or canRankTo(
+        world, multiworld, state, player, rankRequired, "Any", countRequired
+    )
+
+
+def lives(
+    world: World,
+    multiworld: MultiWorld,
+    state: CollectionState,
+    player: int,
+    lives: str,
+):
+    livesList = lives.split(",")
+    requiredList = []
+    for item in livesList:
+        life, rank = item.split()
+        requiredList.append(
+            f"{{OptOne({life} License)}} \
+            and {{OptOne(Fast Progressive {life} License:{Licenses.FAST_REQUIRED[rank]})}} \
+            and {{OptOne(Progressive {life} License:{Licenses.FULL_REQUIRED[rank]})}}"
+        )
+
+    return f"({requiredList.join(') and (')})"
 
 
 def canRankTo(

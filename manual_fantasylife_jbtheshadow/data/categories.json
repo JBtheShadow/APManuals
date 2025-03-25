@@ -1,8 +1,8 @@
 {
     "Passwords": { "yaml_option": ["passwords"], "hidden": true },
     "DLC": { "yaml_option": ["dlc"], "hidden": true },
-    "StreetPass": { "yaml_option": ["streetpass_checks"], "hidden": true },
-    "Playtime": { "yaml_option": ["playtime_checks"], "hidden": true },
+    "StreetPass Bliss Checks": { "yaml_option": ["streetpass_checks"] },
+    "Playtime Bliss Checks": { "yaml_option": ["playtime_checks"] },
     "Single Licenses": { "hidden": true },
     "Fast Licenses": { "hidden": true },
     "Progressive Licenses": { "hidden": true },
