@@ -27,26 +27,6 @@ def canReachLifeMasteryGoal(
     )
 
 
-def lives(
-    world: World,
-    multiworld: MultiWorld,
-    state: CollectionState,
-    player: int,
-    lives: str,
-):
-    livesList = lives.split(",")
-    requiredList = []
-    for item in livesList:
-        life, rank = item.split()
-        requiredList.append(
-            f"{{OptOne({life} License)}} \
-            and {{OptOne(Fast Progressive {life} License:{Licenses.FAST_REQUIRED[rank]})}} \
-            and {{OptOne(Progressive {life} License:{Licenses.FULL_REQUIRED[rank]})}}"
-        )
-
-    return f"({requiredList.join(') and (')})"
-
-
 def canRankTo(
     world: World,
     multiworld: MultiWorld,
