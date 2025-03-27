@@ -37,22 +37,6 @@ def before_is_category_enabled(
             progressiveLicenses != Options.ProgressiveLicenses.option_full
         ):
             return False
-        case "Extra Level Checks (5)" if (
-            extraLevelChecks == Options.IncludeExtraLevelChecks.option_disabled
-        ):
-            return False
-        case "Extra Level Checks (1)" if (
-            extraLevelChecks != Options.IncludeExtraLevelChecks.option_every
-        ):
-            return False
-        case "Extra Skill Checks (5)" if (
-            extraSkillChecks == Options.IncludeExtraSkillLevelChecks.option_disabled
-        ):
-            return False
-        case "Extra Skill Checks (1)" if (
-            extraSkillChecks != Options.IncludeExtraSkillLevelChecks.option_every
-        ):
-            return False
     return None
 
 

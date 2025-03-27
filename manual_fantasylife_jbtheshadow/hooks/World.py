@@ -12,7 +12,6 @@ from .. import Rules
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
 #
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
-from ..Helpers import get_option_value, is_option_enabled
 from ..hooks import Licenses, Lives, Options
 
 # Object classes from Manual -- extending AP core -- representing items and locations that are used in generation
@@ -41,7 +40,29 @@ def hook_get_filler_item_name(
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
-    pass
+
+    if world.options.goal.value == Options.Goal.option_wish_hunt:
+        if not world.options.other_requests.value:
+            logging.info("Forcing Other Requests to be enabled for Wish Hunt.")
+            world.options.other_requests.value = True
+
+    wish_hunt_required = world.options.wish_hunt_required.value
+    wish_hunt_total = world.options.wish_hunt_total.value
+
+    if wish_hunt_required > wish_hunt_total:
+        logging.info(f"There are more Lost Wishes required than the available total. Setting the required amount to {wish_hunt_total}")
+        world.options.wish_hunt_required.value = wish_hunt_total
+
+    progressive_licenses = world.options.progressive_licenses.value
+    starting_life = world.options.starting_life.value
+
+    if progressive_licenses == Options.ProgressiveLicenses.option_disabled:
+        if starting_life != Options.StartingLife.option_disabled:
+            logging.info("Progressive Licenses are disabled; forcing starting life option to be disabled as well.")
+            world.options.starting_life.value = Options.StartingLife.option_disabled
+    elif starting_life == Options.StartingLife.option_disabled:
+        logging.info("Progressive Licenses are enabled; forcing starting life to be a random one")
+        world.options.starting_life.value = Options.StartingLife.option_any
 
 
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
@@ -81,24 +102,18 @@ def before_create_items_filler(
     # to the list multiple times if you want to remove multiple copies of it.
 
     # Wish Hunt goal
-    goal = get_option_value(multiworld, player, "goal")
-    wishHuntRequired = get_option_value(multiworld, player, "wish_hunt_required")
-    wishHuntTotal = get_option_value(multiworld, player, "wish_hunt_total")
-    if goal == "1":
-        for _ in range(0, Options.WishHuntTotal.range_end):
+    goal = int(world.options.goal.value)
+    wishHuntTotal = world.options.wish_hunt_total.value
+    if goal == Options.Goal.option_wish_hunt:
+        for _ in range(0, Options.WishHuntTotal.range_end - wishHuntTotal):
             itemNamesToRemove.append("Lost Wish")
     else:
-        if wishHuntRequired > wishHuntTotal:
-            logging.warning(
-                f"Total of Lost Wishes cannot be lower than the amount required. Utilizing total as {wishHuntRequired} instead."
-            )
-            wishHuntTotal = wishHuntRequired
-        for _ in range(0, Options.WishHuntTotal.range_end - wishHuntTotal):
+        for _ in range(0, Options.WishHuntTotal.range_end):
             itemNamesToRemove.append("Lost Wish")
 
     # Progressive Licenses and DLC
-    dlc = is_option_enabled(multiworld, player, "dlc")
-    progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
+    dlc = world.options.dlc.value
+    progressiveLicenses = world.options.progressive_licenses.value
     match progressiveLicenses:
         case Options.ProgressiveLicenses.option_fast:
             for life in Lives.ALL_LIVES:
@@ -112,7 +127,7 @@ def before_create_items_filler(
 
     # Starting Life
     if progressiveLicenses > 0:
-        startingLife = get_option_value(multiworld, player, "starting_life")
+        startingLife = world.options.starting_life.value
         life = ""
         match startingLife:
             case Options.StartingLife.option_disabled | Options.StartingLife.option_any:
@@ -148,7 +163,6 @@ def before_create_items_filler(
         item = next(i for i in item_pool if i.name == itemName)
         multiworld.push_precollected(item)
         item_pool.remove(item)
-        world.start_inventory.update({itemName: 1})
 
     return item_pool
 
@@ -180,10 +194,11 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     def hasLicense(state: CollectionState, itemCount: str):
         return Rules.ItemValue(world, multiworld, state, player, itemCount)
 
-    progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
+    dlc = world.options.dlc.value
+    progressiveLicenses = world.options.progressive_licenses.value
     if progressiveLicenses > 0:
         for life in Lives.ALL_LIVES:
-            for rank in [x for x in Licenses.ALL_LICENSES if x != "Novice"]:
+            for rank in [x for x in Licenses.ALL_LICENSES if x != "Novice" and (dlc or x not in ["Demi-Creator", "Creator"]) ]:
                 match rank:
                     case "Fledgeling":
                         locationName = f"(1*) Started a new Life as {'an' if life.startswith('A') else 'a'} {life}"

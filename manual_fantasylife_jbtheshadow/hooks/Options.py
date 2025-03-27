@@ -152,6 +152,16 @@ class StartingLife(Choice):
     option_any = 17
     default = 13
 
+class IncludeOtherRequests(Toggle):
+    """Include Other Requests as checks? Forced to True when goal is Wish Hunt"""
+    display_name = "Include Other Requests?"
+    default = True
+
+
+class Goal(Choice):
+    option_wish_hunt = 0
+    option_life_mastery = 1
+
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict) -> dict:
@@ -163,6 +173,7 @@ def before_options_defined(options: dict) -> dict:
     options["dlc"] = IncludeDLC
     options["progressive_licenses"] = ProgressiveLicenses
     options["starting_life"] = StartingLife
+    options["other_requests"] = IncludeOtherRequests
     return options
 
 

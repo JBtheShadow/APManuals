@@ -2,26 +2,23 @@ from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
 
 from .. import Rules
-from ..Helpers import get_option_value
 from ..hooks import Licenses, Lives, Options
 
 
 def foundRequiredWishes(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int
 ):
-    goal = get_option_value(multiworld, player, "goal")
-    required = get_option_value(multiworld, player, "wish_hunt_required")
+    goal = world.options.goal.value
+    required = world.options.wish_hunt_required.value
     return goal != "0" or state.count("Lost Wish", player) >= required
 
 
 def canReachLifeMasteryGoal(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int
 ):
-    goal = get_option_value(multiworld, player, "goal")
-    rankRequired = Licenses.ALL_LICENSES[
-        get_option_value(multiworld, player, "life_mastery_rank")
-    ]
-    countRequired = get_option_value(multiworld, player, "life_mastery_count")
+    goal = world.options.goal.value
+    rankRequired = Licenses.ALL_LICENSES[world.options.life_mastery_rank.value]
+    countRequired = world.options.life_mastery_count.value
     return goal != "1" or canRankTo(
         world, multiworld, state, player, rankRequired, "Any", countRequired
     )
@@ -36,7 +33,7 @@ def canRankTo(
     life: str,
     lifeCount: str = "1",
 ):
-    progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
+    progressiveLicenses = world.options.progressive_licenses.value
     required = 0
     match progressiveLicenses:
         case Options.ProgressiveLicenses.option_disabled:
