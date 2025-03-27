@@ -6,12 +6,14 @@ import random
 from BaseClasses import CollectionState, LocationProgressType, MultiWorld
 from worlds.AutoWorld import World
 
+from .. import Rules
+
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
 #
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
 from ..Helpers import get_option_value, is_option_enabled
-from ..hooks import Lives, Options
+from ..hooks import Licenses, Lives, Options
 
 # Object classes from Manual -- extending AP core -- representing items and locations that are used in generation
 from ..Items import ManualItem
@@ -215,11 +217,33 @@ def before_set_rules(world: World, multiworld: MultiWorld, player: int):
 def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to modify the access rules for a given location
 
-    def Example_Rule(state: CollectionState) -> bool:
-        # Calculated rules take a CollectionState object and return a boolean
-        # True if the player can access the location
-        # CollectionState is defined in BaseClasses
-        return True
+    def hasLicense(state: CollectionState, itemCount: str):
+        return Rules.ItemValue(world, multiworld, state, player, itemCount)
+
+    progressiveLicenses = get_option_value(multiworld, player, "progressive_licenses")
+    if progressiveLicenses > 0:
+        for life in Lives.ALL_LIVES:
+            for rank in [x for x in Licenses.ALL_LICENSES if x != "Novice"]:
+                match rank:
+                    case "Fledgeling":
+                        locationName = f"Started a new Life as {'an' if life.startswith('A') else 'a'} {life}"
+                    case "Legend":
+                        locationName = f"Became a Legend-ranked {life}"
+                    case "Demi-Creator":
+                        locationName = f"Became a Creator {life}"
+                    case "Creator":
+                        locationName = f"Found your passion as {'an' if life.startswith('A') else 'a'} {life}"
+                    case _:
+                        locationName = f"Became a {rank} {life}"
+                match progressiveLicenses:
+                    case Options.ProgressiveLicenses.option_single:
+                        itemCount = f"{life} License:1"
+                    case Options.ProgressiveLicenses.option_fast:
+                        itemCount = f"{life} License:{Licenses.FAST_REQUIRED[rank]}"
+                    case Options.ProgressiveLicenses.option_full:
+                        itemCount = f"{life} License:{Licenses.FULL_REQUIRED[rank]}"
+                location = multiworld.get_location(locationName, player)
+                location.access_rule = lambda state: hasLicense(state, itemCount)
 
     ## Common functions:
     # location = world.get_location(location_name, player)

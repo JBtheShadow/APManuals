@@ -9,5 +9,6 @@
     "Extra Levels (1)": { "hidden": true },
     "Extra Levels (5)": { "hidden": true },
     "Extra Skills (1)": { "hidden": true },
-    "Extra Skills (5)": { "hidden": true }
+    "Extra Skills (5)": { "hidden": true },
+    "Other Requests": { "yaml_option": ["other_requests"], "hidden": true }
 }
