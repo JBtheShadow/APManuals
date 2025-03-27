@@ -20,6 +20,13 @@ from Options import Choice, Option, OptionGroup, PerGameCommonOptions, Range, To
 #
 # Then, to see if the option is set, you can call is_option_enabled or get_option_value.
 #####################################################################
+class RequireMainStoryForGoal(Toggle):
+    """If the goal requires completing the Prologue and Chapters 1 through Final (7)."""
+
+    display_name = "Require beating the game for goal?"
+    default = False
+
+
 class WishHuntRequired(Range):
     """If the goal is set to Wish Hunt, sets the amount of Lost Wishes required for beating it."""
 
@@ -64,104 +71,11 @@ class LifeMasteryCount(Range):
     default = 1
 
 
-class IncludePasswords(Toggle):
-    """Toggles whether or not to include passwords into the item pool.
-
-    If enabled, upon receiving a password, after Butterfly teaches you about Other Requests, you can head to the Post Office to input
-    whichever passwords you have unlocked."""
-
-    display_name = "Include passwords into the pool?"
-    default = True
-
-
 class IncludeDLC(Toggle):
     """Toggles whether or not to include items and locations related to the Origin Island DLC."""
 
     display_name = "Include the Origin Island DLC?"
     default = True
-
-
-class AllowProgressionInFashionBonuses(Toggle):
-    """Toggles whether or not to allow placing progression items in the Hairdressing, Clothes Dyeing and Mystery Fairy Bliss bonuses."""
-
-    display_name = "Allow progression on Fashion bonuses?"
-    default = False
-
-
-class AllowProgressionInMediaBonuses(Toggle):
-    """Toggles whether or not to allow placing progression items in the Happy Audio and Happy Movies Bliss bonuses."""
-
-    display_name = "Allow progression on Media bonuses?"
-    default = False
-
-
-class IncludeExtraLevelChecks(Choice):
-    """Sets whether to include extra level checks and how many of them.
-
-    [disabled] Only the vanilla level checks will be present (those awarding bliss for the first level up and every 10th level)
-    [multiples_five] Adds extra checks for levels 5, 15, 25, all the way up to 195
-    [every] Every level above 1 is a check"""
-
-    display_name = "Extra level checks?"
-    option_disabled = 0
-    option_multiples_five = 1
-    option_every = 2
-    default = 1
-
-
-class ProgressionLevelLimit(Range):
-    """Limits placement of progression after the level indicated.
-    Set to 1 to disable progression placed on any levels,
-    99 for any level up to the base game max to be able to have progression,
-    or 200 for any level including the DLC to be able to have it.
-    Careful as some values may cause generation to fail."""
-
-    display_name = "Progression level cap"
-    range_start = 1
-    range_end = 200
-    default = 50
-
-
-class IncludeExtraSkillLevelChecks(Choice):
-    """Sets whether to include extra skill level checks and how many of them.
-
-    [disabled] Only the vanilla skill level checks will be present (those awarding bliss for 1, 5, 15 and 25 skills to reach 15th level)
-    [multiples_five] Adds extra checks for having 1, 5, 15 and 25 skills at levels 5, 10 and 20 (if DLC)
-    [every] Adds extra checks for every skill level above 1"""
-
-    display_name = "Extra level checks?"
-    option_disabled = 0
-    option_multiples_five = 1
-    option_every = 2
-    default = 1
-
-
-class ProgressionSkillLevelLimit(Range):
-    """Limits placement of progression after the skill level indicated.
-
-    Set to 1 to disable progression placed on any levels,
-    15 for any skill level up to the base game max to be able to have progression,
-    or 20 for any level including the DLC to be able to have it.
-    Careful as some values may cause generation to fail."""
-
-    display_name = "Progression level cap"
-    range_start = 1
-    range_end = 20
-    default = 5
-
-
-class IncludeStreetPassChecks(Toggle):
-    """Toggles whether or not to include StreetPass Bliss quests. Recommended to leave it off."""
-
-    display_name = "Include StreetPass Bliss checks?"
-    default = False
-
-
-class IncludePlaytimeChecks(Toggle):
-    """Toggles whether or not to include the Bliss quests for 1, 10, 50 and 100 hours of playtime. Recommended to leave it off."""
-
-    display_name = "Include playtime Bliss checks?"
-    default = False
 
 
 class ProgressiveLicenses(Choice):
@@ -241,20 +155,12 @@ class StartingLife(Choice):
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict) -> dict:
+    options["require_main_story_for_goal"] = RequireMainStoryForGoal
     options["wish_hunt_required"] = WishHuntRequired
     options["wish_hunt_total"] = WishHuntTotal
     options["life_mastery_rank"] = LifeMasteryRank
     options["life_mastery_count"] = LifeMasteryCount
-    options["passwords"] = IncludePasswords
     options["dlc"] = IncludeDLC
-    options["allow_fashion_progression"] = AllowProgressionInFashionBonuses
-    options["allow_media_progression"] = AllowProgressionInMediaBonuses
-    options["extra_level_checks"] = IncludeExtraLevelChecks
-    options["progression_level_limit"] = ProgressionLevelLimit
-    options["extra_skill_checks"] = IncludeExtraSkillLevelChecks
-    options["progression_skill_limit"] = ProgressionSkillLevelLimit
-    options["streetpass_checks"] = IncludeStreetPassChecks
-    options["playtime_checks"] = IncludePlaytimeChecks
     options["progressive_licenses"] = ProgressiveLicenses
     options["starting_life"] = StartingLife
     return options
@@ -280,18 +186,6 @@ def before_option_groups_created(
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
     groups["Wish Hunt Goal"] = [WishHuntRequired, WishHuntTotal]
     groups["Life Mastery Goal"] = [LifeMasteryRank, LifeMasteryCount]
-    groups["Extra Checks"] = [
-        IncludeExtraLevelChecks,
-        ProgressionLevelLimit,
-        IncludeExtraSkillLevelChecks,
-        ProgressionSkillLevelLimit,
-    ]
-    groups["Location Tweaks"] = [
-        AllowProgressionInFashionBonuses,
-        AllowProgressionInMediaBonuses,
-        IncludeStreetPassChecks,
-        IncludePlaytimeChecks,
-    ]
     return groups
 
 

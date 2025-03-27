@@ -3,7 +3,7 @@
 import logging
 import random
 
-from BaseClasses import CollectionState, LocationProgressType, MultiWorld
+from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
 
 from .. import Rules
@@ -48,60 +48,14 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
     locationNamesToRemove = []  # List of location names
-    locationNamesToLimitProgression = []
 
     # Add your code here to calculate which locations to remove
-    progressionLevelLimit = get_option_value(
-        multiworld, player, "progression_level_limit"
-    )
-    if progressionLevelLimit < 2:
-        locationNamesToLimitProgression.append("Levelled up for the first time")
-    locationNamesToLimitProgression += [
-        f"Reached Level {level}" for level in range(progressionLevelLimit + 1, 201)
-    ]
-
-    progressionSkillLimit = get_option_value(
-        multiworld, player, "progression_skill_limit"
-    )
-    for level in range(progressionSkillLimit + 1, 21):
-        locationNamesToLimitProgression += [
-            f"Reached Level {level} with one skill",
-            f"Reached Level {level} with five skills",
-            f"Reached Level {level} with 15 skills",
-            f"Reached Level {level} with 25 skills",
-        ]
-
-    progressionInFashion = is_option_enabled(
-        multiworld, player, "allow_fashion_progression"
-    )
-    if not progressionInFashion:
-        locationNamesToLimitProgression += [
-            "Unlock Hairdressing",
-            "Unlock Hairdressing (2)",
-            "Unlock Clothes Dyeing",
-            "Unlock Clothes Dyeing (2)",
-            "Unlock Mystery Fairy",
-            "Unlock Mystery Fairy (2)",
-        ]
-
-    progressionInMedia = is_option_enabled(
-        multiworld, player, "allow_media_progression"
-    )
-    if not progressionInMedia:
-        locationNamesToLimitProgression += [
-            "Unlock Happy Audio",
-            "Unlock Happy Audio (2)",
-            "Unlock Happy Movies",
-            "Unlock Happy Movies (2)",
-        ]
-
     for region in multiworld.regions:
         if region.player == player:
             for location in list(region.locations):
                 if location.name in locationNamesToRemove:
                     region.locations.remove(location)
-                elif location.name in locationNamesToLimitProgression:
-                    location.progress_type = LocationProgressType.EXCLUDED
+
     if hasattr(multiworld, "clear_location_cache"):
         multiworld.clear_location_cache()
 
@@ -119,6 +73,7 @@ def before_create_items_filler(
 ) -> list:
     # Use this hook to remove items from the item pool
     itemNamesToRemove = []  # List of item names
+    startingInventory = []
 
     # Add your code here to calculate which items to remove.
     #
@@ -183,12 +138,17 @@ def before_create_items_filler(
                     f"Fast Progressive {life} License",
                 ]
             )
-            itemNamesToRemove.append(itemName)
-            world.start_inventory.update({itemName: 1})
+            startingInventory.append(itemName)
 
     for itemName in itemNamesToRemove:
         item = next(i for i in item_pool if i.name == itemName)
         item_pool.remove(item)
+
+    for itemName in startingInventory:
+        item = next(i for i in item_pool if i.name == itemName)
+        multiworld.push_precollected(item)
+        item_pool.remove(item)
+        world.start_inventory.update({itemName: 1})
 
     return item_pool
 
@@ -226,15 +186,23 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
             for rank in [x for x in Licenses.ALL_LICENSES if x != "Novice"]:
                 match rank:
                     case "Fledgeling":
-                        locationName = f"Started a new Life as {'an' if life.startswith('A') else 'a'} {life}"
+                        locationName = f"(1*) Started a new Life as {'an' if life.startswith('A') else 'a'} {life}"
+                    case "Apprentice":
+                        locationName = f"(2*) Became an Apprentice {life}"
+                    case "Adept":
+                        locationName = f"(3*) Became an Adept {life}"
+                    case "Expert":
+                        locationName = f"(4*) Became an Expert {life}"
+                    case "Master":
+                        locationName = f"(5*) Became a Master {life}"
+                    case "Hero":
+                        locationName = f"(6*) Became a Hero {life}"
                     case "Legend":
-                        locationName = f"Became a Legend-ranked {life}"
+                        locationName = f"(7*) Became a Legend-ranked {life}"
                     case "Demi-Creator":
-                        locationName = f"Became a Creator {life}"
+                        locationName = f"(8*) Became a Creator {life}"
                     case "Creator":
-                        locationName = f"Found your passion as {'an' if life.startswith('A') else 'a'} {life}"
-                    case _:
-                        locationName = f"Became a {rank} {life}"
+                        locationName = f"(9*) Found your passion as {'an' if life.startswith('A') else 'a'} {life}"
                 match progressiveLicenses:
                     case Options.ProgressiveLicenses.option_single:
                         itemCount = f"{life} License:1"
@@ -242,8 +210,11 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
                         itemCount = f"{life} License:{Licenses.FAST_REQUIRED[rank]}"
                     case Options.ProgressiveLicenses.option_full:
                         itemCount = f"{life} License:{Licenses.FULL_REQUIRED[rank]}"
-                location = multiworld.get_location(locationName, player)
-                location.access_rule = lambda state: hasLicense(state, itemCount)
+                try:
+                    location = multiworld.get_location(locationName, player)
+                    location.access_rule = lambda state: hasLicense(state, itemCount)
+                except Exception:
+                    logging.info(f"Location {locationName} not found, ignoring it.")
 
     ## Common functions:
     # location = world.get_location(location_name, player)
