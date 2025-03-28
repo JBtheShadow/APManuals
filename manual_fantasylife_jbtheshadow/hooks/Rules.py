@@ -8,20 +8,22 @@ from ..hooks import Licenses, Lives, Options
 def foundRequiredWishes(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int
 ):
-    goal = world.options.goal.value
+    goal = int(world.options.goal.value)
     required = world.options.wish_hunt_required.value
-    return goal != "0" or state.count("Lost Wish", player) >= required
+    main_story = world.options.require_main_story_for_goal.value
+    return goal != Options.Goal.option_wish_hunt or (state.count("Lost Wish", player) >= required and (not main_story or state.has("Final Chapter End", player)))
 
 
 def canReachLifeMasteryGoal(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int
 ):
-    goal = world.options.goal.value
+    goal = int(world.options.goal.value)
     rankRequired = Licenses.ALL_LICENSES[world.options.life_mastery_rank.value]
     countRequired = world.options.life_mastery_count.value
-    return goal != "1" or canRankTo(
+    main_story = world.options.require_main_story_for_goal.value
+    return goal != Options.Goal.option_life_mastery or (canRankTo(
         world, multiworld, state, player, rankRequired, "Any", countRequired
-    )
+    ) and (not main_story or state.has("Final Chapter End", player)))
 
 
 def canRankTo(

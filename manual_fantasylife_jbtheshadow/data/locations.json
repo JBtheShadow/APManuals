@@ -1,6 +1,6 @@
 [
-  { "name": "Wish Hunt", "category": [ "Goal" ], "victory": true, "requires": "({YamlDisabled(require_main_story_for_goal)} or |Final Chapter End|) and {foundRequiredWishes()}" },
-  { "name": "Life Mastery", "category": [ "Goal" ], "victory": true, "requires": "({YamlDisabled(require_main_story_for_goal)} or |Final Chapter End|) and {canReachLifeMasteryGoal()}" },
+  { "name": "Wish Hunt", "category": [ "Goal" ], "victory": true, "requires": "{foundRequiredWishes()}" },
+  { "name": "Life Mastery", "category": [ "Goal" ], "victory": true, "requires": "{canReachLifeMasteryGoal()}" },
   
   { "name": "(b1.1*) Unlock Bigger Bag", "region": "Bliss Bonuses", "category": [ "Bliss Bonuses" ] },
   { "name": "(b1.2*) Unlock Even Bigger Bag", "region": "Bliss Bonuses", "category": [ "Bliss Bonuses" ] },
