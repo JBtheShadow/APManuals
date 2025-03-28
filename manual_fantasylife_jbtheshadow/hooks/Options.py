@@ -152,8 +152,10 @@ class StartingLife(Choice):
     option_any = 17
     default = 13
 
+
 class IncludeOtherRequests(Toggle):
     """Include Other Requests as checks? Forced to True when goal is Wish Hunt"""
+
     display_name = "Include Other Requests?"
     default = True
 
