@@ -5,9 +5,9 @@ from .. import Rules
 from ..hooks import Licenses, Lives, Options
 
 
-def foundRequiredWishes(
-    world: World, multiworld: MultiWorld, state: CollectionState, player: int
-):
+# Sometimes you have a requirement that is just too messy or repetitive to write out with boolean logic.
+# Define a function here, and you can use it in a requires string with {function_name()}.
+def foundRequiredWishes(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     goal = int(world.options.goal.value)
     if goal != Options.Goal.option_wish_hunt:
         return True
@@ -21,9 +21,7 @@ def foundRequiredWishes(
         return f"|Lost Wish:{required}|"
 
 
-def canReachLifeMasteryGoal(
-    world: World, multiworld: MultiWorld, state: CollectionState, player: int
-):
+def canReachLifeMasteryGoal(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     goal = int(world.options.goal.value)
     rankRequired = Licenses.ALL_LICENSES[world.options.life_mastery_rank.value]
     countRequired = world.options.life_mastery_count.value
@@ -56,9 +54,7 @@ def canRankTo(
             required = Licenses.FULL_REQUIRED[rank]
 
     if life not in Lives.GOALS:
-        return Rules.ItemValue(
-            world, multiworld, state, player, f"{life} License:{required}"
-        )
+        return Rules.ItemValue(world, multiworld, state, player, f"{life} License:{required}")
 
     if life.startswith("Any"):
         match life:
@@ -72,9 +68,7 @@ def canRankTo(
                 livesToTest = Lives.CRAFTING_LIVES
         matches = 0
         for life in livesToTest:
-            if Rules.ItemValue(
-                world, multiworld, state, player, f"{life} License:{required}"
-            ):
+            if Rules.ItemValue(world, multiworld, state, player, f"{life} License:{required}"):
                 matches += 1
             if matches >= int(lifeCount):
                 return True
@@ -90,9 +84,7 @@ def canRankTo(
             case "All Crafting":
                 livesToTest = Lives.CRAFTING_LIVES
         for life in livesToTest:
-            if not Rules.ItemValue(
-                world, multiworld, state, player, f"{life} License:{required}"
-            ):
+            if not Rules.ItemValue(world, multiworld, state, player, f"{life} License:{required}"):
                 return False
         return True
 

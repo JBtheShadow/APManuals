@@ -32,15 +32,12 @@ from ..Items import ManualItem
 
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
-def hook_get_filler_item_name(
-    world: World, multiworld: MultiWorld, player: int
-) -> str | bool:
+def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int) -> str | bool:
     return False
 
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
-
     if world.options.goal.value == Options.Goal.option_wish_hunt:
         if not world.options.other_requests.value:
             logging.info("Forcing Other Requests to be enabled for Wish Hunt.")
@@ -50,7 +47,9 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
     wish_hunt_total = world.options.wish_hunt_total.value
 
     if wish_hunt_required > wish_hunt_total:
-        logging.info(f"There are more Lost Wishes required than the available total. Setting the required amount to {wish_hunt_total}")
+        logging.info(
+            f"There are more Lost Wishes required than the available total. Setting the required amount to {wish_hunt_total}"
+        )
         world.options.wish_hunt_required.value = wish_hunt_total
 
     progressive_licenses = world.options.progressive_licenses.value
@@ -71,27 +70,23 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     locationNamesToRemove = []  # List of location names
 
     # Add your code here to calculate which locations to remove
+
     for region in multiworld.regions:
         if region.player == player:
             for location in list(region.locations):
                 if location.name in locationNamesToRemove:
                     region.locations.remove(location)
-
     if hasattr(multiworld, "clear_location_cache"):
         multiworld.clear_location_cache()
 
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
-def before_create_items_starting(
-    item_pool: list, world: World, multiworld: MultiWorld, player: int
-) -> list:
+def before_create_items_starting(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
     return item_pool
 
 
 # The item pool after starting items are processed but before filler is added, in case you want to see the raw item pool at that stage
-def before_create_items_filler(
-    item_pool: list, world: World, multiworld: MultiWorld, player: int
-) -> list:
+def before_create_items_filler(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
     # Use this hook to remove items from the item pool
     itemNamesToRemove = []  # List of item names
     startingInventory = []
@@ -154,7 +149,6 @@ def before_create_items_filler(
                 ]
             )
             startingInventory.append(itemName)
-
     for itemName in itemNamesToRemove:
         item = next(i for i in item_pool if i.name == itemName)
         item_pool.remove(item)
@@ -163,7 +157,6 @@ def before_create_items_filler(
         item = next(i for i in item_pool if i.name == itemName)
         multiworld.push_precollected(item)
         item_pool.remove(item)
-
     return item_pool
 
     # Some other useful hook options:
@@ -176,9 +169,7 @@ def before_create_items_filler(
 
 
 # The complete item pool prior to being set for generation is provided here, in case you want to make changes to it
-def after_create_items(
-    item_pool: list, world: World, multiworld: MultiWorld, player: int
-) -> list:
+def after_create_items(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
     return item_pool
 
 
@@ -198,7 +189,9 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     progressiveLicenses = world.options.progressive_licenses.value
     if progressiveLicenses > 0:
         for life in Lives.ALL_LIVES:
-            for rank in [x for x in Licenses.ALL_LICENSES if x != "Novice" and (dlc or x not in ["Demi-Creator", "Creator"]) ]:
+            for rank in [
+                x for x in Licenses.ALL_LICENSES if x != "Novice" and (dlc or x not in ["Demi-Creator", "Creator"])
+            ]:
                 match rank:
                     case "Fledgeling":
                         locationName = f"(1*) Started a new Life as {'an' if life.startswith('A') else 'a'} {life}"
@@ -243,16 +236,12 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
 
 
 # The item name to create is provided before the item is created, in case you want to make changes to it
-def before_create_item(
-    item_name: str, world: World, multiworld: MultiWorld, player: int
-) -> str:
+def before_create_item(item_name: str, world: World, multiworld: MultiWorld, player: int) -> str:
     return item_name
 
 
 # The item that was created is provided after creation, in case you want to modify the item
-def after_create_item(
-    item: ManualItem, world: World, multiworld: MultiWorld, player: int
-) -> ManualItem:
+def after_create_item(item: ManualItem, world: World, multiworld: MultiWorld, player: int) -> ManualItem:
     return item
 
 
@@ -267,16 +256,12 @@ def after_generate_basic(world: World, multiworld: MultiWorld, player: int):
 
 
 # This is called before slot data is set and provides an empty dict ({}), in case you want to modify it before Manual does
-def before_fill_slot_data(
-    slot_data: dict, world: World, multiworld: MultiWorld, player: int
-) -> dict:
+def before_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld, player: int) -> dict:
     return slot_data
 
 
 # This is called after slot data is set and provides the slot data at the time, in case you want to check and modify it after Manual is done with it
-def after_fill_slot_data(
-    slot_data: dict, world: World, multiworld: MultiWorld, player: int
-) -> dict:
+def after_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld, player: int) -> dict:
     return slot_data
 
 
@@ -287,10 +272,7 @@ def before_write_spoiler(world: World, multiworld: MultiWorld, spoiler_handle) -
 
 # This is called when you want to add information to the hint text
 def before_extend_hint_information(
-    hint_data: dict[int, dict[int, str]],
-    world: World,
-    multiworld: MultiWorld,
-    player: int,
+    hint_data: dict[int, dict[int, str]], world: World, multiworld: MultiWorld, player: int
 ) -> None:
     ### Example way to use this hook:
     # if player not in hint_data:
@@ -307,9 +289,6 @@ def before_extend_hint_information(
 
 
 def after_extend_hint_information(
-    hint_data: dict[int, dict[int, str]],
-    world: World,
-    multiworld: MultiWorld,
-    player: int,
+    hint_data: dict[int, dict[int, str]], world: World, multiworld: MultiWorld, player: int
 ) -> None:
     pass

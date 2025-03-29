@@ -1,4 +1,5 @@
 {
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
   "Bliss Bonuses": { "connects_to": [], "requires": "|First Bliss Check|", "starting": true },
   
   "Butterfly Requests": { "connects_to": ["Chapter 1 Butterfly Requests"], "requires": "|Other Requests Tutorial|", "starting": true },

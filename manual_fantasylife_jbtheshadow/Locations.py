@@ -1,7 +1,7 @@
 from BaseClasses import Location
+
 from .Data import location_table
 from .Game import starting_index
-
 
 ######################
 # Generate location lookups
@@ -25,22 +25,21 @@ for key, _ in enumerate(location_table):
     location_table[key]["id"] = count
 
     if "region" not in location_table[key]:
-        location_table[key]["region"] = "Manual" # all locations are in the same region for Manual
-
-    if isinstance(location_table[key].get("category", []), str):
-        location_table[key]["category"] = [location_table[key]["category"]]
+        location_table[key]["region"] = "Manual"  # all locations are in the same region for Manual
 
     count += 1
 
 if not victory_names:
     # Add the game completion location, which will have the Victory item assigned to it automatically
-    location_table.append({
-        "id": count + 1,
-        "name": "__Manual Game Complete__",
-        "region": "Manual",
-        "requires": []
-        # "category": custom_victory_location["category"] if "category" in custom_victory_location else []
-    })
+    location_table.append(
+        {
+            "id": count + 1,
+            "name": "__Manual Game Complete__",
+            "region": "Manual",
+            "requires": [],
+            # "category": custom_victory_location["category"] if "category" in custom_victory_location else []
+        }
+    )
     victory_names.append("__Manual Game Complete__")
 
 location_id_to_name: dict[int, str] = {}
