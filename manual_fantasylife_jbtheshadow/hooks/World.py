@@ -3,10 +3,8 @@
 import logging
 import random
 
-from BaseClasses import CollectionState, MultiWorld
+from BaseClasses import MultiWorld
 from worlds.AutoWorld import World
-
-from .. import Rules
 
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
@@ -38,28 +36,43 @@ def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int)
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
-    if world.options.goal.value == Options.Goal.option_wish_hunt:
-        if not world.options.other_requests.value:
-            logging.info("Forcing Other Requests to be enabled for Wish Hunt.")
-            world.options.other_requests.value = True
+    goal = world.options.goal.value
+    progressiveLicenses = world.options.progressive_licenses.value
+    startingLife = world.options.starting_life.value
+    wishHuntRequired = world.options.wish_hunt_required.value
+    wishHuntTotal = world.options.wish_hunt_total.value
+    lifeMasteryRank = world.options.life_mastery_rank.value
+    dlc = world.options.dlc.value > 0
+    otherRequests = world.options.other_requests > 0
 
-    wish_hunt_required = world.options.wish_hunt_required.value
-    wish_hunt_total = world.options.wish_hunt_total.value
+    match goal:
+        case Options.Goal.option_wish_hunt:
+            if not world.options.other_requests.value:
+                logging.info("Forcing Other Requests to be enabled for Wish Hunt.")
+                world.options.other_requests.value = True
+            if wishHuntRequired > wishHuntTotal:
+                logging.info(
+                    f"There are more Lost Wishes required than the available total. Setting the required amount to {wishHuntTotal}"
+                )
+                world.options.wish_hunt_required.value = wishHuntTotal
+        case Options.Goal.option_life_mastery:
+            if not dlc and lifeMasteryRank in [
+                Options.LifeMasteryRank.option_demi_creator,
+                Options.LifeMasteryRank.option_creator,
+            ]:
+                logging.info("Target rank for Life Mastery cannot be reached without the DLC. Defaulting to Master.")
+                world.options.life_mastery_rank.value = Options.LifeMasteryRank.option_master
 
-    if wish_hunt_required > wish_hunt_total:
-        logging.info(
-            f"There are more Lost Wishes required than the available total. Setting the required amount to {wish_hunt_total}"
-        )
-        world.options.wish_hunt_required.value = wish_hunt_total
-
-    progressive_licenses = world.options.progressive_licenses.value
-    starting_life = world.options.starting_life.value
-
-    if progressive_licenses == Options.ProgressiveLicenses.option_disabled:
-        if starting_life != Options.StartingLife.option_disabled:
+    if progressiveLicenses == Options.ProgressiveLicenses.option_disabled:
+        if startingLife != Options.StartingLife.option_disabled:
             logging.info("Progressive Licenses are disabled; forcing starting life option to be disabled as well.")
             world.options.starting_life.value = Options.StartingLife.option_disabled
-    elif starting_life == Options.StartingLife.option_disabled:
+    if progressiveLicenses == Options.ProgressiveLicenses.option_full and not dlc and not otherRequests:
+        logging.info(
+            "There won't be enough items to place with DLC and Other Requests both disabled; changing Progressive Licenses from full to fast."
+        )
+        world.options.progressive_licenses.value = Options.ProgressiveLicenses.option_fast
+    elif startingLife == Options.StartingLife.option_disabled:
         logging.info("Progressive Licenses are enabled; forcing starting life to be a random one")
         world.options.starting_life.value = Options.StartingLife.option_any
 
@@ -70,6 +83,11 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     locationNamesToRemove = []  # List of location names
 
     # Add your code here to calculate which locations to remove
+    goal = world.options.goal.value
+    if goal != Options.Goal.option_wish_hunt:
+        locationNamesToRemove.append("Wish Hunt")
+    if goal != Options.Goal.option_life_mastery:
+        locationNamesToRemove.append("Life Mastery")
 
     for region in multiworld.regions:
         if region.player == player:
@@ -97,7 +115,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     # to the list multiple times if you want to remove multiple copies of it.
 
     # Wish Hunt goal
-    goal = int(world.options.goal.value)
+    goal = world.options.goal.value
     wishHuntTotal = world.options.wish_hunt_total.value
     if goal == Options.Goal.option_wish_hunt:
         for _ in range(0, Options.WishHuntTotal.range_end - wishHuntTotal):
@@ -182,12 +200,16 @@ def before_set_rules(world: World, multiworld: MultiWorld, player: int):
 def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to modify the access rules for a given location
 
-    def hasLicense(state: CollectionState, itemCount: str):
-        return Rules.ItemValue(world, multiworld, state, player, itemCount)
-
     dlc = world.options.dlc.value
-    progressiveLicenses = world.options.progressive_licenses.value
-    if progressiveLicenses > 0:
+    noLicenses = world.options.progressive_licenses.value == Options.ProgressiveLicenses.option_disabled
+    singleLicenses = world.options.progressive_licenses.value == Options.ProgressiveLicenses.option_single
+    fastLicenses = world.options.progressive_licenses.value == Options.ProgressiveLicenses.option_fast
+    progressiveLicenses = world.options.progressive_licenses.value == Options.ProgressiveLicenses.option_full
+    goal = world.options.goal.value
+    lifeMasteryRank = world.options.life_mastery_rank.value
+    lifeMasteryCount = world.options.life_mastery_count.value
+
+    if not noLicenses > 0:
         for life in Lives.ALL_LIVES:
             for rank in [
                 x for x in Licenses.ALL_LICENSES if x != "Novice" and (dlc or x not in ["Demi-Creator", "Creator"])
@@ -211,18 +233,58 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
                         locationName = f"(8*) Became a Creator {life}"
                     case "Creator":
                         locationName = f"(9*) Found your passion as {'an' if life.startswith('A') else 'a'} {life}"
-                match progressiveLicenses:
-                    case Options.ProgressiveLicenses.option_single:
-                        itemCount = f"{life} License:1"
-                    case Options.ProgressiveLicenses.option_fast:
-                        itemCount = f"{life} License:{Licenses.FAST_REQUIRED[rank]}"
-                    case Options.ProgressiveLicenses.option_full:
-                        itemCount = f"{life} License:{Licenses.FULL_REQUIRED[rank]}"
+                if singleLicenses:
+                    itemName = f"{life} License"
+                    itemCount = 1
+                if fastLicenses:
+                    itemName = f"Fast Progressive {life} License"
+                    itemCount = Licenses.FAST_REQUIRED[rank]
+                if progressiveLicenses:
+                    itemName = f"Progressive {life} License"
+                    itemCount = Licenses.FULL_REQUIRED[rank]
                 try:
                     location = multiworld.get_location(locationName, player)
-                    location.access_rule = lambda state: hasLicense(state, itemCount)
+                    location.access_rule = lambda state: state.has(itemName, player, itemCount)
                 except Exception:
                     logging.info(f"Location {locationName} not found, ignoring it.")
+
+    if goal == Options.Goal.option_life_mastery and not noLicenses:
+        if singleLicenses:
+            itemName = "{life} License"
+            itemCount = 1
+        else:
+            itemName = "Fast Progressive {life} License" if fastLicenses else "Progressive {life} License"
+            match lifeMasteryRank:
+                case Options.LifeMasteryRank.option_fledgeling:
+                    itemCount = 1
+                case Options.LifeMasteryRank.option_apprentice:
+                    itemCount = 1 if fastLicenses else 2
+                case Options.LifeMasteryRank.option_adept:
+                    itemCount = 2 if fastLicenses else 3
+                case Options.LifeMasteryRank.option_expert:
+                    itemCount = 2 if fastLicenses else 4
+                case Options.LifeMasteryRank.option_master:
+                    itemCount = 3 if fastLicenses else 5
+                case Options.LifeMasteryRank.option_hero:
+                    itemCount = 4 if fastLicenses else 6
+                case Options.LifeMasteryRank.option_legend:
+                    itemCount = 4 if fastLicenses else 7
+                case Options.LifeMasteryRank.option_demi_creator:
+                    itemCount = 5 if fastLicenses else 8
+                case Options.LifeMasteryRank.option_creator:
+                    itemCount = 5 if fastLicenses else 9
+
+        def lifeMasteryRule(state):
+            lifeCount = 0
+            for life in Lives.ALL_LIVES:
+                if state.has(itemName.replace("{life}", life), player, itemCount):
+                    lifeCount += 1
+                if lifeCount >= lifeMasteryCount:
+                    return True
+            return False
+
+        location = multiworld.get_location("Life Mastery", player)
+        location.access_rule = lambda state: lifeMasteryRule(state)
 
     ## Common functions:
     # location = world.get_location(location_name, player)
