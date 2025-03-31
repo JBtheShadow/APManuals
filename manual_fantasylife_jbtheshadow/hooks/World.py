@@ -43,7 +43,7 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
     wishHuntTotal = world.options.wish_hunt_total.value
     lifeMasteryRank = world.options.life_mastery_rank.value
     dlc = world.options.dlc.value > 0
-    otherRequests = world.options.other_requests > 0
+    otherRequests = world.options.other_requests
 
     match goal:
         case Options.Goal.option_wish_hunt:
@@ -67,7 +67,11 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
         if startingLife != Options.StartingLife.option_disabled:
             logging.info("Progressive Licenses are disabled; forcing starting life option to be disabled as well.")
             world.options.starting_life.value = Options.StartingLife.option_disabled
-    if progressiveLicenses == Options.ProgressiveLicenses.option_full and not dlc and not otherRequests:
+    if (
+        progressiveLicenses == Options.ProgressiveLicenses.option_full
+        and not dlc
+        and otherRequests == Options.IncludeOtherRequests.option_none
+    ):
         logging.info(
             "There won't be enough items to place with DLC and Other Requests both disabled; changing Progressive Licenses from full to fast."
         )

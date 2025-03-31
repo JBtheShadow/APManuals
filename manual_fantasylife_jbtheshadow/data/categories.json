@@ -20,6 +20,9 @@
     "Carpenter License": { "hidden": true },
     "Tailor License": { "hidden": true },
     "Alchemist License": { "hidden": true },
-    "Other Requests": { "yaml_option": ["other_requests"], "hidden": true },
+    "Other Requests 1": { "hidden": true },
+    "Other Requests 2": { "hidden": true },
+    "Other Requests 3": { "hidden": true },
+    "Other Requests 4": { "hidden": true },
     "Story Progression": { "hidden": true }
 }

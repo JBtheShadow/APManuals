@@ -157,11 +157,22 @@ class StartingLife(Choice):
     default = 13
 
 
-class IncludeOtherRequests(Toggle):
-    """Include Other Requests as checks? Forced to True when goal is Wish Hunt"""
+class IncludeOtherRequests(Choice):
+    """Include Other Requests as checks? Forced to [all] when goal is Wish Hunt.
+    [none] No requests are included.
+    [only_first] Only the first request is included as a check.
+    [up_to_second] The first and second requests are included as checks.
+    [up_to_third] Only the first three requests are included as checks. Covers all non-DLC requests.
+    [all] Every request is considered. Does the same as [up_to_third] when no DLC.
+    """
 
     display_name = "Include Other Requests?"
-    default = True
+    option_none = 0
+    option_only_first = 1
+    option_up_to_second = 2
+    option_up_to_third = 3
+    option_all = 4
+    default = 4
 
 
 class Goal(Choice):
