@@ -70,6 +70,14 @@
     { "count": 1, "name": "DLC Chapter 2 Start", "category": [ "Chapters and Tutorials", "Story Progression", "DLC" ], "progression_skip_balancing": true },
     { "count": 1, "name": "DLC Chapter 2 End", "category": [ "Chapters and Tutorials", "Story Progression", "DLC" ], "progression_skip_balancing": true },
   
+    { "count": 5, "name": "Bigger Bag", "category": [ "Bliss Bonuses", "Bag Bonus" ], "progression": true },
+    { "count": 5, "name": "Bigger Storage", "category": [ "Bliss Bonuses", "Storage Bonus" ], "progression": true },
+    { "count": 4, "name": "Better Shopping", "category": [ "Bliss Bonuses", "Shopping Bonus" ], "progression": true },
+    { "count": 3, "name": "More Pets", "category": [ "Bliss Bonuses", "Pet Bonus" ], "progression": true },
+    { "count": 4, "name": "More Mounts", "category": [ "Bliss Bonuses", "Mounts Bonus" ], "progression": true },
+    { "count": 3, "name": "More Fashion", "category": [ "Bliss Bonuses", "Fashion Bonus" ], "progression": true },
+    { "count": 2, "name": "Audio & Video", "category": [ "Bliss Bonuses", "Media Bonus" ], "progression": true },
+    
     { "count": 1, "name": "Paladin License", "category": [ "Single Licenses", "Combat License", "Easier Combat", "Paladin License", "Life Licenses" ], "progression": true, "value": { "Paladin License": 1} },
     { "count": 1, "name": "Mercenary License", "category": [ "Single Licenses", "Combat License", "Easier Combat", "Mercenary License", "Life Licenses" ], "progression": true, "value": { "Mercenary License": 1} },
     { "count": 1, "name": "Hunter License", "category": [ "Single Licenses", "Combat License", "Hunter License", "Life Licenses" ], "progression": true, "value": { "Hunter License": 1} },
