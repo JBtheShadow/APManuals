@@ -82,41 +82,39 @@ class IncludeDLC(Toggle):
     default = True
 
 
-class ProgressiveLicenses(Choice):
-    """Controls whether Licenses will be included in the pool and how they'll behave.
+class IncludeLicenses(Toggle):
+    """Toggles whether or not to include licenses in the pool."""
 
-    [disabled] None will be placed in the pool and you may pick whichever Lives you want.
-    [single] One of each License will be added to the pool. Receiving a License unlocks everything that Life can do.
-    [fast] 4 (or 5 with DLC) Fast Progressive Licenses will be added for each Life, and each rank will have the following requirements:
-        1 license: Novice, Fledgeling, Apprentice
-        2 licenses: Adept, Expert
-        3 licenses: Master
-        4 licenses: Hero, Legend
-        5 licenses (DLC): Demi-Creator, Creator
-    [full] 7 (or 9 with DLC) Progressive Licenses will be added for each Life, and each rank will have the following requirements:
-        1 license: Novice, Fledgeling
-        2 licenses: Apprentice
-        3 licenses: Adept
-        4 licenses: Expert
-        5 licenses: Master
-        6 licenses: Hero
-        7 licenses: Legend
-        8 licenses (DLC): Demi-Creator
-        9 licenses (DLC): Creator"""
+    display_name = "Include licenses?"
+    default = True
 
-    display_name = "Progressive Licenses?"
-    option_disabled = 0
-    option_single = 1
-    option_fast = 2
-    option_full = 3
-    default = 3
+
+class ProgressiveLicenses(Toggle):
+    """Toggles whether or not licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgeling ranks.
+    If disabled, a single license unlocks all ranks.
+    Does nothing if licenses are not included."""
+
+    display_name = "Progressive licenses?"
+    default = True
+
+
+class FastLicenses(Toggle):
+    """Toggles whether or not progressive licenses should be grouped together, to reduce item count.
+    Does nothing if licenses are not included nor if progressive licenses are disabled.
+    The unlocked ranks per license become as follows:
+    Novice, Fledgeling, Apprentice -> 1 license
+    Adept, Expert -> 2 licenses
+    Master -> 3 licenses
+    Hero, Legend -> 4 licenses
+    Demi-Creator, Creator -> 5 licenses (DLC)"""
+
+    display_name = "Fast progressive licenses?"
+    default = False
 
 
 class StartingLife(Choice):
     """Sets what Life your character will start with, since the game forces you to go with one of the 12 Lives.
-    This option does nothing if Progressive Licenses is disabled.
-    If Licenses are in the pool but this option is disabled the game will instead pick one of the Lives at random.
-    [disabled] To be used with Progressive Licenses disabled.
+    This option does nothing if licenses are not included.
     [paladin] Start as a Paladin.
     [mercenary] Start as a Mercenary.
     [hunter] Start as a Hunter.
@@ -135,8 +133,7 @@ class StartingLife(Choice):
     [crafting] Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist.
     [any] Randomly pick between any of the 12 Lives."""
 
-    display_name = "Starting Life?"
-    option_disabled = 0
+    display_name = "Starting Life"
     option_paladin = 1
     option_mercenary = 2
     option_hunter = 3
@@ -155,6 +152,32 @@ class StartingLife(Choice):
     option_crafting = 16
     option_any = 17
     default = 13
+
+
+class IncludeBlissBonuses(Toggle):
+    """Toggles whether to add the bliss bonuses to the pool, like the bigger bag or access to pets.
+    When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen."""
+
+    display_name = "Include Bliss Bonuses?"
+    default = True
+
+
+class StartingBlissBonus(Choice):
+    """Selects which bliss bonus to start with, or picks a random one among the more useful bonuses.
+    Very early, before reaching Chapter One, the game will teach about bliss bonuses.
+    As there are not many checks the player can do as early, this ensures the player won't have to go out of logic.
+    Does nothing if bliss bonuses are not included.
+    [bag] Starts with Bigger Bag.
+    [storage] Starts with Bigger Storage.
+    [shopping] Starts with Shopping +.
+    [any] Starts with a random one out of those three."""
+
+    display_name = "Starting Bliss Bonus"
+    option_bag = 1
+    option_storage = 2
+    option_shopping = 3
+    option_any = 4
+    default = 4
 
 
 class IncludeOtherRequests(Choice):
@@ -188,9 +211,13 @@ def before_options_defined(options: dict) -> dict:
     options["life_mastery_rank"] = LifeMasteryRank
     options["life_mastery_count"] = LifeMasteryCount
     options["dlc"] = IncludeDLC
+    options["licenses"] = IncludeLicenses
     options["progressive_licenses"] = ProgressiveLicenses
+    options["fast_licenses"] = FastLicenses
     options["starting_life"] = StartingLife
     options["other_requests"] = IncludeOtherRequests
+    options["bliss_bonuses"] = IncludeBlissBonuses
+    options["starting_bliss_bonus"] = StartingBlissBonus
     return options
 
 

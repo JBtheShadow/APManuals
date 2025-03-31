@@ -1,9 +1,9 @@
 {
     "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.categories.schema.json",
     "DLC": { "yaml_option": ["dlc"], "hidden": true },
-    "Single Licenses": { "hidden": true },
-    "Fast Licenses": { "hidden": true },
-    "Progressive Licenses": { "hidden": true },
+    "Single Licenses": { "yaml_option": [ "licenses", "!progressive_licenses"], "hidden": true },
+    "Fast Licenses": { "yaml_option": [ "licenses", "progressive_licenses", "fast_licenses"], "hidden": true },
+    "Progressive Licenses": { "yaml_option": [ "licenses", "progressive_licenses", "!fast_licenses" ], "hidden": true },
     "Combat License": { "hidden": true },
     "Easier Combat": { "hidden": true },
     "Gathering License": { "hidden": true },
@@ -24,5 +24,12 @@
     "Other Requests 2": { "hidden": true },
     "Other Requests 3": { "hidden": true },
     "Other Requests 4": { "hidden": true },
-    "Story Progression": { "hidden": true }
+    "Bag Bonus": { "hidden": true },
+    "Storage Bonus": { "hidden": true },
+    "Shopping Bonus": { "hidden": true },
+    "Pet Bonus": { "hidden": true },
+    "Mounts Bonus": { "hidden": true },
+    "Fashion Bonus": { "hidden": true },
+    "Media Bonus": { "hidden": true },
+    "Progressive Bliss": { "yaml_option": ["bliss_bonuses"], "hidden": true }
 }

@@ -15,6 +15,6 @@ def foundRequiredWishes(world: World, multiworld: MultiWorld, state: CollectionS
     main_story = world.options.require_main_story_for_goal.value
 
     if main_story:
-        return f"|Final Chapter End| and |Lost Wish:{required}|"
+        return f"|Chapter Complete:7| and |Lost Wish:{required}|"
     else:
         return f"|Lost Wish:{required}|"
