@@ -2,7 +2,7 @@ from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
 
 from .. import Helpers
-from ..hooks import Options
+from ..hooks import Licenses, Options
 
 
 # Sometimes you have a requirement that is just too messy or repetitive to write out with boolean logic.
@@ -21,8 +21,11 @@ def foundRequiredWishes(world: World, multiworld: MultiWorld, state: CollectionS
         return f"|Lost Wish:{required}|"
 
 
-# Works for generation, doesn't seem to work for the client
 def hasLicense(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank: str, life: str):
+    # You wanna ensure there are no spaces before or after str parameters
+    rank = rank.strip()
+    life = life.strip()
+
     licenses = Helpers.is_option_enabled(multiworld, player, "licenses")
     if not licenses:
         return True
@@ -32,29 +35,7 @@ def hasLicense(world: World, multiworld: MultiWorld, state: CollectionState, pla
         return f"|{life} License|"
 
     fastLicenses = Helpers.is_option_enabled(multiworld, player, "fast_licenses")
-    dlc = Helpers.is_option_enabled(multiworld, player, "dlc")
-    itemName = f"Fast Progressive {life} License" if fastLicenses else f"Progressive {life} License"
+    if not fastLicenses:
+        return f"|Progressive {life} License:{Licenses.FULL_REQUIRED[rank]}|"
 
-    match rank:
-        case "Fledgeling":
-            required = 1
-        case "Apprentice":
-            required = 1 if fastLicenses else 2
-        case "Adept":
-            required = 2 if fastLicenses else 3
-        case "Expert":
-            required = 2 if fastLicenses else 4
-        case "Master":
-            required = 3 if fastLicenses else 5
-        case "Hero":
-            required = 4 if fastLicenses else 6
-        case "Legend":
-            required = 4 if fastLicenses else 7
-        case "Demi-Creator" if dlc:
-            required = 5 if fastLicenses else 8
-        case "Creator" if dlc:
-            required = 5 if fastLicenses else 9
-        case "Demi-Creator" | "Creator" if not dlc:
-            required = 4 if fastLicenses else 7
-
-    return f"|{itemName}:{required}|"
+    return f"|Fast Progressive {life} License:{Licenses.FAST_REQUIRED[rank]}|"
