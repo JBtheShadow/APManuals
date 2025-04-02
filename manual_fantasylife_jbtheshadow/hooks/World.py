@@ -3,7 +3,7 @@
 import logging
 import random
 
-from BaseClasses import MultiWorld
+from BaseClasses import ItemClassification, MultiWorld
 from worlds.AutoWorld import World
 
 # Raw JSON data from the Manual apworld, respectively:
@@ -209,7 +209,57 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
 
 # The complete item pool prior to being set for generation is provided here, in case you want to make changes to it
 def after_create_items(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
-    return item_pool
+    new_item_pool = [
+        x for x in item_pool if x.classification != ItemClassification.filler and not x.name.startswith("Password")
+    ]
+
+    needed = len(item_pool) - len(new_item_pool)
+    filler_items = [
+        "Castele Crucian",
+        "Plains Sweetfish",
+        "Castele Carp",
+        "Mutton",
+        "Bird Meat",
+        "Eggs",
+        "Cows' Milk",
+        "Carrot",
+        "Daikon Radish",
+        "Potato",
+        "Onion",
+        "Castele Apple",
+        "Grassy Plains Barley",
+        "Carrot Soup",
+        "Fluffy Omelette",
+        "Well-Done Burger",
+        "Steak",
+        "Winter Stew",
+        "Grilled Crucian",
+        "Salt",
+        "Sugar",
+        "Barley Juice",
+        "Roast Mutton",
+        "Tasty Kebab",
+        "Boiled Egg",
+        "Healweed",
+        "HP Potion",
+        "Vitalweed",
+        "SP Potion",
+        "Poison Antidote",
+        "Stun Antidote",
+        "Sleep Antidote",
+        "Life Cure",
+        "Mini Bomb",
+        "Cureweed",
+        "Spring Water",
+        "Apple Juice",
+        "Honey Pudding",
+        "Grassland Honey",
+    ]
+
+    for _ in range(needed):
+        new_item_pool.append(world.create_item(random.choice(filler_items)))
+
+    return new_item_pool
 
 
 # Called before rules for accessing regions and locations are created. Not clear why you'd want this, but it's here.
