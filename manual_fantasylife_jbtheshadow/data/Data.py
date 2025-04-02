@@ -1,102 +1,112 @@
 from enum import Enum
 
 
-class NameId:
-    def __init__(self, name: str, id: int):
-        self.name = name
-        self.id = id
-
-
-class LifeDetails:
-    def __init__(self, id: int, description: str):
-        self.id = id
-        self.description = description
-
-
 class Life(Enum):
-    PALADIN = LifeDetails(1, "Paladin")
-    MERCENARY = LifeDetails(2, "Mercenary")
-    HUNTER = LifeDetails(3, "Hunter")
-    MAGICIAN = LifeDetails(4, "Magician")
-    MINER = LifeDetails(5, "Miner")
-    WOODCUTTER = LifeDetails(6, "Woodcutter")
-    ANGLER = LifeDetails(7, "Angler")
-    COOK = LifeDetails(8, "Cook")
-    BLACKSMITH = LifeDetails(9, "Blacksmith")
-    CARPENTER = LifeDetails(10, "Carpenter")
-    TAILOR = LifeDetails(11, "Tailor")
-    ALCHEMIST = LifeDetails(12, "Alchemist")
+    PALADIN = 1, "Paladin"
+    MERCENARY = 2, "Mercenary"
+    HUNTER = 3, "Hunter"
+    MAGICIAN = 4, "Magician"
+    MINER = 5, "Miner"
+    WOODCUTTER = 6, "Woodcutter"
+    ANGLER = 7, "Angler"
+    COOK = 8, "Cook"
+    BLACKSMITH = 9, "Blacksmith"
+    CARPENTER = 10, "Carpenter"
+    TAILOR = 11, "Tailor"
+    ALCHEMIST = 12, "Alchemist"
 
-    id = property(lambda self: self.value.id)
-    description = property(lambda self: self.value.description)
+    def __new__(cls, *args, **kwds):
+        obj = object.__new__(cls)
+        obj._value_ = args[0]
+        return obj
 
-    def all_life_names():
-        return [x.description for x in Life]
+    def __init__(self, _: int, description: str = None):
+        self._description_ = description
 
-    def easy_combat_life_names():
-        return [x.description for x in [Life.PALADIN, Life.MERCENARY]]
+    @property
+    def description(self):
+        return self._description_
 
-    def combat_life_names():
-        return [x.description for x in [Life.PALADIN, Life.MERCENARY, Life.HUNTER, Life.MAGICIAN]]
+    def easy_combat():
+        return [Life.PALADIN, Life.MERCENARY]
 
-    def gathering_life_names():
-        return [x.description for x in [Life.MINER, Life.WOODCUTTER, Life.ANGLER]]
+    def combat():
+        return [Life.PALADIN, Life.MERCENARY, Life.HUNTER, Life.MAGICIAN]
 
-    def crafting_life_names():
-        return [x.description for x in [Life.COOK, Life.BLACKSMITH, Life.CARPENTER, Life.TAILOR, Life.ALCHEMIST]]
+    def gathering():
+        return [Life.MINER, Life.WOODCUTTER, Life.ANGLER]
 
-    def name_from_id(id: int):
-        for life in Life:
-            if life.id == id:
-                return life.description
-
-        raise Exception("Id doesn't exist")
-
-
-class LicenseDetails:
-    def __init__(self, id: int, description: str, fast_requirement: int, full_requirement: int):
-        self.id = id
-        pass
+    def crafting():
+        return [Life.COOK, Life.BLACKSMITH, Life.CARPENTER, Life.TAILOR, Life.ALCHEMIST]
 
 
-class License(Enum):
-    NOVICE = NameId("Novice", 0)
-    FLEDGELING = NameId("Fledgeling", 1)
-    APPRENTICE = NameId("Apprentice", 2)
-    ADEPT = NameId("Adept", 3)
-    EXPERT = NameId("Expert", 4)
-    MASTER = NameId("Master", 5)
-    HERO = NameId("Hero", 6)
-    LEGEND = NameId("Legend", 7)
-    DEMI_CREATOR = NameId("Demi-Creator", 8)
-    CREATOR = NameId("Creator", 9)
+class Rank(Enum):
+    NOVICE = 0, "Novice", 1, 1
+    FLEDGELING = 1, "Fledgeling", 1, 1
+    APPRENTICE = 2, "Apprentice", 1, 2
+    ADEPT = 3, "Adept", 2, 3
+    EXPERT = 4, "Expert", 2, 4
+    MASTER = 5, "Master", 3, 5
+    HERO = 6, "Hero", 4, 6
+    LEGEND = 7, "Legend", 4, 7
+    DEMI_CREATOR = 8, "Demi-Creator", 5, 8
+    CREATOR = 9, "Creator", 5, 9
 
-    def from_id(id: int):
-        for license in License:
-            if license.value.id == id:
-                return license
+    def __new__(cls, *args, **kwds):
+        obj = object.__new__(cls)
+        obj._value_ = args[0]
+        return obj
 
-        raise Exception("Id doesn't exist")
+    def __init__(self, _: int, description: str = None, fast_requirement: int = 1, full_requirement: int = 1):
+        self._description_ = description
+        self._fast_requirement_ = fast_requirement
+        self._full_requirement_ = full_requirement
 
-    def from_name(name: str):
-        for license in License:
-            if license.value.name == name:
-                return license
+    @property
+    def description(self):
+        return self._description_
 
-        raise Exception("Name doesn't exist")
-
-    def full_requirement(self):
-        return 1 if self == License.NOVICE else self.value.id
-
+    @property
     def fast_requirement(self):
-        match self:
-            case License.NOVICE | License.FLEDGELING | License.APPRENTICE:
-                return 1
-            case License.ADEPT | License.EXPERT:
-                return 2
-            case License.MASTER:
-                return 3
-            case License.HERO | License.LEGEND:
-                return 4
-            case License.DEMI_CREATOR | License.CREATOR:
-                return 5
+        return self._fast_requirement_
+
+    @property
+    def full_requirement(self):
+        return self._full_requirement_
+
+    def from_description(description: str):
+        for license in Rank:
+            if license.description == description:
+                return license
+
+        raise Exception(f"'{description}' is not a valid Rank!")
+
+
+class FillerCategory(Enum):
+    FOOD = 1
+    POTIONS = 2
+    ANTIDOTES = 3
+    CURES = 4
+    BOMBS = 5
+
+
+FILLER_ITEMS = {
+    FillerCategory.FOOD: [
+        "Carrot Soup",
+        "Fluffy Omelette",
+        "Well-Done Burger",
+        "Steak",
+        "Winter Stew",
+        "Grilled Crucian",
+        "Barley Juice",
+        "Roast Mutton",
+        "Tasty Kebab",
+        "Boiled Egg",
+        "Apple Juice",
+        "Honey Pudding",
+    ],
+    FillerCategory.POTIONS: ["HP Potion", "SP Potion"],
+    FillerCategory.ANTIDOTES: ["Poison Antidote", "Stun Antidote", "Sleep Antidote"],
+    FillerCategory.CURES: ["Life Cure"],
+    FillerCategory.BOMBS: ["Mini Bomb"],
+}

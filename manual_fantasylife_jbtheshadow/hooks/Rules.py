@@ -1,7 +1,7 @@
 from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
 
-from ..data.Data import License, Life
+from ..data.Data import Life, Rank
 from ..hooks import Options
 
 
@@ -42,12 +42,12 @@ def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, p
             item_count = 1
         else:
             item_name = "Fast Progressive {life} License" if fast_licenses else "Progressive {life} License"
-            rank: License = License.from_id(life_mastery_rank)
-            item_count = rank.fast_requirement() if fast_licenses else rank.full_requirement()
+            rank = Rank(life_mastery_rank)
+            item_count = rank.fast_requirement if fast_licenses else rank.full_requirement
 
         life_count = 0
-        for life in Life.all_life_names():
-            if state.has(item_name.replace("{life}", life), player, item_count):
+        for life in Life:
+            if state.has(item_name.replace("{life}", life.description), player, item_count):
                 life_count += 1
             if life_count >= life_mastery_count:
                 return not main_story or state.has("Chapter Complete", player, 7)
@@ -64,7 +64,7 @@ def license(world: World, multiworld: MultiWorld, state: CollectionState, player
     if not licenses:
         return True
 
-    license: License = License.from_name(rank)
+    rank: Rank = Rank.from_description(rank)
 
     progressive_licenses = world.options.progressive_licenses.value > 0
     if not progressive_licenses:
@@ -72,6 +72,6 @@ def license(world: World, multiworld: MultiWorld, state: CollectionState, player
 
     fast_licenses = world.options.fast_licenses.value > 0
     if not fast_licenses:
-        return f"|Progressive {life} License:{license.full_requirement()}|"
+        return f"|Progressive {life} License:{rank.full_requirement}|"
 
-    return f"|Fast Progressive {life} License:{license.fast_requirement()}|"
+    return f"|Fast Progressive {life} License:{rank.fast_requirement}|"

@@ -5,7 +5,7 @@ import logging
 from BaseClasses import MultiWorld
 from worlds.AutoWorld import World
 
-from ..data.Data import Life
+from ..data.Data import FILLER_ITEMS, FillerCategory, Life
 
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
@@ -32,29 +32,7 @@ from ..Items import ManualItem
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
 def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int) -> str | bool:
-    categories = ["food", "potions", "antidotes", "cures", "bombs"]
-    filler_items = {
-        "food": [
-            "Carrot Soup",
-            "Fluffy Omelette",
-            "Well-Done Burger",
-            "Steak",
-            "Winter Stew",
-            "Grilled Crucian",
-            "Barley Juice",
-            "Roast Mutton",
-            "Tasty Kebab",
-            "Boiled Egg",
-            "Apple Juice",
-            "Honey Pudding",
-        ],
-        "potions": ["HP Potion", "SP Potion"],
-        "antidotes": ["Poison Antidote", "Stun Antidote", "Sleep Antidote"],
-        "cures": ["Life Cure"],
-        "bombs": ["Mini Bomb"],
-    }
-
-    return world.random.choice(filler_items[world.random.choice(categories)])
+    return world.random.choice(FILLER_ITEMS[world.random.choice(list(FillerCategory))])
 
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
@@ -161,28 +139,28 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         if progressive_licenses and not dlc:
             fast_licenses = world.options.fast_licenses.value > 0
             if fast_licenses:
-                for life in Life.all_life_names():
-                    item_names_to_remove.append(f"Fast Progressive {life} License")
+                for life in Life:
+                    item_names_to_remove.append(f"Fast Progressive {life.description} License")
             else:
-                for life in Life.all_life_names():
+                for life in Life:
                     for _ in range(0, 2):
-                        item_names_to_remove.append(f"Progressive {life} License")
+                        item_names_to_remove.append(f"Progressive {life.description} License")
 
         startingLife = world.options.starting_life.value
         life = ""
         match startingLife:
             case Options.StartingLife.option_any:
-                life = world.random.choice(Life.all_life_names())
+                life = world.random.choice(list(Life)).description
             case Options.StartingLife.option_combat_easy:
-                life = world.random.choice(Life.easy_combat_life_names())
+                life = world.random.choice(Life.easy_combat()).description
             case Options.StartingLife.option_combat:
-                life = world.random.choice(Life.combat_life_names())
+                life = world.random.choice(Life.combat()).description
             case Options.StartingLife.option_gathering:
-                life = world.random.choice(Life.gathering_life_names())
+                life = world.random.choice(Life.gathering()).description
             case Options.StartingLife.option_crafting:
-                life = world.random.choice(Life.crafting_life_names())
+                life = world.random.choice(Life.crafting()).description
             case x if 0 < x and x < 13:
-                life = Life.name_from_id(x)
+                life = Life(x).description
         if life and len(life) > 0:
             item_name = next(
                 x.name
