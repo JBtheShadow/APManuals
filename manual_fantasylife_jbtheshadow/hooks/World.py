@@ -5,11 +5,13 @@ import logging
 from BaseClasses import MultiWorld
 from worlds.AutoWorld import World
 
+from ..data.Data import Life
+
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
 #
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
-from ..hooks import Lives, Options
+from ..hooks import Options
 
 # Object classes from Manual -- extending AP core -- representing items and locations that are used in generation
 from ..Items import ManualItem
@@ -30,6 +32,7 @@ from ..Items import ManualItem
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
 def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int) -> str | bool:
+    categories = ["food", "potions", "antidotes", "cures", "bombs"]
     filler_items = {
         "food": [
             "Carrot Soup",
@@ -51,40 +54,40 @@ def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int)
         "bombs": ["Mini Bomb"],
     }
 
-    return world.random.choice(filler_items[world.random.choice(filler_items.keys())])
+    return world.random.choice(filler_items[world.random.choice(categories)])
 
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
     goal = world.options.goal.value
     licenses = world.options.licenses.value > 0
-    progressiveLicenses = world.options.progressive_licenses.value > 0
-    fastLicenses = world.options.fast_licenses.value > 0
-    wishHuntRequired = world.options.wish_hunt_required.value
-    wishHuntTotal = world.options.wish_hunt_total.value
-    lifeMasteryRank = world.options.life_mastery_rank.value
+    progressive_licenses = world.options.progressive_licenses.value > 0
+    fast_licenses = world.options.fast_licenses.value > 0
+    wish_hunt_required = world.options.wish_hunt_required.value
+    wish_hunt_total = world.options.wish_hunt_total.value
+    life_mastery_rank = world.options.life_mastery_rank.value
     dlc = world.options.dlc.value > 0
-    otherRequests = world.options.other_requests.value
+    other_requests = world.options.other_requests.value
 
     match goal:
         case Options.Goal.option_wish_hunt:
-            if (wishHuntRequired <= 84 and not dlc or wishHuntRequired <= 100 and dlc) and otherRequests < 1:
+            if (wish_hunt_required <= 84 and not dlc or wish_hunt_required <= 100 and dlc) and other_requests < 1:
                 logging.info("Forcing Other Requests to [only_first] for Wish Hunt")
                 world.options.other_requests.value = Options.IncludeOtherRequests.option_only_first
-            elif (wishHuntRequired <= 168 and not dlc or wishHuntRequired <= 200 and dlc) and otherRequests < 2:
+            elif (wish_hunt_required <= 168 and not dlc or wish_hunt_required <= 200 and dlc) and other_requests < 2:
                 logging.info("Forcing Other Requests to [up_to_second] for Wish Hunt")
                 world.options.other_requests.value = Options.IncludeOtherRequests.option_up_to_second
-            elif wishHuntRequired <= 200 and not dlc:
+            elif wish_hunt_required <= 200 and not dlc:
                 logging.info("Forcing Other Requests to [up_to_third] for Wish Hunt")
                 world.options.other_requests.value = Options.IncludeOtherRequests.option_up_to_third
 
-            if wishHuntRequired > wishHuntTotal:
+            if wish_hunt_required > wish_hunt_total:
                 logging.info(
-                    f"There are more Lost Wishes required than the available total. Setting the required amount to {wishHuntTotal}"
+                    f"There are more Lost Wishes required than the available total. Setting the required amount to {wish_hunt_total}"
                 )
-                world.options.wish_hunt_required.value = wishHuntTotal
+                world.options.wish_hunt_required.value = wish_hunt_total
         case Options.Goal.option_life_mastery:
-            if not dlc and lifeMasteryRank in [
+            if not dlc and life_mastery_rank in [
                 Options.LifeMasteryRank.option_demi_creator,
                 Options.LifeMasteryRank.option_creator,
             ]:
@@ -93,9 +96,9 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 
     if (
         licenses
-        and progressiveLicenses
-        and not fastLicenses
-        and otherRequests == Options.IncludeOtherRequests.option_none
+        and progressive_licenses
+        and not fast_licenses
+        and other_requests == Options.IncludeOtherRequests.option_none
     ):
         logging.info(
             "There won't be enough items to place with Other Requests disabled; changing Progressive Licenses from full to fast."
@@ -106,13 +109,13 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
-    locationNamesToRemove = []  # List of location names
+    location_names_to_remove = []  # List of location names
 
     # Add your code here to calculate which locations to remove
     for region in multiworld.regions:
         if region.player == player:
             for location in list(region.locations):
-                if location.name in locationNamesToRemove:
+                if location.name in location_names_to_remove:
                     region.locations.remove(location)
     if hasattr(multiworld, "clear_location_cache"):
         multiworld.clear_location_cache()
@@ -126,8 +129,8 @@ def before_create_items_starting(item_pool: list, world: World, multiworld: Mult
 # The item pool after starting items are processed but before filler is added, in case you want to see the raw item pool at that stage
 def before_create_items_filler(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
     # Use this hook to remove items from the item pool
-    itemNamesToRemove = []  # List of item names
-    startingInventory = []
+    item_names_to_remove = []  # List of item names
+    starting_inventory = []
 
     # Add your code here to calculate which items to remove.
     #
@@ -136,47 +139,52 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
 
     # Wish Hunt goal
     goal = world.options.goal.value
-    wishHuntTotal = world.options.wish_hunt_total.value
+    wish_hunt_total = world.options.wish_hunt_total.value
     if goal == Options.Goal.option_wish_hunt:
-        for _ in range(0, Options.WishHuntTotal.range_end - wishHuntTotal):
-            itemNamesToRemove.append("Lost Wish")
+        for _ in range(0, Options.WishHuntTotal.range_end - wish_hunt_total):
+            item_names_to_remove.append("Lost Wish")
 
     # Licenses, Starting Life and DLC
     dlc = world.options.dlc.value
 
     if not dlc:
-        itemNamesToRemove += ["Chapter Complete", "Chapter Complete", "Intermission Complete", "Intermission Complete"]
+        item_names_to_remove += [
+            "Chapter Complete",
+            "Chapter Complete",
+            "Intermission Complete",
+            "Intermission Complete",
+        ]
 
     licenses = world.options.licenses.value > 0
-    progressiveLicenses = world.options.progressive_licenses.value > 0
+    progressive_licenses = world.options.progressive_licenses.value > 0
     if licenses:
-        if progressiveLicenses and not dlc:
-            fastLicenses = world.options.fast_licenses.value > 0
-            if fastLicenses:
-                for life in Lives.ALL_LIVES:
-                    itemNamesToRemove.append(f"Fast Progressive {life} License")
+        if progressive_licenses and not dlc:
+            fast_licenses = world.options.fast_licenses.value > 0
+            if fast_licenses:
+                for life in Life.all_life_names():
+                    item_names_to_remove.append(f"Fast Progressive {life} License")
             else:
-                for life in Lives.ALL_LIVES:
+                for life in Life.all_life_names():
                     for _ in range(0, 2):
-                        itemNamesToRemove.append(f"Progressive {life} License")
+                        item_names_to_remove.append(f"Progressive {life} License")
 
         startingLife = world.options.starting_life.value
         life = ""
         match startingLife:
             case Options.StartingLife.option_any:
-                life = world.random.choice(Lives.ALL_LIVES)
+                life = world.random.choice(Life.all_life_names())
             case Options.StartingLife.option_combat_easy:
-                life = world.random.choice(Lives.EASY_COMBAT_LIVES)
+                life = world.random.choice(Life.easy_combat_life_names())
             case Options.StartingLife.option_combat:
-                life = world.random.choice(Lives.COMBAT_LIVES)
+                life = world.random.choice(Life.combat_life_names())
             case Options.StartingLife.option_gathering:
-                life = world.random.choice(Lives.GATHERING_LIVES)
+                life = world.random.choice(Life.gathering_life_names())
             case Options.StartingLife.option_crafting:
-                life = world.random.choice(Lives.CRAFTING_LIVES)
+                life = world.random.choice(Life.crafting_life_names())
             case x if 0 < x and x < 13:
-                life = Lives.ALL_LIVES[x - 1]
+                life = Life.name_from_id(x)
         if life and len(life) > 0:
-            itemName = next(
+            item_name = next(
                 x.name
                 for x in item_pool
                 if x.name
@@ -186,34 +194,34 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                     f"Fast Progressive {life} License",
                 ]
             )
-            startingInventory.append(itemName)
+            starting_inventory.append(item_name)
 
     # Bliss Bonuses
-    blissBonuses = world.options.bliss_bonuses.value > 0
-    if blissBonuses:
+    bliss_bonuses = world.options.bliss_bonuses.value > 0
+    if bliss_bonuses:
         if not dlc:
-            itemNamesToRemove += ["Bigger Bag", "Bigger Bag", "Bigger Storage", "Bigger Storage"]
+            item_names_to_remove += ["Bigger Bag", "Bigger Bag", "Bigger Storage", "Bigger Storage"]
 
-        startingBlissBonus = world.options.starting_bliss_bonus.value
-        itemName = ""
-        match startingBlissBonus:
+        starting_bliss_bonus = world.options.starting_bliss_bonus.value
+        item_name = ""
+        match starting_bliss_bonus:
             case Options.StartingBlissBonus.option_bag:
-                itemName = "Bigger Bag"
+                item_name = "Bigger Bag"
             case Options.StartingBlissBonus.option_storage:
-                itemName = "Bigger Storage"
+                item_name = "Bigger Storage"
             case Options.StartingBlissBonus.option_shopping:
-                itemName = "Better Shopping"
+                item_name = "Better Shopping"
             case Options.StartingBlissBonus.option_any:
-                itemName = world.random.choice(["Bigger Bag", "Bigger Storage", "Better Shopping"])
-        if itemName:
-            startingInventory.append(itemName)
+                item_name = world.random.choice(["Bigger Bag", "Bigger Storage", "Better Shopping"])
+        if item_name:
+            starting_inventory.append(item_name)
 
-    for itemName in itemNamesToRemove:
-        item = next(i for i in item_pool if i.name == itemName)
+    for item_name in item_names_to_remove:
+        item = next(i for i in item_pool if i.name == item_name)
         item_pool.remove(item)
 
-    for itemName in startingInventory:
-        item = next(i for i in item_pool if i.name == itemName)
+    for item_name in starting_inventory:
+        item = next(i for i in item_pool if i.name == item_name)
         multiworld.push_precollected(item)
         item_pool.remove(item)
     return item_pool
@@ -241,95 +249,6 @@ def before_set_rules(world: World, multiworld: MultiWorld, player: int):
 def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to modify the access rules for a given location
 
-    # dlc = world.options.dlc.value
-    mainStory = world.options.require_main_story_for_goal.value > 0
-    licenses = world.options.licenses.value > 0
-    progressiveLicenses = world.options.progressive_licenses.value > 0
-    fastLicenses = world.options.fast_licenses.value > 0
-    goal = world.options.goal.value
-    lifeMasteryRank = world.options.life_mastery_rank.value
-    lifeMasteryCount = world.options.life_mastery_count.value
-
-    # This worked for generation but not the client
-    # Ignore the fact location names haven't been updated here
-    # if licenses:
-    #     for life in Lives.ALL_LIVES:
-    #         for rank in [
-    #             x for x in Licenses.ALL_LICENSES if x != "Novice" and (dlc or x not in ["Demi-Creator", "Creator"])
-    #         ]:
-    #             match rank:
-    #                 case "Fledgeling":
-    #                     locationName = f"(1*) Started a new Life as {'an' if life.startswith('A') else 'a'} {life}"
-    #                 case "Apprentice":
-    #                     locationName = f"(2*) Became an Apprentice {life}"
-    #                 case "Adept":
-    #                     locationName = f"(3*) Became an Adept {life}"
-    #                 case "Expert":
-    #                     locationName = f"(4*) Became an Expert {life}"
-    #                 case "Master":
-    #                     locationName = f"(5*) Became a Master {life}"
-    #                 case "Hero":
-    #                     locationName = f"(6*) Became a Hero {life}"
-    #                 case "Legend":
-    #                     locationName = f"(7*) Became a Legend-ranked {life}"
-    #                 case "Demi-Creator":
-    #                     locationName = f"(8*) Became a Creator {life}"
-    #                 case "Creator":
-    #                     locationName = f"(9*) Found your passion as {'an' if life.startswith('A') else 'a'} {life}"
-    #             match progressiveLicenses, fastLicenses:
-    #                 case False, _:
-    #                     itemName = f"{life} License"
-    #                     itemCount = 1
-    #                 case True, True:
-    #                     itemName = f"Fast Progressive {life} License"
-    #                     itemCount = Licenses.FAST_REQUIRED[rank]
-    #                 case True, False:
-    #                     itemName = f"Progressive {life} License"
-    #                     itemCount = Licenses.FULL_REQUIRED[rank]
-    #             try:
-    #                 location = multiworld.get_location(locationName, player)
-    #                 location.access_rule = lambda state: state.has(itemName, player, itemCount)
-    #             except Exception:
-    #                 logging.info(f"Location {locationName} not found, ignoring it.")
-
-    if goal == Options.Goal.option_life_mastery and licenses:
-        if not progressiveLicenses:
-            itemName = "{life} License"
-            itemCount = 1
-        else:
-            itemName = "Fast Progressive {life} License" if fastLicenses else "Progressive {life} License"
-            match lifeMasteryRank:
-                case Options.LifeMasteryRank.option_fledgeling:
-                    itemCount = 1
-                case Options.LifeMasteryRank.option_apprentice:
-                    itemCount = 1 if fastLicenses else 2
-                case Options.LifeMasteryRank.option_adept:
-                    itemCount = 2 if fastLicenses else 3
-                case Options.LifeMasteryRank.option_expert:
-                    itemCount = 2 if fastLicenses else 4
-                case Options.LifeMasteryRank.option_master:
-                    itemCount = 3 if fastLicenses else 5
-                case Options.LifeMasteryRank.option_hero:
-                    itemCount = 4 if fastLicenses else 6
-                case Options.LifeMasteryRank.option_legend:
-                    itemCount = 4 if fastLicenses else 7
-                case Options.LifeMasteryRank.option_demi_creator:
-                    itemCount = 5 if fastLicenses else 8
-                case Options.LifeMasteryRank.option_creator:
-                    itemCount = 5 if fastLicenses else 9
-
-        def lifeMasteryRule(state):
-            lifeCount = 0
-            for life in Lives.ALL_LIVES:
-                if state.has(itemName.replace("{life}", life), player, itemCount):
-                    lifeCount += 1
-                if lifeCount >= lifeMasteryCount:
-                    return not mainStory or state.has("Chapter Complete", player, 7)
-            return False
-
-        location = multiworld.get_location("Life Mastery", player)
-        location.access_rule = lambda state: lifeMasteryRule(state)
-
     ## Common functions:
     # location = world.get_location(location_name, player)
     # location.access_rule = Example_Rule
@@ -339,6 +258,7 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     # location.access_rule = lambda state: old_rule(state) and Example_Rule(state)
     # OR
     # location.access_rule = lambda state: old_rule(state) or Example_Rule(state)
+    pass
 
 
 # The item name to create is provided before the item is created, in case you want to make changes to it

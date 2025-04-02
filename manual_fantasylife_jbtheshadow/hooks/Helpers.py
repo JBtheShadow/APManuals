@@ -11,16 +11,16 @@ from ..Locations import ManualLocation
 # Use this if you want to override the default behavior of is_option_enabled
 # Return True to enable the category, False to disable it, or None to use the default behavior
 def before_is_category_enabled(multiworld: MultiWorld, player: int, category_name: str) -> Optional[bool]:
-    otherRequests = Helpers.get_option_value(multiworld, player, "other_requests")
+    other_requests = Helpers.get_option_value(multiworld, player, "other_requests")
     goal = Helpers.get_option_value(multiworld, player, "goal")
     match category_name:
-        case "Other Requests 1" if otherRequests < 1:
+        case "Other Requests 1" if other_requests < 1:
             return False
-        case "Other Requests 2" if otherRequests < 2:
+        case "Other Requests 2" if other_requests < 2:
             return False
-        case "Other Requests 3" if otherRequests < 3:
+        case "Other Requests 3" if other_requests < 3:
             return False
-        case "Other Requests 4" if otherRequests < 4:
+        case "Other Requests 4" if other_requests < 4:
             return False
         case "Wish Hunt" if goal != Options.Goal.option_wish_hunt:
             return False
