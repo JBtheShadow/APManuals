@@ -1,9 +1,8 @@
 # Object classes from AP core, to represent an entire MultiWorld and this individual World that's part of it
 # calling logging.info("message") anywhere below in this file will output the message to both console and log file
 import logging
-import random
 
-from BaseClasses import ItemClassification, MultiWorld
+from BaseClasses import MultiWorld
 from worlds.AutoWorld import World
 
 # Raw JSON data from the Manual apworld, respectively:
@@ -31,7 +30,28 @@ from ..Items import ManualItem
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
 def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int) -> str | bool:
-    return False
+    filler_items = {
+        "food": [
+            "Carrot Soup",
+            "Fluffy Omelette",
+            "Well-Done Burger",
+            "Steak",
+            "Winter Stew",
+            "Grilled Crucian",
+            "Barley Juice",
+            "Roast Mutton",
+            "Tasty Kebab",
+            "Boiled Egg",
+            "Apple Juice",
+            "Honey Pudding",
+        ],
+        "potions": ["HP Potion", "SP Potion"],
+        "antidotes": ["Poison Antidote", "Stun Antidote", "Sleep Antidote"],
+        "cures": ["Life Cure"],
+        "bombs": ["Mini Bomb"],
+    }
+
+    return world.random.choice(filler_items[world.random.choice(filler_items.keys())])
 
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
@@ -144,15 +164,15 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         life = ""
         match startingLife:
             case Options.StartingLife.option_any:
-                life = random.choice(Lives.ALL_LIVES)
+                life = world.random.choice(Lives.ALL_LIVES)
             case Options.StartingLife.option_combat_easy:
-                life = random.choice(Lives.EASY_COMBAT_LIVES)
+                life = world.random.choice(Lives.EASY_COMBAT_LIVES)
             case Options.StartingLife.option_combat:
-                life = random.choice(Lives.COMBAT_LIVES)
+                life = world.random.choice(Lives.COMBAT_LIVES)
             case Options.StartingLife.option_gathering:
-                life = random.choice(Lives.GATHERING_LIVES)
+                life = world.random.choice(Lives.GATHERING_LIVES)
             case Options.StartingLife.option_crafting:
-                life = random.choice(Lives.CRAFTING_LIVES)
+                life = world.random.choice(Lives.CRAFTING_LIVES)
             case x if 0 < x and x < 13:
                 life = Lives.ALL_LIVES[x - 1]
         if life and len(life) > 0:
@@ -184,7 +204,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             case Options.StartingBlissBonus.option_shopping:
                 itemName = "Better Shopping"
             case Options.StartingBlissBonus.option_any:
-                itemName = random.choice(["Bigger Bag", "Bigger Storage", "Better Shopping"])
+                itemName = world.random.choice(["Bigger Bag", "Bigger Storage", "Better Shopping"])
         if itemName:
             startingInventory.append(itemName)
 
@@ -209,57 +229,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
 
 # The complete item pool prior to being set for generation is provided here, in case you want to make changes to it
 def after_create_items(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
-    new_item_pool = [
-        x for x in item_pool if x.classification != ItemClassification.filler and not x.name.startswith("Password")
-    ]
-
-    needed = len(item_pool) - len(new_item_pool)
-    filler_items = [
-        "Castele Crucian",
-        "Plains Sweetfish",
-        "Castele Carp",
-        "Mutton",
-        "Bird Meat",
-        "Eggs",
-        "Cows' Milk",
-        "Carrot",
-        "Daikon Radish",
-        "Potato",
-        "Onion",
-        "Castele Apple",
-        "Grassy Plains Barley",
-        "Carrot Soup",
-        "Fluffy Omelette",
-        "Well-Done Burger",
-        "Steak",
-        "Winter Stew",
-        "Grilled Crucian",
-        "Salt",
-        "Sugar",
-        "Barley Juice",
-        "Roast Mutton",
-        "Tasty Kebab",
-        "Boiled Egg",
-        "Healweed",
-        "HP Potion",
-        "Vitalweed",
-        "SP Potion",
-        "Poison Antidote",
-        "Stun Antidote",
-        "Sleep Antidote",
-        "Life Cure",
-        "Mini Bomb",
-        "Cureweed",
-        "Spring Water",
-        "Apple Juice",
-        "Honey Pudding",
-        "Grassland Honey",
-    ]
-
-    for _ in range(needed):
-        new_item_pool.append(world.create_item(random.choice(filler_items)))
-
-    return new_item_pool
+    return item_pool
 
 
 # Called before rules for accessing regions and locations are created. Not clear why you'd want this, but it's here.
