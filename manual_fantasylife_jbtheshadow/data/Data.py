@@ -126,7 +126,7 @@ class Requester(Enum):
     SAMANTHA = "Samantha"
     TILDA = "Tilda"
     MARSHAL = "Marshal"
-    LETTINA = "Letina"
+    LETTINA = "Lettina"
     ROSEMARY = "Rosemary"
     CHAMBERS = "Chambers"
     MARCO = "Marco"
