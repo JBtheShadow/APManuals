@@ -180,6 +180,25 @@ class StartingBlissBonus(Choice):
     default = 4
 
 
+class IncludeHappyAudioVideo(Toggle):
+    """Toggles whether to include the Happy Audio and Happy Video bliss bonuses into the pool."""
+
+    display_name = "Include Happy Audio and Video?"
+    default = False
+
+
+class IncludePasswords(Toggle):
+    """Toggles whether to include passwords in the pool. Passwords can be redeemed after Butterfly teaches about Other Requests,
+    and there are 42 of them in total. Some grant costumes or even gear with nice stats, while some merely provide furniture
+    or consumables.
+
+    The passwords displayed on the client are based on the US version; if your game is from a different region please refer to the wiki
+    for the correct phrase to enter."""
+
+    display_name = "Include claimable passwords?"
+    default = True
+
+
 class IncludePlaytimeBlissChecks(Toggle):
     """Toggles whether to include the 1 hour, 10 hours, 50 hours and 100 hours in Reveria bliss checks as locations in the pool."""
 
@@ -191,6 +210,27 @@ class IncludeStreetPassBlissChecks(Toggle):
     """Toggles whether to include the bliss checks related to meeting visitors/StreetPass features as locations in the pool."""
 
     display_name = "Include StreetPass Bliss checks?"
+    default = False
+
+
+class IncludeLevelUpBlissChecks(Toggle):
+    """Toggles whether to include the level up Bliss checks as locations in the pool."""
+
+    display_name = "Include level up Bliss checks?"
+    default = False
+
+
+class IncludeSkillLevelBlissChecks(Toggle):
+    """Toggles whether to include the Bliss checks related to leveling 1, 5, 15 and 25 skills to skill level 15 as locations in the pool."""
+
+    display_name = "Include skill level Bliss checks?"
+    default = False
+
+
+class IncludeAllyBlissChecks(Toggle):
+    """Toggles whether to include the Bliss checks related to making allies with npcs (and being able to invite them to your party) as locations in the pool."""
+
+    display_name = "Include ally Bliss checks?"
     default = False
 
 
@@ -229,10 +269,15 @@ def before_options_defined(options: dict) -> dict:
     options["progressive_licenses"] = ProgressiveLicenses
     options["fast_licenses"] = FastLicenses
     options["starting_life"] = StartingLife
+    options["include_passwords"] = IncludePasswords
     options["other_requests"] = IncludeOtherRequests
     options["bliss_bonuses"] = IncludeBlissBonuses
     options["starting_bliss_bonus"] = StartingBlissBonus
+    options["include_happy_audio_video"] = IncludeHappyAudioVideo
     options["include_playtime_checks"] = IncludePlaytimeBlissChecks
+    options["include_level_up_checks"] = IncludeLevelUpBlissChecks
+    options["include_skill_level_checks"] = IncludeSkillLevelBlissChecks
+    options["include_ally_checks"] = IncludeAllyBlissChecks
     options["include_streetpass_checks"] = IncludeStreetPassBlissChecks
     return options
 

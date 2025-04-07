@@ -1,8 +1,10 @@
 {
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
-  "Game": { "connects_to": ["Bliss Bonuses", "Chapters", "Other Requests"], "requires": "", "starting": true },
+  "Game": { "connects_to": ["Bliss Bonuses", "Chapters", "Other Requests", "Passwords"], "requires": "", "starting": true },
 
-  "Bliss Bonuses": { "connects_to": [], "requires": "" },
+  "Bliss Bonuses": { "connects_to": [], "requires": "|Prologue Complete|" },
+
+  "Passwords": { "connects_to": [], "requires": "|Prologue Complete|" },
   
   "Chapters" : { "connects_to": [ "Prologue" ], "requires": "" },
   "Prologue" : { "connects_to": [ "Intermission 1" ], "requires": "" },

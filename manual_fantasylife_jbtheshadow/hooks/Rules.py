@@ -150,7 +150,7 @@ def request(
         case Requester.GRAMPS, 2:
             return port_puerto_access()
         case Requester.GRAMPS, 3:
-            return has_license(Rank.FLEDGELING, Life.ANGLER)
+            return port_puerto_access() and has_license(Rank.FLEDGELING, Life.ANGLER)
 
         case Requester.HELMUT, 1:
             return True
