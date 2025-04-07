@@ -203,7 +203,7 @@ class Requester(Enum):
     NAPOLLON = "Napollon"
     MALLOW = "Mallow"
     MANA = "Mana"
-    HOMERO = "Homero"
+    HOMEROS = "Homeros"
     GLADYS = "Gladys"
     TATE = "Tate"
     SANDOR = "Sandor"

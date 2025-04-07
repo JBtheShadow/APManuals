@@ -339,161 +339,669 @@ def request(
         case Requester.JULIET, 3:
             return al_maajik_access()
 
-        case Requester.HARMONY, _:
-            pass
-        case Requester.BENEDICT, _:
-            pass
-        case Requester.CASSANDRA, _:
-            pass
-        case Requester.GEOFFREY, _:
-            pass
-        case Requester.TUFTS, _:
-            pass
-        case Requester.BARKER, _:
-            pass
-        case Requester.MONA, _:
-            pass
-        case Requester.PAUL, _:
-            pass
-        case Requester.GAITES, _:
-            pass
-        case Requester.POM, _:
-            pass
-        case Requester.GILES, _:
-            pass
-        case Requester.HAMSVICH, _:
-            pass
-        case Requester.BARLEY, _:
-            pass
-        case Requester.LLAETH, _:
-            pass
-        case Requester.HANS, _:
-            pass
-        case Requester.REGGIE, _:
-            pass
-        case Requester.COLLINSWORTH, _:
-            pass
-        case Requester.HANSEL, _:
-            pass
-        case Requester.TERRY, _:
-            pass
-        case Requester.FLUFFIN, _:
-            pass
-        case Requester.FARLEY, _:
-            pass
-        case Requester.JEWEL, _:
-            pass
-        case Requester.ROCCO, _:
-            pass
-        case Requester.POLKOVICH, _:
-            pass
-        case Requester.JACK, _:
-            pass
-        case Requester.EDUARDO, _:
-            pass
-        case Requester.KARIN, _:
-            pass
-        case Requester.SAMI, _:
-            pass
-        case Requester.BOMBA, _:
-            pass
-        case Requester.PEPPERONITA, _:
-            pass
-        case Requester.SWABBIE, _:
-            pass
-        case Requester.EMILIO, _:
-            pass
-        case Requester.PEPITA, _:
-            pass
-        case Requester.HONEY, _:
-            pass
-        case Requester.GIBBS, _:
-            pass
-        case Requester.LILAC, _:
-            pass
-        case Requester.CASHEW, _:
-            pass
-        case Requester.POLLY, _:
-            pass
-        case Requester.SHELLDON, _:
-            pass
-        case Requester.DANNY, _:
-            pass
-        case Requester.ALEJANDRO, _:
-            pass
-        case Requester.SIMRA, _:
-            pass
-        case Requester.CHAI, _:
-            pass
-        case Requester.SAFFRON, _:
-            pass
-        case Requester.DESKOVICH, _:
-            pass
-        case Requester.JEM, _:
-            pass
-        case Requester.CALUMNUS, _:
-            pass
-        case Requester.VINCENT, _:
-            pass
-        case Requester.OMAR, _:
-            pass
-        case Requester.MABEL, _:
-            pass
-        case Requester.XAVIER, _:
-            pass
-        case Requester.RICHIE, _:
-            pass
-        case Requester.AMIR, _:
-            pass
-        case Requester.ZERK, _:
-            pass
-        case Requester.KHUBZ, _:
-            pass
-        case Requester.AKIM, _:
-            pass
-        case Requester.LIBBY, _:
-            pass
-        case Requester.RUCK, _:
-            pass
-        case Requester.RUDY, _:
-            pass
-        case Requester.ABAHKUS, _:
-            pass
-        case Requester.LEIF, _:
-            pass
-        case Requester.KEVIN, _:
-            pass
-        case Requester.ACHILLES, _:
-            pass
-        case Requester.DAPHNE, _:
-            pass
-        case Requester.SALLY, _:
-            pass
-        case Requester.NAPOLLON, _:
-            pass
-        case Requester.MALLOW, _:
-            pass
-        case Requester.MANA, _:
-            pass
-        case Requester.HOMERO, _:
-            pass
-        case Requester.GLADYS, _:
-            pass
-        case Requester.TATE, _:
-            pass
-        case Requester.SANDOR, _:
-            pass
-        case Requester.FURKLEY, _:
-            pass
-        case Requester.FURCASSO, _:
-            pass
-        case Requester.FAUNA, _:
-            pass
-        case Requester.ORION, _:
-            pass
-        case Requester.MAERYN, _:
-            pass
-        case Requester.SIR_LOIN, _:
-            pass
+        case Requester.HARMONY, 1:
+            return (
+                al_maajik_access()
+                and better_desert_shopping()
+                or elderwood_village_access()
+                and has_license(Rank.EXPERT, Life.CARPENTER)
+            )
+        case Requester.HARMONY, 2:
+            return (
+                al_maajik_access()
+                and better_desert_shopping()
+                or elderwood_village_access()
+                and has_license(Rank.EXPERT, Life.CARPENTER)
+            )
+        case Requester.HARMONY, 3:
+            return (
+                al_maajik_access()
+                and better_traveling_shopping()
+                or elderwood_village_access()
+                and has_license(Rank.EXPERT, Life.CARPENTER)
+                and has_license(Rank.EXPERT, Life.WOODCUTTER)
+            )
+
+        case Requester.BENEDICT, 1:
+            return port_puerto_access() and has_license(Rank.APPRENTICE, Life.COOK)
+        case Requester.BENEDICT, 2:
+            return al_maajik_access() and has_license(Rank.EXPERT, Life.COOK)
+        case Requester.BENEDICT, 3:
+            return elderwood_village_access() and has_license(Rank.MASTER, Life.COOK)
+
+        case Requester.CASSANDRA, 1:
+            return elderwood_village_access() and has_license(Rank.MASTER, Life.CARPENTER)
+        case Requester.CASSANDRA, 2:
+            return elderwood_village_access() and has_license(Rank.MASTER, Life.CARPENTER)
+        case Requester.CASSANDRA, 3:
+            return (
+                terra_nimbus_access()
+                and has_license(Rank.MASTER, Life.CARPENTER)
+                and has_license(Rank.MASTER, Life.WOODCUTTER)
+            )
+
+        case Requester.GEOFFREY, 1:
+            return True
+        case Requester.GEOFFREY, 2:
+            return port_puerto_access()
+        case Requester.GEOFFREY, 3:
+            return al_maajik_access()
+        case Requester.GEOFFREY, 4:
+            return origin_island_access()
+
+        case Requester.TUFTS, 1:
+            return has_license(Rank.APPRENTICE, Life.BLACKSMITH)
+        case Requester.TUFTS, 2:
+            return port_puerto_access() and has_license(Rank.ADEPT, Life.BLACKSMITH)
+        case Requester.TUFTS, 3:
+            return port_puerto_access() and has_license(Rank.EXPERT, Life.BLACKSMITH)
+
+        case Requester.BARKER, 1:
+            return True
+        case Requester.BARKER, 2:
+            return snowpeak_access()
+        case Requester.BARKER, 3:
+            return snowpeak_access()
+        case Requester.BARKER, 4:
+            return origin_island_access()
+
+        case Requester.MONA, 1:
+            return port_puerto_access()
+        case Requester.MONA, 2:
+            return port_puerto_access()
+        case Requester.MONA, 3:
+            return port_puerto_access() and has_license(Rank.MASTER, Life.TAILOR) or al_maajik_access()
+
+        case Requester.PAUL, 1:
+            return True
+        case Requester.PAUL, 2:
+            return snowpeak_access()
+        case Requester.PAUL, 3:
+            return port_puerto_access()
+        case Requester.PAUL, 4:
+            return origin_island_access()
+
+        case Requester.GAITES, 1:
+            return has_license(Rank.FLEDGELING, Life.BLACKSMITH)
+        case Requester.GAITES, 2:
+            return has_license(Rank.APPRENTICE, Life.BLACKSMITH)
+        case Requester.GAITES, 3:
+            return port_puerto_access() and has_license(Rank.ADEPT, Life.BLACKSMITH)
+
+        case Requester.POM, 1:
+            return True
+        case Requester.POM, 2:
+            return west_grassy_plains_access()
+        case Requester.POM, 3:
+            return west_grassy_plains_access()
+        case Requester.POM, 4:
+            return trials_access()
+
+        case Requester.GILES, 1:
+            return True
+        case Requester.GILES, 2:
+            return True
+        case Requester.GILES, 3:
+            return True
+        case Requester.GILES, 4:
+            return origin_island_access()
+
+        case Requester.HAMSVICH, 1:
+            return west_grassy_plains_access()
+        case Requester.HAMSVICH, 2:
+            return west_grassy_plains_access()
+        case Requester.HAMSVICH, 3:
+            return west_grassy_plains_access()
+        case Requester.HAMSVICH, 4:
+            return trials_access()
+
+        case Requester.BARLEY, 1:
+            return True
+        case Requester.BARLEY, 2:
+            return port_puerto_access()
+        case Requester.BARLEY, 3:
+            return port_puerto_access()
+
+        case Requester.LLAETH, 1:
+            return True
+        case Requester.LLAETH, 2:
+            return (
+                better_castele_shopping()
+                or port_puerto_access()
+                and better_port_shopping()
+                or al_maajik_access()
+                or west_grassy_plains_access()
+                and better_traveling_shopping()
+            )
+        case Requester.LLAETH, 3:
+            return al_maajik_access()
+        case Requester.LLAETH, 4:
+            return origin_island_access()
+
+        case Requester.HANS, 1:
+            return better_castele_shopping() or has_license(Rank.FLEDGELING, Life.MINER)
+        case Requester.HANS, 2:
+            return (better_castele_shopping() or has_license(Rank.FLEDGELING, Life.MINER)) and port_puerto_access()
+        case Requester.HANS, 3:
+            return (better_castele_shopping() or has_license(Rank.FLEDGELING, Life.MINER)) and port_puerto_access()
+        case Requester.HANS, 4:
+            return (better_castele_shopping() or has_license(Rank.FLEDGELING, Life.MINER)) and trials_access()
+
+        case Requester.REGGIE, 1:
+            return west_grassy_plains_access()
+        case Requester.REGGIE, 2:
+            return port_puerto_access()
+        case Requester.REGGIE, 3:
+            return al_maajik_access()
+        case Requester.REGGIE, 4:
+            return origin_island_access()
+
+        case Requester.COLLINSWORTH, 1:
+            return al_maajik_access() and has_license(Rank.EXPERT, Life.COOK)
+        case Requester.COLLINSWORTH, 2:
+            return al_maajik_access() and has_license(Rank.EXPERT, Life.COOK)
+        case Requester.COLLINSWORTH, 3:
+            return al_maajik_access() and has_license(Rank.MASTER, Life.COOK)
+
+        case Requester.HANSEL, 1:
+            return snowpeak_access()
+        case Requester.HANSEL, 2:
+            return snowpeak_access()
+        case Requester.HANSEL, 3:
+            return snowpeak_access()
+        case Requester.HANSEL, 4:
+            return origin_island_access()
+
+        case Requester.TERRY, 1:
+            return True
+        case Requester.TERRY, 2:
+            return True
+        case Requester.TERRY, 3:
+            return has_license(Rank.FLEDGELING, Life.MAGICIAN)
+
+        case Requester.FLUFFIN, 1:
+            return True
+        case Requester.FLUFFIN, 2:
+            return True
+        case Requester.FLUFFIN, 3:
+            return True
+
+        case Requester.FARLEY, 1:
+            return True
+        case Requester.FARLEY, 2:
+            return snowpeak_access()
+        case Requester.FARLEY, 3:
+            return port_puerto_access()
+        case Requester.FARLEY, 4:
+            return origin_island_access()
+
+        case Requester.JEWEL, 1:
+            return True
+        case Requester.JEWEL, 2:
+            return True
+        case Requester.JEWEL, 3:
+            return True
+
+        case Requester.ROCCO, 1:
+            return True
+        case Requester.ROCCO, 2:
+            return True
+        case Requester.ROCCO, 3:
+            return True
+        case Requester.ROCCO, 4:
+            return origin_island_access()
+
+        case Requester.POLKOVICH, 1:
+            return al_maajik_access()
+        case Requester.POLKOVICH, 2:
+            return al_maajik_access()
+        case Requester.POLKOVICH, 3:
+            return al_maajik_access()
+
+        case Requester.JACK, 1:
+            return True
+        case Requester.JACK, 2:
+            return True
+        case Requester.JACK, 3:
+            return True
+        case Requester.JACK, 4:
+            return origin_island_access()
+
+        case Requester.EDUARDO, 1:
+            return has_license(Rank.APPRENTICE, Life.ALCHEMIST)
+        case Requester.EDUARDO, 2:
+            return has_license(Rank.APPRENTICE, Life.ALCHEMIST) and has_license(Rank.EXPERT, Life.TAILOR)
+        case Requester.EDUARDO, 3:
+            return (
+                al_maajik_access()
+                and has_license(Rank.APPRENTICE, Life.ALCHEMIST)
+                and has_license(Rank.EXPERT, Life.TAILOR)
+            )
+
+        case Requester.KARIN, 1:
+            return al_maajik_access()
+        case Requester.KARIN, 2:
+            return al_maajik_access()
+        case Requester.KARIN, 3:
+            return al_maajik_access()
+        case Requester.KARIN, 4:
+            return trials_access()
+
+        case Requester.SAMI, 1:
+            return has_license(Rank.APPRENTICE, Life.CARPENTER)
+        case Requester.SAMI, 2:
+            return (
+                port_puerto_access()
+                and has_license(Rank.APPRENTICE, Life.CARPENTER)
+                and (better_port_shopping() or al_maajik_access() or has_license(Rank.ADEPT, Life.TAILOR))
+            )
+        case Requester.SAMI, 3:
+            return al_maajik_access() and has_license(Rank.EXPERT, Life.CARPENTER)
+        case Requester.SAMI, 4:
+            return origin_island_access() and has_license(Rank.DEMI_CREATOR, Life.CARPENTER)
+
+        case Requester.BOMBA, 1:
+            return has_license(Rank.FLEDGELING, Life.ALCHEMIST)
+        case Requester.BOMBA, 2:
+            return has_license(Rank.ADEPT, Life.ALCHEMIST)
+        case Requester.BOMBA, 3:
+            return has_license(Rank.ADEPT, Life.ALCHEMIST)
+
+        case Requester.PEPPERONITA, 1:
+            return better_port_shopping() or al_maajik_access() or has_license(Rank.ADEPT, Life.MINER)
+        case Requester.PEPPERONITA, 2:
+            return al_maajik_access() and (better_desert_shopping() or has_license(Rank.EXPERT, Life.MINER))
+        case Requester.PEPPERONITA, 3:
+            return al_maajik_access() and (better_desert_shopping() or has_license(Rank.EXPERT, Life.MINER))
+
+        case Requester.SWABBIE, 1:
+            return has_license(Rank.APPRENTICE, Life.BLACKSMITH)
+        case Requester.SWABBIE, 2:
+            return has_license(Rank.APPRENTICE, Life.BLACKSMITH)
+        case Requester.SWABBIE, 3:
+            return has_license(Rank.APPRENTICE, Life.BLACKSMITH)
+
+        case Requester.EMILIO, 1:
+            return True
+        case Requester.EMILIO, 2:
+            return al_maajik_access() and (has_license(Rank.ADEPT, Life.WOODCUTTER) or better_traveling_shopping())
+        case Requester.EMILIO, 3:
+            return al_maajik_access() and (has_license(Rank.EXPERT, Life.WOODCUTTER) or better_traveling_shopping())
+
+        case Requester.PEPITA, 1:
+            return has_license(Rank.ADEPT, Life.TAILOR)
+        case Requester.PEPITA, 2:
+            return has_license(Rank.ADEPT, Life.TAILOR)
+        case Requester.PEPITA, 3:
+            return has_license(Rank.ADEPT, Life.TAILOR)
+
+        case Requester.HONEY, 1:
+            return has_license(Rank.APPRENTICE, Life.CARPENTER)
+        case Requester.HONEY, 2:
+            return (
+                has_license(Rank.ADEPT, Life.CARPENTER)
+                and al_maajik_access()
+                and (better_desert_shopping() or elderwood_village_access())
+            )
+        case Requester.HONEY, 3:
+            return (
+                has_license(Rank.ADEPT, Life.CARPENTER)
+                and al_maajik_access()
+                and (better_desert_shopping() or elderwood_village_access())
+            )
+
+        case Requester.GIBBS, 1:
+            return True
+        case Requester.GIBBS, 2:
+            return True
+        case Requester.GIBBS, 3:
+            return True
+        case Requester.GIBBS, 4:
+            return origin_island_access()
+
+        case Requester.LILAC, 1:
+            return True
+        case Requester.LILAC, 2:
+            return True
+        case Requester.LILAC, 3:
+            return True
+        case Requester.LILAC, 4:
+            return origin_island_access()
+
+        case Requester.CASHEW, 1:
+            return better_traveling_shopping() or has_license(Rank.ADEPT, Life.ANGLER)
+        case Requester.CASHEW, 2:
+            return (better_traveling_shopping() or has_license(Rank.ADEPT, Life.ANGLER)) and al_maajik_access()
+        case Requester.CASHEW, 3:
+            return (better_traveling_shopping() or has_license(Rank.ADEPT, Life.ANGLER)) and al_maajik_access()
+        case Requester.CASHEW, 4:
+            return (better_traveling_shopping() or has_license(Rank.ADEPT, Life.ANGLER)) and origin_island_access()
+
+        case Requester.POLLY, 1:
+            return True
+        case Requester.POLLY, 2:
+            return al_maajik_access()
+        case Requester.POLLY, 3:
+            return elderwood_village_access()
+
+        case Requester.SHELLDON, 1:
+            return True
+        case Requester.SHELLDON, 2:
+            return True
+        case Requester.SHELLDON, 3:
+            return True
+
+        case Requester.DANNY, 1:
+            return True
+        case Requester.DANNY, 2:
+            return True
+        case Requester.DANNY, 3:
+            return True
+
+        case Requester.ALEJANDRO, 1:
+            return terra_nimbus_access() and has_license(Rank.HERO, Life.COOK)
+        case Requester.ALEJANDRO, 2:
+            return terra_nimbus_access() and has_license(Rank.HERO, Life.COOK) and has_license(Rank.HERO, Life.ANGLER)
+        case Requester.ALEJANDRO, 3:
+            return terra_nimbus_access() and has_license(Rank.HERO, Life.COOK) and has_license(Rank.HERO, Life.ANGLER)
+        case Requester.ALEJANDRO, 3:
+            return (
+                origin_island_access()
+                and has_license(Rank.DEMI_CREATOR, Life.COOK)
+                and has_license(Rank.HERO, Life.ANGLER)
+            )
+
+        case Requester.SIMRA, 1:
+            return True
+        case Requester.SIMRA, 2:
+            return True
+        case Requester.SIMRA, 3:
+            return has_license(Rank.FLEDGELING, Life.MAGICIAN)
+        case Requester.SIMRA, 4:
+            return origin_island_access() and has_license(Rank.FLEDGELING, Life.MAGICIAN)
+
+        case Requester.CHAI, 1:
+            return elderwood_village_access()
+        case Requester.CHAI, 2:
+            return elderwood_village_access()
+        case Requester.CHAI, 3:
+            return elderwood_village_access()
+
+        case Requester.SAFFRON, 1:
+            return True
+        case Requester.SAFFRON, 2:
+            return True
+        case Requester.SAFFRON, 3:
+            return True
+
+        case Requester.DESKOVICH, 1:
+            return has_license(Rank.LEGEND, Life.MINER)
+        case Requester.DESKOVICH, 2:
+            return has_license(Rank.LEGEND, Life.MINER)
+        case Requester.DESKOVICH, 3:
+            return has_license(Rank.LEGEND, Life.MINER)
+
+        case Requester.JEM, 1:
+            return has_license(Rank.APPRENTICE, Life.ALCHEMIST)
+        case Requester.JEM, 2:
+            return has_license(Rank.APPRENTICE, Life.ALCHEMIST) and has_license(Rank.EXPERT, Life.TAILOR)
+        case Requester.JEM, 3:
+            return (
+                has_license(Rank.APPRENTICE, Life.ALCHEMIST)
+                and has_license(Rank.EXPERT, Life.TAILOR)
+                and has_license(Rank.EXPERT, Life.BLACKSMITH)
+            )
+
+        case Requester.CALUMNUS, 1:
+            return True
+        case Requester.CALUMNUS, 2:
+            return terra_nimbus_access()
+        case Requester.CALUMNUS, 3:
+            return terra_nimbus_access()
+        case Requester.CALUMNUS, 4:
+            return origin_island_access()
+
+        case Requester.VINCENT, 1:
+            return True
+        case Requester.VINCENT, 2:
+            return True
+        case Requester.VINCENT, 3:
+            return True
+
+        case Requester.OMAR, 1:
+            return True
+        case Requester.OMAR, 2:
+            return True
+        case Requester.OMAR, 3:
+            return terra_nimbus_access()
+
+        case Requester.MABEL, 1:
+            return has_license(Rank.ADEPT, Life.ALCHEMIST)
+        case Requester.MABEL, 2:
+            return has_license(Rank.EXPERT, Life.ALCHEMIST)
+        case Requester.MABEL, 3:
+            return has_license(Rank.MASTER, Life.ALCHEMIST)
+
+        case Requester.XAVIER, 1:
+            return has_license(Rank.EXPERT, Life.COOK)
+        case Requester.XAVIER, 2:
+            return has_license(Rank.EXPERT, Life.COOK)
+        case Requester.XAVIER, 3:
+            return has_license(Rank.MASTER, Life.COOK)
+
+        case Requester.RICHIE, 1:
+            return has_license(Rank.EXPERT, Life.ANGLER)
+        case Requester.RICHIE, 2:
+            return has_license(Rank.EXPERT, Life.ANGLER) and has_license(Rank.ADEPT, Life.CARPENTER)
+        case Requester.RICHIE, 3:
+            return (
+                has_license(Rank.EXPERT, Life.ANGLER)
+                and has_license(Rank.ADEPT, Life.CARPENTER)
+                and has_license(Rank.MASTER, Life.BLACKSMITH)
+            )
+
+        case Requester.AMIR, 1:
+            return has_license(Rank.EXPERT, Life.WOODCUTTER) or elderwood_village_access()
+        case Requester.AMIR, 2:
+            return has_license(Rank.EXPERT, Life.WOODCUTTER) or elderwood_village_access()
+        case Requester.AMIR, 3:
+            return has_license(Rank.EXPERT, Life.WOODCUTTER) or elderwood_village_access()
+
+        case Requester.ZERK, 1:
+            return has_license(Rank.MASTER, Life.BLACKSMITH)
+        case Requester.ZERK, 2:
+            return has_license(Rank.MASTER, Life.BLACKSMITH)
+        case Requester.ZERK, 3:
+            return has_license(Rank.MASTER, Life.BLACKSMITH)
+
+        case Requester.KHUBZ, 1:
+            return True
+        case Requester.KHUBZ, 2:
+            return True
+        case Requester.KHUBZ, 3:
+            return True
+
+        case Requester.AKIM, 1:
+            return True
+        case Requester.AKIM, 2:
+            return True
+        case Requester.AKIM, 3:
+            return True
+        case Requester.AKIM, 4:
+            return origin_island_access()
+
+        case Requester.LIBBY, 1:
+            return has_license(Rank.FLEDGELING, Life.ANGLER)
+        case Requester.LIBBY, 2:
+            return has_license(Rank.ADEPT, Life.ANGLER)
+        case Requester.LIBBY, 3:
+            return has_license(Rank.EXPERT, Life.ANGLER)
+        case Requester.LIBBY, 4:
+            return trials_access() and has_license(Rank.MASTER, Life.ANGLER)
+
+        case Requester.RUCK, 1:
+            return has_license(Rank.EXPERT, Life.TAILOR)
+        case Requester.RUCK, 2:
+            return has_license(Rank.EXPERT, Life.TAILOR)
+        case Requester.RUCK, 3:
+            return has_license(Rank.EXPERT, Life.TAILOR)
+
+        case Requester.RUDY, 1:
+            return True
+        case Requester.RUDY, 2:
+            return True
+        case Requester.RUDY, 3:
+            return True
+
+        case Requester.ABAHKUS, 1:
+            return elderwood_village_access()
+        case Requester.ABAHKUS, 2:
+            return elderwood_village_access() and has_license(Rank.MASTER, Life.MINER)
+        case Requester.ABAHKUS, 3:
+            return terra_nimbus_access() and has_license(Rank.MASTER, Life.MINER)
+        case Requester.ABAHKUS, 4:
+            return (
+                origin_island_access()
+                and has_license(Rank.MASTER, Life.MINER)
+                and has_license(Rank.MASTER, Life.WOODCUTTER)
+            )
+
+        case Requester.LEIF, 1:
+            return True
+        case Requester.LEIF, 2:
+            return True
+        case Requester.LEIF, 3:
+            return better_castele_shopping()
+        case Requester.LEIF, 4:
+            return origin_island_access() and better_castele_shopping()
+
+        case Requester.KEVIN, 1:
+            return True
+        case Requester.KEVIN, 2:
+            return True
+        case Requester.KEVIN, 3:
+            return True
+        case Requester.KEVIN, 4:
+            return origin_island_access()
+
+        case Requester.ACHILLES, 1:
+            return True
+        case Requester.ACHILLES, 2:
+            return True
+        case Requester.ACHILLES, 3:
+            return True
+
+        case Requester.DAPHNE, 1:
+            return has_license(Rank.DEMI_CREATOR, Life.TAILOR)
+        case Requester.DAPHNE, 2:
+            return has_license(Rank.DEMI_CREATOR, Life.TAILOR)
+        case Requester.DAPHNE, 3:
+            return (
+                trials_access()
+                and has_license(Rank.DEMI_CREATOR, Life.TAILOR)
+                or has_license(Rank.CREATOR, Life.TAILOR)
+            )
+
+        case Requester.SALLY, 1:
+            return True
+        case Requester.SALLY, 2:
+            return has_license(Rank.MASTER, Life.WOODCUTTER)
+        case Requester.SALLY, 3:
+            return has_license(Rank.MASTER, Life.WOODCUTTER)
+
+        case Requester.NAPOLLON, 1:
+            return has_license(Rank.MASTER, Life.MINER)
+        case Requester.NAPOLLON, 2:
+            return has_license(Rank.MASTER, Life.MINER)
+        case Requester.NAPOLLON, 3:
+            return has_license(Rank.MASTER, Life.MINER)
+
+        case Requester.MALLOW, 1:
+            return True
+        case Requester.MALLOW, 2:
+            return True
+        case Requester.MALLOW, 3:
+            return has_license(Rank.MASTER, Life.WOODCUTTER)
+
+        case Requester.MANA, 1:
+            return True
+        case Requester.MANA, 2:
+            return True
+        case Requester.MANA, 3:
+            return True
+
+        case Requester.HOMEROS, 1:
+            return True
+        case Requester.HOMEROS, 2:
+            return True
+        case Requester.HOMEROS, 3:
+            return trials_access()
+
+        case Requester.GLADYS, 1:
+            return has_license(Rank.DEMI_CREATOR, Life.TAILOR)
+        case Requester.GLADYS, 2:
+            return has_license(Rank.DEMI_CREATOR, Life.TAILOR) and has_license(Rank.DEMI_CREATOR, Life.ALCHEMIST)
+        case Requester.GLADYS, 3:
+            return (
+                has_license(Rank.DEMI_CREATOR, Life.TAILOR)
+                and has_license(Rank.DEMI_CREATOR, Life.ALCHEMIST)
+                and has_license(Rank.DEMI_CREATOR, Life.COOK)
+            )
+
+        case Requester.TATE, 1:
+            return True
+        case Requester.TATE, 2:
+            return True
+        case Requester.TATE, 3:
+            return True
+
+        case Requester.SANDOR, 1:
+            return has_license(Rank.EXPERT, Life.ANGLER)
+        case Requester.SANDOR, 2:
+            return has_license(Rank.EXPERT, Life.ANGLER)
+        case Requester.SANDOR, 3:
+            return has_license(Rank.EXPERT, Life.ANGLER)
+
+        case Requester.FURKLEY, 1:
+            return has_license(Rank.DEMI_CREATOR, Life.COOK)
+        case Requester.FURKLEY, 2:
+            return has_license(Rank.DEMI_CREATOR, Life.COOK)
+        case Requester.FURKLEY, 3:
+            return has_license(Rank.DEMI_CREATOR, Life.COOK)
+
+        case Requester.FURCASSO, 1:
+            return True
+        case Requester.FURCASSO, 2:
+            return True
+        case Requester.FURCASSO, 3:
+            return trials_access()
+
+        case Requester.FAUNA, 1:
+            return True
+        case Requester.FAUNA, 2:
+            return trials_access()
+        case Requester.FAUNA, 3:
+            return trials_access() and has_license(Rank.EXPERT, Life.TAILOR)
+
+        case Requester.ORION, 1:
+            return True
+        case Requester.ORION, 2:
+            return trials_access()
+        case Requester.ORION, 3:
+            return trials_access() and has_license(Rank.HERO, Life.BLACKSMITH)
+
+        case Requester.MAERYN, 1:
+            return has_license(Rank.DEMI_CREATOR, Life.TAILOR)
+        case Requester.MAERYN, 2:
+            return has_license(Rank.DEMI_CREATOR, Life.TAILOR) and has_license(Rank.DEMI_CREATOR, Life.CARPENTER)
+        case Requester.MAERYN, 3:
+            return has_license(Rank.DEMI_CREATOR, Life.TAILOR) and has_license(Rank.DEMI_CREATOR, Life.CARPENTER)
+
+        case Requester.SIR_LOIN, 1:
+            return True
+        case Requester.SIR_LOIN, 2:
+            return True
+        case Requester.SIR_LOIN, 3:
+            return True
 
     return False
