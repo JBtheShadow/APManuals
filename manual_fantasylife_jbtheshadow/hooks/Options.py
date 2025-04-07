@@ -79,7 +79,7 @@ class IncludeDLC(Toggle):
     """Toggles whether or not to include items and locations related to the Origin Island DLC."""
 
     display_name = "Include the Origin Island DLC?"
-    default = True
+    default = False
 
 
 class IncludeLicenses(Toggle):
@@ -180,6 +180,20 @@ class StartingBlissBonus(Choice):
     default = 4
 
 
+class IncludePlaytimeBlissChecks(Toggle):
+    """Toggles whether to include the 1 hour, 10 hours, 50 hours and 100 hours in Reveria bliss checks as locations in the pool."""
+
+    display_name = "Include playtime Bliss checks?"
+    default = False
+
+
+class IncludeStreetPassBlissChecks(Toggle):
+    """Toggles whether to include the bliss checks related to meeting visitors/StreetPass features as locations in the pool."""
+
+    display_name = "Include StreetPass Bliss checks?"
+    default = False
+
+
 class IncludeOtherRequests(Choice):
     """Include Other Requests as checks? Forced to [all] when goal is Wish Hunt.
     [none] No requests are included.
@@ -218,6 +232,8 @@ def before_options_defined(options: dict) -> dict:
     options["other_requests"] = IncludeOtherRequests
     options["bliss_bonuses"] = IncludeBlissBonuses
     options["starting_bliss_bonus"] = StartingBlissBonus
+    options["include_playtime_checks"] = IncludePlaytimeBlissChecks
+    options["include_streetpass_checks"] = IncludeStreetPassBlissChecks
     return options
 
 

@@ -41,26 +41,34 @@ class Life(Enum):
 
 
 class Rank(Enum):
-    NOVICE = 0, "Novice", 1, 1
-    FLEDGELING = 1, "Fledgeling", 1, 1
-    APPRENTICE = 2, "Apprentice", 1, 2
-    ADEPT = 3, "Adept", 2, 3
-    EXPERT = 4, "Expert", 2, 4
-    MASTER = 5, "Master", 3, 5
-    HERO = 6, "Hero", 4, 6
-    LEGEND = 7, "Legend", 4, 7
-    DEMI_CREATOR = 8, "Demi-Creator", 5, 8
-    CREATOR = 9, "Creator", 5, 9
+    NOVICE = 0, "Novice", 1, 1, 0
+    FLEDGELING = 1, "Fledgeling", 1, 1, 0
+    APPRENTICE = 2, "Apprentice", 1, 2, 0
+    ADEPT = 3, "Adept", 2, 3, 2
+    EXPERT = 4, "Expert", 2, 4, 3
+    MASTER = 5, "Master", 3, 5, 4
+    HERO = 6, "Hero", 4, 6, 6
+    LEGEND = 7, "Legend", 4, 7, 7
+    DEMI_CREATOR = 8, "Demi-Creator", 5, 8, 7
+    CREATOR = 9, "Creator", 5, 9, 8
 
     def __new__(cls, *args, **kwds):
         obj = object.__new__(cls)
         obj._value_ = args[0]
         return obj
 
-    def __init__(self, _: int, description: str = None, fast_requirement: int = 1, full_requirement: int = 1):
+    def __init__(
+        self,
+        _: int,
+        description: str = None,
+        fast_requirement: int = 1,
+        full_requirement: int = 1,
+        min_chapter: int = 0,
+    ):
         self._description_ = description
         self._fast_requirement_ = fast_requirement
         self._full_requirement_ = full_requirement
+        self._min_chapter_ = min_chapter
 
     @property
     def description(self):
@@ -73,6 +81,10 @@ class Rank(Enum):
     @property
     def full_requirement(self):
         return self._full_requirement_
+
+    @property
+    def min_chapter(self):
+        return self._min_chapter_
 
     def from_description(description: str):
         for license in Rank:

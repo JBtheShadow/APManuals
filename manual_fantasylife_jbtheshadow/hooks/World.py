@@ -52,10 +52,12 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
             if (wish_hunt_required <= 84 and not dlc or wish_hunt_required <= 100 and dlc) and other_requests < 1:
                 logging.info("Forcing Other Requests to [only_first] for Wish Hunt")
                 world.options.other_requests.value = Options.IncludeOtherRequests.option_only_first
-            elif (wish_hunt_required <= 168 and not dlc or wish_hunt_required <= 200 and dlc) and other_requests < 2:
+            elif (
+                84 < wish_hunt_required <= 168 and not dlc or 100 < wish_hunt_required <= 200 and dlc
+            ) and other_requests < 2:
                 logging.info("Forcing Other Requests to [up_to_second] for Wish Hunt")
                 world.options.other_requests.value = Options.IncludeOtherRequests.option_up_to_second
-            elif wish_hunt_required <= 200 and not dlc:
+            elif 100 < wish_hunt_required <= 200 and not dlc and other_requests < 3:
                 logging.info("Forcing Other Requests to [up_to_third] for Wish Hunt")
                 world.options.other_requests.value = Options.IncludeOtherRequests.option_up_to_third
 
@@ -88,6 +90,22 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
     location_names_to_remove = []  # List of location names
+
+    # Goals
+    # goal = world.options.goal.value
+    # if goal == Options.Goal.option_wish_hunt:
+    #     wish_hunt_required = world.options.wish_hunt_required.value
+    #     wish_hunt_total = world.options.wish_hunt_total.value
+
+    #     location = multiworld.get_location("Wish Hunt", player)
+    #     location.name = f"Wish Hunt: {wish_hunt_required} Lost Wishes out of {wish_hunt_total}"
+
+    # if goal == Options.Goal.option_life_mastery:
+    #     life_mastery_rank = Rank(world.options.life_mastery_rank.value)
+    #     life_mastery_count = world.options.life_mastery_count.value
+
+    #     location = multiworld.get_location("Life Mastery", player)
+    #     location.name = f"Life Mastery: reach {life_mastery_rank.description} rank in {life_mastery_count} Lives"
 
     # Add your code here to calculate which locations to remove
     for region in multiworld.regions:

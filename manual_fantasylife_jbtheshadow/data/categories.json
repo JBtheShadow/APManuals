@@ -31,5 +31,7 @@
     "Mounts Bonus": { "hidden": true },
     "Fashion Bonus": { "hidden": true },
     "Media Bonus": { "hidden": true },
-    "Progressive Bliss": { "yaml_option": ["bliss_bonuses"], "hidden": true }
+    "Progressive Bliss": { "yaml_option": ["bliss_bonuses"], "hidden": true },
+    "StreetPass": { "yaml_option": ["include_streetpass_checks"], "hidden": true },
+    "Playtime": { "yaml_option": ["include_playtime_checks"], "hidden": true }
 }

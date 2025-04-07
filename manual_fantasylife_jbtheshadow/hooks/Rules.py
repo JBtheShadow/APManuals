@@ -73,6 +73,9 @@ def license(world: World, multiworld: MultiWorld, state: CollectionState, player
     if not progressive_licenses:
         return state.has(f"{life} License", player)
 
+    if rank.min_chapter and not state.has("Chapter Complete", player, rank.min_chapter):
+        return False
+
     fast_licenses = world.options.fast_licenses.value > 0
     if not fast_licenses:
         return state.has(f"Progressive {life} License", player, rank.full_requirement)
@@ -83,7 +86,10 @@ def license(world: World, multiworld: MultiWorld, state: CollectionState, player
 def request(
     world: World, multiworld: MultiWorld, state: CollectionState, player: int, requester: str, request_number: str
 ):
-    requester = Requester(requester.strip())
+    requester = requester.strip()
+    requester = Requester(requester)
+
+    request_number = request_number.strip()
     request_number = int(request_number) if request_number.isnumeric() else 1
 
     def west_grassy_plains_access():
@@ -135,7 +141,7 @@ def request(
         return shopping(4)
 
     def shopping(level: int):
-        return state.has("Better Shopping", player, level)
+        return not (world.options.bliss_bonuses.value > 0) or state.has("Better Shopping", player, level)
 
     match requester, request_number:
         # Castele Square
