@@ -102,6 +102,14 @@ def request(
     request_number = request_number.strip()
     request_number = int(request_number) if request_number.isnumeric() else 1
 
+    def can_fight():
+        return not (world.options.enable_item_restrictions.value > 0) or state.has_any(
+            ["Daggers", "Longswords", "Greatswords", "Bows", "Wands"], player
+        )
+
+    def can_cast_magic():
+        return needs_license(Rank.FLEDGLING, Life.MAGICIAN)
+
     def west_grassy_plains_access():
         return chapter(1)
 
@@ -179,11 +187,11 @@ def request(
             return needs_license(Rank.FLEDGLING, Life.ANGLER)
 
         case Requester.PROSPERO, 1:
-            return True
+            return can_fight()
         case Requester.PROSPERO, 2:
-            return True
+            return can_fight()
         case Requester.PROSPERO, 3:
-            return True
+            return can_fight()
 
         case Requester.POSTONBY, 1:
             return al_maajik_access() and needs_license(Rank.EXPERT, Life.ANGLER)
@@ -458,13 +466,13 @@ def request(
             return trials_access()
 
         case Requester.GILES, 1:
-            return True
+            return can_fight()
         case Requester.GILES, 2:
-            return True
+            return can_fight()
         case Requester.GILES, 3:
-            return True
+            return can_fight()
         case Requester.GILES, 4:
-            return origin_island_access()
+            return origin_island_access() and can_fight()
 
         case Requester.HAMSVICH, 1:
             return west_grassy_plains_access()
@@ -524,27 +532,27 @@ def request(
             return al_maajik_access() and needs_license(Rank.MASTER, Life.COOK)
 
         case Requester.HANSEL, 1:
-            return snowpeak_access()
+            return snowpeak_access() and can_fight()
         case Requester.HANSEL, 2:
-            return snowpeak_access()
+            return snowpeak_access() and can_fight()
         case Requester.HANSEL, 3:
-            return snowpeak_access()
+            return snowpeak_access() and can_fight()
         case Requester.HANSEL, 4:
-            return origin_island_access()
+            return origin_island_access() and can_fight()
 
         case Requester.TERRY, 1:
-            return True
+            return can_fight()
         case Requester.TERRY, 2:
-            return True
+            return can_fight()
         case Requester.TERRY, 3:
-            return needs_license(Rank.FLEDGLING, Life.MAGICIAN)
+            return can_cast_magic()
 
         case Requester.FLUFFIN, 1:
-            return True
+            return can_fight()
         case Requester.FLUFFIN, 2:
-            return True
+            return can_fight()
         case Requester.FLUFFIN, 3:
-            return True
+            return can_fight()
 
         case Requester.FARLEY, 1:
             return True
@@ -556,20 +564,20 @@ def request(
             return origin_island_access()
 
         case Requester.JEWEL, 1:
-            return True
+            return can_fight()
         case Requester.JEWEL, 2:
-            return True
+            return can_fight()
         case Requester.JEWEL, 3:
-            return True
+            return can_fight()
 
         case Requester.ROCCO, 1:
-            return True
+            return can_fight()
         case Requester.ROCCO, 2:
-            return True
+            return can_fight()
         case Requester.ROCCO, 3:
-            return True
+            return can_fight()
         case Requester.ROCCO, 4:
-            return origin_island_access()
+            return origin_island_access() and can_fight()
 
         case Requester.POLKOVICH, 1:
             return al_maajik_access()
@@ -579,13 +587,13 @@ def request(
             return al_maajik_access()
 
         case Requester.JACK, 1:
-            return True
+            return can_fight()
         case Requester.JACK, 2:
-            return True
+            return can_fight()
         case Requester.JACK, 3:
-            return True
+            return can_fight()
         case Requester.JACK, 4:
-            return origin_island_access()
+            return origin_island_access() and can_fight()
 
         case Requester.EDUARDO, 1:
             return needs_license(Rank.APPRENTICE, Life.ALCHEMIST)
@@ -705,18 +713,18 @@ def request(
             return elderwood_village_access()
 
         case Requester.SHELLDON, 1:
-            return True
+            return can_fight()
         case Requester.SHELLDON, 2:
-            return True
+            return can_fight()
         case Requester.SHELLDON, 3:
-            return True
+            return can_fight()
 
         case Requester.DANNY, 1:
-            return True
+            return can_fight()
         case Requester.DANNY, 2:
-            return True
+            return can_fight()
         case Requester.DANNY, 3:
-            return True
+            return can_fight()
 
         case Requester.ALEJANDRO, 1:
             return terra_nimbus_access() and needs_license(Rank.HERO, Life.COOK)
@@ -736,13 +744,13 @@ def request(
             )
 
         case Requester.SIMRA, 1:
-            return True
+            return can_fight()
         case Requester.SIMRA, 2:
-            return True
+            return can_fight()
         case Requester.SIMRA, 3:
-            return needs_license(Rank.FLEDGLING, Life.MAGICIAN)
+            return can_cast_magic()
         case Requester.SIMRA, 4:
-            return origin_island_access() and needs_license(Rank.FLEDGLING, Life.MAGICIAN)
+            return origin_island_access() and can_cast_magic()
 
         case Requester.CHAI, 1:
             return elderwood_village_access()
@@ -752,11 +760,11 @@ def request(
             return elderwood_village_access()
 
         case Requester.SAFFRON, 1:
-            return True
+            return can_fight()
         case Requester.SAFFRON, 2:
-            return True
+            return can_fight()
         case Requester.SAFFRON, 3:
-            return True
+            return can_fight()
 
         case Requester.DESKOVICH, 1:
             return needs_license(Rank.LEGEND, Life.MINER)
@@ -786,11 +794,11 @@ def request(
             return origin_island_access()
 
         case Requester.VINCENT, 1:
-            return True
+            return can_fight()
         case Requester.VINCENT, 2:
-            return True
+            return can_fight()
         case Requester.VINCENT, 3:
-            return True
+            return can_fight()
 
         case Requester.OMAR, 1:
             return True
@@ -871,11 +879,11 @@ def request(
             return needs_license(Rank.EXPERT, Life.TAILOR)
 
         case Requester.RUDY, 1:
-            return True
+            return can_fight()
         case Requester.RUDY, 2:
-            return True
+            return can_fight()
         case Requester.RUDY, 3:
-            return True
+            return can_fight()
 
         case Requester.ABAHKUS, 1:
             return elderwood_village_access()
@@ -909,11 +917,11 @@ def request(
             return origin_island_access()
 
         case Requester.ACHILLES, 1:
-            return True
+            return can_fight()
         case Requester.ACHILLES, 2:
-            return True
+            return can_fight()
         case Requester.ACHILLES, 3:
-            return True
+            return can_fight()
 
         case Requester.DAPHNE, 1:
             return needs_license(Rank.DEMI_CREATOR, Life.TAILOR)
@@ -955,11 +963,11 @@ def request(
             return True
 
         case Requester.HOMEROS, 1:
-            return True
+            return can_fight()
         case Requester.HOMEROS, 2:
-            return True
+            return can_fight()
         case Requester.HOMEROS, 3:
-            return trials_access()
+            return trials_access() and can_fight()
 
         case Requester.GLADYS, 1:
             return needs_license(Rank.DEMI_CREATOR, Life.TAILOR)

@@ -137,43 +137,54 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
 
     licenses = world.options.licenses.value > 0
     progressive_licenses = world.options.progressive_licenses.value > 0
+    enable_item_restrictions = world.options.enable_item_restrictions.value > 0
+    include_starting_tools = world.options.include_starting_tools.value > 0
     if licenses:
         if progressive_licenses and not dlc:
             fast_licenses = world.options.fast_licenses.value > 0
             if fast_licenses:
-                for life in Life:
-                    item_names_to_remove.append(f"Fast Progressive {life.description} License")
+                for life_name in Life:
+                    item_names_to_remove.append(f"Fast Progressive {life_name.description} License")
             else:
-                for life in Life:
+                for life_name in Life:
                     for _ in range(0, 2):
-                        item_names_to_remove.append(f"Progressive {life.description} License")
+                        item_names_to_remove.append(f"Progressive {life_name.description} License")
 
         starting_life = world.options.starting_life.value
-        life = ""
+        life_name = ""
         match starting_life:
             case Options.StartingLife.option_any:
-                life = world.random.choice(list(Life)).description
+                life_name = world.random.choice(list(Life)).description
             case Options.StartingLife.option_combat_easy:
-                life = world.random.choice(Life.easy_combat()).description
+                life_name = world.random.choice(Life.easy_combat()).description
             case Options.StartingLife.option_combat:
-                life = world.random.choice(Life.combat()).description
+                life_name = world.random.choice(Life.combat()).description
             case Options.StartingLife.option_gathering:
-                life = world.random.choice(Life.gathering()).description
+                life_name = world.random.choice(Life.gathering()).description
             case Options.StartingLife.option_crafting:
-                life = world.random.choice(Life.crafting()).description
+                life_name = world.random.choice(Life.crafting()).description
             case x if 0 < x < 13:
-                life = Life(x).description
-        if life and len(life) > 0:
+                life_name = Life(x).description
+        if life_name and len(life_name) > 0:
             item_name = next(
                 x.name
                 for x in item_pool
                 if x.name
                 in [
-                    f"{life} License",
-                    f"Progressive {life} License",
-                    f"Fast Progressive {life} License",
+                    f"{life_name} License",
+                    f"Progressive {life_name} License",
+                    f"Fast Progressive {life_name} License",
                 ]
             )
+            starting_inventory.append(item_name)
+            if enable_item_restrictions and include_starting_tools:
+                life = Life.from_description(life_name)
+                for item_name in life.required_items:
+                    starting_inventory.append(item_name)
+
+    elif enable_item_restrictions and include_starting_tools:
+        life = world.random.choice(list(Life))
+        for item_name in life.required_items:
             starting_inventory.append(item_name)
 
     # Bliss Bonuses
