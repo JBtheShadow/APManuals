@@ -2,7 +2,7 @@
 # calling logging.info("message") anywhere below in this file will output the message to both console and log file
 import logging
 
-from BaseClasses import MultiWorld
+from BaseClasses import CollectionState, MultiWorld
 from worlds.AutoWorld import World
 
 from ..data.Data import FILLER_ITEMS, FillerCategory, Life
@@ -229,6 +229,12 @@ def before_set_rules(world: World, multiworld: MultiWorld, player: int):
 def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to modify the access rules for a given location
 
+    def Example_Rule(state: CollectionState) -> bool:
+        # Calculated rules take a CollectionState object and return a boolean
+        # True if the player can access the location
+        # CollectionState is defined in BaseClasses
+        return True
+
     ## Common functions:
     # location = world.get_location(location_name, player)
     # location.access_rule = Example_Rule
@@ -238,7 +244,6 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     # location.access_rule = lambda state: old_rule(state) and Example_Rule(state)
     # OR
     # location.access_rule = lambda state: old_rule(state) or Example_Rule(state)
-    pass
 
 
 # The item name to create is provided before the item is created, in case you want to make changes to it

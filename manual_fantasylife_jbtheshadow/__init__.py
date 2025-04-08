@@ -1,15 +1,17 @@
 import json
 import logging
 import os
+import webbrowser
 from base64 import b64encode
 from typing import Callable, Optional
 
+import requests
 import Utils
 from BaseClasses import Item, ItemClassification, Tutorial
 from Options import PerGameCommonOptions
 from worlds.AutoWorld import WebWorld, World
 from worlds.generic.Rules import forbid_items_for_player
-from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, launch_subprocess
+from worlds.LauncherComponents import Component, SuffixIdentifier, Type, components, icon_paths, launch_subprocess
 
 from .Data import category_table, item_table, location_table, meta_table, region_table
 from .DataValidation import runGenerationDataValidation, runPreFillDataValidation
@@ -78,6 +80,9 @@ class ManualWorld(World):
     location_name_to_location = location_name_to_location
     location_name_groups = location_name_groups
     victory_names = victory_names
+
+    # UT (the universal-est of trackers) can now generate without a YAML
+    ut_can_gen_without_yaml = True
 
     def get_filler_item_name(self) -> str:
         return hook_get_filler_item_name(self, self.multiworld, self.player) or self.filler_item_name
@@ -245,16 +250,15 @@ class ManualWorld(World):
         classification = ItemClassification.filler
 
         if "trap" in item and item["trap"]:
-            classification = ItemClassification.trap
+            classification |= ItemClassification.trap
 
         if "useful" in item and item["useful"]:
-            classification = ItemClassification.useful
-
-        if "progression" in item and item["progression"]:
-            classification = ItemClassification.progression
+            classification |= ItemClassification.useful
 
         if "progression_skip_balancing" in item and item["progression_skip_balancing"]:
-            classification = ItemClassification.progression_skip_balancing
+            classification |= ItemClassification.progression_skip_balancing
+        elif "progression" in item and item["progression"]:
+            classification |= ItemClassification.progression
 
         item_object = ManualItem(name, classification, self.item_name_to_id[name], player=self.player)
 
@@ -431,6 +435,11 @@ class ManualWorld(World):
     # Non-standard AP world methods
     ###
 
+    rules_functions_maximum_recursion: int = 5
+    """Default: 5\n
+    The maximum time a location/region's requirement can loop to check for functions\n
+    One thing to remember is the more you loop the longer generation will take. So probably leave it as is unless you really needs it."""
+
     def add_filler_items(self, item_pool, traps):
         Utils.deprecate("Use adjust_filler_items instead.")
         return self.adjust_filler_items(item_pool, traps)
@@ -457,12 +466,24 @@ class ManualWorld(World):
             logging.warning(
                 f"{self.game} has more items than locations. {abs(extras)} non-progression items will be removed at random."
             )
+            # Filler is only assigned if the item doesn't have any other tags, so it only has to be covered by itself.
+            # Skip Balancing is also not covered due to how it's only supported when paired with Progression.
+            # As a result, these cover every possible combination can be removed.
             fillers = [item for item in item_pool if item.classification == ItemClassification.filler]
             traps = [item for item in item_pool if item.classification == ItemClassification.trap]
             useful = [item for item in item_pool if item.classification == ItemClassification.useful]
+            # Useful + Trap is classified separately so that it can have a unique priority ranking.
+            useful_traps = [
+                item
+                for item in item_pool
+                if ItemClassification.progression not in item.classification
+                and ItemClassification.useful in item.classification
+                and ItemClassification.trap in item.classification
+            ]
             self.random.shuffle(fillers)
             self.random.shuffle(traps)
             self.random.shuffle(useful)
+            self.random.shuffle(useful_traps)
             for _ in range(0, abs(extras)):
                 popped = None
                 if fillers:
@@ -471,6 +492,8 @@ class ManualWorld(World):
                     popped = traps.pop()
                 elif useful:
                     popped = useful.pop()
+                elif useful_traps:
+                    popped = useful_traps.pop()
                 else:
                     logging.warning("Could not remove enough non-progression items from the pool.")
                     break
@@ -525,6 +548,7 @@ class VersionedComponent(Component):
         func: Optional[Callable] = None,
         version: int = 0,
         file_identifier: Optional[Callable[[str], bool]] = None,
+        icon: Optional[str] = None,
     ):
         super().__init__(
             display_name=display_name,
@@ -532,13 +556,25 @@ class VersionedComponent(Component):
             func=func,
             component_type=Type.CLIENT,
             file_identifier=file_identifier,
+            icon=icon,
         )
         self.version = version
 
 
 def add_client_to_launcher() -> None:
-    version = 2024_09_19  # YYYYMMDD
+    version = 2024_11_22  # YYYYMMDD
     found = False
+
+    if "manual" not in icon_paths:
+        icon_paths["manual"] = Utils.user_path("data", "manual.png")
+        if not os.path.exists(icon_paths["manual"]):
+            icon_url = (
+                "https://manualforarchipelago.github.io/ManualBuilder/images/ap-manual-discord-logo-square-96x96.png"
+            )
+            with open(icon_paths["manual"], "wb") as f:
+                f.write(requests.get(icon_url).content)
+
+    discord_component = None
     for c in components:
         if c.display_name == "Manual Client":
             found = True
@@ -547,7 +583,10 @@ def add_client_to_launcher() -> None:
             ):  # We have a newer version of the Manual Client than the one the last apworld added
                 c.version = version
                 c.func = launch_client
-                return
+                c.icon = "manual"
+        elif c.display_name == "Manual Discord Server":
+            discord_component = c
+
     if not found:
         components.append(
             VersionedComponent(
@@ -556,6 +595,17 @@ def add_client_to_launcher() -> None:
                 func=launch_client,
                 version=version,
                 file_identifier=SuffixIdentifier(".apmanual"),
+                icon="manual",
+            )
+        )
+    if not discord_component:
+        components.append(
+            Component(
+                "Manual Discord Server",
+                "ManualDiscord",
+                func=lambda: webbrowser.open("https://discord.gg/hm4rQnTzQ5"),
+                icon="discord",
+                component_type=Type.ADJUSTER,
             )
         )
 
