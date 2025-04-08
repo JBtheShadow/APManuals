@@ -125,7 +125,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             item_names_to_remove.append("Lost Wish")
 
     # Licenses, Starting Life and DLC
-    dlc = world.options.dlc.value
+    dlc = world.options.dlc.value > 0
 
     if not dlc:
         item_names_to_remove += [

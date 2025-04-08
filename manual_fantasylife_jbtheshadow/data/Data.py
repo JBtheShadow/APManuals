@@ -2,30 +2,35 @@ from enum import Enum
 
 
 class Life(Enum):
-    PALADIN = 1, "Paladin"
-    MERCENARY = 2, "Mercenary"
-    HUNTER = 3, "Hunter"
-    MAGICIAN = 4, "Magician"
-    MINER = 5, "Miner"
-    WOODCUTTER = 6, "Woodcutter"
-    ANGLER = 7, "Angler"
-    COOK = 8, "Cook"
-    BLACKSMITH = 9, "Blacksmith"
-    CARPENTER = 10, "Carpenter"
-    TAILOR = 11, "Tailor"
-    ALCHEMIST = 12, "Alchemist"
+    PALADIN = 1, "Paladin", ["Longswords", "Shields"]
+    MERCENARY = 2, "Mercenary", ["Greatswords"]
+    HUNTER = 3, "Hunter", ["Bows"]
+    MAGICIAN = 4, "Magician", ["Wands"]
+    MINER = 5, "Miner", ["Pickaxes"]
+    WOODCUTTER = 6, "Woodcutter", ["Axes"]
+    ANGLER = 7, "Angler", ["Fishing Rods"]
+    COOK = 8, "Cook", ["Frying Pans"]
+    BLACKSMITH = 9, "Blacksmith", ["Hammers"]
+    CARPENTER = 10, "Carpenter", ["Saws"]
+    TAILOR = 11, "Tailor", ["Needles"]
+    ALCHEMIST = 12, "Alchemist", ["Flasks"]
 
     def __new__(cls, *args, **kwds):
         obj = object.__new__(cls)
         obj._value_ = args[0]
         return obj
 
-    def __init__(self, _: int, description: str = None):
+    def __init__(self, _: int, description: str = None, required_items: list[str] = None):
         self._description_ = description
+        self._required_items_ = required_items
 
     @property
     def description(self):
         return self._description_
+
+    @property
+    def required_items(self):
+        return self._required_items_
 
     @classmethod
     def easy_combat(cls):
@@ -42,6 +47,14 @@ class Life(Enum):
     @classmethod
     def crafting(cls):
         return [Life.COOK, Life.BLACKSMITH, Life.CARPENTER, Life.TAILOR, Life.ALCHEMIST]
+
+    @classmethod
+    def from_description(cls, description: str):
+        for life in Life:
+            if life.description == description:
+                return life
+
+        raise Exception(f"'{description}' is not a valid Life!")
 
 
 class Rank(Enum):

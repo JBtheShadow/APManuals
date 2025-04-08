@@ -60,10 +60,18 @@ def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, p
         return False
 
 
-def has_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_str: str, life_str: str):
+def has_license(
+    world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_str: str, life_str: str
+):
     # You want to ensure there are no spaces before or after str parameters
     rank_str = rank_str.strip()
     life_str = life_str.strip()
+
+    life = Life.from_description(life_str)
+    enable_item_restrictions = world.options.enable_item_restrictions.value > 0
+    if enable_item_restrictions:
+        if not state.has_all(life.required_items, player):
+            return False
 
     licenses = world.options.licenses.value > 0
     if not licenses:
@@ -180,7 +188,9 @@ def request(
         case Requester.POSTONBY, 1:
             return al_maajik_access() and needs_license(Rank.EXPERT, Life.ANGLER)
         case Requester.POSTONBY, 2:
-            return al_maajik_access() and needs_license(Rank.EXPERT, Life.ANGLER) and needs_license(Rank.EXPERT, Life.COOK)
+            return (
+                al_maajik_access() and needs_license(Rank.EXPERT, Life.ANGLER) and needs_license(Rank.EXPERT, Life.COOK)
+            )
         case Requester.POSTONBY, 3:
             return (
                 al_maajik_access()
@@ -334,7 +344,9 @@ def request(
             return origin_island_access() and needs_license(Rank.DEMI_CREATOR, Life.COOK)
 
         case Requester.MARCEL, 1:
-            return (better_castele_shopping() or port_puerto_access()) and needs_license(Rank.APPRENTICE, Life.ALCHEMIST)
+            return (better_castele_shopping() or port_puerto_access()) and needs_license(
+                Rank.APPRENTICE, Life.ALCHEMIST
+            )
         case Requester.MARCEL, 2:
             return terra_nimbus_access() and needs_license(Rank.MASTER, Life.ALCHEMIST)
         case Requester.MARCEL, 3:
@@ -709,9 +721,13 @@ def request(
         case Requester.ALEJANDRO, 1:
             return terra_nimbus_access() and needs_license(Rank.HERO, Life.COOK)
         case Requester.ALEJANDRO, 2:
-            return terra_nimbus_access() and needs_license(Rank.HERO, Life.COOK) and needs_license(Rank.HERO, Life.ANGLER)
+            return (
+                terra_nimbus_access() and needs_license(Rank.HERO, Life.COOK) and needs_license(Rank.HERO, Life.ANGLER)
+            )
         case Requester.ALEJANDRO, 3:
-            return terra_nimbus_access() and needs_license(Rank.HERO, Life.COOK) and needs_license(Rank.HERO, Life.ANGLER)
+            return (
+                terra_nimbus_access() and needs_license(Rank.HERO, Life.COOK) and needs_license(Rank.HERO, Life.ANGLER)
+            )
         case Requester.ALEJANDRO, 3:
             return (
                 origin_island_access()

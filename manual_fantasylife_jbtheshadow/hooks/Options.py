@@ -156,7 +156,8 @@ class StartingLife(Choice):
 
 class IncludeBlissBonuses(Toggle):
     """Toggles whether to add the bliss bonuses to the pool, like the bigger bag or access to pets.
-    When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen."""
+    When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen.
+    """
 
     display_name = "Include Bliss Bonuses?"
     default = True
@@ -252,6 +253,48 @@ class IncludeOtherRequests(Choice):
     default = 4
 
 
+class EnableItemRestrictions(Toggle):
+    """Toggles whether to restrict equipment and consumable usage.
+
+    When enabled, you must unequip everything you have as soon as you can, with the end of your first Life tutorial at the latest.
+
+    From then on, you must unlock the respective slot, item type, quality and rarity before being allowed to use or equip any items.
+
+    Furniture and materials have no restrictions.
+
+    Each Life requires the following items unlocked:
+    * Paladin: Longsword and Shield
+    * Mercenary: Greatsword
+    * Hunter: Bow
+    * Magician: Wand
+    * Miner: Pickaxe
+    * Woodcutter: Axe
+    * Angler: Fishing Rod
+    * Cook: Frying Pan
+    * Blacksmith: Hammer
+    * Carpenter: Saw
+    * Tailor: Needle
+    * Alchemist: Flask
+
+    Very restrictive, not recommended unless you really want to take on the extra challenge.
+    """
+
+    display_name = "Enable Item Restrictions?"
+    default = False
+
+
+class IncludeStartingTools(Toggle):
+    """Toggles whether to include weapons or tools related to the starting Life. Does nothing without item restrictions.
+
+    When enabled, you'll start with the dagger + any weapons/tools required for the starting Life already unlocked.
+
+    This allows one to actually use their first Life past the tutorial, otherwise they may be limited to barehanded gathering and combat.
+    """
+
+    display_name = "Include Starting Tools?"
+    default = True
+
+
 class Goal(Choice):
     option_wish_hunt = 0
     option_life_mastery = 1
@@ -279,6 +322,8 @@ def before_options_defined(options: dict) -> dict:
     options["include_skill_level_checks"] = IncludeSkillLevelBlissChecks
     options["include_ally_checks"] = IncludeAllyBlissChecks
     options["include_streetpass_checks"] = IncludeStreetPassBlissChecks
+    options["enable_item_restrictions"] = EnableItemRestrictions
+    options["include_starting_tools"] = IncludeStartingTools
     return options
 
 
