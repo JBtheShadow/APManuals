@@ -54,7 +54,7 @@ class LifeMasteryRank(Choice):
     """If the goal is set to Life Mastery, sets the target rank to beat the game."""
 
     display_name = "Target rank for Life Mastery"
-    option_fledgeling = 1
+    option_fledgling = 1
     option_apprentice = 2
     option_adept = 3
     option_expert = 4
@@ -76,21 +76,21 @@ class LifeMasteryCount(Range):
 
 
 class IncludeDLC(Toggle):
-    """Toggles whether or not to include items and locations related to the Origin Island DLC."""
+    """Toggles whether to include items and locations related to the Origin Island DLC."""
 
     display_name = "Include the Origin Island DLC?"
     default = False
 
 
 class IncludeLicenses(Toggle):
-    """Toggles whether or not to include licenses in the pool."""
+    """Toggles whether to include licenses in the pool."""
 
     display_name = "Include licenses?"
     default = True
 
 
 class ProgressiveLicenses(Toggle):
-    """Toggles whether or not licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgeling ranks.
+    """Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.
     If disabled, a single license unlocks all ranks.
     Does nothing if licenses are not included."""
 
@@ -99,10 +99,10 @@ class ProgressiveLicenses(Toggle):
 
 
 class FastLicenses(Toggle):
-    """Toggles whether or not progressive licenses should be grouped together, to reduce item count.
+    """Toggles whether progressive licenses should be grouped together, to reduce item count.
     Does nothing if licenses are not included nor if progressive licenses are disabled.
     The unlocked ranks per license become as follows:
-    Novice, Fledgeling, Apprentice -> 1 license
+    Novice, Fledgling, Apprentice -> 1 license
     Adept, Expert -> 2 licenses
     Master -> 3 licenses
     Hero, Legend -> 4 licenses

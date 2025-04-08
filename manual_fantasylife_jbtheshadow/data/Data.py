@@ -27,22 +27,26 @@ class Life(Enum):
     def description(self):
         return self._description_
 
-    def easy_combat():
+    @classmethod
+    def easy_combat(cls):
         return [Life.PALADIN, Life.MERCENARY]
 
-    def combat():
+    @classmethod
+    def combat(cls):
         return [Life.PALADIN, Life.MERCENARY, Life.HUNTER, Life.MAGICIAN]
 
-    def gathering():
+    @classmethod
+    def gathering(cls):
         return [Life.MINER, Life.WOODCUTTER, Life.ANGLER]
 
-    def crafting():
+    @classmethod
+    def crafting(cls):
         return [Life.COOK, Life.BLACKSMITH, Life.CARPENTER, Life.TAILOR, Life.ALCHEMIST]
 
 
 class Rank(Enum):
     NOVICE = 0, "Novice", 1, 1, 0
-    FLEDGELING = 1, "Fledgeling", 1, 1, 0
+    FLEDGLING = 1, "Fledgling", 1, 1, 0
     APPRENTICE = 2, "Apprentice", 1, 2, 0
     ADEPT = 3, "Adept", 2, 3, 2
     EXPERT = 4, "Expert", 2, 4, 3
@@ -86,10 +90,11 @@ class Rank(Enum):
     def min_chapter(self):
         return self._min_chapter_
 
-    def from_description(description: str):
-        for license in Rank:
-            if license.description == description:
-                return license
+    @classmethod
+    def from_description(cls, description: str):
+        for rank in Rank:
+            if rank.description == description:
+                return rank
 
         raise Exception(f"'{description}' is not a valid Rank!")
 

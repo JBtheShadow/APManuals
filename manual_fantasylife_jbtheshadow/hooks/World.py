@@ -148,9 +148,9 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                     for _ in range(0, 2):
                         item_names_to_remove.append(f"Progressive {life.description} License")
 
-        startingLife = world.options.starting_life.value
+        starting_life = world.options.starting_life.value
         life = ""
-        match startingLife:
+        match starting_life:
             case Options.StartingLife.option_any:
                 life = world.random.choice(list(Life)).description
             case Options.StartingLife.option_combat_easy:
@@ -161,7 +161,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                 life = world.random.choice(Life.gathering()).description
             case Options.StartingLife.option_crafting:
                 life = world.random.choice(Life.crafting()).description
-            case x if 0 < x and x < 13:
+            case x if 0 < x < 13:
                 life = Life(x).description
         if life and len(life) > 0:
             item_name = next(
