@@ -42,5 +42,6 @@
             "fileMatch": [ "**/manual*/data/options.json" ],
             "url": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json"
         }
-    ]
+    ],
+    "ruff.lineLength": 120
 }
