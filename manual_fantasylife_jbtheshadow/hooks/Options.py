@@ -4,7 +4,6 @@ from typing import Type
 
 from Options import Choice, Option, OptionGroup, PerGameCommonOptions, Range, Toggle
 
-
 ####################################################################
 # NOTE: At the time that options are created, Manual has no concept of the multiworld or its own world.
 #       Options are defined before the world is even created.
@@ -20,6 +19,11 @@ from Options import Choice, Option, OptionGroup, PerGameCommonOptions, Range, To
 #
 # Then, to see if the option is set, you can call is_option_enabled or get_option_value.
 #####################################################################
+
+
+# To add an option, use the before_options_defined hook below and something like this:
+#   options["total_characters_to_win_with"] = TotalCharactersToWinWith
+#
 class RequireMainStoryForGoal(Toggle):
     """If the goal requires completing the Prologue and Chapters 1 through Final (7)."""
 
@@ -75,44 +79,42 @@ class IncludeDLC(Toggle):
     """Toggles whether or not to include items and locations related to the Origin Island DLC."""
 
     display_name = "Include the Origin Island DLC?"
+    default = False
+
+
+class IncludeLicenses(Toggle):
+    """Toggles whether or not to include licenses in the pool."""
+
+    display_name = "Include licenses?"
     default = True
 
 
-class ProgressiveLicenses(Choice):
-    """Controls whether Licenses will be included in the pool and how they'll behave.
+class ProgressiveLicenses(Toggle):
+    """Toggles whether or not licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgeling ranks.
+    If disabled, a single license unlocks all ranks.
+    Does nothing if licenses are not included."""
 
-    [disabled] None will be placed in the pool and you may pick whichever Lives you want.
-    [single] One of each License will be added to the pool. Receiving a License unlocks everything that Life can do.
-    [fast] 4 (or 5 with DLC) Fast Progressive Licenses will be added for each Life, and each rank will have the following requirements:
-        1 license: Novice, Fledgeling, Apprentice
-        2 licenses: Adept, Expert
-        3 licenses: Master
-        4 licenses: Hero, Legend
-        5 licenses (DLC): Demi-Creator, Creator
-    [full] 7 (or 9 with DLC) Progressive Licenses will be added for each Life, and each rank will have the following requirements:
-        1 license: Novice, Fledgeling
-        2 licenses: Apprentice
-        3 licenses: Adept
-        4 licenses: Expert
-        5 licenses: Master
-        6 licenses: Hero
-        7 licenses: Legend
-        8 licenses (DLC): Demi-Creator
-        9 licenses (DLC): Creator"""
+    display_name = "Progressive licenses?"
+    default = True
 
-    display_name = "Progressive Licenses?"
-    option_disabled = 0
-    option_single = 1
-    option_fast = 2
-    option_full = 3
-    default = 3
+
+class FastLicenses(Toggle):
+    """Toggles whether or not progressive licenses should be grouped together, to reduce item count.
+    Does nothing if licenses are not included nor if progressive licenses are disabled.
+    The unlocked ranks per license become as follows:
+    Novice, Fledgeling, Apprentice -> 1 license
+    Adept, Expert -> 2 licenses
+    Master -> 3 licenses
+    Hero, Legend -> 4 licenses
+    Demi-Creator, Creator -> 5 licenses (DLC)"""
+
+    display_name = "Fast progressive licenses?"
+    default = False
 
 
 class StartingLife(Choice):
     """Sets what Life your character will start with, since the game forces you to go with one of the 12 Lives.
-    This option does nothing if Progressive Licenses is disabled.
-    If Licenses are in the pool but this option is disabled the game will instead pick one of the Lives at random.
-    [disabled] To be used with Progressive Licenses disabled.
+    This option does nothing if licenses are not included.
     [paladin] Start as a Paladin.
     [mercenary] Start as a Mercenary.
     [hunter] Start as a Hunter.
@@ -131,8 +133,7 @@ class StartingLife(Choice):
     [crafting] Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist.
     [any] Randomly pick between any of the 12 Lives."""
 
-    display_name = "Starting Life?"
-    option_disabled = 0
+    display_name = "Starting Life"
     option_paladin = 1
     option_mercenary = 2
     option_hunter = 3
@@ -153,11 +154,102 @@ class StartingLife(Choice):
     default = 13
 
 
-class IncludeOtherRequests(Toggle):
-    """Include Other Requests as checks? Forced to True when goal is Wish Hunt"""
+class IncludeBlissBonuses(Toggle):
+    """Toggles whether to add the bliss bonuses to the pool, like the bigger bag or access to pets.
+    When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen."""
+
+    display_name = "Include Bliss Bonuses?"
+    default = True
+
+
+class StartingBlissBonus(Choice):
+    """Selects which bliss bonus to start with, or picks a random one among the more useful bonuses.
+    Very early, before reaching Chapter One, the game will teach about bliss bonuses.
+    As there are not many checks the player can do as early, this ensures the player won't have to go out of logic.
+    Does nothing if bliss bonuses are not included.
+    [bag] Starts with Bigger Bag.
+    [storage] Starts with Bigger Storage.
+    [shopping] Starts with Shopping +.
+    [any] Starts with a random one out of those three."""
+
+    display_name = "Starting Bliss Bonus"
+    option_bag = 1
+    option_storage = 2
+    option_shopping = 3
+    option_any = 4
+    default = 4
+
+
+class IncludeHappyAudioVideo(Toggle):
+    """Toggles whether to include the Happy Audio and Happy Video bliss bonuses into the pool."""
+
+    display_name = "Include Happy Audio and Video?"
+    default = False
+
+
+class IncludePasswords(Toggle):
+    """Toggles whether to include passwords in the pool. Passwords can be redeemed after Butterfly teaches about Other Requests,
+    and there are 42 of them in total. Some grant costumes or even gear with nice stats, while some merely provide furniture
+    or consumables.
+
+    The passwords displayed on the client are based on the US version; if your game is from a different region please refer to the wiki
+    for the correct phrase to enter."""
+
+    display_name = "Include claimable passwords?"
+    default = True
+
+
+class IncludePlaytimeBlissChecks(Toggle):
+    """Toggles whether to include the 1 hour, 10 hours, 50 hours and 100 hours in Reveria bliss checks as locations in the pool."""
+
+    display_name = "Include playtime Bliss checks?"
+    default = False
+
+
+class IncludeStreetPassBlissChecks(Toggle):
+    """Toggles whether to include the bliss checks related to meeting visitors/StreetPass features as locations in the pool."""
+
+    display_name = "Include StreetPass Bliss checks?"
+    default = False
+
+
+class IncludeLevelUpBlissChecks(Toggle):
+    """Toggles whether to include the level up Bliss checks as locations in the pool."""
+
+    display_name = "Include level up Bliss checks?"
+    default = False
+
+
+class IncludeSkillLevelBlissChecks(Toggle):
+    """Toggles whether to include the Bliss checks related to leveling 1, 5, 15 and 25 skills to skill level 15 as locations in the pool."""
+
+    display_name = "Include skill level Bliss checks?"
+    default = False
+
+
+class IncludeAllyBlissChecks(Toggle):
+    """Toggles whether to include the Bliss checks related to making allies with npcs (and being able to invite them to your party) as locations in the pool."""
+
+    display_name = "Include ally Bliss checks?"
+    default = False
+
+
+class IncludeOtherRequests(Choice):
+    """Include Other Requests as checks? Forced to [all] when goal is Wish Hunt.
+    [none] No requests are included.
+    [only_first] Only the first request is included as a check.
+    [up_to_second] The first and second requests are included as checks.
+    [up_to_third] Only the first three requests are included as checks. Covers all non-DLC requests.
+    [all] Every request is considered. Does the same as [up_to_third] when no DLC.
+    """
 
     display_name = "Include Other Requests?"
-    default = True
+    option_none = 0
+    option_only_first = 1
+    option_up_to_second = 2
+    option_up_to_third = 3
+    option_all = 4
+    default = 4
 
 
 class Goal(Choice):
@@ -173,9 +265,20 @@ def before_options_defined(options: dict) -> dict:
     options["life_mastery_rank"] = LifeMasteryRank
     options["life_mastery_count"] = LifeMasteryCount
     options["dlc"] = IncludeDLC
+    options["licenses"] = IncludeLicenses
     options["progressive_licenses"] = ProgressiveLicenses
+    options["fast_licenses"] = FastLicenses
     options["starting_life"] = StartingLife
+    options["include_passwords"] = IncludePasswords
     options["other_requests"] = IncludeOtherRequests
+    options["bliss_bonuses"] = IncludeBlissBonuses
+    options["starting_bliss_bonus"] = StartingBlissBonus
+    options["include_happy_audio_video"] = IncludeHappyAudioVideo
+    options["include_playtime_checks"] = IncludePlaytimeBlissChecks
+    options["include_level_up_checks"] = IncludeLevelUpBlissChecks
+    options["include_skill_level_checks"] = IncludeSkillLevelBlissChecks
+    options["include_ally_checks"] = IncludeAllyBlissChecks
+    options["include_streetpass_checks"] = IncludeStreetPassBlissChecks
     return options
 
 
@@ -193,12 +296,8 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 
 
 # Use this Hook if you want to add your Option to an Option group (existing or not)
-def before_option_groups_created(
-    groups: dict[str, list[Option]],
-) -> dict[str, list[Option]]:
+def before_option_groups_created(groups: dict[str, list[Option]]) -> dict[str, list[Option]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
-    groups["Wish Hunt Goal"] = [WishHuntRequired, WishHuntTotal]
-    groups["Life Mastery Goal"] = [LifeMasteryRank, LifeMasteryCount]
     return groups
 
 

@@ -1,23 +1,22 @@
 from BaseClasses import Entrance, MultiWorld, Region
-from .Helpers import is_category_enabled, is_location_enabled
-from .Data import region_table
-from .Locations import ManualLocation, location_name_to_location
 from worlds.AutoWorld import World
 
+from .Data import region_table
+from .Helpers import is_location_enabled
+from .Locations import ManualLocation, location_name_to_location
 
 if not region_table:
     region_table = {}
 
-regionMap = { **region_table }
-starting_regions = [ name for name in regionMap if "starting" in regionMap[name].keys() and regionMap[name]["starting"] ]
+regionMap = {**region_table}
+starting_regions = [name for name in regionMap if "starting" in regionMap[name].keys() and regionMap[name]["starting"]]
 
 if len(starting_regions) == 0:
-    starting_regions = region_table.keys() # the Manual region connects to all user-defined regions automatically if you specify no starting regions
+    starting_regions = (
+        region_table.keys()
+    )  # the Manual region connects to all user-defined regions automatically if you specify no starting regions
 
-regionMap["Manual"] = {
-    "requires": [],
-    "connects_to": starting_regions
-}
+regionMap["Manual"] = {"requires": [], "connects_to": starting_regions}
 
 
 def create_regions(world: World, multiworld: MultiWorld, player: int):
@@ -53,6 +52,7 @@ def create_regions(world: World, multiworld: MultiWorld, player: int):
                 connection = multiworld.get_entrance(getConnectionName(region, linkedRegion), player)
                 connection.connect(multiworld.get_region(linkedRegion, player))
 
+
 def create_region(world: World, multiworld: MultiWorld, player: int, name: str, locations=None, exits=None):
     ret = Region(name, player, multiworld)
 
@@ -60,13 +60,14 @@ def create_region(world: World, multiworld: MultiWorld, player: int, name: str, 
         for location in locations:
             loc_id = world.location_name_to_id.get(location, 0)
             locationObj = ManualLocation(player, location, loc_id, ret)
-            if location_name_to_location[location].get('prehint'):
+            if location_name_to_location[location].get("prehint"):
                 world.options.start_location_hints.value.add(location)
             ret.locations.append(locationObj)
     if exits:
         for exit in exits:
             ret.exits.append(Entrance(player, getConnectionName(name, exit), ret))
     return ret
+
 
 def getConnectionName(entranceName: str, exitName: str):
     return entranceName + "To" + exitName

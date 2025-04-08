@@ -1,31 +1,37 @@
-from typing import TYPE_CHECKING, Optional
-from enum import IntEnum
-from worlds.generic.Rules import set_rule, add_rule
-from .Regions import regionMap
-from .hooks import Rules
-
-from BaseClasses import MultiWorld, CollectionState
-from .Helpers import clamp, is_item_enabled, get_items_with_value, is_option_enabled
-from worlds.AutoWorld import World
-
-import re
-import math
 import inspect
 import logging
+import math
+import re
+from enum import IntEnum
+from typing import TYPE_CHECKING, Optional
+
+from BaseClasses import CollectionState, MultiWorld
+from worlds.AutoWorld import World
+from worlds.generic.Rules import add_rule, set_rule
+
+from .Helpers import clamp, get_items_with_value, is_option_enabled
+from .hooks import Rules
+from .Regions import regionMap
 
 if TYPE_CHECKING:
     from . import ManualWorld
 
+
 class LogicErrorSource(IntEnum):
-    INFIX_TO_POSTFIX = 1 # includes more closing parentheses than opening (but not the opposite)
-    EVALUATE_POSTFIX = 2 # includes missing pipes and missing value on either side of AND/OR
-    EVALUATE_STACK_SIZE = 3 # includes missing curly brackets
+    INFIX_TO_POSTFIX = 1  # includes more closing parentheses than opening (but not the opposite)
+    EVALUATE_POSTFIX = 2  # includes missing pipes and missing value on either side of AND/OR
+    EVALUATE_STACK_SIZE = 3  # includes missing curly brackets
+
 
 def construct_logic_error(location_or_region: dict, source: LogicErrorSource) -> KeyError:
     object_type = "location/region"
     object_name = location_or_region.get("name", "Unknown")
 
-    if location_or_region.get("is_region", False) or "starting" in location_or_region or "connects_to" in location_or_region:
+    if (
+        location_or_region.get("is_region", False)
+        or "starting" in location_or_region
+        or "connects_to" in location_or_region
+    ):
         object_type = "region"
     elif "region" in location_or_region or "category" in location_or_region:
         object_type = "location"
@@ -35,11 +41,12 @@ def construct_logic_error(location_or_region: dict, source: LogicErrorSource) ->
     elif source == LogicErrorSource.EVALUATE_POSTFIX:
         source_text = "There may be missing || around item names, or an AND/OR that is missing a value on one side, or other invalid syntax for the requires."
     elif source == LogicErrorSource.EVALUATE_STACK_SIZE:
-        source_text = "There may be missing {} around requirement functions like YamlEnabled() / YamlDisabled(), or other invalid syntax for the requires." 
+        source_text = "There may be missing {} around requirement functions like YamlEnabled() / YamlDisabled(), or other invalid syntax for the requires."
     else:
         source_text = "This requires includes invalid syntax."
 
     return KeyError(f"Invalid 'requires' for {object_type} '{object_name}': {source_text} (ERROR {source})")
+
 
 def infix_to_postfix(expr, location):
     prec = {"&": 2, "|": 2, "!": 3}
@@ -97,6 +104,7 @@ def evaluate_postfix(expr: str, location: str) -> bool:
 
     return stack.pop()
 
+
 def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
     # this is only called when the area (think, location or region) has a "requires" field that is a string
     def checkRequireStringForArea(state: CollectionState, area: dict):
@@ -109,17 +117,19 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
             return True
 
         def findAndRecursivelyExecuteFunctions(requires_list: str, recursionDepth: int = 0) -> str:
-            found_functions = re.findall(r'\{(\w+)\((.*?)\)\}', requires_list)
+            found_functions = re.findall(r"\{(\w+)\((.*?)\)\}", requires_list)
             if found_functions:
                 if recursionDepth >= world.rules_functions_maximum_recursion:
-                    raise RecursionError(f'One or more functions in "{area.get("name", f"An area with these parameters: {area}")}"\'s requires looped too many time (maximum recursion is {world.rules_functions_maximum_recursion}) \
+                    raise RecursionError(
+                        f'One or more functions in "{area.get("name", f"An area with these parameters: {area}")}"\'s requires looped too many time (maximum recursion is {world.rules_functions_maximum_recursion}) \
                                          \n    As of this Exception the following function(s) are waiting to run: {[f[0] for f in found_functions]} \
-                                         \n    And the currently processed requires look like this: "{requires_list}"')
+                                         \n    And the currently processed requires look like this: "{requires_list}"'
+                    )
                 else:
                     for item in found_functions:
                         func_name = item[0]
                         func_args = item[1].split(",")
-                        if func_args == ['']:
+                        if func_args == [""]:
                             func_args.pop()
 
                         func = globals().get(func_name)
@@ -130,10 +140,14 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
                         if not callable(func):
                             raise ValueError(f"Invalid function `{func_name}` in {area}.")
 
-                        convert_req_function_args(func, func_args, area.get("name", f"An area with these parameters: {area}"))
+                        convert_req_function_args(
+                            func, func_args, area.get("name", f"An area with these parameters: {area}")
+                        )
                         result = func(world, multiworld, state, player, *func_args)
                         if isinstance(result, bool):
-                            requires_list = requires_list.replace("{" + func_name + "(" + item[1] + ")}", "1" if result else "0")
+                            requires_list = requires_list.replace(
+                                "{" + func_name + "(" + item[1] + ")}", "1" if result else "0"
+                            )
                         else:
                             requires_list = requires_list.replace("{" + func_name + "(" + item[1] + ")}", str(result))
 
@@ -143,19 +157,18 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
         requires_list = findAndRecursivelyExecuteFunctions(requires_list)
 
         # parse user written statement into list of each item
-        for item in re.findall(r'\|[^|]+\|', requires_list):
-            require_type = 'item'
+        for item in re.findall(r"\|[^|]+\|", requires_list):
+            require_type = "item"
 
-            if '|@' in item:
-                require_type = 'category'
+            if "|@" in item:
+                require_type = "category"
 
             item_base = item
-            item = item.lstrip('|@$').rstrip('|')
+            item = item.lstrip("|@$").rstrip("|")
 
             item_parts = item.split(":")  # type: list[str]
             item_name = item
             item_count = "1"
-
 
             if len(item_parts) > 1:
                 item_name = item_parts[0].strip()
@@ -163,14 +176,20 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
 
             total = 0
 
-            if require_type == 'category':
-                category_items = [item for item in world.item_name_to_item.values() if "category" in item and item_name in item["category"]]
-                category_items_counts = sum([items_counts.get(category_item["name"], 0) for category_item in category_items])
-                if item_count.lower() == 'all':
+            if require_type == "category":
+                category_items = [
+                    item
+                    for item in world.item_name_to_item.values()
+                    if "category" in item and item_name in item["category"]
+                ]
+                category_items_counts = sum(
+                    [items_counts.get(category_item["name"], 0) for category_item in category_items]
+                )
+                if item_count.lower() == "all":
                     item_count = category_items_counts
-                elif item_count.lower() == 'half':
+                elif item_count.lower() == "half":
                     item_count = int(category_items_counts / 2)
-                elif item_count.endswith('%') and len(item_count) > 1:
+                elif item_count.endswith("%") and len(item_count) > 1:
                     percent = clamp(float(item_count[:-1]) / 100, 0, 1)
                     item_count = math.ceil(category_items_counts * percent)
                 else:
@@ -184,13 +203,13 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
 
                     if total >= item_count:
                         requires_list = requires_list.replace(item_base, "1")
-            elif require_type == 'item':
+            elif require_type == "item":
                 item_current_count = items_counts.get(item_name, 0)
-                if item_count.lower() == 'all':
+                if item_count.lower() == "all":
                     item_count = item_current_count
-                elif item_count.lower() == 'half':
+                elif item_count.lower() == "half":
                     item_count = int(item_current_count / 2)
-                elif item_count.endswith('%') and len(item_count) > 1:
+                elif item_count.endswith("%") and len(item_count) > 1:
                     percent = clamp(float(item_count[:-1]) / 100, 0, 1)
                     item_count = math.ceil(item_current_count * percent)
                 else:
@@ -204,11 +223,11 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
             if total <= item_count:
                 requires_list = requires_list.replace(item_base, "0")
 
-        requires_list = re.sub(r'\s?\bAND\b\s?', '&', requires_list, 0, re.IGNORECASE)
-        requires_list = re.sub(r'\s?\bOR\b\s?', '|', requires_list, 0, re.IGNORECASE)
+        requires_list = re.sub(r"\s?\bAND\b\s?", "&", requires_list, 0, re.IGNORECASE)
+        requires_list = re.sub(r"\s?\bOR\b\s?", "|", requires_list, 0, re.IGNORECASE)
 
         requires_string = infix_to_postfix("".join(requires_list), area)
-        return (evaluate_postfix(requires_string, area))
+        return evaluate_postfix(requires_string, area)
 
     # this is only called when the area (think, location or region) has a "requires" field that is a dict
     def checkRequireDictForArea(state: CollectionState, area: dict):
@@ -273,17 +292,20 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
         used_location_names.extend([l.name for l in multiworld.get_region(region, player).locations])
         if region != "Menu":
             for exitRegion in multiworld.get_region(region, player).entrances:
+
                 def fullRegionCheck(state: CollectionState, region=regionMap[region]):
                     return fullLocationOrRegionCheck(state, region)
 
                 add_rule(world.get_entrance(exitRegion.name), fullRegionCheck)
             entrance_rules = regionMap[region].get("entrance_requires", {})
             for e in entrance_rules:
-                entrance = world.get_entrance(f'{e}To{region}')
-                add_rule(entrance, lambda state, rule={"requires": entrance_rules[e]}: fullLocationOrRegionCheck(state, rule))
+                entrance = world.get_entrance(f"{e}To{region}")
+                add_rule(
+                    entrance, lambda state, rule={"requires": entrance_rules[e]}: fullLocationOrRegionCheck(state, rule)
+                )
             exit_rules = regionMap[region].get("exit_requires", {})
             for e in exit_rules:
-                exit = world.get_entrance(f'{region}To{e}')
+                exit = world.get_entrance(f"{region}To{e}")
                 add_rule(exit, lambda state, rule={"requires": exit_rules[e]}: fullLocationOrRegionCheck(state, rule))
 
     # Location access rules
@@ -296,13 +318,14 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
         locationRegion = regionMap[location["region"]] if "region" in location else None
 
         if locationRegion:
-            locationRegion['name'] = location['region']
-            locationRegion['is_region'] = True
+            locationRegion["name"] = location["region"]
+            locationRegion["is_region"] = True
 
-        if "requires" in location: # Location has requires, check them alongside the region requires
+        if "requires" in location:  # Location has requires, check them alongside the region requires
+
             def checkBothLocationAndRegion(state: CollectionState, location=location, region=locationRegion):
                 locationCheck = fullLocationOrRegionCheck(state, location)
-                regionCheck = True # default to true unless there's a region with requires
+                regionCheck = True  # default to true unless there's a region with requires
 
                 if region:
                     regionCheck = fullLocationOrRegionCheck(state, region)
@@ -310,12 +333,14 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
                 return locationCheck and regionCheck
 
             set_rule(locFromWorld, checkBothLocationAndRegion)
-        elif "region" in location: # Only region access required, check the location's region's requires
+        elif "region" in location:  # Only region access required, check the location's region's requires
+
             def fullRegionCheck(state, region=locationRegion):
                 return fullLocationOrRegionCheck(state, region)
 
             set_rule(locFromWorld, fullRegionCheck)
-        else: # No location region and no location requires? It's accessible.
+        else:  # No location region and no location requires? It's accessible.
+
             def allRegionsAccessible(state):
                 return True
 
@@ -335,15 +360,17 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
             argType = info.annotation
             optional = False
             try:
-                if issubclass(argType, inspect._empty): #if not set then it wont get converted but still be checked for valid data at index
+                if issubclass(
+                    argType, inspect._empty
+                ):  # if not set then it wont get converted but still be checked for valid data at index
                     argType = str
 
-            except TypeError: # Optional
-                if argType.__module__ == 'typing' and argType._name == 'Optional':
+            except TypeError:  # Optional
+                if argType.__module__ == "typing" and argType._name == "Optional":
                     optional = True
                     argType = argType.__args__[0]
                 else:
-                    #Implementing complex typing is not simple so ill skip it for now
+                    # Implementing complex typing is not simple so ill skip it for now
                     index += 1
                     continue
 
@@ -355,47 +382,55 @@ def set_rules(world: "ManualWorld", multiworld: MultiWorld, player: int):
                     value = info.default
 
                 else:
-                    raise Exception(f"A call of the {func.__name__} function in '{areaName}'s requirement, asks for a value of type {argType}\nfor its argument '{info.name}' but its missing")
+                    raise Exception(
+                        f"A call of the {func.__name__} function in '{areaName}'s requirement, asks for a value of type {argType}\nfor its argument '{info.name}' but its missing"
+                    )
 
             if optional:
                 if isinstance(value, type(None)):
                     index += 1
                     continue
                 elif isinstance(value, str):
-                    if value.lower() == 'none':
+                    if value.lower() == "none":
                         value = None
                         args[index] = value
                         index += 1
                         continue
 
-
             if not isinstance(value, argType):
                 if issubclass(argType, bool):
-                    #Special conversion to bool
-                    if value.lower() in ['true', '1']:
+                    # Special conversion to bool
+                    if value.lower() in ["true", "1"]:
                         value = True
 
-                    elif value.lower() in ['false', '0']:
+                    elif value.lower() in ["false", "0"]:
                         value = False
 
                     else:
                         value = bool(value)
                         if warn:
-                        # warning here spam the console if called from rules.py, might be worth to make it a data validation instead
-                            logging.warning(f"A call of the {func.__name__} function in '{areaName}'s requirement, asks for a value of type {argType}\nfor its argument '{info.name}' but an unknown string was passed and thus converted to {value}")
+                            # warning here spam the console if called from rules.py, might be worth to make it a data validation instead
+                            logging.warning(
+                                f"A call of the {func.__name__} function in '{areaName}'s requirement, asks for a value of type {argType}\nfor its argument '{info.name}' but an unknown string was passed and thus converted to {value}"
+                            )
 
                 else:
                     try:
                         value = argType(value)
 
                     except ValueError:
-                        raise Exception(f"A call of the {func.__name__} function in '{areaName}'s requirement, asks for a value of type {argType}\nfor its argument '{info.name}' but its value '{value}' cannot be converted to {argType}")
+                        raise Exception(
+                            f"A call of the {func.__name__} function in '{areaName}'s requirement, asks for a value of type {argType}\nfor its argument '{info.name}' but its value '{value}' cannot be converted to {argType}"
+                        )
 
                 args[index] = value
 
             index += 1
 
-def ItemValue(world: World, multiworld: MultiWorld, state: CollectionState, player: int, valueCount: str, skipCache: bool = False):
+
+def ItemValue(
+    world: World, multiworld: MultiWorld, state: CollectionState, player: int, valueCount: str, skipCache: bool = False
+):
     """When passed a string with this format: 'valueName:int',
     this function will check if the player has collect at least 'int' valueName worth of items\n
     eg. {ItemValue(Coins:12)} will check if the player has collect at least 12 coins worth of items\n
@@ -409,7 +444,7 @@ def ItemValue(world: World, multiworld: MultiWorld, state: CollectionState, play
     value_name = valueCount[0].lower().strip()
     requested_count = int(valueCount[1].strip())
 
-    if not hasattr(world, 'itemvalue_rule_cache'): #Cache made for optimization purposes
+    if not hasattr(world, "itemvalue_rule_cache"):  # Cache made for optimization purposes
         world.itemvalue_rule_cache = {}
 
     if not world.itemvalue_rule_cache.get(player, {}):
@@ -418,12 +453,15 @@ def ItemValue(world: World, multiworld: MultiWorld, state: CollectionState, play
     if not skipCache:
         if not world.itemvalue_rule_cache[player].get(value_name, {}):
             world.itemvalue_rule_cache[player][value_name] = {
-                'state': {},
-                'count': -1,
-                }
+                "state": {},
+                "count": -1,
+            }
 
-    if (skipCache or world.itemvalue_rule_cache[player][value_name].get('count', -1) == -1
-            or world.itemvalue_rule_cache[player][value_name].get('state') != dict(state.prog_items[player])):
+    if (
+        skipCache
+        or world.itemvalue_rule_cache[player][value_name].get("count", -1) == -1
+        or world.itemvalue_rule_cache[player][value_name].get("state") != dict(state.prog_items[player])
+    ):
         # Run First Time, if state changed since last check or if skipCache has a value
         existing_item_values = get_items_with_value(world, multiworld, value_name)
         total_Count = 0
@@ -433,48 +471,63 @@ def ItemValue(world: World, multiworld: MultiWorld, state: CollectionState, play
                 total_Count += count * value
         if skipCache:
             return total_Count >= requested_count
-        world.itemvalue_rule_cache[player][value_name]['count'] = total_Count
-        world.itemvalue_rule_cache[player][value_name]['state'] = dict(state.prog_items[player])
-    return world.itemvalue_rule_cache[player][value_name]['count'] >= requested_count
+        world.itemvalue_rule_cache[player][value_name]["count"] = total_Count
+        world.itemvalue_rule_cache[player][value_name]["state"] = dict(state.prog_items[player])
+    return world.itemvalue_rule_cache[player][value_name]["count"] >= requested_count
+
 
 # Two useful functions to make require work if an item is disabled instead of making it inaccessible
-def OptOne(world: World, multiworld: MultiWorld, state: CollectionState, player: int, item: str, items_counts: Optional[dict] = None):
+def OptOne(
+    world: World,
+    multiworld: MultiWorld,
+    state: CollectionState,
+    player: int,
+    item: str,
+    items_counts: Optional[dict] = None,
+):
     """Check if the passed item (with or without ||) is enabled, then this returns |item:count|
     where count is clamped to the maximum number of said item in the itempool.\n
     Eg. requires: "{OptOne(|DisabledItem|)} and |other items|" become "|DisabledItem:0| and |other items|" if the item is disabled.
     """
     if item == "":
-        return "" #Skip this function if item is left blank
+        return ""  # Skip this function if item is left blank
     if not items_counts:
         items_counts = world.get_item_counts()
 
-    require_type = 'item'
+    require_type = "item"
 
-    if '@' in item[:2]:
-        require_type = 'category'
+    if "@" in item[:2]:
+        require_type = "category"
 
-    item = item.lstrip('|@$').rstrip('|')
+    item = item.lstrip("|@$").rstrip("|")
 
     item_parts = item.split(":")
     item_name = item
-    item_count = '1'
+    item_count = "1"
 
     if len(item_parts) > 1:
         item_name = item_parts[0]
         item_count = item_parts[1]
 
-    if require_type == 'category':
+    if require_type == "category":
         if item_count.isnumeric():
-            #Only loop if we can use the result to clamp
-            category_items = [item for item in world.item_name_to_item.values() if "category" in item and item_name in item["category"]]
-            category_items_counts = sum([items_counts.get(category_item["name"], 0) for category_item in category_items])
+            # Only loop if we can use the result to clamp
+            category_items = [
+                item
+                for item in world.item_name_to_item.values()
+                if "category" in item and item_name in item["category"]
+            ]
+            category_items_counts = sum(
+                [items_counts.get(category_item["name"], 0) for category_item in category_items]
+            )
             item_count = clamp(int(item_count), 0, category_items_counts)
         return f"|@{item_name}:{item_count}|"
-    elif require_type == 'item':
+    elif require_type == "item":
         if item_count.isnumeric():
             item_current_count = items_counts.get(item_name, 0)
             item_count = clamp(int(item_count), 0, item_current_count)
         return f"|{item_name}:{item_count}|"
+
 
 # OptAll check the passed require string and loop every item to check if they're enabled,
 def OptAll(world: World, multiworld: MultiWorld, state: CollectionState, player: int, requires: str):
@@ -489,19 +542,22 @@ def OptAll(world: World, multiworld: MultiWorld, state: CollectionState, player:
     functions = {}
     if requires_list == "":
         return True
-    for item in re.findall(r'\{(\w+)\(([^)]*)\)\}', requires_list):
-        #so this function doesn't try to get item from other functions, in theory.
+    for item in re.findall(r"\{(\w+)\(([^)]*)\)\}", requires_list):
+        # so this function doesn't try to get item from other functions, in theory.
         func_name = item[0]
         functions[func_name] = item[1]
         requires_list = requires_list.replace("{" + func_name + "(" + item[1] + ")}", "{" + func_name + "(temp)}")
     # parse user written statement into list of each item
-    for item in re.findall(r'\|[^|]+\|', requires):
+    for item in re.findall(r"\|[^|]+\|", requires):
         itemScanned = OptOne(world, multiworld, state, player, item, items_counts)
         requires_list = requires_list.replace(item, itemScanned)
 
     for function in functions:
-        requires_list = requires_list.replace("{" + function + "(temp)}", "{" + func_name + "(" + functions[func_name] + ")}")
+        requires_list = requires_list.replace(
+            "{" + function + "(temp)}", "{" + func_name + "(" + functions[func_name] + ")}"
+        )
     return requires_list
+
 
 # Rule to expose the can_reach_location core function
 def canReachLocation(world: World, multiworld: MultiWorld, state: CollectionState, player: int, location: str):
@@ -510,9 +566,11 @@ def canReachLocation(world: World, multiworld: MultiWorld, state: CollectionStat
         return True
     return False
 
+
 def YamlEnabled(world: "ManualWorld", multiworld: MultiWorld, state: CollectionState, player: int, param: str) -> bool:
     """Is a yaml option enabled?"""
     return is_option_enabled(multiworld, player, param)
+
 
 def YamlDisabled(world: "ManualWorld", multiworld: MultiWorld, state: CollectionState, player: int, param: str) -> bool:
     """Is a yaml option disabled?"""

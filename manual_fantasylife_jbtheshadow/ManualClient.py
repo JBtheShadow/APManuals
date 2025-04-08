@@ -1,15 +1,17 @@
 from __future__ import annotations
-import time
-import sys
-from typing import Any, Optional
-import typing
-from worlds import AutoWorldRegister, network_data_package
-import json
-import traceback
 
-import asyncio, re
+import asyncio
+import json
+import re
+import sys
+import time
+import traceback
+import typing
+from typing import Any, Optional
 
 import ModuleUpdate
+from worlds import AutoWorldRegister, network_data_package
+
 ModuleUpdate.update()
 
 import Utils
@@ -17,17 +19,20 @@ import Utils
 if __name__ == "__main__":
     Utils.init_logging("ManualClient", exception_logger="Client")
 
-from NetUtils import ClientStatus
-from CommonClient import gui_enabled, logger, get_base_parser, ClientCommandProcessor, server_loop
+from CommonClient import ClientCommandProcessor, get_base_parser, gui_enabled, logger, server_loop
 from MultiServer import mark_raw
+from NetUtils import ClientStatus
 
 tracker_loaded = False
 try:
-    from worlds.tracker.TrackerClient import TrackerGameContext as SuperContext, TrackerCommandProcessor
+    from worlds.tracker.TrackerClient import TrackerCommandProcessor
+    from worlds.tracker.TrackerClient import TrackerGameContext as SuperContext
+
     ClientCommandProcessor = TrackerCommandProcessor
     tracker_loaded = True
 except ModuleNotFoundError:
     from CommonClient import CommonContext as SuperContext
+
 
 class ManualClientCommandProcessor(ClientCommandProcessor):
     def _cmd_resync(self) -> bool:
@@ -40,10 +45,7 @@ class ManualClientCommandProcessor(ClientCommandProcessor):
     def _cmd_send(self, location_name: str) -> bool:
         """Send a check"""
         names = self.ctx.location_names_to_id.keys()
-        location_name, usable, response = Utils.get_intended_text(
-            location_name,
-            names
-        )
+        location_name, usable, response = Utils.get_intended_text(location_name, names)
         if usable:
             location_id = self.ctx.location_names_to_id[location_name]
             self.ctx.locations_checked.append(location_id)
@@ -51,9 +53,6 @@ class ManualClientCommandProcessor(ClientCommandProcessor):
         else:
             self.output(response)
             return False
-
-
-
 
 
 class ManualContext(SuperContext):
@@ -77,25 +76,29 @@ class ManualContext(SuperContext):
     search_term = ""
 
     colors = {
-        'location_default': [219/255, 218/255, 213/255, 1],
-        'location_in_logic': [2/255, 242/255, 42/255, 1],
-        'category_even_default': [0.5, 0.5, 0.5, 0.1],
-        'category_odd_default': [1.0, 1.0, 1.0, 0.0],
-        'category_in_logic': [2/255, 82/255, 2/255, 1],
-        'deathlink_received': [1, 0, 0, 1],
-        'deathlink_primed': [1, 1, 1, 1],
-        'deathlink_sent': [0, 1, 0, 1],
-        'game_select_button': [200/255, 200/255, 200/255, 1],
-        'header_background': [15/255, 80/255, 112/255, 1]
+        "location_default": [219 / 255, 218 / 255, 213 / 255, 1],
+        "location_in_logic": [2 / 255, 242 / 255, 42 / 255, 1],
+        "category_even_default": [0.5, 0.5, 0.5, 0.1],
+        "category_odd_default": [1.0, 1.0, 1.0, 0.0],
+        "category_in_logic": [2 / 255, 82 / 255, 2 / 255, 1],
+        "deathlink_received": [1, 0, 0, 1],
+        "deathlink_primed": [1, 1, 1, 1],
+        "deathlink_sent": [0, 1, 0, 1],
+        "game_select_button": [200 / 255, 200 / 255, 200 / 255, 1],
+        "header_background": [15 / 255, 80 / 255, 112 / 255, 1],
     }
 
     def __init__(self, server_address, password, game, player_name) -> None:
         super(ManualContext, self).__init__(server_address, password)
 
         if tracker_loaded:
-            super().set_callback(self.on_tracker_updated) # Universal Tracker takes this func and calls it when updateTracker is called
+            super().set_callback(
+                self.on_tracker_updated
+            )  # Universal Tracker takes this func and calls it when updateTracker is called
             if hasattr(self, "set_events_callback"):
-                super().set_events_callback(self.on_tracker_events) # Universal Tracker takes this func and calls it when events are calculated
+                super().set_events_callback(
+                    self.on_tracker_events
+                )  # Universal Tracker takes this func and calls it when events are calculated
 
         self.send_index: int = 0
         self.syncing = False
@@ -137,6 +140,7 @@ class ManualContext(SuperContext):
         if self.game:
             return self.game
         from .Game import game_name  # This will at least give us the name of a manual they've installed
+
         return Utils.persistent_load().get("client", {}).get("last_manual_game", game_name)
 
     def get_location_by_name(self, name) -> dict[str, Any]:
@@ -161,8 +165,8 @@ class ManualContext(SuperContext):
         return self.get_item_by_name(name)
 
     def update_ids(self, data_package) -> None:
-        self.location_names_to_id = data_package['location_name_to_id']
-        self.item_names_to_id = data_package['item_name_to_id']
+        self.location_names_to_id = data_package["location_name_to_id"]
+        self.item_names_to_id = data_package["item_name_to_id"]
 
     def update_data_package(self, data_package: dict):
         super().update_data_package(data_package)
@@ -195,7 +199,7 @@ class ManualContext(SuperContext):
                 goal = args["slot_data"].get("goal")
                 if goal and goal < len(self.victory_names):
                     self.goal_location = self.get_location_by_name(self.victory_names[goal])
-                if args['slot_data'].get('death_link'):
+                if args["slot_data"].get("death_link"):
                     self.ui.enable_death_link()
                     self.set_deathlink = True
                     self.last_death_link = 0
@@ -211,7 +215,7 @@ class ManualContext(SuperContext):
     def on_deathlink(self, data: typing.Dict[str, typing.Any]) -> None:
         super().on_deathlink(data)
         self.ui.death_link_button.text = f"Death Link: {data['source']}"
-        self.ui.death_link_button.background_color = self.colors['deathlink_received']
+        self.ui.death_link_button.background_color = self.colors["deathlink_received"]
 
     def on_tracker_updated(self, reachable_locations: list[str]):
         self.tracker_reachable_locations = reachable_locations
@@ -225,20 +229,21 @@ class ManualContext(SuperContext):
     def handle_connection_loss(self, msg: str) -> None:
         """Helper for logging and displaying a loss of connection. Must be called from an except block."""
         exc_info = sys.exc_info()
-        logger.exception(msg, exc_info=exc_info, extra={'compact_gui': True})
+        logger.exception(msg, exc_info=exc_info, extra={"compact_gui": True})
         tracker_error = False
         e = exc_info[2]
-        formatted_tb = ''.join(traceback.format_tb(e))
+        formatted_tb = "".join(traceback.format_tb(e))
         while e:
-            if '/tracker/' in e.tb_frame.f_code.co_filename:
+            if "/tracker/" in e.tb_frame.f_code.co_filename:
                 tracker_error = True
                 break
             e = e.tb_next
 
         if tracker_error:
             self._messagebox_connection_loss = self.gui_error(
-                "A Universal Tracker error has occurred. Please ensure that your version of UT matches your version of Archipelago.", 
-                formatted_tb)
+                "A Universal Tracker error has occurred. Please ensure that your version of UT matches your version of Archipelago.",
+                formatted_tb,
+            )
         else:
             self._messagebox_connection_loss = self.gui_error(msg, formatted_tb)
 
@@ -259,11 +264,15 @@ class ManualContext(SuperContext):
             ui = super().make_gui()  # before the kivy imports so kvui gets loaded first
         else:
             from kvui import GameManager
+
             ui = GameManager
 
+        from kivy.core.window import Window
+        from kivy.lang import Builder
         from kivy.metrics import dp
-        from kivy.uix.button import Button
+        from kivy.properties import ColorProperty
         from kivy.uix.boxlayout import BoxLayout
+        from kivy.uix.button import Button
         from kivy.uix.dropdown import DropDown
         from kivy.uix.gridlayout import GridLayout
         from kivy.uix.label import Label
@@ -271,10 +280,7 @@ class ManualContext(SuperContext):
         from kivy.uix.scrollview import ScrollView
         from kivy.uix.spinner import Spinner, SpinnerOption
         from kivy.uix.textinput import TextInput
-        from kivy.uix.treeview import TreeView, TreeViewNode, TreeViewLabel
-        from kivy.core.window import Window
-        from kivy.lang import Builder
-        from kivy.properties import ColorProperty
+        from kivy.uix.treeview import TreeView, TreeViewLabel, TreeViewNode
 
         class ManualTabLayout(BoxLayout):
             pass
@@ -299,14 +305,14 @@ class ManualContext(SuperContext):
             pass
 
         class GameSelectOption(SpinnerOption):
-            background_color = self.colors['game_select_button']
+            background_color = self.colors["game_select_button"]
 
         class GameSelectDropDown(DropDown):
             # If someone can figure out how to give this a solid background, I'd be very happy.
             pass
 
         Builder.load_string(
-        """
+            """
 
 <ManualControlsStyledLayout>:
     canvas:
@@ -316,7 +322,8 @@ class ManualContext(SuperContext):
             pos: self.pos
             size: self.size
 
-        """)
+        """
+        )
 
         class ManualControlsStyledLayout(BoxLayout):
             background_color = ColorProperty()
@@ -348,24 +355,33 @@ class ManualContext(SuperContext):
 
                 self.manual_game_layout = BoxLayout(orientation="horizontal", size_hint_y=None, height=dp(30))
 
-                game_bar_label = Label(text="Manual Game ID", size=(dp(150), dp(30)), size_hint_y=None, size_hint_x=None)
+                game_bar_label = Label(
+                    text="Manual Game ID", size=(dp(150), dp(30)), size_hint_y=None, size_hint_x=None
+                )
                 manuals = [w for w in AutoWorldRegister.world_types.keys() if "Manual_" in w]
                 manuals.sort()  # Sort by alphabetical order, not load order
                 self.manual_game_layout.add_widget(game_bar_label)
-                self.game_bar_text = Spinner(text=self.ctx.suggested_game, size_hint_y=None, height=dp(30), sync_height=True,
-                                             values=manuals, option_cls=GameSelectOption, dropdown_cls=GameSelectDropDown)
+                self.game_bar_text = Spinner(
+                    text=self.ctx.suggested_game,
+                    size_hint_y=None,
+                    height=dp(30),
+                    sync_height=True,
+                    values=manuals,
+                    option_cls=GameSelectOption,
+                    dropdown_cls=GameSelectDropDown,
+                )
                 self.manual_game_layout.add_widget(self.game_bar_text)
 
                 self.grid.add_widget(self.manual_game_layout, 3)
 
                 for child in self.tabs.tab_list:
                     if child.text == "Manual":
-                        panel = child # instead of creating a new TabbedPanelItem, use the one we use above to make the tabs show
+                        panel = child  # instead of creating a new TabbedPanelItem, use the one we use above to make the tabs show
 
                 panel.content = ManualTabLayout(orientation="vertical")
 
                 self.controls_panel = ManualControlsLayout(orientation="horizontal", size_hint_y=None, height=dp(40))
-                self.tracker_and_locations_panel = TrackerAndLocationsLayout(cols = 2)
+                self.tracker_and_locations_panel = TrackerAndLocationsLayout(cols=2)
 
                 panel.content.add_widget(self.controls_panel)
                 panel.content.add_widget(self.tracker_and_locations_panel)
@@ -402,8 +418,7 @@ class ManualContext(SuperContext):
 
             def enable_death_link(self):
                 if not hasattr(self, "death_link_button"):
-                    self.death_link_button = Button(text="Death Link: Primed",
-                                                size_hint_x=None, width=150)
+                    self.death_link_button = Button(text="Death Link: Primed", size_hint_x=None, width=150)
                     self.connect_layout.add_widget(self.death_link_button)
                     self.death_link_button.bind(on_release=self.send_death_link)
 
@@ -411,11 +426,11 @@ class ManualContext(SuperContext):
                 if self.ctx.last_death_link:
                     self.ctx.last_death_link = 0
                     self.death_link_button.text = "Death Link: Primed"
-                    self.death_link_button.background_color = self.ctx.colors['deathlink_primed']
+                    self.death_link_button.background_color = self.ctx.colors["deathlink_primed"]
                 else:
                     self.ctx.deathlink_out = True
                     self.death_link_button.text = "Death Link: Sent"
-                    self.death_link_button.background_color = self.ctx.colors['deathlink_sent']
+                    self.death_link_button.background_color = self.ctx.colors["deathlink_sent"]
 
             def update_hints(self):
                 super().update_hints()
@@ -435,12 +450,12 @@ class ManualContext(SuperContext):
 
             def update_search_from_input(self, instance, text: str):
                 self.ctx.set_search(text)
-                self.request_update_tracker_and_locations_table() # if we want search to be "snappier", we can just make this update
+                self.request_update_tracker_and_locations_table()  # if we want search to be "snappier", we can just make this update
 
             def clear_search_input(self):
                 self.search_textbox.text = ""
                 self.ctx.clear_search()
-                self.request_update_tracker_and_locations_table() # if we want search to be "snappier", we can just make this update
+                self.request_update_tracker_and_locations_table()  # if we want search to be "snappier", we can just make this update
 
             def build_tracker_and_locations_table(self):
                 self.controls_panel.clear_widgets()
@@ -448,17 +463,28 @@ class ManualContext(SuperContext):
 
                 if not self.ctx.server or not self.ctx.auth:
                     self.tracker_and_locations_panel.add_widget(
-                                Label(text="Waiting for connection...", size_hint_y=None, height=50, outline_width=1))
+                        Label(text="Waiting for connection...", size_hint_y=None, height=50, outline_width=1)
+                    )
                     return
 
                 self.clear_lists()
 
                 # build tab-specific controls above the two tracker columns
-                controls_styled_layout = ManualControlsStyledLayout(orientation="horizontal", size_hint_y=None, height=dp(40), padding=dp(5), background_color=self.ctx.colors["header_background"])
-                search_layout = BoxLayout(orientation="horizontal", size_hint=(None, None), width=dp(320), height=dp(30), spacing=dp(2))
+                controls_styled_layout = ManualControlsStyledLayout(
+                    orientation="horizontal",
+                    size_hint_y=None,
+                    height=dp(40),
+                    padding=dp(5),
+                    background_color=self.ctx.colors["header_background"],
+                )
+                search_layout = BoxLayout(
+                    orientation="horizontal", size_hint=(None, None), width=dp(320), height=dp(30), spacing=dp(2)
+                )
                 search_label = Label(text="Search:", size_hint=(None, None), width=dp(55), height=dp(30), bold=True)
-                self.search_textbox = TextInput(size_hint=(None, None), width=dp(200), height=dp(30), multiline=False, write_tab=False)
-                self.search_textbox.bind(text = self.update_search_from_input)
+                self.search_textbox = TextInput(
+                    size_hint=(None, None), width=dp(200), height=dp(30), multiline=False, write_tab=False
+                )
+                self.search_textbox.bind(text=self.update_search_from_input)
                 search_button = Button(size_hint=(None, None), width=dp(50), height=dp(30), text="Clear")
                 search_button.bind(on_release=lambda *args: self.clear_search_input())
 
@@ -469,10 +495,15 @@ class ManualContext(SuperContext):
                 self.controls_panel.add_widget(controls_styled_layout)
 
                 # seed all category names to start
-                for item in self.ctx.item_table.values() or AutoWorldRegister.world_types[self.ctx.game].item_name_to_item.values():
+                for item in (
+                    self.ctx.item_table.values()
+                    or AutoWorldRegister.world_types[self.ctx.game].item_name_to_item.values()
+                ):
                     if "category" in item and len(item["category"]) > 0:
                         for category in item["category"]:
-                            category_settings = self.ctx.category_table.get(category) or getattr(AutoWorldRegister.world_types[self.ctx.game], "category_table", {}).get(category, {})
+                            category_settings = self.ctx.category_table.get(category) or getattr(
+                                AutoWorldRegister.world_types[self.ctx.game], "category_table", {}
+                            ).get(category, {})
                             if "hidden" in category_settings and category_settings["hidden"]:
                                 continue
                             if category not in self.item_categories:
@@ -481,11 +512,14 @@ class ManualContext(SuperContext):
                             if category not in self.listed_items:
                                 self.listed_items[category] = []
 
-
                 # Items are not received on connect, so don't bother attempting to work with received items here
 
-                if not self.ctx.location_table and not hasattr(AutoWorldRegister.world_types[self.ctx.game], 'location_name_to_location'):
-                    raise Exception("The apworld for %s is too outdated for this client. Please update it." % (self.ctx.game))
+                if not self.ctx.location_table and not hasattr(
+                    AutoWorldRegister.world_types[self.ctx.game], "location_name_to_location"
+                ):
+                    raise Exception(
+                        "The apworld for %s is too outdated for this client. Please update it." % (self.ctx.game)
+                    )
 
                 for location_id in self.ctx.missing_locations:
                     # holy nesting, wow
@@ -497,7 +531,9 @@ class ManualContext(SuperContext):
 
                     if "category" in location and len(location["category"]) > 0:
                         for category in location["category"]:
-                            category_settings = self.ctx.category_table.get(category) or getattr(AutoWorldRegister.world_types[self.ctx.game], "category_table", {}).get(category, {})
+                            category_settings = self.ctx.category_table.get(category) or getattr(
+                                AutoWorldRegister.world_types[self.ctx.game], "category_table", {}
+                            ).get(category, {})
                             if "hidden" in category_settings and category_settings["hidden"]:
                                 continue
                             if category not in self.location_categories:
@@ -507,10 +543,10 @@ class ManualContext(SuperContext):
                                 self.listed_locations[category] = []
 
                             self.listed_locations[category].append(location_id)
-                    else: # leave it in the generic category
+                    else:  # leave it in the generic category
                         self.listed_locations["(No Category)"].append(location_id)
 
-                victory_location =  self.ctx.goal_location
+                victory_location = self.ctx.goal_location
                 victory_categories = set()
 
                 if "category" in victory_location and len(victory_location["category"]) > 0:
@@ -530,48 +566,68 @@ class ManualContext(SuperContext):
 
                 items_length = len(self.ctx.items_received)
                 tracker_panel_scrollable = TrackerLayoutScrollable(do_scroll=(False, True), bar_width=10)
-                tracker_panel = TreeView(root_options=dict(text="Items Received (%d)" % (items_length)), size_hint_y=None)
-                tracker_panel.bind(minimum_height=tracker_panel.setter('height'))
+                tracker_panel = TreeView(
+                    root_options=dict(text="Items Received (%d)" % (items_length)), size_hint_y=None
+                )
+                tracker_panel.bind(minimum_height=tracker_panel.setter("height"))
 
                 # Since items_received is not available on connect, don't bother building item labels here
                 for item_category in sorted(self.listed_items.keys()):
                     category_tree = tracker_panel.add_node(
-                        TreeViewLabel(text = "%s (%s)" % (item_category, len(self.listed_items[item_category])))
+                        TreeViewLabel(text="%s (%s)" % (item_category, len(self.listed_items[item_category])))
                     )
 
-                    category_scroll = tracker_panel.add_node(TreeViewScrollView(size_hint=(1, None), size=(Window.width / 2, 250)), category_tree)
+                    category_scroll = tracker_panel.add_node(
+                        TreeViewScrollView(size_hint=(1, None), size=(Window.width / 2, 250)), category_tree
+                    )
                     category_layout = GridLayout(cols=1, size_hint_y=None)
-                    category_layout.bind(minimum_height = category_layout.setter('height'))
+                    category_layout.bind(minimum_height=category_layout.setter("height"))
                     category_scroll.add_widget(category_layout)
 
                 locations_length = len(self.ctx.missing_locations)
                 locations_panel_scrollable = LocationsLayoutScrollable(do_scroll=(False, True), bar_width=10)
-                locations_panel = TreeView(root_options=dict(text="Remaining Locations (%d)" % (locations_length + 1)), size_hint_y=None)
-                locations_panel.bind(minimum_height=locations_panel.setter('height'))
+                locations_panel = TreeView(
+                    root_options=dict(text="Remaining Locations (%d)" % (locations_length + 1)), size_hint_y=None
+                )
+                locations_panel.bind(minimum_height=locations_panel.setter("height"))
 
                 # This seems like a redundant copy of the same check above?
-                if not self.ctx.location_table and not hasattr(AutoWorldRegister.world_types[self.ctx.game], 'location_name_to_location'):
-                    raise Exception("The apworld for %s is too outdated for this client. Please update it." % (self.ctx.game))
+                if not self.ctx.location_table and not hasattr(
+                    AutoWorldRegister.world_types[self.ctx.game], "location_name_to_location"
+                ):
+                    raise Exception(
+                        "The apworld for %s is too outdated for this client. Please update it." % (self.ctx.game)
+                    )
 
                 for location_category in sorted(self.listed_locations.keys()):
                     locations_in_category = len(self.listed_locations[location_category])
 
-                    if ("category" in victory_location and location_category in victory_location["category"]) or \
-                        ("category" not in victory_location and location_category == "(No Category)"):
+                    if ("category" in victory_location and location_category in victory_location["category"]) or (
+                        "category" not in victory_location and location_category == "(No Category)"
+                    ):
                         locations_in_category += 1
 
                     category_tree = locations_panel.add_node(
-                        TreeViewLabel(text = "%s (%s)" % (location_category, locations_in_category))
+                        TreeViewLabel(text="%s (%s)" % (location_category, locations_in_category))
                     )
 
-                    category_scroll = locations_panel.add_node(TreeViewScrollView(size_hint=(1, None), size=(Window.width / 2, 250)), category_tree)
+                    category_scroll = locations_panel.add_node(
+                        TreeViewScrollView(size_hint=(1, None), size=(Window.width / 2, 250)), category_tree
+                    )
                     category_layout = GridLayout(cols=1, size_hint_y=None)
-                    category_layout.bind(minimum_height = category_layout.setter('height'))
+                    category_layout.bind(minimum_height=category_layout.setter("height"))
                     category_scroll.add_widget(category_layout)
 
                     for location_id in self.listed_locations[location_category]:
-                        location_button = TreeViewButton(text=self.ctx.location_names.lookup_in_game(location_id), size_hint=(None, None), height=30, width=400)
-                        location_button.bind(on_release=lambda *args, loc_id=location_id: self.location_button_callback(loc_id, *args))
+                        location_button = TreeViewButton(
+                            text=self.ctx.location_names.lookup_in_game(location_id),
+                            size_hint=(None, None),
+                            height=30,
+                            width=400,
+                        )
+                        location_button.bind(
+                            on_release=lambda *args, loc_id=location_id: self.location_button_callback(loc_id, *args)
+                        )
                         location_button.id = location_id
                         category_layout.add_widget(location_button)
 
@@ -580,8 +636,14 @@ class ManualContext(SuperContext):
                     #     ("category" not in victory_location_data and location_category == "(No Category)"):
                     if location_category in victory_categories:
                         # Add the Victory location to be marked at any point, which is why locations length has 1 added to it above
-                        victory_text = "VICTORY! (seed finished)" if victory_location["name"] == "__Manual Game Complete__" else "GOAL: " + victory_location["name"]
-                        location_button = TreeViewButton(text=victory_text, size_hint=(None, None), height=dp(30), width=dp(400))
+                        victory_text = (
+                            "VICTORY! (seed finished)"
+                            if victory_location["name"] == "__Manual Game Complete__"
+                            else "GOAL: " + victory_location["name"]
+                        )
+                        location_button = TreeViewButton(
+                            text=victory_text, size_hint=(None, None), height=dp(30), width=dp(400)
+                        )
                         location_button.victory = True
                         location_button.bind(on_release=self.victory_button_callback)
                         category_layout.add_widget(location_button)
@@ -602,22 +664,30 @@ class ManualContext(SuperContext):
 
             def request_update_tracker_and_locations_table(self, update_highlights=False):
                 self.update_requested_time = time.time()
-                self.update_requested_highlights = update_highlights or self.update_requested_highlights # if any of the requests wanted highlights, do highlight
+                self.update_requested_highlights = (
+                    update_highlights or self.update_requested_highlights
+                )  # if any of the requests wanted highlights, do highlight
 
             def update_tracker_and_locations_table(self, update_highlights=False):
                 items_length = len(self.ctx.items_received)
                 locations_length = len(self.ctx.missing_locations)
 
                 if self.ctx.search_term:
-                    items_length = len([
-                        i for i in self.ctx.items_received 
+                    items_length = len(
+                        [
+                            i
+                            for i in self.ctx.items_received
                             if self.ctx.search_term.lower() in self.ctx.item_names.lookup_in_game(i.item).lower()
-                    ])
+                        ]
+                    )
 
-                    locations_length = len([
-                        l for l in self.ctx.missing_locations 
+                    locations_length = len(
+                        [
+                            l
+                            for l in self.ctx.missing_locations
                             if self.ctx.search_term.lower() in self.ctx.location_names.lookup_in_game(l).lower()
-                    ])
+                        ]
+                    )
 
                 for _, child in enumerate(self.tracker_and_locations_panel.children):
                     #
@@ -626,21 +696,26 @@ class ManualContext(SuperContext):
                     #        item tracker     -> category -> category label, category scroll   -> label col  -> item
                     #
                     if type(child) is TrackerLayoutScrollable:
-                        treeview = child.children[0] # TreeView
+                        treeview = child.children[0]  # TreeView
                         treeview_nodes = treeview.iterate_all_nodes()
 
-                        items_received_label = next(treeview_nodes) # always the first node
+                        items_received_label = next(treeview_nodes)  # always the first node
                         items_received_label.text = "Items Received (%s)" % (items_length)
 
                         # loop for each category in listed items and get the label + scrollview
                         for x in range(0, len(self.item_categories)):
-                            category_label = next(treeview_nodes) # TreeViewLabel for category
-                            category_scrollview = next(treeview_nodes) # TreeViewScrollView for housing category's grid layout
+                            category_label = next(treeview_nodes)  # TreeViewLabel for category
+                            category_scrollview = next(
+                                treeview_nodes
+                            )  # TreeViewScrollView for housing category's grid layout
 
                             old_category_text = category_label.text
 
-                            if type(category_label) is TreeViewLabel and type(category_scrollview) is TreeViewScrollView:
-                                category_grid = category_scrollview.children[0] # GridLayout
+                            if (
+                                type(category_label) is TreeViewLabel
+                                and type(category_scrollview) is TreeViewScrollView
+                            ):
+                                category_grid = category_scrollview.children[0]  # GridLayout
 
                                 category_name = re.sub(r"\s\(\d+\)$", "", category_label.text)
                                 category_count = 0
@@ -659,7 +734,10 @@ class ManualContext(SuperContext):
                                         item_count = len(list(i for i in self.ctx.items_received if i.item == item_id))
 
                                         # if the player is searching for text and the item name doesn't contain it, skip it
-                                        if self.ctx.search_term and not self.ctx.search_term.lower() in item_name.lower():
+                                        if (
+                                            self.ctx.search_term
+                                            and self.ctx.search_term.lower() not in item_name.lower()
+                                        ):
                                             item.width = 0
                                             item.height = 0
                                             item.opacity = 0
@@ -673,7 +751,7 @@ class ManualContext(SuperContext):
                                                 category_unique_name_count += 1
 
                                         # Update the label quantity
-                                        item.text="%s (%s)" % (item_name, item_count)
+                                        item.text = "%s (%s)" % (item_name, item_count)
 
                                         if update_highlights and (old_item_text != item.text):
                                             bold_item_labels.append(item_name)
@@ -685,28 +763,40 @@ class ManualContext(SuperContext):
                                 self.listed_items[category_name].clear()
 
                                 # Label (for all item listings)
-                                sorted_items_received = sorted([
-                                    i.item for i in self.ctx.items_received 
-                                ], key=self.ctx.item_names.lookup_in_game)
+                                sorted_items_received = sorted(
+                                    [i.item for i in self.ctx.items_received], key=self.ctx.item_names.lookup_in_game
+                                )
 
                                 for network_item in sorted_items_received:
                                     item_name = self.ctx.item_names.lookup_in_game(network_item)
                                     item_data = self.ctx.get_item_by_name(item_name)
 
                                     # if the player is searching for text and the item name doesn't contain it, skip it
-                                    if self.ctx.search_term and not self.ctx.search_term.lower() in item_name.lower():
+                                    if self.ctx.search_term and self.ctx.search_term.lower() not in item_name.lower():
                                         continue
 
                                     if "category" not in item_data or not item_data["category"]:
                                         item_data["category"] = ["(No Category)"]
 
-                                    if category_name in item_data["category"] and network_item not in self.listed_items[category_name]:
-                                        item_count = len(list(i for i in self.ctx.items_received if i.item == network_item))
-                                        item_text = Label(text="%s (%s)" % (item_name, item_count),
-                                                    size_hint=(None, None), height=dp(30), width=dp(400), bold=True)
+                                    if (
+                                        category_name in item_data["category"]
+                                        and network_item not in self.listed_items[category_name]
+                                    ):
+                                        item_count = len(
+                                            list(i for i in self.ctx.items_received if i.item == network_item)
+                                        )
+                                        item_text = Label(
+                                            text="%s (%s)" % (item_name, item_count),
+                                            size_hint=(None, None),
+                                            height=dp(30),
+                                            width=dp(400),
+                                            bold=True,
+                                        )
 
                                         # if the item was previously listed and was bold, or if it wasn't previously listed at all, make it bold
-                                        item_text.bold = (update_highlights and (item_name in bold_item_labels or item_name not in existing_item_labels))
+                                        item_text.bold = update_highlights and (
+                                            item_name in bold_item_labels or item_name not in existing_item_labels
+                                        )
 
                                         category_grid.add_widget(item_text)
                                         self.listed_items[category_name].append(network_item)
@@ -728,7 +818,7 @@ class ManualContext(SuperContext):
                             if update_highlights:
                                 category_label.bold = True if old_category_text != category_label.text else False
 
-                            category_scrollview.size=(Window.width / 2, scrollview_height)
+                            category_scrollview.size = (Window.width / 2, scrollview_height)
 
                     #
                     # Structure of locations:
@@ -736,19 +826,24 @@ class ManualContext(SuperContext):
                     #      location tracker     -> category -> category label, category scroll   -> label col  -> location
                     #
                     if type(child) is LocationsLayoutScrollable:
-                        treeview = child.children[0] # TreeView
+                        treeview = child.children[0]  # TreeView
                         treeview_nodes = treeview.iterate_all_nodes()
 
-                        locations_remaining_label = next(treeview_nodes) # always the first node
+                        locations_remaining_label = next(treeview_nodes)  # always the first node
                         locations_remaining_label.text = "Remaining Locations (%d)" % (locations_length)
 
                         # loop for each category in listed items and get the label + scrollview
                         for x in range(0, len(self.location_categories)):
-                            category_label = next(treeview_nodes) # TreeViewLabel for category
-                            category_scrollview = next(treeview_nodes) # TreeViewScrollView for housing category's grid layout
+                            category_label = next(treeview_nodes)  # TreeViewLabel for category
+                            category_scrollview = next(
+                                treeview_nodes
+                            )  # TreeViewScrollView for housing category's grid layout
 
-                            if type(category_label) is TreeViewLabel and type(category_scrollview) is TreeViewScrollView:
-                                category_grid = category_scrollview.children[0] # GridLayout
+                            if (
+                                type(category_label) is TreeViewLabel
+                                and type(category_scrollview) is TreeViewScrollView
+                            ):
+                                category_grid = category_scrollview.children[0]  # GridLayout
 
                                 category_name = re.sub(r"\s\(\d+\/?(\d+)?\)$", "", category_label.text)
                                 category_count = 0
@@ -773,16 +868,27 @@ class ManualContext(SuperContext):
                                 for location_button in category_grid.children:
                                     if type(location_button) is TreeViewButton:
                                         # should only be true for the victory location button, which has different text
-                                        if location_button.text not in (self.ctx.location_table or AutoWorldRegister.world_types[self.ctx.game].location_name_to_location):
+                                        if location_button.text not in (
+                                            self.ctx.location_table
+                                            or AutoWorldRegister.world_types[self.ctx.game].location_name_to_location
+                                        ):
                                             # if the player is searching for text and the location name doesn't contain it, hide and disable it
-                                            if self.ctx.search_term and not self.ctx.search_term.lower() in location_button.text.lower():
-                                                hide_button_during_search(location_button)                                            
+                                            if (
+                                                self.ctx.search_term
+                                                and self.ctx.search_term.lower() not in location_button.text.lower()
+                                            ):
+                                                hide_button_during_search(location_button)
                                             else:
                                                 show_button_during_search(location_button)
                                                 category_count += 1
 
-                                                if location_button.victory and "__Victory__" in self.ctx.tracker_reachable_events:
-                                                    location_button.background_color = self.ctx.colors['location_in_logic']
+                                                if (
+                                                    location_button.victory
+                                                    and "__Victory__" in self.ctx.tracker_reachable_events
+                                                ):
+                                                    location_button.background_color = self.ctx.colors[
+                                                        "location_in_logic"
+                                                    ]
                                                     reachable_count += 1
 
                                                 continue
@@ -797,17 +903,20 @@ class ManualContext(SuperContext):
                                         was_reachable = False
 
                                         if location_button.text in self.ctx.tracker_reachable_locations:
-                                            location_button.background_color = self.ctx.colors['location_in_logic']
+                                            location_button.background_color = self.ctx.colors["location_in_logic"]
                                             was_reachable = True
                                         else:
-                                            location_button.background_color = self.ctx.colors['location_default']
+                                            location_button.background_color = self.ctx.colors["location_default"]
 
                                         # if the player is searching for text and the location name doesn't contain it, hide and disable it
-                                        if self.ctx.search_term and not self.ctx.search_term.lower() in location_button.text.lower():
-                                            hide_button_during_search(location_button)                                            
+                                        if (
+                                            self.ctx.search_term
+                                            and self.ctx.search_term.lower() not in location_button.text.lower()
+                                        ):
+                                            hide_button_during_search(location_button)
                                         else:
                                             show_button_during_search(location_button)
-                                                                                        
+
                                             if was_reachable:
                                                 reachable_count += 1
 
@@ -834,13 +943,13 @@ class ManualContext(SuperContext):
 
                                 if reachable_count > 0:
                                     # treeviewlabels don't have background color. because #justkivythings.
-                                    category_label.even_color = self.ctx.colors['category_in_logic']
-                                    category_label.odd_color = self.ctx.colors['category_in_logic']
+                                    category_label.even_color = self.ctx.colors["category_in_logic"]
+                                    category_label.odd_color = self.ctx.colors["category_in_logic"]
                                 else:
-                                    category_label.even_color = self.ctx.colors['category_even_default']
-                                    category_label.odd_color = self.ctx.colors['category_odd_default']
+                                    category_label.even_color = self.ctx.colors["category_even_default"]
+                                    category_label.odd_color = self.ctx.colors["category_odd_default"]
 
-                                category_scrollview.size=(Window.width / 2, scrollview_height)
+                                category_scrollview.size = (Window.width / 2, scrollview_height)
 
             def location_button_callback(self, location_id, button):
                 if button.text not in self.ctx.location_names_to_id:
@@ -860,13 +969,14 @@ class ManualContext(SuperContext):
 
         return ManualManager
 
+
 async def game_watcher_manual(ctx: ManualContext):
     while not ctx.exit_event.is_set():
         if ctx.ui:
             ctx.ui.check_for_requested_update()
 
         if ctx.syncing == True:
-            sync_msg = [{'cmd': 'Sync'}]
+            sync_msg = [{"cmd": "Sync"}]
             if ctx.locations_checked:
                 sync_msg.append({"cmd": "LocationChecks", "locations": list(ctx.locations_checked)})
             await ctx.send_msgs(sync_msg)
@@ -881,9 +991,9 @@ async def game_watcher_manual(ctx: ManualContext):
             await ctx.send_death()
 
         sending = []
-        victory = ("__Victory__" in ctx.items_received)
+        victory = "__Victory__" in ctx.items_received
         ctx.locations_checked = sending
-        message = [{"cmd": 'LocationChecks', "locations": sending}]
+        message = [{"cmd": "LocationChecks", "locations": sending}]
         await ctx.send_msgs(message)
         if not ctx.finished_game and victory:
             await ctx.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
@@ -894,7 +1004,7 @@ async def game_watcher_manual(ctx: ManualContext):
 def read_apmanual_file(apmanual_file):
     from base64 import b64decode
 
-    with open(apmanual_file, 'r') as f:
+    with open(apmanual_file, "r") as f:
         return json.loads(b64decode(f.read()))
 
 
@@ -915,8 +1025,7 @@ async def main(args):
     if gui_enabled:
         ctx.run_gui()
     ctx.run_cli()
-    progression_watcher = asyncio.create_task(
-        game_watcher_manual(ctx), name="ManualProgressionWatcher")
+    progression_watcher = asyncio.create_task(game_watcher_manual(ctx), name="ManualProgressionWatcher")
 
     await ctx.exit_event.wait()
     ctx.server_address = None
@@ -925,12 +1034,12 @@ async def main(args):
 
     await ctx.shutdown()
 
+
 def launch() -> None:
     import colorama
 
     parser = get_base_parser(description="Manual Client, for operating a Manual game in Archipelago.")
-    parser.add_argument('apmanual_file', default="", type=str, nargs="?",
-                        help='Path to an APMANUAL file')
+    parser.add_argument("apmanual_file", default="", type=str, nargs="?", help="Path to an APMANUAL file")
 
     args = sys.argv[1:]
     if "Manual Client" in args:
@@ -940,5 +1049,6 @@ def launch() -> None:
     asyncio.run(main(args))
     colorama.deinit()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     launch()

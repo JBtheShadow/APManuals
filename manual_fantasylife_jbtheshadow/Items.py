@@ -1,7 +1,7 @@
 from BaseClasses import Item
+
 from .Data import item_table
 from .Game import filler_item_name, starting_index
-
 
 ######################
 # Generate item lookups
@@ -17,9 +17,7 @@ count = starting_index
 
 # add the filler item to the list of items for lookup
 if filler_item_name:
-    item_table.append({
-        "name": filler_item_name
-    })
+    item_table.append({"name": filler_item_name})
 
 # add sequential generated ids to the lists
 for key, val in enumerate(item_table):
@@ -34,7 +32,7 @@ for key, val in enumerate(item_table):
     item_table[key]["progression"] = val["progression"] if "progression" in val else False
     if isinstance(val.get("category", []), str):
         item_table[key]["category"] = [val["category"]]
-        
+
     count += 1
 
 for item in item_table:
@@ -50,9 +48,8 @@ for item in item_table:
             item_name_groups[c] = []
         item_name_groups[c].append(item_name)
 
-    #Just lowercase the values here to remove all the .lower.strip down the line
-    item['value'] = {k.lower().strip(): v
-                     for k, v in item.get('value', {}).items()}
+    # Just lowercase the values here to remove all the .lower.strip down the line
+    item["value"] = {k.lower().strip(): v for k, v in item.get("value", {}).items()}
 
     for v in item.get("value", {}).keys():
         group_name = f"has_{v}_value"
