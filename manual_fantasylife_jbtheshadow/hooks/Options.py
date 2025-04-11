@@ -228,6 +228,39 @@ class IncludeSkillLevelBlissChecks(Toggle):
     default = False
 
 
+class AdditionalSkillLevelChecks(Toggle):
+    """Toggles whether to include individual checks for each separate skill.
+
+    These are separate from the Bliss checks and are meant to give you more locations earlier on as another incentive to work on the different Lives.
+    """
+
+    display_name = "Additional skill level checks?"
+    default = True
+
+
+class AdditionalSkillLevelChecksIncluded(Choice):
+    """Selects which skill levels will be considered checks. Beware some options can lead to grinding.
+
+    [five] Levels 2, 3, 4 and 5 are checks
+    [ten] Levels 2 through 10 are checks
+    [ten_sparse] Levels 2, 3, 5, 7 and 10 are checks
+    [fifteen] Levels 2 through 15 are checks
+    [fifteen_sparse] Levels 2, 3, 5, 7, 10, 13 and 15 are checks
+    [twenty] Levels 2 through 20 are checks. Requires partial completion of DLC for levels 16 through 20.
+    [twenty_sparse] Levels 2, 3, 5, 7, 10, 13, 15, 17 and 20 are checks. Requires partial completion of DLC for levels 17 and 20.
+    """
+
+    display_name = "Additional skill level checks included?"
+    option_five = 5
+    option_ten = 10
+    option_ten_sparse = 11
+    option_fifteen = 15
+    option_fifteen_sparse = 16
+    option_twenty = 20
+    option_twenty_sparse = 21
+    default = 5
+
+
 class IncludeAllyBlissChecks(Toggle):
     """Toggles whether to include the Bliss checks related to making allies with npcs (and being able to invite them to your party) as locations in the pool."""
 
@@ -306,6 +339,8 @@ def before_options_defined(options: dict) -> dict:
     options["include_playtime_checks"] = IncludePlaytimeBlissChecks
     options["include_level_up_checks"] = IncludeLevelUpBlissChecks
     options["include_skill_level_checks"] = IncludeSkillLevelBlissChecks
+    options["additional_skill_level_checks"] = AdditionalSkillLevelChecks
+    options["additional_skill_level_checks_included"] = AdditionalSkillLevelChecksIncluded
     options["include_ally_checks"] = IncludeAllyBlissChecks
     options["include_streetpass_checks"] = IncludeStreetPassBlissChecks
     options["enable_item_restrictions"] = EnableItemRestrictions

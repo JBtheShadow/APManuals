@@ -1,28 +1,88 @@
 from enum import Enum
 
 
+class Skill(Enum):
+    DASH = "Dash"
+    SNEAKING = "Sneaking"
+    DAGGER = "Dagger Skill"
+    LONGSWORD = "Longsword Skill"
+    SHIELD = "Shield Skill"
+    GREATSWORD = "Greatsword Skill"
+    ARCHERY = "Archery"
+    MAGIC = "Magic Skill"
+    WIND_MAGIC = "Wind Magic"
+    WATER_MAGIC = "Water Magic"
+    EARTH_MAGIC = "Earth Magic"
+    FIRE_MAGIC = "Fire Magic"
+    MINING = "Mining"
+    WOODCUTTING = "Woodcutting"
+    FISHING = "Fishing"
+    COOKING = "Cooking"
+    MEAT_CUISINE = "Meat Cuisine"
+    SEAFOOD_CUISINE = "Seafood Cuisine"
+    EGG_VEG_CUISINE = "Egg & Veg Cuisine"
+    SMITHING = "Smithing"
+    WEAPONSMITHING = "Weaponsmithing"
+    ARMORSMITHING = "Armorsmithing"
+    TOOL_SMITHING = "Metal Tool Smithing"
+    CARPENTRY = "Carpentry"
+    FURNITURE_CARPENTRY = "Furniture Carpentry"
+    WEAPONS_CARPENTRY = "Weapons Carpentry"
+    TOOLS_CARPENTRY = "Tools Carpentry"
+    SEWING = "Sewing"
+    GARMENT_TAILORING = "Garment Tailoring"
+    MISC_TAILORING = "Misc. Tailoring"
+    FABRIC_TAILORING = "Fabric Tailoring"
+    ALCHEMY = "Alchemy"
+    COMPOUND_ALCHEMY = "Compound Alchemy"
+    ACCESSORY_ALCHEMY = "Accessory Alchemy"
+
+
 class Life(Enum):
-    PALADIN = 1, "Paladin", ["Longswords", "Shields"]
-    MERCENARY = 2, "Mercenary", ["Greatswords"]
-    HUNTER = 3, "Hunter", ["Bows"]
-    MAGICIAN = 4, "Magician", ["Wands"]
-    MINER = 5, "Miner", ["Pickaxes"]
-    WOODCUTTER = 6, "Woodcutter", ["Axes"]
-    ANGLER = 7, "Angler", ["Fishing Rods"]
-    COOK = 8, "Cook", ["Frying Pans"]
-    BLACKSMITH = 9, "Blacksmith", ["Hammers"]
-    CARPENTER = 10, "Carpenter", ["Saws"]
-    TAILOR = 11, "Tailor", ["Needles"]
-    ALCHEMIST = 12, "Alchemist", ["Flasks"]
+    PALADIN = 1, "Paladin", ["Longswords", "Shields"], [Skill.LONGSWORD, Skill.SHIELD]
+    MERCENARY = 2, "Mercenary", ["Greatswords"], [Skill.GREATSWORD]
+    HUNTER = 3, "Hunter", ["Bows"], [Skill.ARCHERY]
+    MAGICIAN = (
+        4,
+        "Magician",
+        ["Wands"],
+        [Skill.MAGIC, Skill.WIND_MAGIC, Skill.WATER_MAGIC, Skill.EARTH_MAGIC, Skill.FIRE_MAGIC],
+    )
+    MINER = 5, "Miner", ["Pickaxes"], [Skill.MINING]
+    WOODCUTTER = 6, "Woodcutter", ["Axes"], [Skill.WOODCUTTING]
+    ANGLER = 7, "Angler", ["Fishing Rods"], [Skill.FISHING]
+    COOK = 8, "Cook", ["Frying Pans"], [Skill.COOKING, Skill.MEAT_CUISINE, Skill.SEAFOOD_CUISINE, Skill.EGG_VEG_CUISINE]
+    BLACKSMITH = (
+        9,
+        "Blacksmith",
+        ["Hammers"],
+        [Skill.SMITHING, Skill.WEAPONSMITHING, Skill.ARMORSMITHING, Skill.TOOL_SMITHING],
+    )
+    CARPENTER = (
+        10,
+        "Carpenter",
+        ["Saws"],
+        [Skill.CARPENTRY, Skill.FURNITURE_CARPENTRY, Skill.WEAPONS_CARPENTRY, Skill.TOOLS_CARPENTRY],
+    )
+    TAILOR = (
+        11,
+        "Tailor",
+        ["Needles"],
+        [Skill.SEWING, Skill.GARMENT_TAILORING, Skill.MISC_TAILORING, Skill.FABRIC_TAILORING],
+    )
+    ALCHEMIST = 12, "Alchemist", ["Flasks"], [Skill.ALCHEMY, Skill.COMPOUND_ALCHEMY, Skill.ACCESSORY_ALCHEMY]
 
     def __new__(cls, *args, **kwds):
         obj = object.__new__(cls)
         obj._value_ = args[0]
         return obj
 
-    def __init__(self, _: int, description: str = None, required_items: list[str] = None):
+    def __init__(
+        self, _: int, description: str = None, required_items: list[str] = None, related_skills: list[Skill] = None
+    ):
         self._description_ = description
         self._required_items_ = required_items
+        self._related_skills_ = related_skills
 
     @property
     def description(self):
@@ -31,6 +91,10 @@ class Life(Enum):
     @property
     def required_items(self):
         return self._required_items_
+
+    @property
+    def related_skills(self):
+        return self._related_skills_
 
     @classmethod
     def easy_combat(cls):
