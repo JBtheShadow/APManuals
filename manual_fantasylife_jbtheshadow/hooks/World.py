@@ -138,7 +138,6 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     licenses = world.options.licenses.value > 0
     progressive_licenses = world.options.progressive_licenses.value > 0
     enable_item_restrictions = world.options.enable_item_restrictions.value > 0
-    include_starting_tools = world.options.include_starting_tools.value > 0
     if licenses:
         if progressive_licenses and not dlc:
             fast_licenses = world.options.fast_licenses.value > 0
@@ -177,12 +176,12 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                 ]
             )
             starting_inventory.append(item_name)
-            if enable_item_restrictions and include_starting_tools:
+            if enable_item_restrictions:
                 life = Life.from_description(life_name)
                 for item_name in life.required_items:
                     starting_inventory.append(item_name)
 
-    elif enable_item_restrictions and include_starting_tools:
+    elif enable_item_restrictions:
         life = world.random.choice(list(Life))
         for item_name in life.required_items:
             starting_inventory.append(item_name)

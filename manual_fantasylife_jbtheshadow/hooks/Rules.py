@@ -91,6 +91,24 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
     return state.has(f"Fast Progressive {life.description} License", player, rank.fast_requirement)
 
 
+def item_restrictions(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
+    if not (world.options.enable_item_restrictions.value > 0):
+        return True
+
+    count_str = count_str.strip()
+    count = int(count_str) if count_str.isnumeric() else 0
+    return state.has_group("Item Restrictions", player, count)
+
+
+def bliss_bonuses(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
+    if not (world.options.bliss_bonuses.value > 0):
+        return True
+
+    count_str = count_str.strip()
+    count = int(count_str) if count_str.isnumeric() else 0
+    return state.has_group("Bliss Bonuses", player, count)
+
+
 def can_fight(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     if not (world.options.enable_item_restrictions.value > 0):
         return True

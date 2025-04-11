@@ -256,43 +256,29 @@ class IncludeOtherRequests(Choice):
 class EnableItemRestrictions(Toggle):
     """Toggles whether to restrict equipment and consumable usage.
 
-    When enabled, you must unequip everything you have as soon as you can, with the end of your first Life tutorial at the latest.
+    When enabled, you're only allowed to equip or use items you have the clearance for, unequipping everything else.
 
-    From then on, you must unlock the respective slot, item type, quality and rarity before being allowed to use or equip any items.
+    Items are restricted by slot, type, quality and rarity. There are no restrictions on furniture nor materials.
 
-    Furniture and materials have no restrictions.
-
-    Each Life requires the following items unlocked:
-    * Paladin: Longsword and Shield
-    * Mercenary: Greatsword
-    * Hunter: Bow
-    * Magician: Wand
-    * Miner: Pickaxe
-    * Woodcutter: Axe
-    * Angler: Fishing Rod
-    * Cook: Frying Pan
-    * Blacksmith: Hammer
-    * Carpenter: Saw
-    * Tailor: Needle
-    * Alchemist: Flask
+    Each Life requires the following items unlocked. If licenses are in the pool the starting license's items will be granted as well. If not, items from a random Life will be chosen:
+    * Paladin: Longswords and Shields
+    * Mercenary: Greatswords
+    * Hunter: Bows
+    * Magician: Wands
+    * Miner: Pickaxes
+    * Woodcutter: Axes
+    * Angler: Fishing Rods
+    * Cook: Frying Pans
+    * Blacksmith: Hammers
+    * Carpenter: Saws
+    * Tailor: Needles
+    * Alchemist: Flasks
 
     Very restrictive, not recommended unless you really want to take on the extra challenge.
     """
 
     display_name = "Enable Item Restrictions?"
     default = False
-
-
-class IncludeStartingTools(Toggle):
-    """Toggles whether to include weapons or tools related to the starting Life. Does nothing without item restrictions.
-
-    When enabled, you'll start with the dagger + any weapons/tools required for the starting Life already unlocked.
-
-    This allows one to actually use their first Life past the tutorial, otherwise they may be limited to barehanded gathering and combat.
-    """
-
-    display_name = "Include Starting Tools?"
-    default = True
 
 
 class Goal(Choice):
@@ -323,7 +309,6 @@ def before_options_defined(options: dict) -> dict:
     options["include_ally_checks"] = IncludeAllyBlissChecks
     options["include_streetpass_checks"] = IncludeStreetPassBlissChecks
     options["enable_item_restrictions"] = EnableItemRestrictions
-    options["include_starting_tools"] = IncludeStartingTools
     return options
 
 
