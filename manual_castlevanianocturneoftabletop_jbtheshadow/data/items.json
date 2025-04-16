@@ -1,0 +1,66 @@
+[
+  {
+    "count": 1,
+    "name": "Albus",
+    "category": [
+      "Hunters"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Alucard",
+    "category": [
+      "Hunters"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Charlotte",
+    "category": [
+      "Hunters"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Cornell",
+    "category": [
+      "Hunters"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Efrain",
+    "category": [
+      "Hunters"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Eric",
+    "category": [
+      "Hunters"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Hector",
+    "category": [
+      "Hunters"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Henry",
+    "category": [
+      "Hunters"
+    ],
+    "progression": true
+  }
+]
