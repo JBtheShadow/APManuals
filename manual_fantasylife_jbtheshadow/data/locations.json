@@ -1,5 +1,5 @@
 {
-	"$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
   "data": [
     { "name": "Wish Hunt", "category": [ "Goal" ], "victory": true, "requires": "{wish_hunt()}" },
     { "name": "Life Mastery", "category": [ "Goal" ], "victory": true, "requires": "{life_mastery()}" },

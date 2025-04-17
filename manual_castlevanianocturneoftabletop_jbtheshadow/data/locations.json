@@ -1,8 +1,20 @@
-[
-  {
-    "victory": true,
-    "name": "Test",
-    "category": [],
-    "requires": []
-  }
-]
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
+  "data": [
+    { "name": "Defeat Dracula", "category": [ "Goal" ], "requires": [], "victory": true },
+
+    { "name": "Albus - Starting Weapon", "category": [ "Starting Gear" ], "requires": "|Albus|", "place_item_category": [ "Albus Primary" ] },
+    { "name": "Albus - Starting Ability", "category": [ "Starting Gear" ], "requires": "|Albus|", "place_item_category": [ "Albus Secondary" ] },
+    { "name": "Albus - Level Up #01", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:1|" },
+    { "name": "Albus - Level Up #02", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:2|" },
+    { "name": "Albus - Level Up #03", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:3|" },
+    { "name": "Albus - Level Up #04", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:4|" },
+    { "name": "Albus - Level Up #05", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:5|" },
+    { "name": "Albus - Level Up #06", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:6|" },
+    { "name": "Albus - Level Up #07", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:7|" },
+    { "name": "Albus - Level Up #08", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:8|" },
+    { "name": "Albus - Level Up #09", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:9|" },
+    { "name": "Albus - Level Up #10", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:10|" },
+    { "name": "Albus - Level Up #11", "category": [ "Albus - Level Ups" ], "requires": "|Albus| and |@Albus Secondary:11|" }
+  ]
+}

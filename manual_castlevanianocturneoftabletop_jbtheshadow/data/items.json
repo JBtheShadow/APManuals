@@ -1,66 +1,47 @@
-[
-  {
-    "count": 1,
-    "name": "Albus",
-    "category": [
-      "Hunters"
-    ],
-    "progression": true
-  },
-  {
-    "count": 1,
-    "name": "Alucard",
-    "category": [
-      "Hunters"
-    ],
-    "progression": true
-  },
-  {
-    "count": 1,
-    "name": "Charlotte",
-    "category": [
-      "Hunters"
-    ],
-    "progression": true
-  },
-  {
-    "count": 1,
-    "name": "Cornell",
-    "category": [
-      "Hunters"
-    ],
-    "progression": true
-  },
-  {
-    "count": 1,
-    "name": "Efrain",
-    "category": [
-      "Hunters"
-    ],
-    "progression": true
-  },
-  {
-    "count": 1,
-    "name": "Eric",
-    "category": [
-      "Hunters"
-    ],
-    "progression": true
-  },
-  {
-    "count": 1,
-    "name": "Hector",
-    "category": [
-      "Hunters"
-    ],
-    "progression": true
-  },
-  {
-    "count": 1,
-    "name": "Henry",
-    "category": [
-      "Hunters"
-    ],
-    "progression": true
-  }
-]
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.items.schema.json",
+  "data": [
+    { "count": 1, "name": "Albus", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Albus - Agartha", "category": [ "Primary", "Albus", "Albus Primary" ], "progression": true },
+
+    { "count": 1, "name": "Albus - Backdash", "category": [ "Martial Arts", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Dominus Agony", "category": [ "Magic", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Dominus Anger", "category": [ "Magic", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Dominus Hatred", "category": [ "Magic", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Emperor Ring", "category": [ "Accessory", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - High Jump", "category": [ "Ability", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Max Shot", "category": [ "Magic", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Optical Shot", "category": [ "Magic", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Quad Ignis", "category": [ "Martial Arts", "Magic", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Rapid Fire", "category": [ "Ability", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Torpor", "category": [ "Ability", "Albus", "Albus Secondary" ], "progression": true },
+    { "count": 1, "name": "Albus - Warp", "category": [ "Ability", "Albus", "Albus Secondary" ], "progression": true },
+
+    { "count": 1, "name": "Alucard", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Alucard - Short Sword", "category": [ "Weapons", "Alucard", "Alucard Primary" ], "progression": true },
+    { "count": 1, "name": "Alucard - Holy Water", "category": [ "Subweapons", "Alucard", "Alucard Secondary" ], "progression": true },
+
+
+    { "count": 1, "name": "Charlotte", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Cornell", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Efrain", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Eric", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Hector", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Henry", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Jonathan", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Julius", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Juste", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Leon", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Maria", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Maxim", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Nathan", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Pumpkin", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Richter", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Shanoa", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Simon", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Soma", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Sonia", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Trevor", "category": [ "Hunters" ], "progression": true },
+    { "count": 1, "name": "Yoko", "category": [ "Hunters" ], "progression": true }
+  ]
+}
