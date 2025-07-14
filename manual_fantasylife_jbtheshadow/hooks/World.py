@@ -1,20 +1,24 @@
 # Object classes from AP core, to represent an entire MultiWorld and this individual World that's part of it
-# calling logging.info("message") anywhere below in this file will output the message to both console and log file
-import logging
-
-from BaseClasses import MultiWorld
 from worlds.AutoWorld import World
+from BaseClasses import MultiWorld, CollectionState, Item
+
+# Object classes from Manual -- extending AP core -- representing items and locations that are used in generation
+from ..Items import ManualItem
+from ..Locations import ManualLocation
 
 from ..data.Data import FILLER_ITEMS, FillerCategory, Life
+from ..hooks import Options, Helpers
 
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
 #
-# These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
-from ..hooks import Options
+from ..Data import game_table, item_table, location_table, region_table
 
-# Object classes from Manual -- extending AP core -- representing items and locations that are used in generation
-from ..Items import ManualItem
+# These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
+from ..Helpers import is_option_enabled, get_option_value, format_state_prog_items_key, ProgItemsCat
+
+# calling logging.info("message") anywhere below in this file will output the message to both console and log file
+import logging
 
 ########################################################################################
 ## Order of method calls when the world generates:
@@ -37,42 +41,48 @@ def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int)
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
-    goal = world.options.goal.value
-    licenses = world.options.licenses.value > 0
-    progressive_licenses = world.options.progressive_licenses.value > 0
-    fast_licenses = world.options.fast_licenses.value > 0
-    wish_hunt_required = world.options.wish_hunt_required.value
-    wish_hunt_total = world.options.wish_hunt_total.value
-    life_mastery_rank = world.options.life_mastery_rank.value
-    dlc = world.options.dlc.value > 0
-    other_requests = world.options.other_requests.value
+    goal = get_option_value(multiworld, player, "goal")
+    licenses = is_option_enabled(multiworld, player, "licenses")
+    progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
+    fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
+    wish_hunt_required = get_option_value(multiworld, player, "wish_hunt_required")
+    wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
+    life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
+    dlc = is_option_enabled(multiworld, player, "dlc")
+    other_requests = get_option_value(multiworld, player, "other_requests")
 
     match goal:
         case Options.Goal.option_wish_hunt:
             if (wish_hunt_total <= 84 and not dlc or wish_hunt_total <= 100 and dlc) and other_requests < 1:
                 logging.info("Forcing Other Requests to [only_first] for Wish Hunt")
-                world.options.other_requests.value = Options.IncludeOtherRequests.option_only_first
+                Helpers.set_option_value(
+                    multiworld, player, "other_requests", Options.IncludeOtherRequests.option_only_first
+                )
             elif (
                 84 < wish_hunt_total <= 168 and not dlc or 100 < wish_hunt_total <= 200 and dlc
             ) and other_requests < 2:
                 logging.info("Forcing Other Requests to [up_to_second] for Wish Hunt")
-                world.options.other_requests.value = Options.IncludeOtherRequests.option_up_to_second
+                Helpers.set_option_value(
+                    multiworld, player, "other_requests", Options.IncludeOtherRequests.option_up_to_second
+                )
             elif 100 < wish_hunt_total <= 200 and not dlc and other_requests < 3:
                 logging.info("Forcing Other Requests to [up_to_third] for Wish Hunt")
-                world.options.other_requests.value = Options.IncludeOtherRequests.option_up_to_third
+                Helpers.set_option_value(
+                    multiworld, player, "other_requests", Options.IncludeOtherRequests.option_up_to_third
+                )
 
             if wish_hunt_required > wish_hunt_total:
                 logging.info(
                     f"There are more Lost Wishes required than the available total. Setting the required amount to {wish_hunt_total}"
                 )
-                world.options.wish_hunt_required.value = wish_hunt_total
+                Helpers.set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_total)
         case Options.Goal.option_life_mastery:
             if not dlc and life_mastery_rank in [
                 Options.LifeMasteryRank.option_demi_creator,
                 Options.LifeMasteryRank.option_creator,
             ]:
                 logging.info("Target rank for Life Mastery cannot be reached without the DLC. Defaulting to Master.")
-                world.options.life_mastery_rank.value = Options.LifeMasteryRank.option_master
+                Helpers.set_option_value(multiworld, player, "life_mastery_rank", Options.LifeMasteryRank.option_master)
 
     if (
         licenses
@@ -83,22 +93,35 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
         logging.info(
             "There won't be enough items to place with Other Requests disabled; changing Progressive Licenses from full to fast."
         )
-        world.options.fast_licenses.value = True
+        Helpers.set_option_enabled(multiworld, player, "fast_licenses", True)
 
 
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
-    location_names_to_remove = []  # List of location names
+    locationNamesToRemove: list[str] = []  # List of location names
 
     # Add your code here to calculate which locations to remove
+
     for region in multiworld.regions:
         if region.player == player:
             for location in list(region.locations):
-                if location.name in location_names_to_remove:
+                if location.name in locationNamesToRemove:
                     region.locations.remove(location)
-    if hasattr(multiworld, "clear_location_cache"):
-        multiworld.clear_location_cache()
+
+
+# This hook allows you to access the item names & counts before the items are created. Use this to increase/decrease the amount of a specific item in the pool
+# Valid item_config key/values:
+# {"Item Name": 5} <- This will create qty 5 items using all the default settings
+# {"Item Name": {"useful": 7}} <- This will create qty 7 items and force them to be classified as useful
+# {"Item Name": {"progression": 2, "useful": 1}} <- This will create 3 items, with 2 classified as progression and 1 as useful
+# {"Item Name": {0b0110: 5}} <- If you know the special flag for the item classes, you can also define non-standard options. This setup
+#       will create 5 items that are the "useful trap" class
+# {"Item Name": {ItemClassification.useful: 5}} <- You can also use the classification directly
+def before_create_items_all(
+    item_config: dict[str, int | dict], world: World, multiworld: MultiWorld, player: int
+) -> dict[str, int | dict]:
+    return item_config
 
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
@@ -118,14 +141,14 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     # to the list multiple times if you want to remove multiple copies of it.
 
     # Wish Hunt goal
-    goal = world.options.goal.value
-    wish_hunt_total = world.options.wish_hunt_total.value
+    goal = get_option_value(multiworld, player, "goal")
+    wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
     if goal == Options.Goal.option_wish_hunt:
         for _ in range(0, Options.WishHuntTotal.range_end - wish_hunt_total):
             item_names_to_remove.append("Lost Wish")
 
     # Licenses, Starting Life and DLC
-    dlc = world.options.dlc.value > 0
+    dlc = is_option_enabled(multiworld, player, "dlc")
 
     if not dlc:
         item_names_to_remove += [
@@ -135,12 +158,12 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             "Intermission Complete",
         ]
 
-    licenses = world.options.licenses.value > 0
-    progressive_licenses = world.options.progressive_licenses.value > 0
-    enable_item_restrictions = world.options.enable_item_restrictions.value > 0
+    licenses = is_option_enabled(multiworld, player, "licenses")
+    progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
+    enable_item_restrictions = is_option_enabled(multiworld, player, "enable_item_restrictions")
     if licenses:
         if progressive_licenses and not dlc:
-            fast_licenses = world.options.fast_licenses.value > 0
+            fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
             if fast_licenses:
                 for life_name in Life:
                     item_names_to_remove.append(f"Fast Progressive {life_name.description} License")
@@ -149,7 +172,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                     for _ in range(0, 2):
                         item_names_to_remove.append(f"Progressive {life_name.description} License")
 
-        starting_life = world.options.starting_life.value
+        starting_life = get_option_value(multiworld, player, "starting_life")
         life_name = ""
         match starting_life:
             case Options.StartingLife.option_any:
@@ -187,12 +210,12 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             starting_inventory.append(item_name)
 
     # Bliss Bonuses
-    bliss_bonuses = world.options.bliss_bonuses.value > 0
+    bliss_bonuses = is_option_enabled(multiworld, player, "bliss_bonuses")
     if bliss_bonuses:
         if not dlc:
             item_names_to_remove += ["Bigger Bag", "Bigger Bag", "Bigger Storage", "Bigger Storage"]
 
-        starting_bliss_bonus = world.options.starting_bliss_bonus.value
+        starting_bliss_bonus = get_option_value(multiworld, player, "starting_bliss_bonus")
         item_name = ""
         match starting_bliss_bonus:
             case Options.StartingBlissBonus.option_bag:
@@ -239,6 +262,12 @@ def before_set_rules(world: World, multiworld: MultiWorld, player: int):
 def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to modify the access rules for a given location
 
+    def Example_Rule(state: CollectionState) -> bool:
+        # Calculated rules take a CollectionState object and return a boolean
+        # True if the player can access the location
+        # CollectionState is defined in BaseClasses
+        return True
+
     ## Common functions:
     # location = world.get_location(location_name, player)
     # location.access_rule = Example_Rule
@@ -248,7 +277,6 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
     # location.access_rule = lambda state: old_rule(state) and Example_Rule(state)
     # OR
     # location.access_rule = lambda state: old_rule(state) or Example_Rule(state)
-    pass
 
 
 # The item name to create is provided before the item is created, in case you want to make changes to it
@@ -262,12 +290,30 @@ def after_create_item(item: ManualItem, world: World, multiworld: MultiWorld, pl
 
 
 # This method is run towards the end of pre-generation, before the place_item options have been handled and before AP generation occurs
-def before_generate_basic(world: World, multiworld: MultiWorld, player: int) -> list:
+def before_generate_basic(world: World, multiworld: MultiWorld, player: int):
     pass
 
 
 # This method is run at the very end of pre-generation, once the place_item options have been handled and before AP generation occurs
 def after_generate_basic(world: World, multiworld: MultiWorld, player: int):
+    pass
+
+
+# This method is run every time an item is added to the state, can be used to modify the value of an item.
+# IMPORTANT! Any changes made in this hook must be cancelled/undone in after_remove_item
+def after_collect_item(world: World, state: CollectionState, Changed: bool, item: Item):
+    # the following let you add to the Potato Item Value count
+    # if item.name == "Cooked Potato":
+    #     state.prog_items[item.player][format_state_prog_items_key(ProgItemsCat.VALUE, "Potato")] += 1
+    pass
+
+
+# This method is run every time an item is removed from the state, can be used to modify the value of an item.
+# IMPORTANT! Any changes made in this hook must be first done in after_collect_item
+def after_remove_item(world: World, state: CollectionState, Changed: bool, item: Item):
+    # the following let you undo the addition to the Potato Item Value count
+    # if item.name == "Cooked Potato":
+    #     state.prog_items[item.player][format_state_prog_items_key(ProgItemsCat.VALUE, "Potato")] -= 1
     pass
 
 
@@ -290,6 +336,7 @@ def before_write_spoiler(world: World, multiworld: MultiWorld, spoiler_handle) -
 def before_extend_hint_information(
     hint_data: dict[int, dict[int, str]], world: World, multiworld: MultiWorld, player: int
 ) -> None:
+
     ### Example way to use this hook:
     # if player not in hint_data:
     #     hint_data.update({player: {}})

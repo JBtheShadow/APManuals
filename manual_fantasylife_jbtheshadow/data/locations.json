@@ -3,7 +3,7 @@
   "data": [
     { "name": "Wish Hunt", "category": [ "Goal" ], "victory": true, "requires": "{wish_hunt()}" },
     { "name": "Life Mastery", "category": [ "Goal" ], "victory": true, "requires": "{life_mastery()}" },
-    
+
     { "name": "Claim password \"Reveria\"", "region": "Passwords", "category": [ "Claimable Passwords" ], "requires": "|Password \"Reveria\"|" },
     { "name": "Claim password \"Butting in\"", "region": "Passwords", "category": [ "Claimable Passwords" ], "requires": "|Password \"Butting in\"|" },
     { "name": "Claim password \"Exceedingly cute\"", "region": "Passwords", "category": [ "Claimable Passwords" ], "requires": "|Password \"Exceedingly cute\"|" },
@@ -73,7 +73,7 @@
     { "name": "3. Unlock Mystery Fairy", "region": "Bliss Bonuses", "dont_place_item_category": ["Item Restrictions", "Wish Hunt", "Life Licenses", "Claimable Passwords"], "category": [ "Progressive Bliss", "Bliss Bonuses: Fashion Options" ], "requires": "|More Fashion:3|" },
     { "name": "1. Unlock Happy Audio", "region": "Bliss Bonuses", "dont_place_item_category": ["Item Restrictions", "Wish Hunt", "Life Licenses", "Claimable Passwords"], "category": [ "Progressive Bliss", "Bliss Bonuses: Audio & Video", "Media Bonus" ], "requires": "|Audio & Video:1|" },
     { "name": "2. Unlock Happy Movies", "region": "Bliss Bonuses", "dont_place_item_category": ["Item Restrictions", "Wish Hunt", "Life Licenses", "Claimable Passwords"], "category": [ "Progressive Bliss", "Bliss Bonuses: Audio & Video", "Media Bonus" ], "requires": "|Audio & Video:2|" },
-  
+
     { "name": "1. Prologue Start", "region": "Prologue", "category": [ "Chapters: 0 (Prologue)" ], "requires": "" },
     { "name": "2. Meet the king at the castle", "region": "Prologue", "category": [ "Chapters: 0 (Prologue)" ], "requires": "" },
     { "name": "3. Prologue End", "region": "Prologue", "category": [ "Chapters: 0 (Prologue)" ], "place_item": ["Prologue Complete"], "requires": "" },
@@ -172,7 +172,7 @@
     { "name": "1f. The Elderwood Goddess Statue", "region": "Post DLC", "category": [ "Chapters: 9.5 (Post DLC)", "DLC" ], "requires": "" },
     { "name": "1g. The Origin Island Goddess Statue", "region": "Post DLC", "category": [ "Chapters: 9.5 (Post DLC)", "DLC" ], "requires": "" },
     { "name": "2. Finished all of Butterfly's Requests", "region": "Post DLC", "category": [ "Chapters: 9.5 (Post DLC)", "DLC" ], "requires": "" },
-  
+
     { "name": "1. Started a new Life as a Paladin", "category": [ "Life: Paladin" ], "requires": "{has_license(Fledgling Paladin)}" },
     { "name": "2. Became an Apprentice Paladin", "category": [ "Life: Paladin" ], "requires": "{has_license(Apprentice Paladin)}" },
     { "name": "3. Became an Adept Paladin", "category": [ "Life: Paladin" ], "requires": "{has_license(Adept Paladin)}" },

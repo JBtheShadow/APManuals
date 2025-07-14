@@ -1,24 +1,57 @@
-from typing import Any
-
-from BaseClasses import CollectionState, MultiWorld
+from typing import Optional
 from worlds.AutoWorld import World
+from ..Helpers import clamp, get_items_with_value, get_option_value, is_option_enabled
+from BaseClasses import MultiWorld, CollectionState
 
 from ..data.Data import Life, Rank
 from ..hooks import Options
 
+import re
+
 
 # Sometimes you have a requirement that is just too messy or repetitive to write out with boolean logic.
 # Define a function here, and you can use it in a requires string with {function_name()}.
+def overfishedAnywhere(world: World, state: CollectionState, player: int):
+    """Has the player collected all fish from any fishing log?"""
+    for cat, items in world.item_name_groups:
+        if cat.endswith("Fishing Log") and state.has_all(items, player):
+            return True
+    return False
+
+
+# You can also pass an argument to your function, like {function_name(15)}
+# Note that all arguments are strings, so you'll need to convert them to ints if you want to do math.
+def anyClassLevel(state: CollectionState, player: int, level: str):
+    """Has the player reached the given level in any class?"""
+    for item in [
+        "Figher Level",
+        "Black Belt Level",
+        "Thief Level",
+        "Red Mage Level",
+        "White Mage Level",
+        "Black Mage Level",
+    ]:
+        if state.count(item, player) >= int(level):
+            return True
+    return False
+
+
+# You can also return a string from your function, and it will be evaluated as a requires string.
+def requiresMelee():
+    """Returns a requires string that checks if the player has unlocked the tank."""
+    return "|Figher Level:15| or |Black Belt Level:15| or |Thief Level:15|"
+
+
 def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     def beat_main_story():
         return state.has("Chapter Complete", player, 7)
 
-    goal = world.options.goal.value
+    goal = get_option_value(multiworld, player, "goal")
     if goal != Options.Goal.option_wish_hunt:
         return True
 
-    required = world.options.wish_hunt_required.value
-    main_story = world.options.require_main_story_for_goal.value > 0
+    required = get_option_value(multiworld, player, "wish_hunt_required")
+    main_story = is_option_enabled(multiworld, player, "require_main_story_for_goal")
 
     return state.has("Lost Wish", player, required) and (not main_story or beat_main_story())
 
@@ -27,19 +60,19 @@ def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, p
     def beat_main_story():
         return state.has("Chapter Complete", player, 7)
 
-    goal = world.options.goal.value
+    goal = get_option_value(multiworld, player, "goal")
     if goal != Options.Goal.option_life_mastery:
         return True
 
-    main_story = world.options.require_main_story_for_goal.value > 0
-    licenses = world.options.licenses.value > 0
+    main_story = is_option_enabled(multiworld, player, "require_main_story_for_goal")
+    licenses = is_option_enabled(multiworld, player, "licenses")
     if not licenses:
         return not main_story or beat_main_story()
 
-    progressive_licenses = world.options.progressive_licenses.value > 0
-    fast_licenses = world.options.fast_licenses.value > 0
-    life_mastery_rank = world.options.life_mastery_rank.value
-    life_mastery_count = world.options.life_mastery_count.value
+    progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
+    fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
+    life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
+    life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
 
     if goal == Options.Goal.option_life_mastery and licenses:
         if not progressive_licenses:
@@ -57,7 +90,7 @@ def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, p
             if life_count >= life_mastery_count:
                 return not main_story or beat_main_story()
 
-        return False
+    return False
 
 
 def has_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
@@ -66,25 +99,25 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
         raise Exception(f"Invalid rank and life parameter '{rank_and_life}'.")
 
     life = Life.from_description(parts[1])
-    enable_item_restrictions = world.options.enable_item_restrictions.value > 0
+    enable_item_restrictions = is_option_enabled(multiworld, player, "enable_item_restrictions")
     if enable_item_restrictions:
         if not state.has_all(life.required_items, player):
             return False
 
-    licenses = world.options.licenses.value > 0
+    licenses = is_option_enabled(multiworld, player, "licenses")
     if not licenses:
         return True
 
     rank = Rank.from_description(parts[0])
 
-    progressive_licenses = world.options.progressive_licenses.value > 0
+    progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
     if not progressive_licenses:
         return state.has(f"{life.description} License", player)
 
     if rank.min_chapter and not state.has("Chapter Complete", player, rank.min_chapter):
         return False
 
-    fast_licenses = world.options.fast_licenses.value > 0
+    fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
     if not fast_licenses:
         return state.has(f"Progressive {life.description} License", player, rank.full_requirement)
 
@@ -92,7 +125,7 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
 
 
 def item_restrictions(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
-    if not (world.options.enable_item_restrictions.value > 0):
+    if not is_option_enabled(multiworld, player, "enable_item_restrictions"):
         return True
 
     count_str = count_str.strip()
@@ -101,7 +134,7 @@ def item_restrictions(world: World, multiworld: MultiWorld, state: CollectionSta
 
 
 def bliss_bonuses(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
-    if not (world.options.bliss_bonuses.value > 0):
+    if not is_option_enabled(multiworld, player, "bliss_bonuses"):
         return True
 
     count_str = count_str.strip()
@@ -110,7 +143,7 @@ def bliss_bonuses(world: World, multiworld: MultiWorld, state: CollectionState, 
 
 
 def can_fight(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    if not (world.options.enable_item_restrictions.value > 0):
+    if not is_option_enabled(multiworld, player, "enable_item_restrictions"):
         return True
 
     return state.has_any(["Daggers", "Longswords", "Greatswords", "Bows", "Wands"], player)
@@ -175,7 +208,7 @@ def trials_access(world: World, multiworld: MultiWorld, state: CollectionState, 
 
 
 def has_better_shopping(world: World, multiworld: MultiWorld, state: CollectionState, player: int, number_str: str):
-    if not (world.options.bliss_bonuses.value > 0):
+    if not is_option_enabled(multiworld, player, "bliss_bonuses"):
         return True
 
     number_str = number_str.strip()

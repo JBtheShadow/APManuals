@@ -43,11 +43,11 @@
     { "count": 1, "name": "Password \"Spittin' image\"", "category": [ "Claimable Passwords" ], "progression": true },
     { "count": 1, "name": "Password \"Sports ball\"", "category": [ "Claimable Passwords" ], "progression": true },
     { "count": 1, "name": "Password \"Shell of a time\"", "category": [ "Claimable Passwords" ], "progression": true },
-    
+
     { "count": 1, "name": "Prologue Complete", "category": [ "Story Progression" ], "progression_skip_balancing": true },
     { "count": 9, "name": "Chapter Complete", "category": [ "Story Progression" ], "progression_skip_balancing": true },
     { "count": 9, "name": "Intermission Complete", "category": [ "Story Progression" ], "progression_skip_balancing": true },
-  
+
     { "count": 5, "name": "Bigger Bag", "category": [ "Bliss Bonuses", "Progressive Bliss", "Bag Bonus" ], "progression": true },
     { "count": 5, "name": "Bigger Storage", "category": [ "Bliss Bonuses", "Progressive Bliss", "Storage Bonus" ], "progression": true },
     { "count": 4, "name": "Better Shopping", "category": [ "Bliss Bonuses", "Progressive Bliss", "Shopping Bonus" ], "progression": true },
@@ -97,7 +97,7 @@
     { "count": 1, "name": "Carpenter License", "category": [ "Single Licenses", "Crafting License", "Carpenter License", "Life Licenses" ], "progression": true, "value": { "Carpenter License": 1} },
     { "count": 1, "name": "Tailor License", "category": [ "Single Licenses", "Crafting License", "Tailor License", "Life Licenses" ], "progression": true, "value": { "Tailor License": 1} },
     { "count": 1, "name": "Alchemist License", "category": [ "Single Licenses", "Crafting License", "Alchemist License", "Life Licenses" ], "progression": true, "value": { "Alchemist License": 1} },
-  
+
     { "count": 5, "name": "Fast Progressive Paladin License", "category": [ "Fast Licenses", "Combat License", "Easier Combat", "Paladin License", "Life Licenses" ], "progression": true, "value": { "Paladin License": 1} },
     { "count": 5, "name": "Fast Progressive Mercenary License", "category": [ "Fast Licenses", "Combat License", "Easier Combat", "Mercenary License", "Life Licenses" ], "progression": true, "value": { "Mercenary License": 1} },
     { "count": 5, "name": "Fast Progressive Hunter License", "category": [ "Fast Licenses", "Combat License", "Hunter License", "Life Licenses" ], "progression": true, "value": { "Hunter License": 1} },
@@ -110,7 +110,7 @@
     { "count": 5, "name": "Fast Progressive Carpenter License", "category": [ "Fast Licenses", "Crafting License", "Carpenter License", "Life Licenses" ], "progression": true, "value": { "Carpenter License": 1} },
     { "count": 5, "name": "Fast Progressive Tailor License", "category": [ "Fast Licenses", "Crafting License", "Tailor License", "Life Licenses" ], "progression": true, "value": { "Tailor License": 1} },
     { "count": 5, "name": "Fast Progressive Alchemist License", "category": [ "Fast Licenses", "Crafting License", "Alchemist License", "Life Licenses" ], "progression": true, "value": { "Alchemist License": 1} },
-  
+
     { "count": 9, "name": "Progressive Paladin License", "category": [ "Progressive Licenses", "Combat License", "Easier Combat", "Paladin License", "Life Licenses" ], "progression": true, "value": { "Paladin License": 1} },
     { "count": 9, "name": "Progressive Mercenary License", "category": [ "Progressive Licenses", "Combat License", "Easier Combat", "Mercenary License", "Life Licenses" ], "progression": true, "value": { "Mercenary License": 1} },
     { "count": 9, "name": "Progressive Hunter License", "category": [ "Progressive Licenses", "Combat License", "Hunter License", "Life Licenses" ], "progression": true, "value": { "Hunter License": 1} },
@@ -123,9 +123,9 @@
     { "count": 9, "name": "Progressive Carpenter License", "category": [ "Progressive Licenses", "Crafting License", "Carpenter License", "Life Licenses" ], "progression": true, "value": { "Carpenter License": 1} },
     { "count": 9, "name": "Progressive Tailor License", "category": [ "Progressive Licenses", "Crafting License", "Tailor License", "Life Licenses" ], "progression": true, "value": { "Tailor License": 1} },
     { "count": 9, "name": "Progressive Alchemist License", "category": [ "Progressive Licenses", "Crafting License", "Alchemist License", "Life Licenses" ], "progression": true, "value": { "Alchemist License": 1} },
-  
+
     { "count": 200, "name": "Lost Wish", "category": [ "Wish Hunt" ], "progression": true },
-    
+
     { "count": 0, "name": "Carrot Soup", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Fluffy Omelette", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Well-Done Burger", "category": [ "Filler" ], "filler": true },
@@ -136,7 +136,7 @@
     { "count": 0, "name": "Roast Mutton", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Tasty Kebab", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Boiled Egg", "category": [ "Filler" ], "filler": true },
-    
+
     { "count": 0, "name": "HP Potion", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "SP Potion", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Poison Antidote", "category": [ "Filler" ], "filler": true },
@@ -144,7 +144,7 @@
     { "count": 0, "name": "Sleep Antidote", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Life Cure", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Mini Bomb", "category": [ "Filler" ], "filler": true },
-    
+
     { "count": 0, "name": "Apple Juice", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Honey Pudding", "category": [ "Filler" ], "filler": true }
   ]
