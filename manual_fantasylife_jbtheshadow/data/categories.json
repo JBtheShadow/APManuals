@@ -37,5 +37,11 @@
     "Playtime": { "yaml_option": ["include_playtime_checks"], "hidden": true },
     "Level Up Bliss Checks": { "yaml_option": ["include_level_up_checks"] },
     "Skill Level Bliss Checks": { "yaml_option": ["include_skill_level_checks"] },
-    "Ally Bliss Checks": { "yaml_option": ["include_ally_checks"] }
+    "Ally Bliss Checks": { "yaml_option": ["include_ally_checks"] },
+    "Item Restrictions": { "yaml_option": ["enable_item_restrictions"] },
+    "Additional Skill Level Checks": { "yaml_option": ["additional_skill_level_checks"], "hidden": true },
+    "Skill Level Above 5": { "hidden":  true },
+    "Skill Level Above 10": { "hidden":  true },
+    "Skill Level Above 15": { "hidden":  true },
+    "Skill Level Sparse Missing": { "hidden":  true }
 }

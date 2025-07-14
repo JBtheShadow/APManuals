@@ -1,7 +1,21 @@
 # Object classes from AP that represent different types of options that you can create
-from Options import Choice, Range, Toggle
+from Options import (
+    Option,
+    FreeText,
+    NumericOption,
+    Toggle,
+    DefaultOnToggle,
+    Choice,
+    TextChoice,
+    Range,
+    NamedRange,
+    OptionGroup,
+    PerGameCommonOptions,
+)
 
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
+# from ..Helpers import is_option_enabled, get_option_value
+from typing import Type, Any
 
 
 ####################################################################
@@ -54,7 +68,7 @@ class LifeMasteryRank(Choice):
     """If the goal is set to Life Mastery, sets the target rank to beat the game."""
 
     display_name = "Target rank for Life Mastery"
-    option_fledgeling = 1
+    option_fledgling = 1
     option_apprentice = 2
     option_adept = 3
     option_expert = 4
@@ -76,21 +90,21 @@ class LifeMasteryCount(Range):
 
 
 class IncludeDLC(Toggle):
-    """Toggles whether or not to include items and locations related to the Origin Island DLC."""
+    """Toggles whether to include items and locations related to the Origin Island DLC."""
 
     display_name = "Include the Origin Island DLC?"
     default = False
 
 
 class IncludeLicenses(Toggle):
-    """Toggles whether or not to include licenses in the pool."""
+    """Toggles whether to include licenses in the pool."""
 
     display_name = "Include licenses?"
     default = True
 
 
 class ProgressiveLicenses(Toggle):
-    """Toggles whether or not licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgeling ranks.
+    """Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.
     If disabled, a single license unlocks all ranks.
     Does nothing if licenses are not included."""
 
@@ -99,10 +113,10 @@ class ProgressiveLicenses(Toggle):
 
 
 class FastLicenses(Toggle):
-    """Toggles whether or not progressive licenses should be grouped together, to reduce item count.
+    """Toggles whether progressive licenses should be grouped together, to reduce item count.
     Does nothing if licenses are not included nor if progressive licenses are disabled.
     The unlocked ranks per license become as follows:
-    Novice, Fledgeling, Apprentice -> 1 license
+    Novice, Fledgling, Apprentice -> 1 license
     Adept, Expert -> 2 licenses
     Master -> 3 licenses
     Hero, Legend -> 4 licenses
@@ -156,7 +170,8 @@ class StartingLife(Choice):
 
 class IncludeBlissBonuses(Toggle):
     """Toggles whether to add the bliss bonuses to the pool, like the bigger bag or access to pets.
-    When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen."""
+    When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen.
+    """
 
     display_name = "Include Bliss Bonuses?"
     default = True
@@ -227,6 +242,39 @@ class IncludeSkillLevelBlissChecks(Toggle):
     default = False
 
 
+class AdditionalSkillLevelChecks(Toggle):
+    """Toggles whether to include individual checks for each separate skill.
+
+    These are separate from the Bliss checks and are meant to give you more locations earlier on as another incentive to work on the different Lives.
+    """
+
+    display_name = "Additional skill level checks?"
+    default = True
+
+
+class AdditionalSkillLevelChecksIncluded(Choice):
+    """Selects which skill levels will be considered checks. Beware some options can lead to grinding.
+
+    [five] Levels 2, 3, 4 and 5 are checks
+    [ten] Levels 2 through 10 are checks
+    [ten_sparse] Levels 2, 3, 5, 7 and 10 are checks
+    [fifteen] Levels 2 through 15 are checks
+    [fifteen_sparse] Levels 2, 3, 5, 7, 10, 13 and 15 are checks
+    [twenty] Levels 2 through 20 are checks. Requires partial completion of DLC for levels 16 through 20.
+    [twenty_sparse] Levels 2, 3, 5, 7, 10, 13, 15, 17 and 20 are checks. Requires partial completion of DLC for levels 17 and 20.
+    """
+
+    display_name = "Additional skill level checks included?"
+    option_five = 5
+    option_ten = 10
+    option_ten_sparse = 11
+    option_fifteen = 15
+    option_fifteen_sparse = 16
+    option_twenty = 20
+    option_twenty_sparse = 21
+    default = 5
+
+
 class IncludeAllyBlissChecks(Toggle):
     """Toggles whether to include the Bliss checks related to making allies with npcs (and being able to invite them to your party) as locations in the pool."""
 
@@ -252,13 +300,41 @@ class IncludeOtherRequests(Choice):
     default = 4
 
 
+class EnableItemRestrictions(Toggle):
+    """Toggles whether to restrict equipment and consumable usage.
+
+    When enabled, you're only allowed to equip or use items you have the clearance for, unequipping everything else.
+
+    Items are restricted by slot, type, quality and rarity. There are no restrictions on furniture nor materials.
+
+    Each Life requires the following items unlocked. If licenses are in the pool the starting license's items will be granted as well. If not, items from a random Life will be chosen:
+    * Paladin: Longswords and Shields
+    * Mercenary: Greatswords
+    * Hunter: Bows
+    * Magician: Wands
+    * Miner: Pickaxes
+    * Woodcutter: Axes
+    * Angler: Fishing Rods
+    * Cook: Frying Pans
+    * Blacksmith: Hammers
+    * Carpenter: Saws
+    * Tailor: Needles
+    * Alchemist: Flasks
+
+    Very restrictive, not recommended unless you really want to take on the extra challenge.
+    """
+
+    display_name = "Enable Item Restrictions?"
+    default = False
+
+
 class Goal(Choice):
     option_wish_hunt = 0
     option_life_mastery = 1
 
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
-def before_options_defined(options: dict) -> dict:
+def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
     options["require_main_story_for_goal"] = RequireMainStoryForGoal
     options["wish_hunt_required"] = WishHuntRequired
     options["wish_hunt_total"] = WishHuntTotal
@@ -277,11 +353,32 @@ def before_options_defined(options: dict) -> dict:
     options["include_playtime_checks"] = IncludePlaytimeBlissChecks
     options["include_level_up_checks"] = IncludeLevelUpBlissChecks
     options["include_skill_level_checks"] = IncludeSkillLevelBlissChecks
+    options["additional_skill_level_checks"] = AdditionalSkillLevelChecks
+    options["additional_skill_level_checks_included"] = AdditionalSkillLevelChecksIncluded
     options["include_ally_checks"] = IncludeAllyBlissChecks
     options["include_streetpass_checks"] = IncludeStreetPassBlissChecks
+    options["enable_item_restrictions"] = EnableItemRestrictions
     return options
 
 
 # This is called after any manual options are defined, in case you want to see what options are defined or want to modify the defined options
-def after_options_defined(options: dict) -> dict:
-    return options
+def after_options_defined(options: Type[PerGameCommonOptions]):
+    # To access a modifiable version of options check the dict in options.type_hints
+    # For example if you want to change DLC_enabled's display name you would do:
+    # options.type_hints["DLC_enabled"].display_name = "New Display Name"
+
+    #  Here's an example on how to add your aliases to the generated goal
+    # options.type_hints['goal'].aliases.update({"example": 0, "second_alias": 1})
+    # options.type_hints['goal'].options.update({"example": 0, "second_alias": 1})  #for an alias to be valid it must also be in options
+
+    pass
+
+
+# Use this Hook if you want to add your Option to an Option group (existing or not)
+def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
+    # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
+    return groups
+
+
+def after_option_groups_created(groups: list[OptionGroup]) -> list[OptionGroup]:
+    return groups
