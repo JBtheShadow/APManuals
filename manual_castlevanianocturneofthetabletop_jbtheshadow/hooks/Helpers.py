@@ -1,6 +1,5 @@
 from typing import Optional, TYPE_CHECKING
 from BaseClasses import MultiWorld, Item, Location
-from .. import Helpers
 
 if TYPE_CHECKING:
     from ..Items import ManualItem
@@ -9,16 +8,6 @@ if TYPE_CHECKING:
 # Use this if you want to override the default behavior of is_option_enabled
 # Return True to enable the category, False to disable it, or None to use the default behavior
 def before_is_category_enabled(multiworld: MultiWorld, player: int, category_name: str) -> Optional[bool]:
-    if category_name == "Score Mode":
-        score_mode = Helpers.get_option_value(multiworld, player, "score")
-        return score_mode > 0
-    if category_name == "Classic Score Mode":
-        score_mode = Helpers.get_option_value(multiworld, player, "score")
-        return score_mode == 1 or score_mode == 3
-    if category_name == "Turbo Score Mode":
-        score_mode = Helpers.get_option_value(multiworld, player, "score")
-        return score_mode == 2 or score_mode == 3
-
     return None
 
 # Use this if you want to override the default behavior of is_option_enabled

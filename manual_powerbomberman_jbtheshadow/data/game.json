@@ -2,6 +2,10 @@
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
   "game": "PowerBomberman",
   "creator": "JBtheShadow",
-  "filler_item_name": "Filler",
-  "starting_items": []
+  "filler_item_name": "Skull",
+  "starting_items": [
+    { "items": ["Bomb Up"], "random": 1 },
+    { "items": ["Fire Up"], "random": 1 },
+    { "items": ["Speed Up"], "random": 1 }
+  ]
 }

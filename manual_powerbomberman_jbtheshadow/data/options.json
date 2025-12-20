@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
     "_comment": "Add a _ before an option name to comment it out and it wont be added to the apworld",
-    "core": {
+    "_core": {
         "goal":{
             "_comment": [
                 "Using 'goal' as the name of an option let you override some of the generated goal parameters"
@@ -22,61 +22,130 @@
         }
     },
     "user": {
-        "_commented_out_option":{
-            "type": "Toggle",
-            "default": true
-        },
-        "Example_Toggle":{
+        "tag": {
             "description": [
-                "This is a Toggle",
-                "A simple boolean, aka True or False set the initial value with \"default\""
+                "Enables tag matches", "This may allow for some locations involving tag matches"
             ],
-            "type": "Toggle",
-            "default": false,
-            "group": "Example Options"
+            "type": "Toggle", "default": false, "group": "Battle Modes"
         },
-        "Example_Choice":{
-            "type": "Choice",
+        "reversi": {
             "description": [
-                "This is a Choice",
-                "Let the user pick from a list of values",
-                "allow_custom_value let a player define their own text value",
-                "Currently the only use for Choice in Manual outside of hooks is the goal"
+                "Enables Reversi Battle mode", "This may allow for Reversi Battle locations"
             ],
-            "values": {
-                "start":0,
-                "test":1
-             },
-            "default": 0,
-            "allow_custom_value": false,
-            "group": "Example Options"
+            "type": "Toggle", "default": false, "group": "Battle Modes"
         },
-        "Example_Range":{
-            "type": "Range",
+        "dodge": {
             "description": [
-                "This is a Range",
-                "Allow the player to specify a value between 'start' and 'end'",
-                "if you include a \"values\" you can define the label for certain values",
-                "Currently the only use for Range in Manual outside of hooks is 'filler_trap'"
+                "Enables Dodge Battle mode", "This may allow for Dodge Battle locations"
             ],
-            "range_start": 0,
-            "default": 1,
-            "range_end": 10,
-            "values": {"example": 2},
-            "group": "Example Options"
+            "type": "Toggle", "default": false, "group": "Battle Modes"
         },
-
-        "DLC_enabled":{
-            "display_name": "DLC Enabled",
-            "description": "Is the Dlc enabled?",
-            "type": "Toggle",
-            "visibility": [
-                "simple_ui",
-                "complex_ui",
-                "template"
+        "hyper": {
+            "description": [
+                "Enables Hyper Battle mode", "This may allow for Hyper Battle locations"
             ],
-            "default": true
+            "type": "Toggle", "default": false, "group": "Battle Modes"
+        },
+        "king": {
+            "description": [
+                "Enables King Battle mode", "This may allow for King Battle locations"
+            ],
+            "type": "Toggle", "default": false, "group": "Battle Modes"
+        },
+        "royale": {
+            "description": [
+                "Enables Battle Royale mode", "This may allow for Battle Royale locations"
+            ],
+            "type": "Toggle", "default": false, "group": "Battle Modes"
+        },
+        "min_difficulty": {
+            "description": [
+                "Minimum COM difficulty", "Sets the minimum difficulty for battle locations",
+                "Possible options are 1 (easy), 2 (normal), 3 (hard) and 4 (intense)"
+            ],
+            "type": "Choice", "default": 2, "group": "Battle Options",
+            "values": { "easy": 1, "normal": 2, "hard": 3, "intense": 4 },
+            "allow_custom_value": false
+        },
+        "max_difficulty": {
+            "description": [
+                "Maximum COM difficulty", "Sets the maximum difficulty for battle locations",
+                "Possible options are 1 (easy), 2 (normal), 3 (hard) and 4 (intense)",
+                "Cannot go lower than min difficulty"
+            ],
+            "type": "Choice", "default": 2, "group": "Battle Options",
+            "values": { "easy": 1, "normal": 2, "hard": 3, "intense": 4 },
+            "allow_custom_value": false
+        },
+        "min_players": {
+            "description": [
+                "Minimum player amount", "Sets the minimum amount of players for battle locations",
+                "Ranges from 2 to 12"
+            ],
+            "type": "Range", "default": 6, "group": "Battle Options",
+            "range_start": 2, "range_end": 12,
+            "values": { "min": 2, "default": 6, "max_standard": 8, "max_wide": 12 }
+        },
+        "max_players": {
+            "description": [
+                "Maximum player amount", "Sets the maximum amount of players for battle locations",
+                "Ranges from 2 to 12", "Cannot go lower than min players"
+            ],
+            "type": "Range", "default": 6, "group": "Battle Options",
+            "range_start": 2, "range_end": 12,
+            "values": { "min": 2, "default": 6, "max_standard": 8, "max_wide": 12 }
+        },
+        "min_matches": {
+            "description": [
+                "Minimum matches amount", "Sets the minimum amount of matches for battle locations",
+                "Ranges from 1 to 5"
+            ],
+            "type": "Range", "default": 3, "group": "Battle Options",
+            "range_start": 1, "range_end": 5,
+            "values": { "min": 1, "default": 3, "max": 5 }
+        },
+        "max_matches": {
+            "description": [
+                "Maximum matches amount", "Sets the maximum amount of matches for battle locations",
+                "Ranges from 1 to 5", "Cannot go lower than min matches"
+            ],
+            "type": "Range", "default": 3, "group": "Battle Options",
+            "range_start": 1, "range_end": 5,
+            "values": { "min": 1, "default": 3, "max": 5 }
+        },
+        "wide": {
+            "description": [
+                "Enables wide maps", "This may allow for some Survival Battle locations involving wide maps"
+            ],
+            "type": "Toggle", "default": false, "group": "Battle Options"
+        },
+        "score": {
+            "description": [
+                "Enables Score mode", "Adds locations related to Score Mode",
+                "Possible options are 0 (none), 1 (classic), 2 (turbo) and 3 (both)"
+            ],
+            "type": "Choice", "default": 0, "group": "Extra Options",
+            "values": { "none": 0, "classic": 1, "turbo": 2, "both": 3 },
+            "allow_custom_value": false
+        },
+        "online": {
+            "description": [
+                "Enables Online mode",
+                "There are a few items, like Invisibility or the Blast Lens, that are only included in online battles"
+            ],
+            "type": "Toggle", "default": false, "group": "Extra Options"
+        },
+        "louies": {
+            "description": [
+                "Enables Louies", "Adds locations related to each of the Louies"
+            ],
+            "type": "Toggle", "default": true, "group": "Extra Options"
+        },
+        "traps": {
+            "description": [
+                "Enables traps", "This includes Bomb Down, Fire Down, Geta, Salt Bomb and all of the skulls"
+            ],
+            "type": "Toggle", "default": true, "group": "Extra Options"
         }
     }
-
 }

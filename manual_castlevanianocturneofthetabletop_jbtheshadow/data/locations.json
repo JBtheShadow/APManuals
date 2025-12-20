@@ -1,0 +1,45 @@
+[
+  {
+    "name": "Clear Stage 1",
+    "category": [
+      "Stage Clear"
+    ],
+    "requires": []
+  },
+  {
+    "name": "Clear Stage 2",
+    "category": [
+      "Stage Clear"
+    ],
+    "requires": "|@Relics:1|"
+  },
+  {
+    "name": "Clear Stage 3",
+    "category": [
+      "Stage Clear"
+    ],
+    "requires": "|@Relics:2|"
+  },
+  {
+    "name": "Clear Stage 4",
+    "category": [
+      "Stage Clear"
+    ],
+    "requires": "|@Relics:3|"
+  },
+  {
+    "name": "Clear Stage 5",
+    "category": [
+      "Stage Clear"
+    ],
+    "requires": "|@Relics:4|"
+  },
+  {
+    "name": "Defeat Dracula",
+    "victory": true,
+    "category": [
+      "Goal"
+    ],
+    "requires": "|@Relics:5|"
+  }
+]

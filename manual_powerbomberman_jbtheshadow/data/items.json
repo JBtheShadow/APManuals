@@ -1,8 +1,85 @@
-[
-  {
-    "count": 1,
-    "name": "Test",
-    "category": [],
-    "filler": true
-  }
-]
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.items.schema.json",
+  "data": [
+    { "count": 1, "name": "Bomb Up", "category": ["Power Ups"], "progression": true },
+    { "count": 1, "name": "Fire Up", "category": ["Power Ups"], "progression": true },
+    { "count": 1, "name": "Speed Up", "category": ["Power Ups"], "progression": true },
+    { "count": 1, "name": "Full Fire", "category": ["Power Ups"], "progression": true },
+
+    { "count": 1, "name": "Bomb Kick", "category": ["Passive Abilities"], "progression": true },
+    { "count": 1, "name": "Bomb Pass", "category": ["Passive Abilities"], "progression": true },
+    { "count": 1, "name": "Wall Pass", "category": ["Passive Abilities"], "progression": true },
+    { "count": 1, "name": "Repel", "category": ["Passive Abilities"], "progression": true },
+    { "count": 1, "name": "Invisibility", "category": ["Passive Abilities", "Online"], "progression": true },
+    { "count": 1, "name": "Cosplay", "category": ["Passive Abilities"], "progression": true },
+    { "count": 1, "name": "Merger", "category": ["Passive Abilities"], "progression": true },
+    { "count": 1, "name": "Blast Lens", "category": ["Passive Abilities", "Online"], "progression": true },
+    { "count": 1, "name": "Heart", "category": ["Passive Abilities"], "progression": true },
+    { "count": 1, "name": "Vest", "category": ["Passive Abilities"], "progression": true },
+    { "count": 1, "name": "Flameproof", "category": ["Score Mode", "Passive Abilities"], "progression": true },
+
+    { "count": 1, "name": "Line Bomb", "category": ["A Button Abilities"], "progression": true },
+    { "count": 1, "name": "Power Glove", "category": ["A Button Abilities"], "progression": true },
+    { "count": 1, "name": "Super Power Glove", "category": ["A Button Abilities"], "progression": true },
+    { "count": 1, "name": "Bead Bomb", "category": ["A Button Abilities"], "progression": true },
+    { "count": 1, "name": "Juggle Glove", "category": ["A Button Abilities"], "progression": true },
+
+    { "count": 1, "name": "Bomb Punch", "category": ["C Button Abilities"], "progression": true },
+    { "count": 1, "name": "Push", "category": ["C Button Abilities"], "progression": true },
+    { "count": 1, "name": "Detonator", "category": ["C Button Abilities"], "progression": true },
+    { "count": 1, "name": "Drill", "category": ["C Button Abilities"], "progression": true },
+
+    { "count": 1, "name": "Shield", "category": ["D Button Abilities"], "progression": true },
+    { "count": 1, "name": "Rocket", "category": ["D Button Abilities"], "progression": true },
+    { "count": 1, "name": "Bomb Change", "category": ["D Button Abilities"], "progression": true },
+    { "count": 1, "name": "Ruse", "category": ["D Button Abilities"], "progression": true },
+    { "count": 1, "name": "Dash", "category": ["D Button Abilities"], "progression": true },
+    { "count": 1, "name": "Whip", "category": ["D Button Abilities"], "progression": true },
+    { "count": 1, "name": "Gun", "category": ["D Button Abilities"], "progression": true },
+    { "count": 1, "name": "Bomb Conjure", "category": ["D Button Abilities"], "progression": true },
+
+    { "count": 1, "name": "Remote Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Penetration Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Power Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Rubber Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Mine Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Dangerous Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Trace Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Cherry Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Pile Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Bubble Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Heavy Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Magnet Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Lightning Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Light Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "RC Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Blow Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Crumble Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Missile Bomb", "category": ["Special Bombs"], "progression": true },
+    { "count": 1, "name": "Bowling Bomb", "category": ["Special Bombs"], "progression": true },
+
+    { "count": 1, "name": "Kerooi (Blue)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Hanerooi (Pink)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Marooi (Green)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Galooi (Yellow)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Magicalooi (Purple)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Nagurooi (Red)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Mamorooi (Orange)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Buckarooi (Beige)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Tamerooi (Brown)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Torooi (Cocoa)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Metalooi (Robo)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Digitalooi (Digital)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Warooi (Black)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Bottlooi (Violet)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Bundorooi (Maroon)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Gozarooi (Navy)", "category": ["Louies"], "progression": true },
+    { "count": 1, "name": "Tatarooi (Olive)", "category": ["Louies"], "progression": true },
+
+    { "count": 1, "name": "Bomb Down", "category": ["Traps"], "trap": true },
+    { "count": 1, "name": "Fire Down", "category": ["Traps"], "trap": true },
+    { "count": 1, "name": "Geta", "category": ["Traps"], "filler": true, "trap": true },
+    { "count": 1, "name": "Salt Bomb", "category": ["Traps", "Special Bombs"], "progression": true, "trap": true },
+    { "count": 1, "name": "Skull", "category": ["Traps"], "trap": true }
+  ]
+}

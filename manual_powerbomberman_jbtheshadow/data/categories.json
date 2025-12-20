@@ -1,1 +1,9 @@
-{}
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.categories.schema.json",
+  "Traps": { "yaml_option": ["traps"] },
+  "Online": { "hidden": true, "yaml_option": ["online"] },
+  "Louies": { "yaml_option": ["louies"] },
+  "Score Mode": {},
+  "Classic Score Mode": {},
+  "Turbo Score Mode": {}
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "count": 1,
+    "name": "Eye of Vlad",
+    "category": [
+      "Relics"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Rib of Vlad",
+    "category": [
+      "Relics"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Heart of Vlad",
+    "category": [
+      "Relics"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Tooth of Vlad",
+    "category": [
+      "Relics"
+    ],
+    "progression": true
+  },
+  {
+    "count": 1,
+    "name": "Ring of Vlad",
+    "category": [
+      "Relics"
+    ],
+    "progression": true
+  }
+]
