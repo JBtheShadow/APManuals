@@ -1,0 +1,8 @@
+[
+  { "name": "Reached Life Goal", "victory": true, "category": [], "requires": "" },
+  { "name": "Collected Enough Lost Wishes", "victory": true, "category": [], "requires": "" },
+  { "name": "Shopped Target Items", "victory": true, "category": [], "requires": "" },
+  { "name": "Crafted Target Items", "victory": true, "category": [], "requires": "" },
+  { "name": "Turned In Target Bounties", "victory": true, "category": [], "requires": "" },
+  { "name": "Completed Objectives", "victory": true, "category": [], "requires": "" }
+]
