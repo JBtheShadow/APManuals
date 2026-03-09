@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
     "_comment": "Add a _ before an option name to comment it out and it wont be added to the apworld",
-    "core": {
+    "_core": {
         "goal":{
             "_comment": [
                 "Using 'goal' as the name of an option let you override some of the generated goal parameters"
@@ -26,7 +26,7 @@
             "type": "Toggle",
             "default": true
         },
-        "Example_Toggle":{
+        "_Example_Toggle":{
             "description": [
                 "This is a Toggle",
                 "A simple boolean, aka True or False set the initial value with \"default\""
@@ -35,7 +35,7 @@
             "default": false,
             "group": "Example Options"
         },
-        "Example_Choice":{
+        "_Example_Choice":{
             "type": "Choice",
             "description": [
                 "This is a Choice",
@@ -51,7 +51,7 @@
             "allow_custom_value": false,
             "group": "Example Options"
         },
-        "Example_Range":{
+        "_Example_Range":{
             "type": "Range",
             "description": [
                 "This is a Range",
@@ -66,7 +66,7 @@
             "group": "Example Options"
         },
 
-        "DLC_enabled":{
+        "_DLC_enabled":{
             "display_name": "DLC Enabled",
             "description": "Is the Dlc enabled?",
             "type": "Toggle",

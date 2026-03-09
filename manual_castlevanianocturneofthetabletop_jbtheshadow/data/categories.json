@@ -1,1 +1,7 @@
-{}
+{
+  "Tilesanity": { "yaml_option": ["tilesanity"], "hidden": true },
+  "Relics": { "yaml_option": ["include_relics"] },
+  "Hunters": { "yaml_option": ["include_hunters"] },
+  "Trevor Together": { "yaml_option": ["!split_trevor"], "hidden": true },
+  "Trevor Split": { "yaml_option": ["split_trevor"], "hidden": true }
+}
