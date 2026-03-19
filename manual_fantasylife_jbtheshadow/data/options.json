@@ -1,82 +1,317 @@
 {
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
-    "_comment": "Add a _ before an option name to comment it out and it wont be added to the apworld",
-    "_core": {
+    "core": {
         "goal":{
-            "_comment": [
-                "Using 'goal' as the name of an option let you override some of the generated goal parameters"
-            ],
             "display_name": "The End Objective",
             "description": "How to End your Randomized playthrough.",
-            "aliases": {"easiest": 0},
+            "aliases": {
+              "wish_hunt": 0,
+              "life_mastery": 1
+            },
             "hidden": false
         },
         "death_link": {
-            "default": false
+            "default": false,
+            "visibility": "none"
         },
         "filler_traps": {
-            "_comment": "Using values here let you set a 'recommended' filler_trap percentage or even a default percentage",
-            "values": {
-                "recommended": 20
-            }
+            "visibility": "none"
         }
     },
-    "_user": {
-        "_commented_out_option":{
+    "user": {
+        "require_main_story_for_goal": {
+            "display_name": "Require beating the game for goal?",
+            "description": "If the goal requires completing the Prologue and Chapters 1 through Final (7).",
             "type": "Toggle",
-            "default": true
+            "default": false
         },
-        "Example_Toggle":{
-            "description": [
-                "This is a Toggle",
-                "A simple boolean, aka True or False set the initial value with \"default\""
-            ],
-            "type": "Toggle",
-            "default": false,
-            "group": "Example Options"
-        },
-        "Example_Choice":{
-            "type": "Choice",
-            "description": [
-                "This is a Choice",
-                "Let the user pick from a list of values",
-                "allow_custom_value let a player define their own text value",
-                "Currently the only use for Choice in Manual outside of hooks is the goal"
-            ],
-            "values": {
-                "start":0,
-                "test":1
-             },
-            "default": 0,
-            "allow_custom_value": false,
-            "group": "Example Options"
-        },
-        "Example_Range":{
+        "wish_hunt_required": {
+            "display_name": "Amount of Lost Wishes required",
+            "description": "If the goal is set to Wish Hunt, sets the amount of Lost Wishes required for beating it.",
             "type": "Range",
-            "description": [
-                "This is a Range",
-                "Allow the player to specify a value between 'start' and 'end'",
-                "if you include a \"values\" you can define the label for certain values",
-                "Currently the only use for Range in Manual outside of hooks is 'filler_trap'"
-            ],
-            "range_start": 0,
-            "default": 1,
-            "range_end": 10,
-            "values": {"example": 2},
-            "group": "Example Options"
+            "range_start": 1,
+            "range_end": 200,
+            "default": 30
         },
-
-        "DLC_enabled":{
-            "display_name": "DLC Enabled",
-            "description": "Is the Dlc enabled?",
-            "type": "Toggle",
-            "visibility": [
-                "simple_ui",
-                "complex_ui",
-                "template"
+        "wish_hunt_total": {
+            "display_name": "Amount of Lost Wishes in total",
+            "description": [
+              "If the goal is set to Wish Hunt, sets the amount of Lost Wishes that will be added to the item pool.",
+              "Cannot be smaller than the required amount."
             ],
+            "type": "Range",
+            "range_start": 1,
+            "range_end": 200,
+            "default": 50
+        },
+        "life_mastery_rank": {
+            "display_name": "Target rank for Life Mastery",
+            "description": "If the goal is set to Life Mastery, sets the target rank to beat the game.",
+            "type": "Choice",
+            "values": {
+              "fledgling": 1,
+              "apprentice": 2,
+              "adept": 3,
+              "expert": 4,
+              "master": 5,
+              "hero": 6,
+              "legend": 7,
+              "demi_creator": 8,
+              "creator": 9
+            },
+            "default": 5
+        },
+        "life_mastery_count": {
+            "display_name": "Amount of lives to reach the target rank",
+            "description": "If the goal is set to Life Mastery, sets how many Lives must reach the target rank.",
+            "type": "Range",
+            "range_start": 1,
+            "range_end": 12,
+            "default": 1
+        },
+        "dlc": {
+            "display_name": "Include the Origin Island DLC?",
+            "description": "Toggles whether to include items and locations related to the Origin Island DLC.",
+            "type": "Toggle",
+            "default": false
+        },
+        "licenses": {
+            "display_name": "Include licenses?",
+            "description": "Toggles whether to include licenses in the pool.",
+            "type": "Toggle",
             "default": true
+        },
+        "progressive_licenses": {
+            "display_name": "Progressive licenses?",
+            "description": [
+              "Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.",
+              "If disabled, a single license unlocks all ranks.",
+              "Does nothing if licenses are not included."
+            ],
+            "type": "Toggle",
+            "default": true
+        },
+        "fast_licenses": {
+            "display_name": "Fast progressive licenses?",
+            "description": [
+              "Toggles whether progressive licenses should be grouped together, to reduce item count.",
+              "Does nothing if licenses are not included nor if progressive licenses are disabled.",
+              "The unlocked ranks per license become as follows:",
+              "Novice, Fledgling, Apprentice -> 1 license",
+              "Adept, Expert -> 2 licenses",
+              "Master -> 3 licenses",
+              "Hero, Legend -> 4 licenses",
+              "Demi-Creator, Creator -> 5 licenses (DLC)"
+            ],
+            "type": "Toggle",
+            "default": false
+        },
+        "starting_life": {
+            "display_name": "Starting Life",
+            "description": [
+              "Sets what Life your character will start with, since the game forces you to go with one of the 12 Lives.",
+              "This option does nothing if licenses are not included.",
+              "[paladin] Start as a Paladin.",
+              "[mercenary] Start as a Mercenary.",
+              "[hunter] Start as a Hunter.",
+              "[magician] Start as a Magician.",
+              "[miner] Start as a Miner.",
+              "[woodcutter] Start as a Woodcutter.",
+              "[angler] Start as an Angler.",
+              "[cook] Start as a Cook.",
+              "[blacksmith] Start as a Blacksmith.",
+              "[carpenter] Start as a Carpenter.",
+              "[tailor] Start as a Tailor.",
+              "[alchemist] Start as an Alchemist.",
+              "[combat_easy] Randomly pick between Paladin and Mercenary.",
+              "[combat] Randomly pick between Paladin, Mercenary, Hunter and Magician.",
+              "[gathering] Randomly pick between Miner, Woodcutter and Angler.",
+              "[crafting] Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist.",
+              "[any] Randomly pick between any of the 12 Lives."
+            ],
+            "type": "Choice",
+            "values": {
+              "paladin": 1,
+              "mercenary": 2,
+              "hunter": 3,
+              "magician": 4,
+              "miner": 5,
+              "woodcutter": 6,
+              "angler": 7,
+              "cook": 8,
+              "blacksmith": 9,
+              "carpenter": 10,
+              "tailor": 11,
+              "alchemist": 12,
+              "combat_easy": 13,
+              "combat": 14,
+              "gathering": 15,
+              "crafting": 16,
+              "any": 17
+            },
+            "default": 13
+        },
+        "bliss_bonuses": {
+            "display_name": "Include Bliss Bonuses?",
+            "description": [
+              "Toggles whether to add the bliss bonuses to the pool, like the bigger bag or access to pets.",
+              "When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen."
+            ],
+            "type": "Toggle",
+            "default": true
+        },
+        "starting_bliss_bonus": {
+            "display_name": "Starting Bliss Bonus",
+            "description": [
+              "Selects which bliss bonus to start with, or picks a random one among the more useful bonuses.",
+              "Very early, before reaching Chapter One, the game will teach about bliss bonuses.",
+              "As there are not many checks the player can do as early, this ensures the player won't have to go out of logic.",
+              "Does nothing if bliss bonuses are not included.",
+              "[bag] Starts with Bigger Bag.",
+              "[storage] Starts with Bigger Storage.",
+              "[shopping] Starts with Shopping +.",
+              "[any] Starts with a random one out of those three."
+            ],
+            "type": "Choice",
+            "values": {
+              "bag": 1,
+              "storage": 2,
+              "shopping": 3,
+              "any": 4
+            },
+            "default": 4
+        },
+        "include_happy_audio_video": {
+            "display_name": "Include Happy Audio and Video?",
+            "description": "Toggles whether to include the Happy Audio and Happy Video bliss bonuses into the pool.",
+            "type": "Toggle",
+            "default": false
+        },
+        "include_passwords": {
+            "display_name": "Include claimable passwords?",
+            "description": [
+              "Toggles whether to include passwords in the pool. Passwords can be redeemed after Butterfly teaches about Other Requests,",
+              "and there are 42 of them in total. Some grant costumes or even gear with nice stats, while some merely provide furniture",
+              "or consumables.",
+              "",
+              "The passwords displayed on the client are based on the US version; if your game is from a different region please refer to the wiki",
+              "for the correct phrase to enter."
+            ],
+            "type": "Toggle",
+            "default": true
+        },
+        "include_playtime_checks": {
+            "display_name": "Include playtime Bliss checks?",
+            "description": "Toggles whether to include the 1 hour, 10 hours, 50 hours and 100 hours in Reveria bliss checks as locations in the pool.",
+            "type": "Toggle",
+            "default": false
+        },
+        "include_streetpass_checks": {
+            "display_name": "Include StreetPass Bliss checks?",
+            "description": "Toggles whether to include the bliss checks related to meeting visitors/StreetPass features as locations in the pool.",
+            "type": "Toggle",
+            "default": false
+        },
+        "include_level_up_checks": {
+            "display_name": "Include level up Bliss checks?",
+            "description": "Toggles whether to include the level up Bliss checks as locations in the pool.",
+            "type": "Toggle",
+            "default": false
+        },
+        "include_skill_level_checks": {
+            "display_name": "Include skill level Bliss checks?",
+            "description": "Toggles whether to include the Bliss checks related to leveling 1, 5, 15 and 25 skills to skill level 15 as locations in the pool.",
+            "type": "Toggle",
+            "default": false
+        },
+        "additional_skill_level_checks": {
+            "display_name": "Additional skill level checks?",
+            "description": [
+              "Toggles whether to include individual checks for each separate skill.",
+              "",
+              "These are separate from the Bliss checks and are meant to give you more locations earlier on as another incentive to work on the different Lives."
+            ],
+            "type": "Toggle",
+            "default": true
+        },
+        "additional_skill_level_checks_included": {
+            "display_name": "Additional skill level checks included?",
+            "description": [
+              "Selects which skill levels will be considered checks. Beware some options can lead to grinding.",
+              "",
+              "[five] Levels 2, 3, 4 and 5 are checks",
+              "[ten] Levels 2 through 10 are checks",
+              "[ten_sparse] Levels 2, 3, 5, 7 and 10 are checks",
+              "[fifteen] Levels 2 through 15 are checks",
+              "[fifteen_sparse] Levels 2, 3, 5, 7, 10, 13 and 15 are checks",
+              "[twenty] Levels 2 through 20 are checks. Requires partial completion of DLC for levels 16 through 20.",
+              "[twenty_sparse] Levels 2, 3, 5, 7, 10, 13, 15, 17 and 20 are checks. Requires partial completion of DLC for levels 17 and 20."
+            ],
+            "type": "Choice",
+            "values": {
+              "five": 5,
+              "ten": 10,
+              "ten_sparse": 11,
+              "fifteen": 15,
+              "fifteen_sparse": 16,
+              "twenty": 20,
+              "twenty_sparse": 21
+            },
+            "default": 5
+        },
+        "other_requests": {
+            "display_name": "Include Other Requests?",
+            "description": [
+              "Include Other Requests as checks? Forced to [all] when goal is Wish Hunt.",
+              "[none] No requests are included.",
+              "[only_first] Only the first request is included as a check.",
+              "[up_to_second] The first and second requests are included as checks.",
+              "[up_to_third] Only the first three requests are included as checks. Covers all non-DLC requests.",
+              "[all] Every request is considered. Does the same as [up_to_third] when no DLC."
+            ],
+            "type": "Choice",
+            "values": {
+              "none": 0,
+              "only_first": 1,
+              "up_to_second": 2,
+              "up_to_third": 3,
+              "all": 4
+            },
+            "default": 4
+        },
+        "include_ally_checks": {
+            "display_name": "Include ally Bliss checks?",
+            "description": "Toggles whether to include the Bliss checks related to making allies with npcs (and being able to invite them to your party) as locations in the pool.",
+            "type": "Toggle",
+            "default": false
+        },
+        "enable_item_restrictions": {
+          "display_name": "Enable Item Restrictions?",
+          "description": [
+            "Toggles whether to restrict equipment and consumable usage.",
+            "",
+            "When enabled, you're only allowed to equip or use items you have the clearance for, unequipping everything else.",
+            "",
+            "Items are restricted by slot, type, quality and rarity. There are no restrictions on furniture nor materials.",
+            "",
+            "Each Life requires the following items unlocked. If licenses are in the pool the starting license's items will be granted as well. If not, items from a random Life will be chosen:",
+            "* Paladin: Longswords and Shields",
+            "* Mercenary: Greatswords",
+            "* Hunter: Bows",
+            "* Magician: Wands",
+            "* Miner: Pickaxes",
+            "* Woodcutter: Axes",
+            "* Angler: Fishing Rods",
+            "* Cook: Frying Pans",
+            "* Blacksmith: Hammers",
+            "* Carpenter: Saws",
+            "* Tailor: Needles",
+            "* Alchemist: Flasks",
+            "",
+            "Very restrictive, not recommended unless you really want to take on the extra challenge."
+          ],
+          "type": "Toggle",
+          "default": false
         }
     }
-
 }

@@ -47,7 +47,7 @@ def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, play
         return state.has("Chapter Complete", player, 7)
 
     goal = get_option_value(multiworld, player, "goal")
-    if goal != Options.Goal.option_wish_hunt:
+    if goal != 0:
         return True
 
     required = get_option_value(multiworld, player, "wish_hunt_required")
@@ -61,7 +61,7 @@ def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, p
         return state.has("Chapter Complete", player, 7)
 
     goal = get_option_value(multiworld, player, "goal")
-    if goal != Options.Goal.option_life_mastery:
+    if goal != 1:
         return True
 
     main_story = is_option_enabled(multiworld, player, "require_main_story_for_goal")
@@ -74,21 +74,20 @@ def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, p
     life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
     life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
 
-    if goal == Options.Goal.option_life_mastery and licenses:
-        if not progressive_licenses:
-            item_name = "{life} License"
-            item_count = 1
-        else:
-            item_name = "Fast Progressive {life} License" if fast_licenses else "Progressive {life} License"
-            rank = Rank(life_mastery_rank)
-            item_count = rank.fast_requirement if fast_licenses else rank.full_requirement
+    if not progressive_licenses:
+        item_name = "{life} License"
+        item_count = 1
+    else:
+        item_name = "Fast Progressive {life} License" if fast_licenses else "Progressive {life} License"
+        rank = Rank(life_mastery_rank)
+        item_count = rank.fast_requirement if fast_licenses else rank.full_requirement
 
-        life_count = 0
-        for life in Life:
-            if state.has(item_name.replace("{life}", life.description), player, item_count):
-                life_count += 1
-            if life_count >= life_mastery_count:
-                return not main_story or beat_main_story()
+    life_count = 0
+    for life in Life:
+        if state.has(item_name.replace("{life}", life.description), player, item_count):
+            life_count += 1
+        if life_count >= life_mastery_count:
+            return not main_story or beat_main_story()
 
     return False
 

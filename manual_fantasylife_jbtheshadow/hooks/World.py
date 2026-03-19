@@ -1,4 +1,5 @@
 # Object classes from AP core, to represent an entire MultiWorld and this individual World that's part of it
+from typing import Any
 from worlds.AutoWorld import World
 from BaseClasses import MultiWorld, CollectionState, Item
 
@@ -7,7 +8,7 @@ from ..Items import ManualItem
 from ..Locations import ManualLocation
 
 from ..data.Data import FILLER_ITEMS, FillerCategory, Life
-from ..hooks import Options, Helpers
+from .Helpers import set_option_value, set_option_enabled
 
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
@@ -38,9 +39,11 @@ import logging
 def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int) -> str | bool:
     return world.random.choice(FILLER_ITEMS[world.random.choice(list(FillerCategory))])
 
-
-# Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
-def before_create_regions(world: World, multiworld: MultiWorld, player: int):
+def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> None:
+    """
+    This is the earliest hook called during generation, before anything else is done.
+    Use it to check or modify incompatible options, or to set up variables for later use.
+    """
     goal = get_option_value(multiworld, player, "goal")
     licenses = is_option_enabled(multiworld, player, "licenses")
     progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
@@ -52,49 +55,41 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
     other_requests = get_option_value(multiworld, player, "other_requests")
 
     match goal:
-        case Options.Goal.option_wish_hunt:
+        case 0:
             if (wish_hunt_total <= 84 and not dlc or wish_hunt_total <= 100 and dlc) and other_requests < 1:
                 logging.info("Forcing Other Requests to [only_first] for Wish Hunt")
-                Helpers.set_option_value(
-                    multiworld, player, "other_requests", Options.IncludeOtherRequests.option_only_first
-                )
-            elif (
-                84 < wish_hunt_total <= 168 and not dlc or 100 < wish_hunt_total <= 200 and dlc
-            ) and other_requests < 2:
+                set_option_value(multiworld, player, "other_requests", 1)
+            elif (84 < wish_hunt_total <= 168 and not dlc or 100 < wish_hunt_total <= 200 and dlc) and other_requests < 2:
                 logging.info("Forcing Other Requests to [up_to_second] for Wish Hunt")
-                Helpers.set_option_value(
-                    multiworld, player, "other_requests", Options.IncludeOtherRequests.option_up_to_second
-                )
+                set_option_value(multiworld, player, "other_requests", 2)
             elif 100 < wish_hunt_total <= 200 and not dlc and other_requests < 3:
                 logging.info("Forcing Other Requests to [up_to_third] for Wish Hunt")
-                Helpers.set_option_value(
-                    multiworld, player, "other_requests", Options.IncludeOtherRequests.option_up_to_third
-                )
+                set_option_value(multiworld, player, "other_requests", 3)
 
             if wish_hunt_required > wish_hunt_total:
                 logging.info(
                     f"There are more Lost Wishes required than the available total. Setting the required amount to {wish_hunt_total}"
                 )
-                Helpers.set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_total)
-        case Options.Goal.option_life_mastery:
-            if not dlc and life_mastery_rank in [
-                Options.LifeMasteryRank.option_demi_creator,
-                Options.LifeMasteryRank.option_creator,
-            ]:
+                set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_total)
+        case 1:
+            if not dlc and life_mastery_rank in [8, 9]:
                 logging.info("Target rank for Life Mastery cannot be reached without the DLC. Defaulting to Master.")
-                Helpers.set_option_value(multiworld, player, "life_mastery_rank", Options.LifeMasteryRank.option_master)
+                set_option_value(multiworld, player, "life_mastery_rank", 5)
 
     if (
-        licenses
-        and progressive_licenses
-        and not fast_licenses
-        and other_requests == Options.IncludeOtherRequests.option_none
+            licenses
+            and progressive_licenses
+            and not fast_licenses
+            and other_requests == 0
     ):
         logging.info(
             "There won't be enough items to place with Other Requests disabled; changing Progressive Licenses from full to fast."
         )
-        Helpers.set_option_enabled(multiworld, player, "fast_licenses", True)
+        set_option_enabled(multiworld, player, "fast_licenses", True)
 
+# Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
+def before_create_regions(world: World, multiworld: MultiWorld, player: int):
+    pass
 
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
@@ -143,8 +138,8 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     # Wish Hunt goal
     goal = get_option_value(multiworld, player, "goal")
     wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
-    if goal == Options.Goal.option_wish_hunt:
-        for _ in range(0, Options.WishHuntTotal.range_end - wish_hunt_total):
+    if goal == 0:
+        for _ in range(0, 200 - wish_hunt_total):
             item_names_to_remove.append("Lost Wish")
 
     # Licenses, Starting Life and DLC
@@ -175,15 +170,15 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         starting_life = get_option_value(multiworld, player, "starting_life")
         life_name = ""
         match starting_life:
-            case Options.StartingLife.option_any:
+            case 17:
                 life_name = world.random.choice(list(Life)).description
-            case Options.StartingLife.option_combat_easy:
+            case 13:
                 life_name = world.random.choice(Life.easy_combat()).description
-            case Options.StartingLife.option_combat:
+            case 14:
                 life_name = world.random.choice(Life.combat()).description
-            case Options.StartingLife.option_gathering:
+            case 15:
                 life_name = world.random.choice(Life.gathering()).description
-            case Options.StartingLife.option_crafting:
+            case 16:
                 life_name = world.random.choice(Life.crafting()).description
             case x if 0 < x < 13:
                 life_name = Life(x).description
@@ -218,13 +213,13 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         starting_bliss_bonus = get_option_value(multiworld, player, "starting_bliss_bonus")
         item_name = ""
         match starting_bliss_bonus:
-            case Options.StartingBlissBonus.option_bag:
+            case 1:
                 item_name = "Bigger Bag"
-            case Options.StartingBlissBonus.option_storage:
+            case 2:
                 item_name = "Bigger Storage"
-            case Options.StartingBlissBonus.option_shopping:
+            case 3:
                 item_name = "Better Shopping"
-            case Options.StartingBlissBonus.option_any:
+            case 4:
                 item_name = world.random.choice(["Bigger Bag", "Bigger Storage", "Better Shopping"])
         if item_name:
             starting_inventory.append(item_name)
@@ -355,3 +350,10 @@ def after_extend_hint_information(
     hint_data: dict[int, dict[int, str]], world: World, multiworld: MultiWorld, player: int
 ) -> None:
     pass
+
+def hook_interpret_slot_data(world: World, player: int, slot_data: dict[str, Any]) -> dict[str, Any]:
+    """
+        Called when Universal Tracker wants to perform a fake generation
+        Use this if you want to use or modify the slot_data for passed into re_gen_passthrough
+    """
+    return slot_data
