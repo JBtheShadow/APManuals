@@ -43,5 +43,13 @@
     "Skill Level Above 5": { "hidden":  true },
     "Skill Level Above 10": { "hidden":  true },
     "Skill Level Above 15": { "hidden":  true },
-    "Skill Level Sparse Missing": { "hidden":  true }
+    "Skill Level Sparse Missing": { "hidden":  true },
+    "Fledgling": { "hidden": true },
+    "Apprentice": { "hidden": true },
+    "Adept": { "hidden": true },
+    "Expert": { "hidden": true },
+    "Master": { "hidden": true },
+    "Hero": { "hidden": true },
+    "Legend": { "hidden": true },
+    "Creator": { "hidden": true }
 }

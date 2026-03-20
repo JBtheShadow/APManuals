@@ -53,6 +53,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
     dlc = is_option_enabled(multiworld, player, "dlc")
     other_requests = get_option_value(multiworld, player, "other_requests")
+    enable_item_restrictions = get_option_value(multiworld, player, "enable_item_restrictions")
+    additional_skill_level_checks = get_option_value(multiworld, player, "additional_skill_level_checks")
 
     match goal:
         case 0:
@@ -86,6 +88,11 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             "There won't be enough items to place with Other Requests disabled; changing Progressive Licenses from full to fast."
         )
         set_option_enabled(multiworld, player, "fast_licenses", True)
+
+    if enable_item_restrictions and not additional_skill_level_checks:
+        logging.info("Item restrictions cannot be enabled without additional skill checks; adding checks up to skill level 5.")
+        set_option_enabled(multiworld, player, "additional_skill_level_checks", True)
+        set_option_value(multiworld, player, "additional_skill_level_checks_included", 5)
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
@@ -146,12 +153,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     dlc = is_option_enabled(multiworld, player, "dlc")
 
     if not dlc:
-        item_names_to_remove += [
-            "Chapter Complete",
-            "Chapter Complete",
-            "Intermission Complete",
-            "Intermission Complete",
-        ]
+        item_names_to_remove += ["Progressive Chapter", "Progressive Chapter"]
 
     licenses = is_option_enabled(multiworld, player, "licenses")
     progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
@@ -194,10 +196,10 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                 ]
             )
             starting_inventory.append(item_name)
-            if enable_item_restrictions:
-                life = Life.from_description(life_name)
-                for item_name in life.required_items:
-                    starting_inventory.append(item_name)
+            # if enable_item_restrictions:
+            #     life = Life.from_description(life_name)
+            #     for item_name in life.required_items:
+            #         starting_inventory.append(item_name)
 
     elif enable_item_restrictions:
         life = world.random.choice(list(Life))

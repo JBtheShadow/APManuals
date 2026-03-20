@@ -11,6 +11,7 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
     additional_skill_level_checks_included = rootHelpers.get_option_value(
         multiworld, player, "additional_skill_level_checks_included"
     )
+    life_mastery_rank = rootHelpers.get_option_value(multiworld, player, "life_mastery_rank")
     match category_name:
         case "Other Requests 1" if other_requests < 1:
             return False
@@ -37,6 +38,27 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
             return False
 
         case "Skill Level Sparse Missing" if additional_skill_level_checks_included in [11, 16, 21]:
+            return False
+
+        case "Apprentice" if life_mastery_rank < 2:
+            return False
+
+        case "Adept" if life_mastery_rank < 3:
+            return False
+
+        case "Expert" if life_mastery_rank < 4:
+            return False
+
+        case "Master" if life_mastery_rank < 5:
+            return False
+
+        case "Hero" if life_mastery_rank < 6:
+            return False
+
+        case "Legend" if life_mastery_rank < 7:
+            return False
+
+        case "Creator" if life_mastery_rank < 8:
             return False
 
     return None

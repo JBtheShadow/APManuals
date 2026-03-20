@@ -39,38 +39,38 @@ class Skill(Enum):
 
 
 class Life(Enum):
-    PALADIN = 1, "Paladin", ["Longswords", "Shields"], [Skill.LONGSWORD, Skill.SHIELD]
-    MERCENARY = 2, "Mercenary", ["Greatswords"], [Skill.GREATSWORD]
-    HUNTER = 3, "Hunter", ["Bows"], [Skill.ARCHERY]
+    PALADIN = 1, "Paladin", ["Longsword Rarity", "Shield Rarity"], [Skill.LONGSWORD, Skill.SHIELD]
+    MERCENARY = 2, "Mercenary", ["Greatsword Rarity"], [Skill.GREATSWORD]
+    HUNTER = 3, "Hunter", ["Bow Rarity"], [Skill.ARCHERY]
     MAGICIAN = (
         4,
         "Magician",
-        ["Wands"],
+        ["Wand Rarity"],
         [Skill.MAGIC, Skill.WIND_MAGIC, Skill.WATER_MAGIC, Skill.EARTH_MAGIC, Skill.FIRE_MAGIC],
     )
-    MINER = 5, "Miner", ["Pickaxes"], [Skill.MINING]
-    WOODCUTTER = 6, "Woodcutter", ["Axes"], [Skill.WOODCUTTING]
-    ANGLER = 7, "Angler", ["Fishing Rods"], [Skill.FISHING]
-    COOK = 8, "Cook", ["Frying Pans"], [Skill.COOKING, Skill.MEAT_CUISINE, Skill.SEAFOOD_CUISINE, Skill.EGG_VEG_CUISINE]
+    MINER = 5, "Miner", ["Pickaxe Rarity"], [Skill.MINING]
+    WOODCUTTER = 6, "Woodcutter", ["Axe Rarity"], [Skill.WOODCUTTING]
+    ANGLER = 7, "Angler", ["Fishing Rod Rarity"], [Skill.FISHING]
+    COOK = 8, "Cook", ["Frying Pan Rarity"], [Skill.COOKING, Skill.MEAT_CUISINE, Skill.SEAFOOD_CUISINE, Skill.EGG_VEG_CUISINE]
     BLACKSMITH = (
         9,
         "Blacksmith",
-        ["Hammers"],
+        ["Hammer Rarity"],
         [Skill.SMITHING, Skill.WEAPONSMITHING, Skill.ARMORSMITHING, Skill.TOOL_SMITHING],
     )
     CARPENTER = (
         10,
         "Carpenter",
-        ["Saws"],
+        ["Saw Rarity"],
         [Skill.CARPENTRY, Skill.FURNITURE_CARPENTRY, Skill.WEAPONS_CARPENTRY, Skill.TOOLS_CARPENTRY],
     )
     TAILOR = (
         11,
         "Tailor",
-        ["Needles"],
+        ["Needle Rarity"],
         [Skill.SEWING, Skill.GARMENT_TAILORING, Skill.MISC_TAILORING, Skill.FABRIC_TAILORING],
     )
-    ALCHEMIST = 12, "Alchemist", ["Flasks"], [Skill.ALCHEMY, Skill.COMPOUND_ALCHEMY, Skill.ACCESSORY_ALCHEMY]
+    ALCHEMIST = 12, "Alchemist", ["Flask Rarity"], [Skill.ALCHEMY, Skill.COMPOUND_ALCHEMY, Skill.ACCESSORY_ALCHEMY]
 
     def __new__(cls, *args, **kwds):
         obj = object.__new__(cls)
@@ -95,6 +95,10 @@ class Life(Enum):
     @property
     def related_skills(self):
         return self._related_skills_
+
+    @property
+    def pronoun(self):
+        return "an" if self.description.startswith("A") else "a"
 
     @classmethod
     def easy_combat(cls):
@@ -122,16 +126,15 @@ class Life(Enum):
 
 
 class Rank(Enum):
-    NOVICE = 0, "Novice", 1, 1, 0
-    FLEDGLING = 1, "Fledgling", 1, 1, 0
-    APPRENTICE = 2, "Apprentice", 1, 2, 0
-    ADEPT = 3, "Adept", 2, 3, 2
-    EXPERT = 4, "Expert", 2, 4, 3
-    MASTER = 5, "Master", 3, 5, 4
-    HERO = 6, "Hero", 4, 6, 6
-    LEGEND = 7, "Legend", 4, 7, 7
-    DEMI_CREATOR = 8, "Demi-Creator", 5, 8, 7
-    CREATOR = 9, "Creator", 5, 9, 8
+    NOVICE = 0, "Novice", 1, 1, 0, 0
+    FLEDGLING = 1, "Fledgling", 1, 1, 0, 0
+    APPRENTICE = 2, "Apprentice", 1, 2, 0, 1
+    ADEPT = 3, "Adept", 2, 3, 2, 2
+    EXPERT = 4, "Expert", 2, 4, 3, 3
+    MASTER = 5, "Master", 3, 5, 4, 3
+    HERO = 6, "Hero", 4, 3, 6, 4
+    LEGEND = 7, "Legend", 3, 7, 7, 4
+    CREATOR = 8, "Creator", 4, 8, 8, 5
 
     def __new__(cls, *args, **kwds):
         obj = object.__new__(cls)
@@ -145,11 +148,13 @@ class Rank(Enum):
         fast_requirement: int = 1,
         full_requirement: int = 1,
         min_chapter: int = 0,
+        item_rarity: int = 0
     ):
         self._description_ = description
         self._fast_requirement_ = fast_requirement
         self._full_requirement_ = full_requirement
         self._min_chapter_ = min_chapter
+        self._item_rarity_ = item_rarity
 
     @property
     def description(self):
@@ -174,6 +179,14 @@ class Rank(Enum):
                 return rank
 
         raise Exception(f"'{description}' is not a valid Rank!")
+
+    @property
+    def item_rarity(self):
+        return self._item_rarity_
+
+    @property
+    def pronoun(self):
+        return "an" if self.description.startswith(("A", "E")) else "a"
 
 
 class FillerCategory(Enum):

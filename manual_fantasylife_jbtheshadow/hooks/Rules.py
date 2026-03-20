@@ -44,7 +44,7 @@ def requiresMelee():
 
 def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     def beat_main_story():
-        return state.has("Chapter Complete", player, 7)
+        return state.has("Progressive Chapter", player, 7)
 
     goal = get_option_value(multiworld, player, "goal")
     if goal != 0:
@@ -58,7 +58,7 @@ def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, play
 
 def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     def beat_main_story():
-        return state.has("Chapter Complete", player, 7)
+        return state.has("Progressive Chapter", player, 7)
 
     goal = get_option_value(multiworld, player, "goal")
     if goal != 1:
@@ -98,10 +98,6 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
         raise Exception(f"Invalid rank and life parameter '{rank_and_life}'.")
 
     life = Life.from_description(parts[1])
-    enable_item_restrictions = is_option_enabled(multiworld, player, "enable_item_restrictions")
-    if enable_item_restrictions:
-        if not state.has_all(life.required_items, player):
-            return False
 
     licenses = is_option_enabled(multiworld, player, "licenses")
     if not licenses:
@@ -109,11 +105,19 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
 
     rank = Rank.from_description(parts[0])
 
+    restrictions = is_option_enabled(multiworld, player, "enable_item_restrictions")
+    if restrictions:
+        for item_name in life.required_items:
+            if rank.item_rarity < 1:
+                continue
+            if not state.has(item_name, player, rank.item_rarity):
+                return False
+
     progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
     if not progressive_licenses:
         return state.has(f"{life.description} License", player)
 
-    if rank.min_chapter and not state.has("Chapter Complete", player, rank.min_chapter):
+    if rank.min_chapter and not state.has("Progressive Chapter", player, rank.min_chapter):
         return False
 
     fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
@@ -142,10 +146,7 @@ def bliss_bonuses(world: World, multiworld: MultiWorld, state: CollectionState, 
 
 
 def can_fight(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    if not is_option_enabled(multiworld, player, "enable_item_restrictions"):
-        return True
-
-    return state.has_any(["Daggers", "Longswords", "Greatswords", "Bows", "Wands"], player)
+    return True
 
 
 def can_cast_magic(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
@@ -159,15 +160,7 @@ def can_heal(world: World, multiworld: MultiWorld, state: CollectionState, playe
 def completed_chapter(world: World, multiworld: MultiWorld, state: CollectionState, player: int, chapter_str: str):
     chapter_str = chapter_str.strip()
     chapter = int(chapter_str) if chapter_str.isnumeric() else 1
-    return state.has("Chapter Complete", player, chapter)
-
-
-def completed_intermission(
-    world: World, multiworld: MultiWorld, state: CollectionState, player: int, intermission_str: str
-):
-    intermission_str = intermission_str.strip()
-    intermission = int(intermission_str) if intermission_str.isnumeric() else 1
-    return state.has("Intermission Complete", player, intermission)
+    return state.has("Progressive Chapter", player, chapter)
 
 
 def west_grassy_plains_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
@@ -199,11 +192,11 @@ def finished_storyline(world: World, multiworld: MultiWorld, state: CollectionSt
 
 
 def origin_island_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_intermission(world, multiworld, state, player, "8")
+    return completed_chapter(world, multiworld, state, player, "7") # TODO: also add event here for the right location that gives access to tihs
 
 
 def trials_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "9")
+    return completed_chapter(world, multiworld, state, player, "8") # TODO: also add event here for the right location that gives access to this
 
 
 def has_better_shopping(world: World, multiworld: MultiWorld, state: CollectionState, player: int, number_str: str):

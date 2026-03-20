@@ -46,7 +46,10 @@
         },
         "life_mastery_rank": {
             "display_name": "Target rank for Life Mastery",
-            "description": "If the goal is set to Life Mastery, sets the target rank to beat the game.",
+            "description": [
+              "If the goal is set to Life Mastery, sets the target rank to beat the game.",
+              "Additionally, regardless of the goal, also sets the highest rank to generate locations for."
+            ],
             "type": "Choice",
             "values": {
               "fledgling": 1,
@@ -56,10 +59,9 @@
               "master": 5,
               "hero": 6,
               "legend": 7,
-              "demi_creator": 8,
-              "creator": 9
+              "creator": 8
             },
-            "default": 5
+            "default": 4
         },
         "life_mastery_count": {
             "display_name": "Amount of lives to reach the target rank",
@@ -99,9 +101,8 @@
               "The unlocked ranks per license become as follows:",
               "Novice, Fledgling, Apprentice -> 1 license",
               "Adept, Expert -> 2 licenses",
-              "Master -> 3 licenses",
-              "Hero, Legend -> 4 licenses",
-              "Demi-Creator, Creator -> 5 licenses (DLC)"
+              "Master, Hero, Legend -> 3 licenses",
+              "Demi-Creator, Creator -> 4 licenses (DLC)"
             ],
             "type": "Toggle",
             "default": false
@@ -290,11 +291,11 @@
           "description": [
             "Toggles whether to restrict equipment and consumable usage.",
             "",
-            "When enabled, you're only allowed to equip or use items you have the clearance for, unequipping everything else.",
+            "When enabled, any 0 star items remain free to equip while anything 1 star or higher rarity will need to be unlocked first.",
             "",
-            "Items are restricted by slot, type, quality and rarity. There are no restrictions on furniture nor materials.",
+            "Items are restricted by slot and type. There are no restrictions on furniture nor materials.",
             "",
-            "Each Life requires the following items unlocked. If licenses are in the pool the starting license's items will be granted as well. If not, items from a random Life will be chosen:",
+            "Each Life has the following tools and weapons associated, higher ranks may also require the respective higher rarities before they're considered in logic:",
             "* Paladin: Longswords and Shields",
             "* Mercenary: Greatswords",
             "* Hunter: Bows",
