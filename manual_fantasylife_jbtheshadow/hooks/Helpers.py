@@ -8,10 +8,7 @@ from .. import Helpers as rootHelpers
 def before_is_category_enabled(multiworld: MultiWorld, player: int, category_name: str) -> Optional[bool]:
     other_requests = rootHelpers.get_option_value(multiworld, player, "other_requests")
     goal = rootHelpers.get_option_value(multiworld, player, "goal")
-    additional_skill_level_checks_included = rootHelpers.get_option_value(
-        multiworld, player, "additional_skill_level_checks_included"
-    )
-    life_mastery_rank = rootHelpers.get_option_value(multiworld, player, "life_mastery_rank")
+    life_max_rank = rootHelpers.get_option_value(multiworld, player, "life_max_rank")
     match category_name:
         case "Other Requests 1" if other_requests < 1:
             return False
@@ -25,40 +22,31 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
         case "Other Requests 4" if other_requests < 4:
             return False
 
-        case "Wish Hunt" if goal != 0:
+        case "Wish Hunt" if goal not in (0, 2):
             return False
 
-        case "Skill Level Above 5" if additional_skill_level_checks_included in [5]:
+        case "Fledgling" if life_max_rank < 1:
             return False
 
-        case "Skill Level Above 10" if additional_skill_level_checks_included in [10, 11]:
+        case "Apprentice" if life_max_rank < 2:
             return False
 
-        case "Skill Level Above 15" if additional_skill_level_checks_included in [15, 16]:
+        case "Adept" if life_max_rank < 3:
             return False
 
-        case "Skill Level Sparse Missing" if additional_skill_level_checks_included in [11, 16, 21]:
+        case "Expert" if life_max_rank < 4:
             return False
 
-        case "Apprentice" if life_mastery_rank < 2:
+        case "Master" if life_max_rank < 5:
             return False
 
-        case "Adept" if life_mastery_rank < 3:
+        case "Hero" if life_max_rank < 6:
             return False
 
-        case "Expert" if life_mastery_rank < 4:
+        case "Legend" if life_max_rank < 7:
             return False
 
-        case "Master" if life_mastery_rank < 5:
-            return False
-
-        case "Hero" if life_mastery_rank < 6:
-            return False
-
-        case "Legend" if life_mastery_rank < 7:
-            return False
-
-        case "Creator" if life_mastery_rank < 8:
+        case "Creator" if life_max_rank < 8:
             return False
 
     return None

@@ -2,13 +2,15 @@
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
     "core": {
         "goal":{
-            "display_name": "The End Objective",
+            "display_name": "Goal",
             "description": "How to End your Randomized playthrough.",
             "aliases": {
               "wish_hunt": 0,
-              "life_mastery": 1
+              "life_mastery": 1,
+              "wish_hunt_mastery": 2
             },
-            "hidden": false
+          "group": "Goal Options",
+          "hidden": false
         },
         "death_link": {
             "default": false,
@@ -19,11 +21,29 @@
         }
     },
     "user": {
-        "require_main_story_for_goal": {
-            "display_name": "Require beating the game for goal?",
-            "description": "If the goal requires completing the Prologue and Chapters 1 through Final (7).",
+        "story_goal": {
+            "display_name": "Require beating the game's main story to goal?",
+            "description": "If the goal also requires completing the Prologue and Chapters 1 through 7.",
             "type": "Toggle",
-            "default": false
+            "default": false,
+            "group": "Goal Options"
+        },
+        "dlc": {
+            "display_name": "Include the Origin Island DLC?",
+            "description": "Toggles whether to include items and locations related to the Origin Island DLC.",
+            "type": "Toggle",
+            "default": false,
+            "group": "Goal Options"
+        },
+        "dlc_goal": {
+            "display_name": "Require beating the game's DLC to goal?",
+            "description": [
+              "If the goal also requires completing the DLC Chapters 1 and 2.",
+              "Does nothing if story goal is also not enabled."
+            ],
+            "type": "Toggle",
+            "default": false,
+            "group": "Goal Options"
         },
         "wish_hunt_required": {
             "display_name": "Amount of Lost Wishes required",
@@ -31,7 +51,8 @@
             "type": "Range",
             "range_start": 1,
             "range_end": 200,
-            "default": 30
+            "default": 30,
+            "group": "Goal Options"
         },
         "wish_hunt_total": {
             "display_name": "Amount of Lost Wishes in total",
@@ -42,14 +63,12 @@
             "type": "Range",
             "range_start": 1,
             "range_end": 200,
-            "default": 50
+            "default": 50,
+            "group": "Goal Options"
         },
         "life_mastery_rank": {
             "display_name": "Target rank for Life Mastery",
-            "description": [
-              "If the goal is set to Life Mastery, sets the target rank to beat the game.",
-              "Additionally, regardless of the goal, also sets the highest rank to generate locations for."
-            ],
+            "description": "If the goal is set to Life Mastery, sets the target rank to beat the game.",
             "type": "Choice",
             "values": {
               "fledgling": 1,
@@ -61,7 +80,8 @@
               "legend": 7,
               "creator": 8
             },
-            "default": 4
+            "default": 4,
+            "group": "Goal Options"
         },
         "life_mastery_count": {
             "display_name": "Amount of lives to reach the target rank",
@@ -69,31 +89,63 @@
             "type": "Range",
             "range_start": 1,
             "range_end": 12,
-            "default": 1
+            "default": 1,
+            "group": "Goal Options"
         },
-        "dlc": {
-            "display_name": "Include the Origin Island DLC?",
-            "description": "Toggles whether to include items and locations related to the Origin Island DLC.",
+
+        "life_licenses": {
+            "display_name": "Include life licenses?",
+            "description": "Toggles whether to include life licenses in the pool.",
             "type": "Toggle",
-            "default": false
+            "default": true,
+            "group": "Life Options"
         },
-        "licenses": {
-            "display_name": "Include licenses?",
-            "description": "Toggles whether to include licenses in the pool.",
+        "life_ranks": {
+            "display_name": "Include life license ranks?",
+            "description": "Toggles whether to include locations for reaching the different ranks on each life license.",
             "type": "Toggle",
-            "default": true
+            "default": true,
+            "group": "Life Options"
         },
-        "progressive_licenses": {
-            "display_name": "Progressive licenses?",
+        "life_challenges": {
+            "display_name": "Include life license challenges?",
             "description": [
-              "Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.",
-              "If disabled, a single license unlocks all ranks.",
-              "Does nothing if licenses are not included."
+              "Toggles whether to include locations for the various tasks required to rank up lives.",
+              "This can add A LOT of locations, so make sure you really want that."
             ],
             "type": "Toggle",
-            "default": true
+            "default": false,
+            "group": "Life Options"
         },
-        "fast_licenses": {
+        "life_max_rank": {
+          "display_name": "Max life license rank",
+            "description": "This option removes any locations with a life rank requirement higher than set here.",
+            "type": "Choice",
+            "values": {
+              "no_life": 0,
+              "fledgling": 1,
+              "apprentice": 2,
+              "adept": 3,
+              "expert": 4,
+              "master": 5,
+              "hero": 6,
+              "legend": 7,
+              "creator": 8
+            },
+            "default": 4,
+            "group": "Life Options"
+        },
+        "life_progressive": {
+            "display_name": "Progressive life ranks?",
+            "description": [
+              "Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.",
+              "If disabled, a single license unlocks all ranks. Does nothing if life licenses are not included."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Life Options"
+        },
+        "life_fast": {
             "display_name": "Fast progressive licenses?",
             "description": [
               "Toggles whether progressive licenses should be grouped together, to reduce item count.",
@@ -105,13 +157,16 @@
               "Demi-Creator, Creator -> 4 licenses (DLC)"
             ],
             "type": "Toggle",
-            "default": false
+            "default": false,
+            "group": "Life Options"
         },
-        "starting_life": {
+        "life_start": {
             "display_name": "Starting Life",
             "description": [
-              "Sets what Life your character will start with, since the game forces you to go with one of the 12 Lives.",
+              "Set what Life your character will start with, since the game forces you to go with one of the 12 Lives.",
               "This option does nothing if licenses are not included.",
+              "",
+              "[any] Randomly pick between any of the 12 Lives.",
               "[paladin] Start as a Paladin.",
               "[mercenary] Start as a Mercenary.",
               "[hunter] Start as a Hunter.",
@@ -127,11 +182,11 @@
               "[combat_easy] Randomly pick between Paladin and Mercenary.",
               "[combat] Randomly pick between Paladin, Mercenary, Hunter and Magician.",
               "[gathering] Randomly pick between Miner, Woodcutter and Angler.",
-              "[crafting] Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist.",
-              "[any] Randomly pick between any of the 12 Lives."
+              "[crafting] Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist."
             ],
             "type": "Choice",
             "values": {
+              "any": 0,
               "paladin": 1,
               "mercenary": 2,
               "hunter": 3,
@@ -147,11 +202,51 @@
               "combat_easy": 13,
               "combat": 14,
               "gathering": 15,
-              "crafting": 16,
-              "any": 17
+              "crafting": 16
             },
-            "default": 13
+            "default": 13,
+            "group": "Life Options"
         },
+
+        "character_levels": {
+            "display_name": "Include level up checks?",
+            "description": "Toggles whether to include checks for leveling your character up.",
+            "type": "Toggle",
+            "default": false,
+            "group": "Level Options"
+        },
+        "character_levels_max": {
+            "display_name": "Highest level up check",
+            "description": [
+              "Sets the highest location you can get a check for leveling up.",
+              "Highest level in the base game is 99, while in Origin Island it's 200."
+            ],
+            "type": "Range",
+            "range_start": 2,
+            "range_end": 200,
+            "default": 20,
+            "group": "Level Options"
+        },
+        "skill_levels": {
+            "display_name": "Include skill level up checks?",
+            "description": "Toggles whether to include checks for leveling up your skills.",
+            "type": "Toggle",
+            "default": true,
+            "group": "Level Options"
+        },
+        "skill_levels_max": {
+            "display_name": "Highest skill level up check",
+            "description": [
+              "Sets the highest location you can get a check for leveling up skills.",
+              "Highest skill level in the base game is 15, while in Origin Island it's 20."
+            ],
+            "type": "Range",
+            "range_start": 2,
+            "range_end": 20,
+            "default": 5,
+            "group": "Level Options"
+        },
+
         "bliss_bonuses": {
             "display_name": "Include Bliss Bonuses?",
             "description": [
@@ -201,65 +296,6 @@
             "type": "Toggle",
             "default": true
         },
-        "include_playtime_checks": {
-            "display_name": "Include playtime Bliss checks?",
-            "description": "Toggles whether to include the 1 hour, 10 hours, 50 hours and 100 hours in Reveria bliss checks as locations in the pool.",
-            "type": "Toggle",
-            "default": false
-        },
-        "include_streetpass_checks": {
-            "display_name": "Include StreetPass Bliss checks?",
-            "description": "Toggles whether to include the bliss checks related to meeting visitors/StreetPass features as locations in the pool.",
-            "type": "Toggle",
-            "default": false
-        },
-        "include_level_up_checks": {
-            "display_name": "Include level up Bliss checks?",
-            "description": "Toggles whether to include the level up Bliss checks as locations in the pool.",
-            "type": "Toggle",
-            "default": false
-        },
-        "include_skill_level_checks": {
-            "display_name": "Include skill level Bliss checks?",
-            "description": "Toggles whether to include the Bliss checks related to leveling 1, 5, 15 and 25 skills to skill level 15 as locations in the pool.",
-            "type": "Toggle",
-            "default": false
-        },
-        "additional_skill_level_checks": {
-            "display_name": "Additional skill level checks?",
-            "description": [
-              "Toggles whether to include individual checks for each separate skill.",
-              "",
-              "These are separate from the Bliss checks and are meant to give you more locations earlier on as another incentive to work on the different Lives."
-            ],
-            "type": "Toggle",
-            "default": true
-        },
-        "additional_skill_level_checks_included": {
-            "display_name": "Additional skill level checks included?",
-            "description": [
-              "Selects which skill levels will be considered checks. Beware some options can lead to grinding.",
-              "",
-              "[five] Levels 2, 3, 4 and 5 are checks",
-              "[ten] Levels 2 through 10 are checks",
-              "[ten_sparse] Levels 2, 3, 5, 7 and 10 are checks",
-              "[fifteen] Levels 2 through 15 are checks",
-              "[fifteen_sparse] Levels 2, 3, 5, 7, 10, 13 and 15 are checks",
-              "[twenty] Levels 2 through 20 are checks. Requires partial completion of DLC for levels 16 through 20.",
-              "[twenty_sparse] Levels 2, 3, 5, 7, 10, 13, 15, 17 and 20 are checks. Requires partial completion of DLC for levels 17 and 20."
-            ],
-            "type": "Choice",
-            "values": {
-              "five": 5,
-              "ten": 10,
-              "ten_sparse": 11,
-              "fifteen": 15,
-              "fifteen_sparse": 16,
-              "twenty": 20,
-              "twenty_sparse": 21
-            },
-            "default": 5
-        },
         "other_requests": {
             "display_name": "Include Other Requests?",
             "description": [
@@ -279,12 +315,6 @@
               "all": 4
             },
             "default": 4
-        },
-        "include_ally_checks": {
-            "display_name": "Include ally Bliss checks?",
-            "description": "Toggles whether to include the Bliss checks related to making allies with npcs (and being able to invite them to your party) as locations in the pool.",
-            "type": "Toggle",
-            "default": false
         },
         "enable_item_restrictions": {
           "display_name": "Enable Item Restrictions?",

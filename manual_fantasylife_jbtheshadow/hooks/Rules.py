@@ -42,52 +42,58 @@ def requiresMelee():
     return "|Figher Level:15| or |Black Belt Level:15| or |Thief Level:15|"
 
 
-def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    def beat_main_story():
+def beat_story(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
+    def can_beat_story():
         return state.has("Progressive Chapter", player, 7)
 
+    def can_beat_dlc():
+        return state.has("Progressive Chapter", player, 9)
+
+    story_goal = is_option_enabled(multiworld, player, "story_goal")
+    dlc = is_option_enabled(multiworld, player, "dlc")
+    dlc_goal = is_option_enabled(multiworld, player, "dlc_goal")
+
+    return not story_goal or can_beat_story() and (not dlc or not dlc_goal or can_beat_dlc())
+
+
+def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     goal = get_option_value(multiworld, player, "goal")
-    if goal != 0:
+    if goal not in [0, 2]:
         return True
 
     required = get_option_value(multiworld, player, "wish_hunt_required")
-    main_story = is_option_enabled(multiworld, player, "require_main_story_for_goal")
 
-    return state.has("Lost Wish", player, required) and (not main_story or beat_main_story())
+    return state.has("Lost Wish", player, required)
 
 
 def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    def beat_main_story():
-        return state.has("Progressive Chapter", player, 7)
-
     goal = get_option_value(multiworld, player, "goal")
-    if goal != 1:
+    if goal not in [1, 2]:
         return True
 
-    main_story = is_option_enabled(multiworld, player, "require_main_story_for_goal")
-    licenses = is_option_enabled(multiworld, player, "licenses")
-    if not licenses:
-        return not main_story or beat_main_story()
+    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    if not life_licenses:
+        return True
 
-    progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
-    fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
+    life_progressive = is_option_enabled(multiworld, player, "life_progressive")
+    life_fast = is_option_enabled(multiworld, player, "life_fast")
     life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
     life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
 
-    if not progressive_licenses:
+    if not life_progressive:
         item_name = "{life} License"
         item_count = 1
     else:
-        item_name = "Fast Progressive {life} License" if fast_licenses else "Progressive {life} License"
+        item_name = "Fast Progressive {life} License" if life_fast else "Progressive {life} License"
         rank = Rank(life_mastery_rank)
-        item_count = rank.fast_requirement if fast_licenses else rank.full_requirement
+        item_count = rank.fast_requirement if life_fast else rank.full_requirement
 
     life_count = 0
     for life in Life:
         if state.has(item_name.replace("{life}", life.description), player, item_count):
             life_count += 1
         if life_count >= life_mastery_count:
-            return not main_story or beat_main_story()
+            return True
 
     return False
 
@@ -99,8 +105,8 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
 
     life = Life.from_description(parts[1])
 
-    licenses = is_option_enabled(multiworld, player, "licenses")
-    if not licenses:
+    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    if not life_licenses:
         return True
 
     rank = Rank.from_description(parts[0])
@@ -113,15 +119,15 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
             if not state.has(item_name, player, rank.item_rarity):
                 return False
 
-    progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
-    if not progressive_licenses:
+    life_progressive = is_option_enabled(multiworld, player, "life_progressive")
+    if not life_progressive:
         return state.has(f"{life.description} License", player)
 
     if rank.min_chapter and not state.has("Progressive Chapter", player, rank.min_chapter):
         return False
 
-    fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
-    if not fast_licenses:
+    life_fast = is_option_enabled(multiworld, player, "life_fast")
+    if not life_fast:
         return state.has(f"Progressive {life.description} License", player, rank.full_requirement)
 
     return state.has(f"Fast Progressive {life.description} License", player, rank.fast_requirement)
@@ -154,7 +160,7 @@ def can_cast_magic(world: World, multiworld: MultiWorld, state: CollectionState,
 
 
 def can_heal(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return state.has("HP Recovery Items", player) or can_cast_magic(world, multiworld, state, player)
+    return True
 
 
 def completed_chapter(world: World, multiworld: MultiWorld, state: CollectionState, player: int, chapter_str: str):
