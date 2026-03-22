@@ -117,12 +117,12 @@
             "default": false,
             "group": "Life Options"
         },
-        "life_max_rank": {
+        "lives_max_rank": {
           "display_name": "Max life license rank",
             "description": "This option removes any locations with a life rank requirement higher than set here.",
             "type": "Choice",
             "values": {
-              "no_life": 0,
+              "no_rank": 0,
               "fledgling": 1,
               "apprentice": 2,
               "adept": 3,
@@ -135,7 +135,7 @@
             "default": 4,
             "group": "Life Options"
         },
-        "life_progressive": {
+        "lives_progressive": {
             "display_name": "Progressive life ranks?",
             "description": [
               "Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.",
@@ -145,7 +145,7 @@
             "default": true,
             "group": "Life Options"
         },
-        "life_fast": {
+        "lives_fast": {
             "display_name": "Fast progressive licenses?",
             "description": [
               "Toggles whether progressive licenses should be grouped together, to reduce item count.",
@@ -160,29 +160,69 @@
             "default": false,
             "group": "Life Options"
         },
+        "lives_available": {
+            "display_name": "Available Lives",
+            "description": [
+              "Set how many lives will be included in the playthrough, removing all of the others and locations that require them.",
+              "Does nothing if licenses are not enabled.",
+              "",
+              "[single]: Only the starting life will be included.",
+              "[three]: Three different lives will be included: one combat, one gatherer and one artisan.",
+              "[half]: Six different lives will be included, two from each group.",
+              "[nine]: Nine different lives will be included, three from each group.",
+              "[all]: All twelve lives will be included.",
+              "[combat]: Only Paladin, Mercenary, Hunter and Magician will be included.",
+              "[gatherer]: Only Miner, Woodcutter and Angler will be included.",
+              "[artisan]: Only Cook, Blacksmith, Carpenter, Tailor and Alchemist will be included.",
+              "",
+              "PS: Challenges for artisan lives are not self sufficient; that is, they may require items only obtainable from",
+              "other lives. For example, there are several Cook challenges involving fish and not all of them can be bought;",
+              "some Blacksmith challenges need beams that require a high enough Carpenter license to either craft or buy them,",
+              "if not a Woodcutter to collect the logs to turn into beams.",
+              "",
+              "This setting is very experimental and using any option other than all lives could get you stuck unable to promote",
+              "your life license from not having enough challenges completed. In that scenario you may have to temporarily switch",
+              "into one of the not included lives and progress enough through it just to get the required items and unstuck yourself"
+            ],
+            "type": "Choice",
+            "values": {
+              "single": 1,
+              "three": 3,
+              "half": 6,
+              "nine": 9,
+              "all": 12,
+              "combat": 14,
+              "gatherer": 15,
+              "artisan": 16
+            },
+            "default": 12,
+            "group": "Life Options"
+        },
         "life_start": {
             "display_name": "Starting Life",
             "description": [
               "Set what Life your character will start with, since the game forces you to go with one of the 12 Lives.",
               "This option does nothing if licenses are not included.",
+              "The starting life must be included in the available lives chosen earlier.",
+              "If it isn't, a random available life will be selected instead.",
               "",
-              "[any] Randomly pick between any of the 12 Lives.",
-              "[paladin] Start as a Paladin.",
-              "[mercenary] Start as a Mercenary.",
-              "[hunter] Start as a Hunter.",
-              "[magician] Start as a Magician.",
-              "[miner] Start as a Miner.",
-              "[woodcutter] Start as a Woodcutter.",
-              "[angler] Start as an Angler.",
-              "[cook] Start as a Cook.",
-              "[blacksmith] Start as a Blacksmith.",
-              "[carpenter] Start as a Carpenter.",
-              "[tailor] Start as a Tailor.",
-              "[alchemist] Start as an Alchemist.",
-              "[combat_easy] Randomly pick between Paladin and Mercenary.",
-              "[combat] Randomly pick between Paladin, Mercenary, Hunter and Magician.",
-              "[gathering] Randomly pick between Miner, Woodcutter and Angler.",
-              "[crafting] Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist."
+              "[any]: Randomly pick between any of the 12 Lives.",
+              "[paladin]: Start as a Paladin.",
+              "[mercenary]: Start as a Mercenary.",
+              "[hunter]: Start as a Hunter.",
+              "[magician]: Start as a Magician.",
+              "[miner]: Start as a Miner.",
+              "[woodcutter]: Start as a Woodcutter.",
+              "[angler]: Start as an Angler.",
+              "[cook]: Start as a Cook.",
+              "[blacksmith]: Start as a Blacksmith.",
+              "[carpenter]: Start as a Carpenter.",
+              "[tailor]: Start as a Tailor.",
+              "[alchemist]: Start as an Alchemist.",
+              "[combat_easy]: Randomly pick between Paladin and Mercenary.",
+              "[combat]: Randomly pick between Paladin, Mercenary, Hunter and Magician.",
+              "[gatherer]: Randomly pick between Miner, Woodcutter and Angler.",
+              "[artisan]: Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist."
             ],
             "type": "Choice",
             "values": {
@@ -201,8 +241,8 @@
               "alchemist": 12,
               "combat_easy": 13,
               "combat": 14,
-              "gathering": 15,
-              "crafting": 16
+              "gatherer": 15,
+              "artisan": 16
             },
             "default": 13,
             "group": "Life Options"
@@ -247,43 +287,61 @@
             "group": "Level Options"
         },
 
-        "bliss_bonuses": {
+        "bliss": {
             "display_name": "Include Bliss Bonuses?",
             "description": [
               "Toggles whether to add the bliss bonuses to the pool, like the bigger bag or access to pets.",
               "When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen."
             ],
             "type": "Toggle",
-            "default": true
+            "default": true,
+            "group": "Bliss Options"
         },
-        "starting_bliss_bonus": {
+        "bliss_available": {
+            "display_name": "Bliss Bonuses available",
+            "description": [
+              "Lets you choose which bonuses should be included into the pool.",
+              "",
+              "[all]: Bag, Storage, Shop, Pets, Animals, Customization and Theatre are all included.",
+              "[useful]: Includes only Bag, Storage and Shop bonuses.",
+              "[exclude_theatre]: Includes all but the Theatre bonuses (Happy Audio and Happy Video)."
+            ],
+            "type": "Choice",
+            "values": {
+              "all": 0,
+              "useful": 1,
+              "exclude_theatre": 2
+            },
+            "default": 2,
+            "group": "Bliss Options"
+        },
+        "bliss_start": {
             "display_name": "Starting Bliss Bonus",
             "description": [
               "Selects which bliss bonus to start with, or picks a random one among the more useful bonuses.",
               "Very early, before reaching Chapter One, the game will teach about bliss bonuses.",
               "As there are not many checks the player can do as early, this ensures the player won't have to go out of logic.",
               "Does nothing if bliss bonuses are not included.",
-              "[bag] Starts with Bigger Bag.",
-              "[storage] Starts with Bigger Storage.",
-              "[shopping] Starts with Shopping +.",
-              "[any] Starts with a random one out of those three."
+              "",
+              "[any]: Starts with any of the included bonuses.",
+              "[bag]: Starts with Bigger Bag.",
+              "[storage]: Starts with Bigger Storage.",
+              "[shopping]: Starts with Shopping +.",
+              "[useful]: Starts with a random one out of those three."
             ],
             "type": "Choice",
             "values": {
+              "any": 0,
               "bag": 1,
               "storage": 2,
               "shopping": 3,
-              "any": 4
+              "useful": 4
             },
-            "default": 4
+            "default": 4,
+            "group": "Bliss Options"
         },
-        "include_happy_audio_video": {
-            "display_name": "Include Happy Audio and Video?",
-            "description": "Toggles whether to include the Happy Audio and Happy Video bliss bonuses into the pool.",
-            "type": "Toggle",
-            "default": false
-        },
-        "include_passwords": {
+
+        "passwords": {
             "display_name": "Include claimable passwords?",
             "description": [
               "Toggles whether to include passwords in the pool. Passwords can be redeemed after Butterfly teaches about Other Requests,",
@@ -294,29 +352,31 @@
               "for the correct phrase to enter."
             ],
             "type": "Toggle",
-            "default": true
+            "default": true,
+            "group": "Misc Options"
         },
         "other_requests": {
             "display_name": "Include Other Requests?",
             "description": [
               "Include Other Requests as checks? Forced to [all] when goal is Wish Hunt.",
               "[none] No requests are included.",
-              "[only_first] Only the first request is included as a check.",
-              "[up_to_second] The first and second requests are included as checks.",
-              "[up_to_third] Only the first three requests are included as checks. Covers all non-DLC requests.",
-              "[all] Every request is considered. Does the same as [up_to_third] when no DLC."
+              "[first] Only the first request is included as a check.",
+              "[second] The first and second requests are included as checks.",
+              "[third] Only the first three requests are included as checks. Covers all non-DLC requests.",
+              "[all] Every request is considered. Does the same as [third] when no DLC."
             ],
             "type": "Choice",
             "values": {
               "none": 0,
-              "only_first": 1,
-              "up_to_second": 2,
-              "up_to_third": 3,
+              "first": 1,
+              "second": 2,
+              "third": 3,
               "all": 4
             },
-            "default": 4
+            "default": 4,
+            "group": "Misc Options"
         },
-        "enable_item_restrictions": {
+        "item_restrictions": {
           "display_name": "Enable Item Restrictions?",
           "description": [
             "Toggles whether to restrict equipment and consumable usage.",
@@ -342,7 +402,8 @@
             "Very restrictive, not recommended unless you really want to take on the extra challenge."
           ],
           "type": "Toggle",
-          "default": false
+          "default": false,
+          "group": "Misc Options"
         }
     }
 }

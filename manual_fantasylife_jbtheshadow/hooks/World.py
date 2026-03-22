@@ -7,7 +7,7 @@ from BaseClasses import MultiWorld, CollectionState, Item
 from ..Items import ManualItem
 from ..Locations import ManualLocation
 
-from ..data.Data import FILLER_ITEMS, FillerCategory, Life, Skill, Rank
+from .Data import FILLER_ITEMS, FillerCategory, Life, Skill, Rank, set_available_lives, get_available_lives
 from .Helpers import set_option_value, set_option_enabled
 
 # Raw JSON data from the Manual apworld, respectively:
@@ -50,7 +50,47 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
     dlc = get_option_value(multiworld, player, "dlc")
     life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
-    life_max_rank = get_option_value(multiworld, player, "life_max_rank")
+    life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
+    lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
+    lives_available = get_option_value(multiworld, player, "lives_available")
+    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
+    life_challenges = is_option_enabled(multiworld, player, "life_challenges")
+
+    all_lives = [x for x in range(1, 13)]
+
+    fake_gen = getattr(multiworld, "generation_is_fake", False)
+    if fake_gen or not life_licenses or lives_available == 12:
+        set_available_lives(all_lives)
+    else:
+        all_combat = [x for x in range(1, 5)]
+        all_gatherer = [x for x in range(5, 8)]
+        all_artisan = [x for x in range(8, 13)]
+        match lives_available:
+            case 1:
+                single = world.random.choice(all_lives)
+                set_available_lives([single])
+            case 3:
+                combat = world.random.choice(all_combat)
+                gatherer = world.random.choice(all_gatherer)
+                artisan = world.random.choice(all_artisan)
+                set_available_lives([combat, gatherer, artisan])
+            case 6:
+                combat = world.random.sample(all_combat, 2)
+                gatherer = world.random.sample(all_gatherer, 2)
+                artisan = world.random.sample(all_artisan, 2)
+                set_available_lives(combat + gatherer + artisan)
+            case 9:
+                combat = world.random.sample(all_combat, 3)
+                gatherer = world.random.sample(all_gatherer, 3)
+                artisan = world.random.sample(all_artisan, 3)
+                set_available_lives(combat + gatherer + artisan)
+            case 14:
+                set_available_lives(all_combat)
+            case 15:
+                set_available_lives(all_gatherer)
+            case 16:
+                set_available_lives(all_artisan)
 
     if goal in [0, 2]:
         if wish_hunt_required > wish_hunt_total:
@@ -59,15 +99,34 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_total)
 
     if goal in [1, 2]:
-        if not dlc:
-            if life_mastery_rank == 8:
-                logging.warning("Creator rank not available without the DLC")
-                logging.warning(f"Setting life_mastery_rank to Legend")
-                set_option_value(multiworld, player, "life_mastery_rank", 7)
-            if life_max_rank == 8:
-                logging.warning("Creator rank not available without the DLC")
-                logging.warning(f"Setting life_max_rank to Legend")
-                set_option_value(multiworld, player, "life_mastery_rank", 7)
+        if not dlc and lives_max_rank == 8:
+            logging.warning("Creator rank not available without the DLC")
+            logging.warning(f"Setting lives_max_rank to Legend")
+            set_option_value(multiworld, player, "lives_max_rank", 7)
+            lives_max_rank = 7
+
+        if lives_max_rank == 0:
+            logging.warning("lives_max_rank cannot be set to 0 when life mastery is a goal")
+            logging.warning(f"Setting lives_max_rank to Fledgling")
+            set_option_value(multiworld, player, "lives_max_rank", 1)
+            lives_max_rank = 1
+
+        if life_mastery_rank > lives_max_rank:
+            logging.warning("life_mastery_rank cannot be greater than lives_max_rank")
+            logging.warning(f"Setting life_mastery_rank to {Rank(lives_max_rank).description}")
+            set_option_value(multiworld, player, "life_mastery_rank", lives_max_rank)
+
+        life_count = len(get_available_lives())
+        if life_mastery_count > life_count:
+            logging.warning("Cannot achieve life mastery goal with the available lives")
+            logging.warning(f"Changing life_mastery_count from {life_mastery_count} to {life_count}")
+            set_option_value(multiworld, player, "life_mastery_count", life_count)
+
+    if item_restrictions and (not life_challenges or lives_max_rank < 1):
+        logging.warning("Cannot set item restrictions when life challenges are disabled or the highest life is below fledgling.")
+        logging.warning("Disabling item restrictions.")
+        set_option_value(multiworld, player, "item_restrictions", False)
+
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
@@ -140,35 +199,47 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         item_names_to_remove += ["Progressive Chapter", "Progressive Chapter"]
 
     life_licenses = is_option_enabled(multiworld, player, "life_licenses")
-    life_progressive = is_option_enabled(multiworld, player, "life_progressive")
-    enable_item_restrictions = is_option_enabled(multiworld, player, "enable_item_restrictions")
+    lives_progressive = is_option_enabled(multiworld, player, "lives_progressive")
+    available_lives = get_available_lives()
     if life_licenses:
-        if life_progressive and not dlc:
-            life_fast = is_option_enabled(multiworld, player, "life_fast")
-            if life_fast:
+        if lives_progressive and not dlc:
+            lives_fast = is_option_enabled(multiworld, player, "lives_fast")
+            if lives_fast:
                 for life_name in Life:
                     item_names_to_remove.append(f"Fast Progressive {life_name.description} License")
             else:
                 for life_name in Life:
-                    for _ in range(0, 2):
-                        item_names_to_remove.append(f"Progressive {life_name.description} License")
+                    item_names_to_remove.append(f"Progressive {life_name.description} License")
 
         life_start = get_option_value(multiworld, player, "life_start")
         life_name = ""
         match life_start:
             case 0:
-                life_name = world.random.choice(list(Life)).description
+                choice = world.random.choice(available_lives)
+                life_name = Life(choice).description
             case 13:
-                life_name = world.random.choice(Life.easy_combat()).description
+                choices = list({1, 2} & set(available_lives))
+                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
+                life_name = Life(choice).description
             case 14:
-                life_name = world.random.choice(Life.combat()).description
+                choices = list({1, 2, 3, 4} & set(available_lives))
+                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
+                life_name = Life(choice).description
             case 15:
-                life_name = world.random.choice(Life.gathering()).description
+                choices = list({5, 6, 7} & set(available_lives))
+                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
+                life_name = Life(choice).description
             case 16:
-                life_name = world.random.choice(Life.crafting()).description
+                choices = list({8, 9, 10, 11, 12} & set(available_lives))
+                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
+                life_name = Life(choice).description
             case x if 0 < x < 13:
-                life_name = Life(x).description
+                choices = list({x} & set(available_lives))
+                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
+                life_name = Life(choice).description
         if life_name and len(life_name) > 0:
+            logging.info(f"Life {life_name}")
+            logging.info(f"Lives available: {available_lives}")
             item_name = next(
                 x.name
                 for x in item_pool
@@ -182,14 +253,23 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             starting_inventory.append(item_name)
 
     # Bliss Bonuses
-    bliss_bonuses = is_option_enabled(multiworld, player, "bliss_bonuses")
-    if bliss_bonuses:
+    bliss = is_option_enabled(multiworld, player, "bliss")
+    if bliss:
         if not dlc:
             item_names_to_remove += ["Bigger Bag", "Bigger Bag", "Bigger Storage", "Bigger Storage"]
 
-        starting_bliss_bonus = get_option_value(multiworld, player, "starting_bliss_bonus")
+        bliss_start = get_option_value(multiworld, player, "bliss_start")
         item_name = ""
-        match starting_bliss_bonus:
+        match bliss_start:
+            case 0:
+                bliss_available = get_option_value(multiworld, player, "bliss_available")
+                choices = ["Bigger Bag", "Bigger Storage", "Better Shopping"]
+                if bliss_available == 2:
+                    choices += ["More Pets", "More Animals", "More Customization"]
+                if bliss_available == 0:
+                    choices += ["More Pets", "More Animals", "More Customization", "Theatre"]
+
+                item_name = world.random.choice(choices)
             case 1:
                 item_name = "Bigger Bag"
             case 2:
@@ -202,8 +282,10 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             starting_inventory.append(item_name)
 
     for item_name in item_names_to_remove:
-        item = next(i for i in item_pool if i.name == item_name)
-        item_pool.remove(item)
+        to_remove = [i for i in item_pool if i.name == item_name]
+        if len(to_remove) > 0:
+            item = to_remove[0]
+            item_pool.remove(item)
 
     for item_name in starting_inventory:
         item = next(i for i in item_pool if i.name == item_name)
