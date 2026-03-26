@@ -10,7 +10,7 @@
     "Other Requests 4": { "hidden": true },
     "Bag Bonus": { "hidden": true },
     "Storage Bonus": { "hidden": true },
-    "Shop Bonus": { "hidden": true },
+    "Shopping Bonus": { "hidden": true },
     "Pet Bonus": { "hidden": true },
     "Animal Bonus": { "hidden": true },
     "Customization Bonus": { "hidden": true },
@@ -20,8 +20,9 @@
     "Level Up Checks": { "yaml_option": ["character_levels"] },
     "Skill Level Checks": { "yaml_option": ["skill_levels"] },
     "Item Restrictions": { "yaml_option": ["item_restrictions"] },
-    "Life Challenges": { "yaml_option": ["life_challenges"], "hidden": true },
-    "Life Ranks": { "yaml_option": ["life_ranks"], "hidden": true },
+    "Map Restrictions": { "yaml_option": ["map_restrictions"] },
+    "Life Challenges": { "yaml_option": ["life_licenses"], "hidden": true },
+    "Life Ranks": { "yaml_option": ["life_licenses"], "hidden": true },
     "Combat": { "hidden": true },
     "Easier Combat": { "hidden": true },
     "Gatherer": { "hidden": true },
@@ -45,5 +46,6 @@
     "Blacksmith": { "hidden": true },
     "Carpenter": { "hidden": true },
     "Tailor": { "hidden": true },
-    "Alchemist": { "hidden": true }
+    "Alchemist": { "hidden": true },
+    "Treasure Chests": { "yaml_option": ["chests"], "hidden": true }
 }

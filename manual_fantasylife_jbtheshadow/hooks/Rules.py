@@ -116,8 +116,8 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
 
     rank = Rank.from_description(parts[0])
 
-    restrictions = is_option_enabled(multiworld, player, "item_restrictions")
-    if restrictions:
+    item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
+    if item_restrictions:
         for item_name in life.required_items:
             if rank.item_rarity < 1:
                 continue
@@ -138,13 +138,13 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
     return state.has(f"Fast Progressive {life.description} License", player, rank.fast_requirement)
 
 
-def item_restrictions(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
-    if not is_option_enabled(multiworld, player, "item_restrictions"):
-        return True
-
-    count_str = count_str.strip()
-    count = int(count_str) if count_str.isnumeric() else 0
-    return state.has_group("Item Restrictions", player, count)
+# def item_restrictions(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
+#     if not is_option_enabled(multiworld, player, "lives_restricted"):
+#         return True
+#
+#     count_str = count_str.strip()
+#     count = int(count_str) if count_str.isnumeric() else 0
+#     return state.has_group("Item Restrictions", player, count)
 
 
 def bliss_bonuses(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):

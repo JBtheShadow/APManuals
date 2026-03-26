@@ -50,7 +50,7 @@
             "description": "If the goal is set to Wish Hunt, sets the amount of Lost Wishes required for beating it.",
             "type": "Range",
             "range_start": 1,
-            "range_end": 200,
+            "range_end": 500,
             "default": 30,
             "group": "Goal Options"
         },
@@ -62,7 +62,7 @@
             ],
             "type": "Range",
             "range_start": 1,
-            "range_end": 200,
+            "range_end": 500,
             "default": 50,
             "group": "Goal Options"
         },
@@ -71,9 +71,6 @@
             "description": "If the goal is set to Life Mastery, sets the target rank to beat the game.",
             "type": "Choice",
             "values": {
-              "fledgling": 1,
-              "apprentice": 2,
-              "adept": 3,
               "expert": 4,
               "master": 5,
               "hero": 6,
@@ -95,26 +92,12 @@
 
         "life_licenses": {
             "display_name": "Include life licenses?",
-            "description": "Toggles whether to include life licenses in the pool.",
-            "type": "Toggle",
-            "default": true,
-            "group": "Life Options"
-        },
-        "life_ranks": {
-            "display_name": "Include life license ranks?",
-            "description": "Toggles whether to include locations for reaching the different ranks on each life license.",
-            "type": "Toggle",
-            "default": true,
-            "group": "Life Options"
-        },
-        "life_challenges": {
-            "display_name": "Include life license challenges?",
             "description": [
-              "Toggles whether to include locations for the various tasks required to rank up lives.",
-              "This can add A LOT of locations, so make sure you really want that."
+              "Toggles whether to include life licenses in the pool.",
+              "This also includes locations for both ranks and life challenges."
             ],
             "type": "Toggle",
-            "default": false,
+            "default": true,
             "group": "Life Options"
         },
         "lives_max_rank": {
@@ -122,10 +105,6 @@
             "description": "This option removes any locations with a life rank requirement higher than set here.",
             "type": "Choice",
             "values": {
-              "no_rank": 0,
-              "fledgling": 1,
-              "apprentice": 2,
-              "adept": 3,
               "expert": 4,
               "master": 5,
               "hero": 6,
@@ -166,34 +145,42 @@
               "Set how many lives will be included in the playthrough, removing all of the others and locations that require them.",
               "Does nothing if licenses are not enabled.",
               "",
-              "[single]: Only the starting life will be included.",
-              "[three]: Three different lives will be included: one combat, one gatherer and one artisan.",
-              "[half]: Six different lives will be included, two from each group.",
-              "[nine]: Nine different lives will be included, three from each group.",
-              "[all]: All twelve lives will be included.",
-              "[combat]: Only Paladin, Mercenary, Hunter and Magician will be included.",
-              "[gatherer]: Only Miner, Woodcutter and Angler will be included.",
-              "[artisan]: Only Cook, Blacksmith, Carpenter, Tailor and Alchemist will be included.",
+              "[single]: One life will be included at random among the combat and gatherer ones.",
+              "[combat_single]: One combat life will be included at random.",
+              "[combat_double]: Two combat lives will be included, one for melee (Paladin, Mercenary) and one for range (Hunter, Magician).",
+              "[combat_all]: All four combat lives will be included.",
+              "[gatherer_single]: One gatherer life will be included.",
+              "[gatherer_double]: Two gatherer lives will be included.",
+              "[gatherer_all]: All gatherer lives will be included.",
+              "[artisan_min]: One artisan live will be included at random along with any other lives it depends on, as well as their dependencies.",
+              "For each of the artisan lives the included dependencies are as follows:",
+              " - Cook: Angler",
+              " - Blacksmith: Woodcutter, Miner, Carpenter, Tailor",
+              " - Carpenter: Woodcutter, Miner, Blacksmith, Tailor",
+              " - Tailor: Woodcutter, Miner, Carpenter, Blacksmith",
+              " - Alchemist: Woodcutter, Miner, Carpenter, Blacksmith, Tailor",
+              "[artisan_all]: All gatherer and artisan lives will be included.",
+              "[self_sufficient_single]: [combat_single] and [artisan_all] combined.",
+              "[self_sufficient_double]: [combat_double] and [artisan_all] combined.",
+              "[all]: All lives will be included.",
               "",
-              "PS: Challenges for artisan lives are not self sufficient; that is, they may require items only obtainable from",
-              "other lives. For example, there are several Cook challenges involving fish and not all of them can be bought;",
-              "some Blacksmith challenges need beams that require a high enough Carpenter license to either craft or buy them,",
-              "if not a Woodcutter to collect the logs to turn into beams.",
-              "",
-              "This setting is very experimental and using any option other than all lives could get you stuck unable to promote",
-              "your life license from not having enough challenges completed. In that scenario you may have to temporarily switch",
-              "into one of the not included lives and progress enough through it just to get the required items and unstuck yourself"
+              "PS: Some challenges for artisan lives require items only obtainable from lives, or at the very least more easily available",
+              "with the help of other lives, and as such, artisan lives are never included by themselves."
             ],
             "type": "Choice",
             "values": {
               "single": 1,
-              "three": 3,
-              "half": 6,
-              "nine": 9,
-              "all": 12,
-              "combat": 14,
-              "gatherer": 15,
-              "artisan": 16
+              "combat_single": 2,
+              "combat_double": 3,
+              "combat_all": 4,
+              "gatherer_single": 5,
+              "gatherer_double": 6,
+              "gatherer_all": 7,
+              "artisan_min": 8,
+              "artisan_all": 9,
+              "self_sufficient_single": 10,
+              "self_sufficient_double": 11,
+              "all": 12
             },
             "default": 12,
             "group": "Life Options"
@@ -219,7 +206,8 @@
               "[carpenter]: Start as a Carpenter.",
               "[tailor]: Start as a Tailor.",
               "[alchemist]: Start as an Alchemist.",
-              "[combat_easy]: Randomly pick between Paladin and Mercenary.",
+              "[combat_melee]: Randomly pick between Paladin and Mercenary.",
+              "[combat_range]: Randomly pick between Hunter and Magician.",
               "[combat]: Randomly pick between Paladin, Mercenary, Hunter and Magician.",
               "[gatherer]: Randomly pick between Miner, Woodcutter and Angler.",
               "[artisan]: Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist."
@@ -239,12 +227,13 @@
               "carpenter": 10,
               "tailor": 11,
               "alchemist": 12,
-              "combat_easy": 13,
-              "combat": 14,
-              "gatherer": 15,
-              "artisan": 16
+              "combat": 13,
+              "combat_melee": 14,
+              "combat_range": 15,
+              "gatherer": 16,
+              "artisan": 17
             },
-            "default": 13,
+            "default": 14,
             "group": "Life Options"
         },
 
@@ -269,21 +258,22 @@
         },
         "skill_levels": {
             "display_name": "Include skill level up checks?",
-            "description": "Toggles whether to include checks for leveling up your skills.",
+            "description": [
+              "Toggles whether to include checks for leveling up your skills.",
+              "Although you're free to level up skills as you want, their corresponding checks will not be in logic",
+              "until you've acquired enough licenses or progressed through the story enough.",
+              "The logic levels are:",
+              " - Levels 2 and 3: Fledgling",
+              " - Levels 4 and 5: Apprentice",
+              " - Levels 6 and 7: Adept",
+              " - Levels 8 and 9: Expert",
+              " - Levels 10 and 11: Master",
+              " - Levels 12 and 13: Hero",
+              " - Levels 14 and 15: Legend",
+              " - Levels 16 through 20: Creator"
+            ],
             "type": "Toggle",
             "default": true,
-            "group": "Level Options"
-        },
-        "skill_levels_max": {
-            "display_name": "Highest skill level up check",
-            "description": [
-              "Sets the highest location you can get a check for leveling up skills.",
-              "Highest skill level in the base game is 15, while in Origin Island it's 20."
-            ],
-            "type": "Range",
-            "range_start": 2,
-            "range_end": 20,
-            "default": 5,
             "group": "Level Options"
         },
 
@@ -355,6 +345,17 @@
             "default": true,
             "group": "Misc Options"
         },
+        "chests": {
+            "display_name": "Include Treasure Chests?",
+            "description": [
+              "Include checks for opening treasure chests.",
+              "For red chests, as they drop random items from a list, there will be a check for each item they can drop in each room they appear in.",
+              "While not implemented yet, in the future the remaining chest types (purple, invisible purple, master) will also have checks each."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Misc Options"
+        },
         "other_requests": {
             "display_name": "Include Other Requests?",
             "description": [
@@ -377,33 +378,44 @@
             "group": "Misc Options"
         },
         "item_restrictions": {
-          "display_name": "Enable Item Restrictions?",
-          "description": [
-            "Toggles whether to restrict equipment and consumable usage.",
-            "",
-            "When enabled, any 0 star items remain free to equip while anything 1 star or higher rarity will need to be unlocked first.",
-            "",
-            "Items are restricted by slot and type. There are no restrictions on furniture nor materials.",
-            "",
-            "Each Life has the following tools and weapons associated, higher ranks may also require the respective higher rarities before they're considered in logic:",
-            "* Paladin: Longswords and Shields",
-            "* Mercenary: Greatswords",
-            "* Hunter: Bows",
-            "* Magician: Wands",
-            "* Miner: Pickaxes",
-            "* Woodcutter: Axes",
-            "* Angler: Fishing Rods",
-            "* Cook: Frying Pans",
-            "* Blacksmith: Hammers",
-            "* Carpenter: Saws",
-            "* Tailor: Needles",
-            "* Alchemist: Flasks",
-            "",
-            "Very restrictive, not recommended unless you really want to take on the extra challenge."
-          ],
-          "type": "Toggle",
-          "default": false,
-          "group": "Misc Options"
+            "display_name": "Enable Item Restrictions?",
+            "description": [
+              "Toggles whether to restrict equipment and consumable usage.",
+              "",
+              "When enabled, any 0 star items remain free to equip while anything 1 star or higher rarity will need to be unlocked first.",
+              "",
+              "Items are restricted by slot and type. There are no restrictions on furniture nor materials.",
+              "",
+              "Each Life has the following tools and weapons associated, higher ranks may also require the respective higher rarities before they're considered in logic:",
+              "* Paladin: Longswords and Shields",
+              "* Mercenary: Greatswords",
+              "* Hunter: Bows",
+              "* Magician: Wands",
+              "* Miner: Pickaxes",
+              "* Woodcutter: Axes",
+              "* Angler: Fishing Rods",
+              "* Cook: Frying Pans",
+              "* Blacksmith: Hammers",
+              "* Carpenter: Saws",
+              "* Tailor: Needles",
+              "* Alchemist: Flasks",
+              "",
+              "Very restrictive, not recommended unless you really want to take on the extra challenge."
+            ],
+            "type": "Toggle",
+            "default": false,
+            "group": "Misc Options"
+        },
+        "map_restrictions": {
+            "display_name": "Enable Map Restrictions?",
+            "description": [
+              "Toggles whether to restrict access to certain locations until you've acquired their respective key item.",
+              "Currently only includes specific caves, grottos and underground locations.",
+              "Subareas, like Nautilus Cave -> Forgotten Tunnel, are free to access once you've got its respective main area's key."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Misc Options"
         }
     }
 }

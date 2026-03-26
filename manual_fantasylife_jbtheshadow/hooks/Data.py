@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, auto
 
 # called after the game.json file has been loaded
 def after_load_game_file(game_table: dict) -> dict:
@@ -16,6 +16,56 @@ def after_load_progressive_item_file(progressive_item_table: list) -> list:
 # called after the locations.json file has been loaded, before any location loading or processing has occurred
 # if you need access to the locations after processing to add ids, etc., you should use the hooks in World.py
 def after_load_location_file(location_table: list) -> list:
+    # Level Up Checks
+    for i in range(2, 5):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ] })
+    for i in range(5, 10):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:1|" })
+    for i in range(10, 15):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:2|" })
+    for i in range(15, 20):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:3|" })
+    for i in range(20, 30):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:4|" })
+    for i in range(30, 40):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:5|" })
+    for i in range(40, 50):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:6|" })
+    for i in range(50, 99):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:7|" })
+    for i in range(100, 150):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "|Progressive Chapter:8|" })
+    for i in range(150, 201):
+        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "|Progressive Chapter:9|" })
+
+    # Skill Level Checks
+    def append_skill(s: Skill, l: int, c: list[str], r: str):
+        location_table.append({
+            "name": f"Reached {s.name} Level {l}",
+            "sort-key": f"skill-{s.value:02d}-{l:02d}",
+            "category": c,
+            "requires": r
+        })
+
+    for skill in Skill:
+        life = skill.life
+        for rank in [rank for rank in Rank if 0 < rank.value < 8]:
+            requires = f"{{has_any_license({rank.description})}}" if life is None else f"{{has_license({rank.description} {life.description})}}"
+            categories = [ "Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}", rank.description ]
+            if life is not None:
+                categories.append(life.description)
+            for level in range(2 * rank.value, 2 * rank.value + 2):
+                append_skill(skill, level, categories, requires)
+
+        requires = "{has_any_license(Creator)}" if life is None else f"{{has_license(Creator {life.description})}}"
+        requires += " AND {origin_island_access()}"
+        categories = ["Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}",
+                      "DLC", "Creator"]
+        if life is not None:
+            categories.append(life.description)
+        for level in range(16, 21):
+            append_skill(skill, level, categories, requires)
+
     return location_table
 
 # called after the events.json file has been loaded, before any processing has occurred
@@ -54,40 +104,57 @@ def set_available_lives(lives: list[int]):
     gen_data["lives"] = lives
 
 class Skill(Enum):
-    DASH = "Dash"
-    SNEAKING = "Sneaking"
-    DAGGER = "Dagger Skill"
-    LONGSWORD = "Longsword Skill"
-    SHIELD = "Shield Skill"
-    GREATSWORD = "Greatsword Skill"
-    ARCHERY = "Archery"
-    MAGIC = "Magic Skill"
-    WIND_MAGIC = "Wind Magic"
-    WATER_MAGIC = "Water Magic"
-    EARTH_MAGIC = "Earth Magic"
-    FIRE_MAGIC = "Fire Magic"
-    MINING = "Mining"
-    WOODCUTTING = "Woodcutting"
-    FISHING = "Fishing"
-    COOKING = "Cooking"
-    MEAT_CUISINE = "Meat Cuisine"
-    SEAFOOD_CUISINE = "Seafood Cuisine"
-    EGG_VEG_CUISINE = "Egg & Veg Cuisine"
-    SMITHING = "Smithing"
-    WEAPONSMITHING = "Weaponsmithing"
-    ARMORSMITHING = "Armorsmithing"
-    TOOL_SMITHING = "Metal Tool Smithing"
-    CARPENTRY = "Carpentry"
-    FURNITURE_CARPENTRY = "Furniture Carpentry"
-    WEAPONS_CARPENTRY = "Weapons Carpentry"
-    TOOLS_CARPENTRY = "Tools Carpentry"
-    SEWING = "Sewing"
-    GARMENT_TAILORING = "Garment Tailoring"
-    MISC_TAILORING = "Misc. Tailoring"
-    FABRIC_TAILORING = "Fabric Tailoring"
-    ALCHEMY = "Alchemy"
-    COMPOUND_ALCHEMY = "Compound Alchemy"
-    ACCESSORY_ALCHEMY = "Accessory Alchemy"
+    DASH = auto(), "Dash", 0
+    SNEAKING = auto(), "Sneaking", 0
+    DAGGER = auto(), "Dagger Skill", 0
+    LONGSWORD = auto(), "Longsword Skill", 1
+    SHIELD = auto(), "Shield Skill", 1
+    GREATSWORD = auto(), "Greatsword Skill", 2
+    ARCHERY = auto(), "Archery", 3
+    MAGIC = auto(), "Magic Skill", 4
+    WIND_MAGIC = auto(), "Wind Magic", 4
+    WATER_MAGIC = auto(), "Water Magic", 4
+    EARTH_MAGIC = auto(), "Earth Magic", 4
+    FIRE_MAGIC = auto(), "Fire Magic", 4
+    MINING = auto(), "Mining", 5
+    WOODCUTTING = auto(), "Woodcutting", 6
+    FISHING = auto(), "Fishing", 7
+    COOKING = auto(), "Cooking", 8
+    MEAT_CUISINE = auto(), "Meat Cuisine", 8
+    SEAFOOD_CUISINE = auto(), "Seafood Cuisine", 8
+    EGG_VEG_CUISINE = auto(), "Egg & Veg Cuisine", 8
+    SMITHING = auto(), "Smithing", 9
+    WEAPONSMITHING = auto(), "Weaponsmithing", 9
+    ARMORSMITHING = auto(), "Armorsmithing", 9
+    TOOL_SMITHING = auto(), "Metal Tool Smithing", 9
+    CARPENTRY = auto(), "Carpentry", 10
+    FURNITURE_CARPENTRY = auto(), "Furniture Carpentry", 10
+    WEAPONS_CARPENTRY = auto(), "Weapons Carpentry", 10
+    TOOLS_CARPENTRY = auto(), "Tools Carpentry", 10
+    SEWING = auto(), "Sewing", 11
+    GARMENT_TAILORING = auto(), "Garment Tailoring", 11
+    MISC_TAILORING = auto(), "Misc. Tailoring", 11
+    FABRIC_TAILORING = auto(), "Fabric Tailoring", 11
+    ALCHEMY = auto(), "Alchemy", 12
+    COMPOUND_ALCHEMY = auto(), "Compound Alchemy", 12
+    ACCESSORY_ALCHEMY = auto(), "Accessory Alchemy", 12
+
+    def __new__(cls, *args, **kwds):
+        obj = object.__new__(cls)
+        obj._value_ = args[0]
+        return obj
+
+    def __init__(self, _: int, name: str = None, life: int = None):
+        self._name_ = name
+        self._life_ = life
+
+    @property
+    def name(self):
+        return self._name_
+
+    @property
+    def life(self):
+        return Life(self._life_) if 1 <= self._life_ <= 12 else None
 
 
 class Life(Enum):
@@ -207,6 +274,10 @@ class Rank(Enum):
         self._full_requirement_ = full_requirement
         self._min_chapter_ = min_chapter
         self._item_rarity_ = item_rarity
+
+    @property
+    def value(self) -> int:
+        return self._value_
 
     @property
     def description(self):

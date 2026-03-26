@@ -120,7 +120,19 @@
     { "count": 8, "name": "Progressive Tailor License", "category": [ "Progressive Licenses", "Artisan", "Tailor", "Life Licenses" ], "progression": true, "value": { "Tailor License": 1} },
     { "count": 8, "name": "Progressive Alchemist License", "category": [ "Progressive Licenses", "Artisan", "Alchemist", "Life Licenses" ], "progression": true, "value": { "Alchemist License": 1} },
 
-    { "count": 200, "name": "Lost Wish", "category": [ "Wish Hunt" ], "progression": true },
+    { "name": "Haniwa Cave Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Lava Cave Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Waterfall Cave Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Elderwood Grotto Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Deepsea Cave Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Nautilus Cave Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Cave of Bones Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Subterranean Lake Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Ancient Ruins Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Cacto Cove Key", "category": ["Map Restrictions"], "progression": true },
+    { "name": "Fluffkin Grotto Key", "category": ["Map Restrictions", "DLC"], "progression": true },
+
+    { "count": 0, "name": "Lost Wish", "category": [ "Wish Hunt" ], "progression_skip_balancing": true },
 
     { "count": 0, "name": "Carrot Soup", "category": [ "Filler" ], "filler": true },
     { "count": 0, "name": "Fluffy Omelette", "category": [ "Filler" ], "filler": true },
