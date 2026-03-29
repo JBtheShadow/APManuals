@@ -203,11 +203,18 @@ def finished_storyline(world: World, multiworld: MultiWorld, state: CollectionSt
 
 
 def origin_island_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "7") # TODO: also add event here for the right location that gives access to tihs
+    return completed_chapter(world, multiworld, state, player, "7") # TODO: also add event here for the right location that gives access to this
 
 
 def trials_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     return completed_chapter(world, multiworld, state, player, "8") # TODO: also add event here for the right location that gives access to this
+
+
+def has_fairy_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
+    if not is_option_enabled(multiworld, player, "bliss"):
+        return True
+
+    return state.has("More Customization", player, 3)
 
 
 def has_better_shopping(world: World, multiworld: MultiWorld, state: CollectionState, player: int, number_str: str):

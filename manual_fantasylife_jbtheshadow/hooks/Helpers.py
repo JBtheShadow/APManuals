@@ -12,7 +12,7 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
     other_requests = rootHelpers.get_option_value(multiworld, player, "other_requests")
     goal = rootHelpers.get_option_value(multiworld, player, "goal")
     lives_max_rank = rootHelpers.get_option_value(multiworld, player, "lives_max_rank")
-
+    shops_dosh = rootHelpers.get_option_value(multiworld, player, "shops_dosh")
     bliss_available = rootHelpers.get_option_value(multiworld, player, "bliss_available")
     available_lives = get_available_lives()
 
@@ -75,6 +75,10 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
             return False
         case "Alchemist" if 12 not in available_lives:
             return False
+        case x if x.startswith("Shop Price:"):
+            price = int(x.split(":")[1].strip())
+            if price > shops_dosh:
+                return False
 
     return None
 

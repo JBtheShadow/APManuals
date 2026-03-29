@@ -7,7 +7,7 @@ from BaseClasses import MultiWorld, CollectionState, Item
 from ..Items import ManualItem
 from ..Locations import ManualLocation
 
-from .Data import FILLER_ITEMS, FillerCategory, Life, Skill, Rank, set_available_lives, get_available_lives
+from .Data import FILLER_ITEMS, FillerCategory, Life, Skill, Rank, set_available_lives, get_available_lives, get_available_shop_checks
 from .Helpers import set_option_value, set_option_enabled
 
 # Raw JSON data from the Manual apworld, respectively:
@@ -48,6 +48,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     goal = get_option_value(multiworld, player, 'goal')
     wish_hunt_required = get_option_value(multiworld, player, "wish_hunt_required")
     wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
+    wish_hunt_local = get_option_value(multiworld, player, "wish_hunt_local")
     dlc = get_option_value(multiworld, player, "dlc")
     life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
     life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
@@ -60,6 +61,15 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     character_levels_max = get_option_value(multiworld, player, "character_levels_max")
     skill_levels = is_option_enabled(multiworld, player, "skill_levels")
     other_requests = get_option_value(multiworld, player, "other_requests")
+    shops = is_option_enabled(multiworld, player, "shops")
+    shops_bliss = is_option_enabled(multiworld, player, "shops_bliss")
+    shops_level = is_option_enabled(multiworld, player, "shops_level")
+    shops_lives = is_option_enabled(multiworld, player, "shops_lives")
+    shops_story = is_option_enabled(multiworld, player, "shops_story")
+    shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
+    shops_dosh = get_option_value(multiworld, player, "shops_dosh")
+    shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
+    bliss_available = get_option_value(multiworld, player, "bliss_available")
 
     all_lives = [x for x in range(1, 13)]
     lives_count = 12
@@ -141,6 +151,11 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             character_levels_max = 99
             set_option_value(multiworld, player, "character_levels_max", character_levels_max)
 
+    if bliss_available == 1 and shops and shops_fairy:
+        logging.warning("Cannot enable Mysterious Fairy when available bliss bonuses are set to only useful.")
+        shops_fairy = False
+        set_option_enabled(multiworld, player, "shops_fairy", shops_fairy)
+
     spare_checks = 50
     if other_requests:
         request_checks = lambda x: x * (44 + 3 * lives_count)
@@ -164,6 +179,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
                 spare_checks += skill_checks(7) + 5
     if character_levels:
         spare_checks += character_levels_max
+    if shops:
+        spare_checks += get_available_shop_checks(dlc, shops_bliss, shops_level, shops_lives, lives_max_rank, shops_story, shops_fairy, shops_dosh, shops_restricted)
 
     if item_restrictions:
         if spare_checks < (130 if goal == 1 else 180):
@@ -175,16 +192,26 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             spare_checks -= 130
 
     if goal in [0, 2]:
-        if wish_hunt_total > spare_checks:
-            logging.warning("Not enough spare locations for current Wish Hunt goal")
-            logging.warning(f"Lowering wish_hunt_total to {spare_checks}")
-            wish_hunt_total = spare_checks
-            set_option_value(multiworld, player, "wish_hunt_total", wish_hunt_total)
+        if wish_hunt_local:
+            local_items = multiworld.worlds[player].options.local_items
+            if "Lost Wish" not in local_items.value:
+                local_items.value.add("Lost Wish")
 
         if wish_hunt_required > wish_hunt_total:
             logging.warning("Wish Hunt requirement cannot be larger than total Lost Wishes available")
-            logging.warning(f"Setting wish_hunt_required down to {wish_hunt_total}")
-            wish_hunt_required = wish_hunt_total
+            logging.warning("Swapping their values")
+            wish_hunt_total, wish_hunt_required = wish_hunt_required, wish_hunt_total
+            set_option_value(multiworld, player, "wish_hunt_total", wish_hunt_total)
+            set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_required)
+
+        if wish_hunt_total > spare_checks:
+            new_wish_hunt_required = int((wish_hunt_required / wish_hunt_total) * spare_checks)
+            logging.warning("Not enough spare locations for current Wish Hunt goal")
+            logging.warning(f"Lowering wish_hunt_total to {spare_checks}")
+            logging.warning(f"Lowering wish_hunt_required to {new_wish_hunt_required}")
+            wish_hunt_total = spare_checks
+            wish_hunt_required = new_wish_hunt_required
+            set_option_value(multiworld, player, "wish_hunt_total", wish_hunt_total)
             set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_required)
 
     if goal in [1, 2]:
@@ -216,11 +243,6 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     character_levels_max = get_option_value(multiworld, player, "character_levels_max")
     if character_levels_max < 200:
         locationNamesToRemove += [f"Reached Level {i}" for i in range(character_levels_max + 1, 201)]
-
-    # skill_levels_max = get_option_value(multiworld, player, "skill_levels_max")
-    # if skill_levels_max < 20:
-    #     for skill in Skill:
-    #         locationNamesToRemove += [f"Reached {skill.name} level {i}" for i in range(skill_levels_max + 1, 21)]
 
     for region in multiworld.regions:
         if region.player == player:

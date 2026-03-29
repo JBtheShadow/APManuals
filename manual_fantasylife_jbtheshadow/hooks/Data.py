@@ -3,9 +3,24 @@ from enum import Enum, auto
 # called after the game.json file has been loaded
 def after_load_game_file(game_table: dict) -> dict:
     return game_table
+
 # called after the items.json file has been loaded, before any item loading or processing has occurred
 # if you need access to the items after processing to add ids, etc., you should use the hooks in World.py
 def after_load_item_file(item_table: list) -> list:
+
+    from ..Helpers import load_data_file
+    global shops
+    shops = load_data_file("shops.json")
+
+    # Shop Items
+    for region, region_shops in shops.items():
+        for shop_name in region_shops:
+            item_table.append({
+                "name": f"{shop_name} Storage Key",
+                "category": ["Shop Restrictions"],
+                "progression": True
+            })
+
     return item_table
 
 # NOTE: Progressive items are not currently supported in Manual. Once they are,
@@ -46,7 +61,6 @@ def after_load_location_file(location_table: list) -> list:
             "category": c,
             "requires": r
         })
-
     for skill in Skill:
         life = skill.life
         for rank in [rank for rank in Rank if 0 < rank.value < 8]:
@@ -66,6 +80,58 @@ def after_load_location_file(location_table: list) -> list:
         for level in range(16, 21):
             append_skill(skill, level, categories, requires)
 
+    # Shop locations
+    for region, region_shops in shops.items():
+        for shop_name, shop_items in region_shops.items():
+            for item_name, values in shop_items.items():
+                life = Life(l) if (l := values.get("life", 0)) > 0 else None
+                bliss = values.get("bliss", 0)
+                needs_story = values.get("story", False)
+                needs_dlc = values.get("dlc_story", False)
+                fairy = values.get("fairy", False)
+                level = values.get("level", 0)
+                dosh = values.get("dosh", 0)
+
+                requires = [ f"{{OptOne(|{shop_name} Storage Key|)}}" ]
+                if life is not None:
+                    requires.append(f"{{has_license(Master {life.description})}}")
+                if bliss > 0:
+                    match bliss:
+                        case 1:
+                            requires.append("{better_castele_shopping()}")
+                        case 2:
+                            requires.append("{better_port_shopping()}")
+                        case 3:
+                            requires.append("{better_desert_shopping()}")
+                        case 4:
+                            requires.append("{better_traveling_shopping()}")
+                if needs_story:
+                    requires.append("|Progressive Chapter:7|")
+                if needs_dlc:
+                    requires.append("|Progressive Chapter:9|")
+                if fairy:
+                    requires.append("{has_fairy_access()}")
+
+                location_table.append({
+                    "name": f"{shop_name}: Purchased {item_name}",
+                    "region": region,
+                    "category": [x for x in [
+                        "Shops",
+                        f"Shop Price: {dosh}",
+                        f"Shops: {region}",
+                        "DLC" if values.get("dlc", False) else None,
+                        "Master" if life is not None else None,
+                        life.description if life is not None else None,
+                        "Life Shop" if life is not None else None,
+                        "Bliss Shop" if bliss > 0 else None,
+                        "Fairy Shop" if fairy else None,
+                        "Level Shop" if level > 0 else None,
+                        "Story Shop" if needs_story or needs_dlc else None,
+                    ] if x is not None],
+                    "requires": " and ".join(requires),
+                    "dont_place_item_category": ["Shop Restrictions"],
+                })
+
     return location_table
 
 # called after the events.json file has been loaded, before any processing has occurred
@@ -80,6 +146,7 @@ def after_load_region_file(region_table: dict) -> dict:
 
 # called after the categories.json file has been loaded
 def after_load_category_file(category_table: dict) -> dict:
+    category_table.update({ f"Shop Price: {10 * price}": { "hidden": True } for price in range(1, 10000) })
     return category_table
 
 # called after the categories.json file has been loaded
@@ -93,15 +160,40 @@ def after_load_option_file(option_table: dict) -> dict:
 def after_load_meta_file(meta_table: dict) -> dict:
     return meta_table
 
-gen_data = {
-    "lives": []
-}
+gen_data = { "lives": [] }
+shops = {}
 
 def get_available_lives():
     return gen_data["lives"]
 
 def set_available_lives(lives: list[int]):
     gen_data["lives"] = lives
+
+def get_available_shop_checks(dlc, with_bliss, with_levels, with_lives, max_rank, with_story, with_fairy, max_dosh, shops_restricted):
+    checks = 0
+    for _, region_shops in shops.items():
+        for _, shop_items in region_shops.items():
+            if shops_restricted:
+                checks -= 1
+            for _, values in shop_items.items():
+                if values.get("dlc", False) and not dlc:
+                    continue
+                if values.get("bliss", 0) > 0 and not with_bliss:
+                    continue
+                if values.get("level", 0) > 0 and not with_levels:
+                    continue
+                if (life := values.get("life", 0)) > 0:
+                    if not with_lives or max_rank < 5 or life not in gen_data["lives"]:
+                        continue
+                if values.get("story", False) or values.get("story_dlc", False):
+                    if not with_story:
+                        continue
+                if values.get("fairy", False) and not with_fairy:
+                    continue
+                if (dosh := values.get("dosh", 0)) > 0 and dosh > max_dosh:
+                    continue
+                checks += 1
+    return checks
 
 class Skill(Enum):
     DASH = auto(), "Dash", 0
