@@ -16,6 +16,7 @@ def after_load_item_file(item_table: list) -> list:
     shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
     requests = load_data_csv("csv", "requests.csv")
+    challenges = load_data_csv("csv", "challenges.csv")
 
     # Shop Items
     item_table += [{
@@ -84,6 +85,33 @@ def after_load_location_file(location_table: list) -> list:
             for level in range(16, 21):
                 append_skill(skill, level, categories, requires)
     build_skill_level_locations()
+
+    def build_challenge_locations():
+        def build_category(entry: dict):
+            categories = [
+                "Life Challenges",
+                f"Challenges: {entry["Rank"]} {entry["Life"]}",
+                entry["Rank"],
+                entry["Life"]
+            ]
+            categories += [extra for extra in [
+                entry["Dependancy1"], entry["Dependancy2"], entry["Dependancy3"], entry["Dependancy4"], entry["DLC"]
+            ] if len(extra)]
+            return categories
+        def build_requires(entry: dict):
+            requires = [
+                f"{{has_license({entry["Rank"]} {life})}}"
+            for life in [x for x in [
+                    entry["Life"], entry["Dependancy1"], entry["Dependancy2"], entry["Dependancy3"], entry["Dependancy4"]
+                ] if len(x)]]
+            return " and ".join(requires)
+        return [{
+            "name": f"{entry["Rank"]} {entry["Life"]}: {entry["Name"]}",
+            "region": f"{entry["Rank"]} Challenges",
+            "category": build_category(entry),
+            "requires": build_requires(entry)
+        } for entry in challenges]
+    location_table += build_challenge_locations()
 
     def build_request_locations():
         def build_category(entry: dict):
@@ -201,6 +229,7 @@ gen_data = { "lives": [] }
 shops = []
 chests = []
 requests = []
+challenges = []
 
 def get_available_lives():
     return gen_data["lives"]
