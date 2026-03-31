@@ -7,11 +7,14 @@ def after_load_game_file(game_table: dict) -> dict:
 # called after the items.json file has been loaded, before any item loading or processing has occurred
 # if you need access to the items after processing to add ids, etc., you should use the hooks in World.py
 def after_load_item_file(item_table: list) -> list:
-    # Shop Items
-    from ..Helpers import load_data_csv
-    global shops
-    shops = load_data_csv("shops.csv")
 
+    # Extra Data
+    from ..Helpers import load_data_csv
+    global shops, chests
+    shops = load_data_csv("csv", "shops.csv")
+    chests = load_data_csv("csv", "chests.csv")
+
+    # Shop Items
     item_table += [{
         "name": f"{name} Storage Key",
         "category": ["Shop Restrictions"],
@@ -77,56 +80,71 @@ def after_load_location_file(location_table: list) -> list:
         for level in range(16, 21):
             append_skill(skill, level, categories, requires)
 
-    # Shop locations
-    def build_category(entry: dict):
-        category = [
-            "Shops",
-            f"Shop Price: {entry["Dosh"]}",
-            f"Shops: {entry["Region"]}"
-        ]
-        if entry["Group"] == "DLC" or "DLC" in entry["Requirement"]:
-            category.append("DLC")
-        if entry["Requirement"].startswith("Master:"):
-            category += ["Master", entry["Requirement"].split(":")[1].strip()]
-        if entry["Group"] == "Life":
-            category.append("Life Shop")
-        if entry["Requirement"] == "Bliss":
-            category.append("Bliss Shop")
-        if entry["Group"] == "Fairy":
-            category.append("Fairy Shop")
-        if entry["Group"] == "Story":
-            category.append("Story Shop")
-        return category
+    def build_chest_locations():
+        def build_category(entry: dict):
+            category = [
+                "Treasure Chests",
+                f"Location: {entry["Region"]} - Red Chest"
+            ]
+            if "DLC" in entry["DLC"]:
+                category.append("DLC")
+            return category
+        return [{
+            "name": f"{entry["Region"]} Red Chest: {entry["Item"]}",
+            "region": entry["Region"],
+            "category": build_category(entry),
+        } for entry in chests]
+    location_table += build_chest_locations()
 
-    def build_requires(entry: dict):
-        require_list = [ f"{{OptOne(|{entry["Shop"]} Storage Key|)}}" ]
-        if entry["Requirement"].startswith("Master:"):
-            require_list.append(f"{{has_license(Master {entry["Requirement"].split(":")[1].strip()})}}")
-        if entry["Requirement"] == "Bliss":
-            match entry["Group"]:
-                case "Castele":
-                    require_list.append("{better_castele_shopping()}")
-                case "Port Puerto":
-                    require_list.append("{better_port_shopping()}")
-                case "Al Maajik":
-                    require_list.append("{better_desert_shopping()}")
-                case "Other":
-                    require_list.append("{better_traveling_shopping()}")
-        if "Level:" in entry["Requirement"]:
-            require_list.append("|Progressive Chapter:9|" if "DLC" in entry["Requirement"] else "|Progressive Chapter:7|")
-        elif "DLC" in entry["Requirement"]:
-            require_list.append("|Progressive Chapter:9|")
-        if entry["Group"] == "Fairy":
-            require_list.append("{has_fairy_access()}")
-        return " and ".join(require_list)
-
-    location_table += [{
-        "name": f"{entry["Shop"]}: Purchased {entry["Item Name"]}",
-        "region": entry["Region"],
-        "category": build_category(entry),
-        "requires": build_requires(entry),
-        "dont_place_item_category": ["Shop Restrictions"]
-    } for entry in shops]
+    def build_shop_locations():
+        def build_category(entry: dict):
+            category = [
+                "Shops",
+                f"Shop Price: {entry["Dosh"]}",
+                f"Shops: {entry["Region"]}"
+            ]
+            if entry["Group"] == "DLC" or "DLC" in entry["Requirement"]:
+                category.append("DLC")
+            if entry["Requirement"].startswith("Master:"):
+                category += ["Master", entry["Requirement"].split(":")[1].strip()]
+            if entry["Group"] == "Life":
+                category.append("Life Shop")
+            if entry["Requirement"] == "Bliss":
+                category.append("Bliss Shop")
+            if entry["Group"] == "Fairy":
+                category.append("Fairy Shop")
+            if entry["Group"] == "Story":
+                category.append("Story Shop")
+            return category
+        def build_requires(entry: dict):
+            require_list = [ f"{{OptOne(|{entry["Shop"]} Storage Key|)}}" ]
+            if entry["Requirement"].startswith("Master:"):
+                require_list.append(f"{{has_license(Master {entry["Requirement"].split(":")[1].strip()})}}")
+            if entry["Requirement"] == "Bliss":
+                match entry["Group"]:
+                    case "Castele":
+                        require_list.append("{better_castele_shopping()}")
+                    case "Port Puerto":
+                        require_list.append("{better_port_shopping()}")
+                    case "Al Maajik":
+                        require_list.append("{better_desert_shopping()}")
+                    case "Other":
+                        require_list.append("{better_traveling_shopping()}")
+            if "Level:" in entry["Requirement"]:
+                require_list.append("|Progressive Chapter:9|" if "DLC" in entry["Requirement"] else "|Progressive Chapter:7|")
+            elif "DLC" in entry["Requirement"]:
+                require_list.append("|Progressive Chapter:9|")
+            if entry["Group"] == "Fairy":
+                require_list.append("{has_fairy_access()}")
+            return " and ".join(require_list)
+        return [{
+            "name": f"{entry["Shop"]}: Purchased {entry["Item Name"]}",
+            "region": entry["Region"],
+            "category": build_category(entry),
+            "requires": build_requires(entry),
+            "dont_place_item_category": ["Shop Restrictions"]
+        } for entry in shops]
+    location_table += build_shop_locations()
 
     return location_table
 
@@ -158,6 +176,7 @@ def after_load_meta_file(meta_table: dict) -> dict:
 
 gen_data = { "lives": [] }
 shops = []
+chests = []
 
 def get_available_lives():
     return gen_data["lives"]
