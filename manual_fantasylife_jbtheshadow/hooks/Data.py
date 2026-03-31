@@ -1,4 +1,6 @@
 from enum import Enum, auto
+from wsgiref.util import request_uri
+
 
 # called after the game.json file has been loaded
 def after_load_game_file(game_table: dict) -> dict:
@@ -10,9 +12,10 @@ def after_load_item_file(item_table: list) -> list:
 
     # Extra Data
     from ..Helpers import load_data_csv
-    global shops, chests
+    global shops, chests, requests
     shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
+    requests = load_data_csv("csv", "requests.csv")
 
     # Shop Items
     item_table += [{
@@ -31,54 +34,74 @@ def after_load_progressive_item_file(progressive_item_table: list) -> list:
 # called after the locations.json file has been loaded, before any location loading or processing has occurred
 # if you need access to the locations after processing to add ids, etc., you should use the hooks in World.py
 def after_load_location_file(location_table: list) -> list:
-    # Level Up Checks
-    for i in range(2, 5):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ] })
-    for i in range(5, 10):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:1|" })
-    for i in range(10, 15):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:2|" })
-    for i in range(15, 20):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:3|" })
-    for i in range(20, 30):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:4|" })
-    for i in range(30, 40):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:5|" })
-    for i in range(40, 50):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:6|" })
-    for i in range(50, 99):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:7|" })
-    for i in range(100, 150):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "|Progressive Chapter:8|" })
-    for i in range(150, 201):
-        location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "|Progressive Chapter:9|" })
+    def build_level_up_locations():
+        for i in range(2, 5):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ] })
+        for i in range(5, 10):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:1|" })
+        for i in range(10, 15):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:2|" })
+        for i in range(15, 20):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:3|" })
+        for i in range(20, 30):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:4|" })
+        for i in range(30, 40):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:5|" })
+        for i in range(40, 50):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:6|" })
+        for i in range(50, 99):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:7|" })
+        for i in range(100, 150):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "|Progressive Chapter:8|" })
+        for i in range(150, 201):
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "|Progressive Chapter:9|" })
+    build_level_up_locations()
 
-    # Skill Level Checks
-    def append_skill(s: Skill, l: int, c: list[str], r: str):
-        location_table.append({
-            "name": f"Reached {s.name} Level {l}",
-            "sort-key": f"skill-{s.value:02d}-{l:02d}",
-            "category": c,
-            "requires": r
-        })
-    for skill in Skill:
-        life = skill.life
-        for rank in [rank for rank in Rank if 0 < rank.value < 8]:
-            requires = f"{{has_any_license({rank.description})}}" if life is None else f"{{has_license({rank.description} {life.description})}}"
-            categories = [ "Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}", rank.description ]
+    def build_skill_level_locations():
+        def append_skill(s: Skill, l: int, c: list[str], r: str):
+            location_table.append({
+                "name": f"Reached {s.name} Level {l}",
+                "sort-key": f"skill-{s.value:02d}-{l:02d}",
+                "category": c,
+                "requires": r
+            })
+        for skill in Skill:
+            life = skill.life
+            for rank in [rank for rank in Rank if 0 < rank.value < 8]:
+                requires = f"{{has_any_license({rank.description})}}" if life is None else f"{{has_license({rank.description} {life.description})}}"
+                categories = [ "Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}", rank.description ]
+                if life is not None:
+                    categories.append(life.description)
+                for level in range(2 * rank.value, 2 * rank.value + 2):
+                    append_skill(skill, level, categories, requires)
+
+            requires = "{has_any_license(Creator)}" if life is None else f"{{has_license(Creator {life.description})}}"
+            requires += " AND {origin_island_access()}"
+            categories = ["Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}",
+                          "DLC", "Creator"]
             if life is not None:
                 categories.append(life.description)
-            for level in range(2 * rank.value, 2 * rank.value + 2):
+            for level in range(16, 21):
                 append_skill(skill, level, categories, requires)
+    build_skill_level_locations()
 
-        requires = "{has_any_license(Creator)}" if life is None else f"{{has_license(Creator {life.description})}}"
-        requires += " AND {origin_island_access()}"
-        categories = ["Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}",
-                      "DLC", "Creator"]
-        if life is not None:
-            categories.append(life.description)
-        for level in range(16, 21):
-            append_skill(skill, level, categories, requires)
+    def build_request_locations():
+        def build_category(entry: dict):
+            categories = [
+                f"Other Requests {entry["#"]}",
+                f"Location: {entry["Region"]} - Requests",
+            ]
+            categories += [extra for extra in [
+                entry["Rank"], entry["Life1"], entry["Life2"], entry["Life3"], entry["DLC"]
+            ] if len(extra)]
+            return categories
+        return [{
+            "name": f"{entry["Issuer"]}'s Request #{entry["#"]}: {entry["Name"]}",
+            "region": entry["Region"],
+            "category": build_category(entry),
+            "requires": entry["Requires"],
+        } for entry in requests ]
+    location_table += build_request_locations()
 
     def build_chest_locations():
         def build_category(entry: dict):
@@ -177,6 +200,7 @@ def after_load_meta_file(meta_table: dict) -> dict:
 gen_data = { "lives": [] }
 shops = []
 chests = []
+requests = []
 
 def get_available_lives():
     return gen_data["lives"]
