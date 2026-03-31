@@ -352,13 +352,6 @@
             "default": false,
             "group": "Shop Options"
         },
-        "shops_level": {
-            "display_name": "Include Checks Behind Specific Character Levels?",
-            "description": "Toggles whether to include checks for items that require one to be at a certain level or higher",
-            "type": "Toggle",
-            "default": false,
-            "group": "Shop Options"
-        },
         "shops_lives": {
             "display_name": "Include Checks Behind Specific Lives and Ranks?",
             "description": "Toggles whether to include checks that require you to be/have a specific life and/or reach a specific rank in it",

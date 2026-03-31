@@ -63,7 +63,6 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     other_requests = get_option_value(multiworld, player, "other_requests")
     shops = is_option_enabled(multiworld, player, "shops")
     shops_bliss = is_option_enabled(multiworld, player, "shops_bliss")
-    shops_level = is_option_enabled(multiworld, player, "shops_level")
     shops_lives = is_option_enabled(multiworld, player, "shops_lives")
     shops_story = is_option_enabled(multiworld, player, "shops_story")
     shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
@@ -180,7 +179,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     if character_levels:
         spare_checks += character_levels_max
     if shops:
-        spare_checks += get_available_shop_checks(dlc, shops_bliss, shops_level, shops_lives, lives_max_rank, shops_story, shops_fairy, shops_dosh, shops_restricted)
+        spare_checks += get_available_shop_checks(dlc, shops_bliss, shops_lives, lives_max_rank, shops_story, shops_fairy, shops_dosh, shops_restricted)
 
     if item_restrictions:
         if spare_checks < (130 if goal == 1 else 180):

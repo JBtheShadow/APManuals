@@ -51,7 +51,6 @@
     "Shops": { "yaml_option": ["shops"], "hidden": true },
     "Life Shop": { "yaml_option": ["shops", "shops_lives"], "hidden": true },
     "Bliss Shop": { "yaml_option": ["shops", "shops_bliss"], "hidden": true },
-    "Level Shop": { "yaml_option": ["shops", "shops_level"], "hidden": true },
     "Fairy Shop": { "yaml_option": ["shops", "shops_fairy"], "hidden": true },
     "Story Shop": { "yaml_option": ["shops", "shops_story"], "hidden": true },
     "Shop Restrictions": { "yaml_option": ["shops", "shops_restricted"] }
