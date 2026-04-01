@@ -25,15 +25,13 @@
             "display_name": "Require beating the game's main story to goal?",
             "description": "If the goal also requires completing the Prologue and Chapters 1 through 7.",
             "type": "Toggle",
-            "default": false,
-            "group": "Goal Options"
+            "default": false
         },
         "dlc": {
             "display_name": "Include the Origin Island DLC?",
             "description": "Toggles whether to include items and locations related to the Origin Island DLC.",
             "type": "Toggle",
-            "default": false,
-            "group": "Goal Options"
+            "default": false
         },
         "dlc_goal": {
             "display_name": "Require beating the game's DLC to goal?",
@@ -42,17 +40,7 @@
                 "Does nothing if story goal is also not enabled."
             ],
             "type": "Toggle",
-            "default": false,
-            "group": "Goal Options"
-        },
-        "wish_hunt_required": {
-            "display_name": "Amount of Lost Wishes required",
-            "description": "If the goal is set to Wish Hunt, sets the amount of Lost Wishes required for beating it.",
-            "type": "Range",
-            "range_start": 1,
-            "range_end": 4000,
-            "default": 30,
-            "group": "Goal Options"
+            "default": false
         },
         "wish_hunt_total": {
             "display_name": "Amount of Lost Wishes in total",
@@ -64,13 +52,26 @@
             "range_start": 1,
             "range_end": 4000,
             "default": 50,
-            "group": "Goal Options"
+            "group": "Wish Hunt Options"
+        },
+        "wish_hunt_required": {
+            "display_name": "Amount of Lost Wishes required",
+            "description": [
+                "If the goal is set to Wish Hunt, sets the amount of Lost Wishes required for beating it.",
+                "Cannot be larger than the total amount."
+            ],
+            "type": "Range",
+            "range_start": 1,
+            "range_end": 4000,
+            "default": 30,
+            "group": "Wish Hunt Options"
         },
         "wish_hunt_local": {
             "display_name": "Make Lost Wishes Local?",
             "description": "Forces all Lost Wishes to be found in your own game.",
             "type": "Toggle",
-            "default": true
+            "default": true,
+            "group": "Wish Hunt Options"
         },
         "life_mastery_rank": {
             "display_name": "Target rank for Life Mastery",
@@ -87,7 +88,7 @@
                 "creator": 8
             },
             "default": 4,
-            "group": "Goal Options"
+            "group": "Life Mastery Options"
         },
         "life_mastery_count": {
             "display_name": "Amount of lives to reach the target rank",
@@ -96,7 +97,7 @@
             "range_start": 1,
             "range_end": 12,
             "default": 1,
-            "group": "Goal Options"
+            "group": "Life Mastery Options"
         },
         "life_licenses": {
             "display_name": "Include life licenses?",
