@@ -75,6 +75,12 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
     bliss_available = get_option_value(multiworld, player, "bliss_available")
     map_restrictions = get_option_value(multiworld, player, "map_restrictions")
+    game_seed = get_option_value(multiworld, player, "game_seed")
+
+    if game_seed < 0:
+        seed = world.random.randint(1, 999999999999)
+        set_option_value(multiworld, player, "game_seed", seed)
+    world.random.seed(game_seed)
 
     all_lives = [x for x in range(1, 13)]
 

@@ -42,6 +42,17 @@
             "type": "Toggle",
             "default": false
         },
+        "game_seed": {
+            "display_name": "Game Seed",
+            "description": "Numeric seed used for generation, use -1 for a random one.",
+            "type": "Range",
+            "range_start": -1,
+            "range_end": 999999999999,
+            "values": {
+                "random": -1
+            },
+            "default": -1
+        },
         "wish_hunt_total": {
             "display_name": "Amount of Lost Wishes in total",
             "description": [
