@@ -7,7 +7,11 @@ from BaseClasses import MultiWorld, CollectionState, Item
 from ..Items import ManualItem
 from ..Locations import ManualLocation
 
-from .Data import FILLER_ITEMS, FillerCategory, Life, Skill, Rank, set_available_lives, get_available_lives, get_available_shop_checks
+from .Data import FILLER_ITEMS, FillerCategory, Life, Skill, \
+    Rank, set_available_lives, get_available_lives, get_available_shop_checks, get_unused_shop_storage_keys, \
+    get_other_requests_checks, get_chests_checks, get_skill_levels_checks, get_life_challenges_checks, \
+    get_fast_license_count, get_prog_license_count, get_base_checks, get_map_restrictions_count, \
+    get_item_restrictions_count
 from .Helpers import set_option_value, set_option_enabled
 
 # Raw JSON data from the Manual apworld, respectively:
@@ -55,6 +59,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
     lives_available = get_option_value(multiworld, player, "lives_available")
     life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    life_challenges = is_option_enabled(multiworld, player, "life_challenges")
     item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
     chests = is_option_enabled(multiworld, player, "chests")
     character_levels = is_option_enabled(multiworld, player, "character_levels")
@@ -69,9 +74,9 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     shops_dosh = get_option_value(multiworld, player, "shops_dosh")
     shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
     bliss_available = get_option_value(multiworld, player, "bliss_available")
+    map_restrictions = get_option_value(multiworld, player, "map_restrictions")
 
     all_lives = [x for x in range(1, 13)]
-    lives_count = 12
 
     fake_gen = getattr(multiworld, "generation_is_fake", False)
     if fake_gen or not life_licenses or lives_available == 12:
@@ -94,49 +99,39 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             case 1:
                 single = world.random.choice(all_single)
                 set_available_lives([single])
-                lives_count = 1
             case 2:
                 single = world.random.choice(all_combat)
                 set_available_lives([single])
-                lives_count = 1
             case 3:
                 melee = world.random.choice(all_melee)
                 ranged = world.random.choice(all_range)
                 set_available_lives([melee, ranged])
-                lives_count = 2
             case 4:
                 set_available_lives(all_combat)
-                lives_count = 4
             case 5:
                 single = world.random.choice(all_gatherer)
                 set_available_lives([single])
-                lives_count = 1
             case 6:
                 gatherer = world.random.sample(all_gatherer, 2)
                 set_available_lives(gatherer)
-                lives_count = 2
             case 7:
                 set_available_lives(all_gatherer)
-                lives_count = 3
             case 8:
                 artisan = world.random.choice(all_artisan)
                 set_available_lives(artisan_dep[artisan])
-                lives_count = len(artisan_dep[artisan]) # 2, 5, 5, 5, 6
             case 9:
                 set_available_lives(all_gatherer + all_artisan)
-                lives_count = 8
             case 10:
                 single = world.random.choice(all_combat)
                 set_available_lives([single] + all_gatherer + all_artisan)
-                lives_count = 9
             case 11:
                 melee = world.random.choice(all_melee)
                 ranged = world.random.choice(all_range)
                 set_available_lives([melee, ranged] + all_gatherer + all_artisan)
-                lives_count = 10
             case 12:
                 set_available_lives(all_lives)
-                lives_count = 12
+
+    logging.info(f"Lives available: {", ".join(Life(i).description for i in get_available_lives())}.")
 
     if not dlc:
         if lives_max_rank == 8:
@@ -155,34 +150,26 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
         shops_fairy = False
         set_option_enabled(multiworld, player, "shops_fairy", shops_fairy)
 
-    spare_checks = 50
+    spare_checks = get_base_checks(dlc)
+    if life_challenges:
+        spare_checks += get_life_challenges_checks(dlc, lives_max_rank)
     if other_requests:
-        request_checks = lambda x: x * (44 + 3 * lives_count)
-        match other_requests:
-            case 1:
-                spare_checks += request_checks(1)
-            case 2:
-                spare_checks += request_checks(2)
-            case 3:
-                spare_checks += request_checks(3)
-            case 4:
-                spare_checks += request_checks(4 if dlc else 3)
+        spare_checks += get_other_requests_checks(dlc, other_requests, lives_max_rank)
     if chests:
-        spare_checks += 260 if dlc else 130
+        spare_checks += get_chests_checks(dlc)
     if skill_levels:
-        skill_checks = lambda x: (3 + lives_count) * x
-        match lives_max_rank:
-            case x if x in [4, 5, 6, 7]:
-                spare_checks += skill_checks(x)
-            case 8:
-                spare_checks += skill_checks(7) + 5
+        spare_checks += get_skill_levels_checks(dlc, lives_max_rank)
     if character_levels:
-        spare_checks += character_levels_max
+        spare_checks += character_levels_max - 1
     if shops:
         spare_checks += get_available_shop_checks(dlc, shops_bliss, shops_lives, lives_max_rank, shops_story, shops_fairy, shops_dosh, shops_restricted)
+    if map_restrictions:
+        spare_checks -= get_map_restrictions_count(dlc)
 
     if item_restrictions:
-        if spare_checks < (130 if goal == 1 else 180):
+        wish_hunt_min = 50
+        item_restrictions_count = get_item_restrictions_count()
+        if spare_checks - (wish_hunt_min if goal in [0, 2] else 0) < item_restrictions_count:
             logging.warning("Not enough spare locations to include item restrictions")
             logging.warning(f"Toggling item_restrictions to false")
             item_restrictions = False
@@ -263,10 +250,27 @@ def before_create_items_all(
 ) -> dict[str, int | dict]:
 
     goal = get_option_value(multiworld, player, "goal")
+    dlc = is_option_enabled(multiworld, player, "dlc")
     wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
+    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    lives_progressive = is_option_enabled(multiworld, player, "lives_progressive")
+    lives_fast = is_option_enabled(multiworld, player, "lives_fast")
+    lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
 
     if goal in [0, 2]:
         item_config["Lost Wish"] = {"progression": wish_hunt_total}
+
+    if not dlc:
+        item_config["Progressive Chapter"] = {"progression": 7}
+
+    if life_licenses and lives_progressive:
+        available_lives = get_available_lives()
+        if lives_fast:
+            for life in [x for x in Life if x.value in available_lives]:
+                item_config[f"Fast Progressive {life.description} License"] = {"progression": get_fast_license_count(dlc, lives_max_rank)}
+        else:
+            for life in [x for x in Life if x.value in available_lives]:
+                item_config[f"Progressive {life.description} License"] = {"progression": get_prog_license_count(dlc, lives_max_rank)}
 
     return item_config
 
@@ -289,9 +293,6 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
 
     # Licenses, Starting Life and DLC
     dlc = is_option_enabled(multiworld, player, "dlc")
-
-    if not dlc:
-        item_names_to_remove += ["Progressive Chapter", "Progressive Chapter"]
 
     life_licenses = is_option_enabled(multiworld, player, "life_licenses")
     available_lives = get_available_lives()
@@ -334,6 +335,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                 ]
             )
             starting_inventory.append(item_name)
+            logging.info(f"Starting life: {life_name}.")
 
     # Bliss Bonuses
     bliss = is_option_enabled(multiworld, player, "bliss")
@@ -363,6 +365,15 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                 item_name = world.random.choice(["Bigger Bag", "Bigger Storage", "Better Shopping"])
         if item_name:
             starting_inventory.append(item_name)
+
+    # Restricted shop items
+    shops_lives = is_option_enabled(multiworld, player, "shops_lives")
+    shops_story = is_option_enabled(multiworld, player, "shops_story")
+    shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
+    shops_dosh = get_option_value(multiworld, player, "shops_dosh")
+    shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
+    if shops_restricted:
+        item_names_to_remove += list(get_unused_shop_storage_keys(dlc, shops_lives, shops_story, shops_fairy, shops_dosh))
 
     for item_name in item_names_to_remove:
         to_remove = [i for i in item_pool if i.name == item_name]

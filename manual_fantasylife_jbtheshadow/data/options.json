@@ -77,6 +77,9 @@
             "description": "If the goal is set to Life Mastery, sets the target rank to beat the game.",
             "type": "Choice",
             "values": {
+                "fledgling": 1,
+                "apprentice": 2,
+                "adept": 3,
                 "expert": 4,
                 "master": 5,
                 "hero": 6,
@@ -105,11 +108,21 @@
             "default": true,
             "group": "Life Options"
         },
+        "life_challenges": {
+            "display_name": "Include life challenges?",
+            "description": "Adds checks for each of the life challenges.",
+            "type": "Toggle",
+            "default": true,
+            "group": "Life Options"
+        },
         "lives_max_rank": {
             "display_name": "Max life license rank",
             "description": "This option removes any locations with a life rank requirement higher than set here.",
             "type": "Choice",
             "values": {
+                "fledgling": 1,
+                "apprentice": 2,
+                "adept": 3,
                 "expert": 4,
                 "master": 5,
                 "hero": 6,

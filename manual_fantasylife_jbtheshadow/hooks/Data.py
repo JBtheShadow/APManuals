@@ -1,5 +1,5 @@
 from enum import Enum, auto
-from wsgiref.util import request_uri
+from unittest import case
 
 
 # called after the game.json file has been loaded
@@ -12,11 +12,12 @@ def after_load_item_file(item_table: list) -> list:
 
     # Extra Data
     from ..Helpers import load_data_csv
-    global shops, chests, requests
+    global shops, chests, requests, challenges, lives
     shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
     requests = load_data_csv("csv", "requests.csv")
     challenges = load_data_csv("csv", "challenges.csv")
+    lives = load_data_csv("csv", "lives.csv")
 
     # Shop Items
     item_table += [{
@@ -95,14 +96,14 @@ def after_load_location_file(location_table: list) -> list:
                 entry["Life"]
             ]
             categories += [extra for extra in [
-                entry["Dependancy1"], entry["Dependancy2"], entry["Dependancy3"], entry["Dependancy4"], entry["DLC"]
+                entry["Dependency1"], entry["Dependency2"], entry["Dependency3"], entry["Dependency4"], entry["DLC"]
             ] if len(extra)]
             return categories
         def build_requires(entry: dict):
             requires = [
                 f"{{has_license({entry["Rank"]} {life})}}"
             for life in [x for x in [
-                    entry["Life"], entry["Dependancy1"], entry["Dependancy2"], entry["Dependancy3"], entry["Dependancy4"]
+                    entry["Life"], entry["Dependency1"], entry["Dependency2"], entry["Dependency3"], entry["Dependency4"]
                 ] if len(x)]]
             return " and ".join(requires)
         return [{
@@ -121,7 +122,7 @@ def after_load_location_file(location_table: list) -> list:
             ]
             categories += [extra for extra in [
                 entry["Rank"], entry["Life1"], entry["Life2"], entry["Life3"], entry["DLC"]
-            ] if len(extra)]
+            ] if len(extra) > 0]
             return categories
         return [{
             "name": f"{entry["Issuer"]}'s Request #{entry["#"]}: {entry["Name"]}",
@@ -225,33 +226,123 @@ def after_load_option_file(option_table: dict) -> dict:
 def after_load_meta_file(meta_table: dict) -> dict:
     return meta_table
 
-gen_data = { "lives": [] }
+available_lives = []
 shops = []
 chests = []
 requests = []
 challenges = []
+lives = []
 
 def get_available_lives():
-    return gen_data["lives"]
+    return available_lives
 
-def set_available_lives(lives: list[int]):
-    gen_data["lives"] = lives
+def set_available_lives(value: list[int]):
+    global available_lives
+    available_lives = value
+
+def get_base_checks(dlc):
+    return 100 if dlc else 80
+
+def get_life_challenges_checks(dlc, max_rank):
+    formated_lives = [Life(i).description for i in available_lives]
+    formated_ranks = [Rank(i).description for i in range(1, max_rank + 1)]
+    return len([
+        entry for entry in challenges
+        if (dlc or "DLC" not in entry["DLC"])
+           and (entry["Rank"] in formated_ranks)
+           and (entry["Life"] in formated_lives)
+           and (not entry["Dependency1"] or entry["Dependency1"] in formated_lives)
+           and (not entry["Dependency2"] or entry["Dependency2"] in formated_lives)
+           and (not entry["Dependency3"] or entry["Dependency3"] in formated_lives)
+           and (not entry["Dependency4"] or entry["Dependency4"] in formated_lives)
+    ])
+
+def get_other_requests_checks(dlc, request_count, max_rank):
+    formated_lives = [Life(i).description for i in available_lives]
+    formated_ranks = [Rank(i).description for i in range(1, max_rank + 1)]
+    return len([
+        entry for entry in requests
+        if (dlc or "DLC" not in entry["DLC"])
+           and (request_count >= int(entry["#"]))
+           and (not entry["Rank"] or entry["Rank"] in formated_ranks)
+           and (not entry["Life1"] or entry["Life1"] in formated_lives)
+           and (not entry["Life2"] or entry["Life2"] in formated_lives)
+           and (not entry["Life3"] or entry["Life3"] in formated_lives)
+    ])
+
+def get_skill_levels_checks(dlc, max_rank):
+    formated_lives = ["Any"] + [Life(i).description for i in available_lives]
+    skill_count = len([
+        entry for entry in lives
+        if (entry["Skill"]) and (entry["Life"] in formated_lives)
+    ])
+    return (2 * max_rank * skill_count if max_rank < 8
+            else 14 * skill_count if not dlc and max_rank == 8
+            else 19 * skill_count)
+
+def get_chests_checks(dlc):
+    return len([
+        entry for entry in chests
+        if (dlc or "DLC" not in entry["DLC"])
+    ])
+
+def get_used_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh):
+    return {
+        f"{entry["Shop"]} Storage Key" for entry in shops
+        if (with_lives or entry["Group"] != "Life")
+           and (with_story or entry["Group"] != "Story")
+           and (with_fairy or entry["Group"] != "Fairy")
+           and (max_dosh >= int(entry["Dosh"]))
+           and (dlc or entry["Group"] != "DLC")
+    }
+
+def get_unused_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh):
+    all_keys = { f"{entry["Shop"]} Storage Key" for entry in shops }
+    used_keys = get_used_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh)
+    return all_keys - used_keys
 
 def get_available_shop_checks(dlc, with_bliss, with_lives, max_rank, with_story, with_fairy, max_dosh, shops_restricted):
-    available_lives = [f"Master: {Life(x).description}" for x in get_available_lives()]
+    formated_lives = [f"Master: {Life(x).description}" for x in available_lives]
     total_checks = len([
         entry for entry in shops
         if (dlc or (entry["Group"] != "DLC" and "DLC" not in entry["Requirement"]))
            and (with_bliss or "Bliss" not in entry["Requirement"])
            and (with_lives or entry["Group"] != "Life")
-           and ((max_rank >= 5 and entry["Requirement"] in available_lives) or "Master:" not in entry["Requirement"])
+           and ((max_rank >= 5 and entry["Requirement"] in formated_lives) or "Master:" not in entry["Requirement"])
            and (with_story or entry["Group"] != "Story")
            and (with_fairy or entry["Group"] != "Fairy")
-           and (max_dosh <= int(entry["Dosh"]))
+           and (max_dosh >= int(entry["Dosh"]))
     ])
     if shops_restricted:
-        total_checks -= len({ entry["Shop"] for entry in shops })
+        total_checks -= len(get_used_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh))
     return total_checks
+
+def get_fast_license_count(dlc, max_rank):
+    match max_rank:
+        case 1 | 2:
+            return 1
+        case 3 | 4:
+            return 2
+        case 5 | 6 | 7:
+            return 3
+        case 8 | _:
+            return 4 if dlc else 3
+
+def get_prog_license_count(dlc, max_rank):
+    if max_rank < 8:
+        return max_rank
+    else:
+        return 8 if dlc else 7
+
+def get_map_restrictions_count(dlc):
+    return 11 if dlc else 10
+
+def get_item_restrictions_count():
+    formated_lives = ["Any"] + [Life(i).description for i in available_lives]
+    return 5 * len({
+        entry["Item"] for entry in lives
+        if (entry["Item"]) and (entry["Life"] in formated_lives)
+    })
 
 class Skill(Enum):
     DASH = auto(), "Dash", 0
