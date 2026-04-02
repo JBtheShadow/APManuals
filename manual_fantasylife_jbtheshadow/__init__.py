@@ -70,7 +70,7 @@ class ManualWorld(World):
     event_name_to_event = event_name_to_event
 
     # UT (the universal-est of trackers) can now generate without a YAML
-    ut_can_gen_without_yaml = True
+    ut_can_gen_without_yaml = False  # Temporary disable until we fix the bugs with it
 
     def get_filler_item_name(self) -> str:
         return hook_get_filler_item_name(self, self.multiworld, self.player) or self.filler_item_name
