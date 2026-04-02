@@ -1,7 +1,5 @@
 # APManuals
 
-* [Fantasy Life](https://github.com/JBtheShadow/APManuals/blob/main/manual_fantasylife_jbtheshadow/README.md)
+Currently only has Fantasy Life on the 3DS but I should, eventually, add some other games to this list
 
-* [Super Bomberman 4](https://github.com/JBtheShadow/APManuals/blob/main/manual_superbomberman4_jbtheshadow/README.md)
-
-* [Power Bomberman](https://github.com/JBtheShadow/APManuals/blob/main/manual_powerbomberman_jbtheshadow/README.md)
+* [Fantasy Life (3DS)](https://github.com/JBtheShadow/APManuals/blob/main/manual_fantasylife_jbtheshadow/README.md)
