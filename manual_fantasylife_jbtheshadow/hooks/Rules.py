@@ -3,8 +3,7 @@ from worlds.AutoWorld import World
 from ..Helpers import clamp, get_items_with_value, get_option_value, is_option_enabled
 from BaseClasses import MultiWorld, CollectionState
 
-from ..data.Data import Life, Rank
-from ..hooks import Options
+from .Data import Life, Rank
 
 import re
 
@@ -42,56 +41,67 @@ def requiresMelee():
     return "|Figher Level:15| or |Black Belt Level:15| or |Thief Level:15|"
 
 
-def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    def beat_main_story():
-        return state.has("Chapter Complete", player, 7)
+def beat_story(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
+    def can_beat_story():
+        return state.has("Progressive Chapter", player, 7)
 
+    def can_beat_dlc():
+        return state.has("Progressive Chapter", player, 9)
+
+    story_goal = is_option_enabled(multiworld, player, "story_goal")
+    dlc = is_option_enabled(multiworld, player, "dlc")
+    dlc_goal = is_option_enabled(multiworld, player, "dlc_goal")
+
+    return not story_goal or can_beat_story() and (not dlc or not dlc_goal or can_beat_dlc())
+
+
+def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     goal = get_option_value(multiworld, player, "goal")
-    if goal != Options.Goal.option_wish_hunt:
+    if goal not in [0, 2]:
         return True
 
     required = get_option_value(multiworld, player, "wish_hunt_required")
-    main_story = is_option_enabled(multiworld, player, "require_main_story_for_goal")
 
-    return state.has("Lost Wish", player, required) and (not main_story or beat_main_story())
+    return state.has("Lost Wish", player, required)
 
 
 def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    def beat_main_story():
-        return state.has("Chapter Complete", player, 7)
-
     goal = get_option_value(multiworld, player, "goal")
-    if goal != Options.Goal.option_life_mastery:
+    if goal not in [1, 2]:
         return True
 
-    main_story = is_option_enabled(multiworld, player, "require_main_story_for_goal")
-    licenses = is_option_enabled(multiworld, player, "licenses")
-    if not licenses:
-        return not main_story or beat_main_story()
+    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    if not life_licenses:
+        return True
 
-    progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
-    fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
+    lives_progressive = is_option_enabled(multiworld, player, "lives_progressive")
+    lives_fast = is_option_enabled(multiworld, player, "lives_fast")
     life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
     life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
 
-    if goal == Options.Goal.option_life_mastery and licenses:
-        if not progressive_licenses:
-            item_name = "{life} License"
-            item_count = 1
-        else:
-            item_name = "Fast Progressive {life} License" if fast_licenses else "Progressive {life} License"
-            rank = Rank(life_mastery_rank)
-            item_count = rank.fast_requirement if fast_licenses else rank.full_requirement
+    if not lives_progressive:
+        item_name = "{life} License"
+        item_count = 1
+    else:
+        item_name = "Fast Progressive {life} License" if lives_fast else "Progressive {life} License"
+        rank = Rank(life_mastery_rank)
+        item_count = rank.fast_requirement if lives_fast else rank.full_requirement
 
-        life_count = 0
-        for life in Life:
-            if state.has(item_name.replace("{life}", life.description), player, item_count):
-                life_count += 1
-            if life_count >= life_mastery_count:
-                return not main_story or beat_main_story()
+    life_count = 0
+    for life in Life:
+        if state.has(item_name.replace("{life}", life.description), player, item_count):
+            life_count += 1
+        if life_count >= life_mastery_count:
+            return True
 
     return False
 
+def has_any_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_name: str):
+    for life in Life:
+        if has_license(world, multiworld, state, player, f"{rank_name} {life.description}"):
+            return True
+
+    return False
 
 def has_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
     parts = rank_and_life.split()
@@ -99,42 +109,46 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
         raise Exception(f"Invalid rank and life parameter '{rank_and_life}'.")
 
     life = Life.from_description(parts[1])
-    enable_item_restrictions = is_option_enabled(multiworld, player, "enable_item_restrictions")
-    if enable_item_restrictions:
-        if not state.has_all(life.required_items, player):
-            return False
 
-    licenses = is_option_enabled(multiworld, player, "licenses")
-    if not licenses:
+    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    if not life_licenses:
         return True
 
     rank = Rank.from_description(parts[0])
 
-    progressive_licenses = is_option_enabled(multiworld, player, "progressive_licenses")
-    if not progressive_licenses:
+    item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
+    if item_restrictions:
+        for item_name in life.required_items:
+            if rank.item_rarity < 1:
+                continue
+            if not state.has(item_name, player, rank.item_rarity):
+                return False
+
+    lives_progressive = is_option_enabled(multiworld, player, "lives_progressive")
+    if not lives_progressive:
         return state.has(f"{life.description} License", player)
 
-    if rank.min_chapter and not state.has("Chapter Complete", player, rank.min_chapter):
+    if rank.min_chapter and not state.has("Progressive Chapter", player, rank.min_chapter):
         return False
 
-    fast_licenses = is_option_enabled(multiworld, player, "fast_licenses")
-    if not fast_licenses:
+    lives_fast = is_option_enabled(multiworld, player, "lives_fast")
+    if not lives_fast:
         return state.has(f"Progressive {life.description} License", player, rank.full_requirement)
 
     return state.has(f"Fast Progressive {life.description} License", player, rank.fast_requirement)
 
 
-def item_restrictions(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
-    if not is_option_enabled(multiworld, player, "enable_item_restrictions"):
-        return True
-
-    count_str = count_str.strip()
-    count = int(count_str) if count_str.isnumeric() else 0
-    return state.has_group("Item Restrictions", player, count)
+# def item_restrictions(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
+#     if not is_option_enabled(multiworld, player, "lives_restricted"):
+#         return True
+#
+#     count_str = count_str.strip()
+#     count = int(count_str) if count_str.isnumeric() else 0
+#     return state.has_group("Item Restrictions", player, count)
 
 
 def bliss_bonuses(world: World, multiworld: MultiWorld, state: CollectionState, player: int, count_str: str):
-    if not is_option_enabled(multiworld, player, "bliss_bonuses"):
+    if not is_option_enabled(multiworld, player, "bliss"):
         return True
 
     count_str = count_str.strip()
@@ -143,10 +157,7 @@ def bliss_bonuses(world: World, multiworld: MultiWorld, state: CollectionState, 
 
 
 def can_fight(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    if not is_option_enabled(multiworld, player, "enable_item_restrictions"):
-        return True
-
-    return state.has_any(["Daggers", "Longswords", "Greatswords", "Bows", "Wands"], player)
+    return True
 
 
 def can_cast_magic(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
@@ -154,21 +165,13 @@ def can_cast_magic(world: World, multiworld: MultiWorld, state: CollectionState,
 
 
 def can_heal(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return state.has("HP Recovery Items", player) or can_cast_magic(world, multiworld, state, player)
+    return True
 
 
 def completed_chapter(world: World, multiworld: MultiWorld, state: CollectionState, player: int, chapter_str: str):
     chapter_str = chapter_str.strip()
     chapter = int(chapter_str) if chapter_str.isnumeric() else 1
-    return state.has("Chapter Complete", player, chapter)
-
-
-def completed_intermission(
-    world: World, multiworld: MultiWorld, state: CollectionState, player: int, intermission_str: str
-):
-    intermission_str = intermission_str.strip()
-    intermission = int(intermission_str) if intermission_str.isnumeric() else 1
-    return state.has("Intermission Complete", player, intermission)
+    return state.has("Progressive Chapter", player, chapter)
 
 
 def west_grassy_plains_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
@@ -200,15 +203,22 @@ def finished_storyline(world: World, multiworld: MultiWorld, state: CollectionSt
 
 
 def origin_island_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_intermission(world, multiworld, state, player, "8")
+    return completed_chapter(world, multiworld, state, player, "7") # TODO: also add event here for the right location that gives access to this
 
 
 def trials_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "9")
+    return completed_chapter(world, multiworld, state, player, "8") # TODO: also add event here for the right location that gives access to this
+
+
+def has_fairy_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
+    if not is_option_enabled(multiworld, player, "bliss"):
+        return True
+
+    return state.has("More Customization", player, 3)
 
 
 def has_better_shopping(world: World, multiworld: MultiWorld, state: CollectionState, player: int, number_str: str):
-    if not is_option_enabled(multiworld, player, "bliss_bonuses"):
+    if not is_option_enabled(multiworld, player, "bliss"):
         return True
 
     number_str = number_str.strip()

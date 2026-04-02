@@ -1,0 +1,46 @@
+Life,Skill,Item
+Any,Dash,
+Any,Sneaking,
+Any,Dagger Skill,Dagger
+Paladin,Longsword Skill,Longsword
+Paladin,Shield Skill,Shield
+Mercenary,Greatsword Skill,Greatsword
+Hunter,Archery,Bow
+Magician,Magic,Wand
+Magician,Wind Magic,Wand
+Magician,Water Magic,Wand
+Magician,Earth Magic,Wand
+Magician,Fire Magic,Wand
+Miner,Mining,Pickaxe
+Woodcutter,Woodcutting,Axe
+Angler,Fishing,Fishing Rod
+Cook,Cooking,Frying Pan
+Cook,Meat Cuisine,Frying Pan
+Cook,Seafood Cuisine,Frying Pan
+Cook,Egg & Veg Cuisine,Frying Pan
+Blacksmith,Smithing,Hammer
+Blacksmith,Weaponsmithing,Hammer
+Blacksmith,Armorsmithing,Hammer
+Blacksmith,Metal Tool Smithing,Hammer
+Carpenter,Carpentry,Saw
+Carpenter,Furniture Carpentry,Saw
+Carpenter,Weapons Carpentry,Saw
+Carpenter,Tools Carpentry,Saw
+Tailor,Sewing,Needle
+Tailor,Garment Tailoring,Needle
+Tailor,Misc. Tailoring,Needle
+Alchemist,Alchemy,Flask
+Alchemist,Compound Alchemy,Flask
+Alchemist,Accessory Alchemy,Flask
+Any,,Head Armor
+Any,,Body Armor
+Any,,Leg Armor
+Any,,Gloves
+Any,,Footwear
+Any,,Accessory
+Any,,HP Recovery Item
+Any,,SP Recovery Item
+Any,,Status Recovery Item
+Any,,Reviving Item
+Any,,Stat Boosting Item
+Any,,Damaging Item

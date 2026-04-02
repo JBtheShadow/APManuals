@@ -1,82 +1,504 @@
 {
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
-    "_comment": "Add a _ before an option name to comment it out and it wont be added to the apworld",
-    "_core": {
-        "goal":{
-            "_comment": [
-                "Using 'goal' as the name of an option let you override some of the generated goal parameters"
-            ],
-            "display_name": "The End Objective",
+    "core": {
+        "goal": {
+            "display_name": "Goal",
             "description": "How to End your Randomized playthrough.",
-            "aliases": {"easiest": 0},
+            "aliases": {
+                "wish_hunt": 0,
+                "life_mastery": 1,
+                "wish_hunt_mastery": 2
+            },
+            "group": "Goal Options",
             "hidden": false
         },
         "death_link": {
-            "default": false
+            "default": false,
+            "visibility": "none"
         },
         "filler_traps": {
-            "_comment": "Using values here let you set a 'recommended' filler_trap percentage or even a default percentage",
-            "values": {
-                "recommended": 20
-            }
+            "visibility": "none"
         }
     },
-    "_user": {
-        "_commented_out_option":{
+    "user": {
+        "story_goal": {
+            "display_name": "Require beating the game's main story to goal?",
+            "description": "If the goal also requires completing the Prologue and Chapters 1 through 7.",
             "type": "Toggle",
-            "default": true
+            "default": false
         },
-        "Example_Toggle":{
+        "dlc": {
+            "display_name": "Include the Origin Island DLC?",
+            "description": "Toggles whether to include items and locations related to the Origin Island DLC.",
+            "type": "Toggle",
+            "default": false
+        },
+        "dlc_goal": {
+            "display_name": "Require beating the game's DLC to goal?",
             "description": [
-                "This is a Toggle",
-                "A simple boolean, aka True or False set the initial value with \"default\""
+                "If the goal also requires completing the DLC Chapters 1 and 2.",
+                "Does nothing if story goal is also not enabled."
+            ],
+            "type": "Toggle",
+            "default": false
+        },
+        "game_seed": {
+            "display_name": "Game Seed",
+            "description": "Numeric seed used for generation, use -1 for a random one.",
+            "type": "Range",
+            "range_start": -1,
+            "range_end": 999999999999,
+            "values": {
+                "random": -1
+            },
+            "default": -1
+        },
+        "wish_hunt_total": {
+            "display_name": "Amount of Lost Wishes in total",
+            "description": [
+                "If the goal is set to Wish Hunt, sets the amount of Lost Wishes that will be added to the item pool.",
+                "Cannot be smaller than the required amount."
+            ],
+            "type": "Range",
+            "range_start": 1,
+            "range_end": 4000,
+            "default": 50,
+            "group": "Wish Hunt Options"
+        },
+        "wish_hunt_required": {
+            "display_name": "Amount of Lost Wishes required",
+            "description": [
+                "If the goal is set to Wish Hunt, sets the amount of Lost Wishes required for beating it.",
+                "Cannot be larger than the total amount."
+            ],
+            "type": "Range",
+            "range_start": 1,
+            "range_end": 4000,
+            "default": 30,
+            "group": "Wish Hunt Options"
+        },
+        "wish_hunt_local": {
+            "display_name": "Make Lost Wishes Local?",
+            "description": "Forces all Lost Wishes to be found in your own game.",
+            "type": "Toggle",
+            "default": true,
+            "group": "Wish Hunt Options"
+        },
+        "life_mastery_rank": {
+            "display_name": "Target rank for Life Mastery",
+            "description": "If the goal is set to Life Mastery, sets the target rank to beat the game.",
+            "type": "Choice",
+            "values": {
+                "fledgling": 1,
+                "apprentice": 2,
+                "adept": 3,
+                "expert": 4,
+                "master": 5,
+                "hero": 6,
+                "legend": 7,
+                "creator": 8
+            },
+            "default": 4,
+            "group": "Life Mastery Options"
+        },
+        "life_mastery_count": {
+            "display_name": "Amount of lives to reach the target rank",
+            "description": "If the goal is set to Life Mastery, sets how many Lives must reach the target rank.",
+            "type": "Range",
+            "range_start": 1,
+            "range_end": 12,
+            "default": 1,
+            "group": "Life Mastery Options"
+        },
+        "life_licenses": {
+            "display_name": "Include life licenses?",
+            "description": [
+                "Toggles whether to include life licenses in the pool.",
+                "This also includes locations for both ranks and life challenges."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Life Options"
+        },
+        "life_challenges": {
+            "display_name": "Include life challenges?",
+            "description": "Adds checks for each of the life challenges.",
+            "type": "Toggle",
+            "default": true,
+            "group": "Life Options"
+        },
+        "lives_max_rank": {
+            "display_name": "Max life license rank",
+            "description": "This option removes any locations with a life rank requirement higher than set here.",
+            "type": "Choice",
+            "values": {
+                "fledgling": 1,
+                "apprentice": 2,
+                "adept": 3,
+                "expert": 4,
+                "master": 5,
+                "hero": 6,
+                "legend": 7,
+                "creator": 8
+            },
+            "default": 4,
+            "group": "Life Options"
+        },
+        "lives_progressive": {
+            "display_name": "Progressive life ranks?",
+            "description": [
+                "Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.",
+                "If disabled, a single license unlocks all ranks. Does nothing if life licenses are not included."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Life Options"
+        },
+        "lives_fast": {
+            "display_name": "Fast progressive licenses?",
+            "description": [
+                "Toggles whether progressive licenses should be grouped together, to reduce item count.",
+                "Does nothing if licenses are not included nor if progressive licenses are disabled.",
+                "The unlocked ranks per license become as follows:",
+                "Novice, Fledgling, Apprentice -> 1 license",
+                "Adept, Expert -> 2 licenses",
+                "Master, Hero, Legend -> 3 licenses",
+                "Demi-Creator, Creator -> 4 licenses (DLC)"
             ],
             "type": "Toggle",
             "default": false,
-            "group": "Example Options"
+            "group": "Life Options"
         },
-        "Example_Choice":{
+        "lives_available": {
+            "display_name": "Available Lives",
+            "description": [
+                "Set how many lives will be included in the playthrough, removing all of the others and locations that require them.",
+                "Does nothing if licenses are not enabled.",
+                "",
+                "[single]: One life will be included at random among the combat and gatherer ones.",
+                "[combat_single]: One combat life will be included at random.",
+                "[combat_double]: Two combat lives will be included, one for melee (Paladin, Mercenary) and one for range (Hunter, Magician).",
+                "[combat_all]: All four combat lives will be included.",
+                "[gatherer_single]: One gatherer life will be included.",
+                "[gatherer_double]: Two gatherer lives will be included.",
+                "[gatherer_all]: All gatherer lives will be included.",
+                "[artisan_min]: One artisan live will be included at random along with any other lives it depends on, as well as their dependencies.",
+                "For each of the artisan lives the included dependencies are as follows:",
+                " - Cook: Angler",
+                " - Blacksmith: Woodcutter, Miner, Carpenter, Tailor",
+                " - Carpenter: Woodcutter, Miner, Blacksmith, Tailor",
+                " - Tailor: Woodcutter, Miner, Carpenter, Blacksmith",
+                " - Alchemist: Woodcutter, Miner, Carpenter, Blacksmith, Tailor",
+                "[artisan_all]: All gatherer and artisan lives will be included.",
+                "[self_sufficient_single]: [combat_single] and [artisan_all] combined.",
+                "[self_sufficient_double]: [combat_double] and [artisan_all] combined.",
+                "[all]: All lives will be included.",
+                "",
+                "PS: Some challenges for artisan lives require items only obtainable from lives, or at the very least more easily available",
+                "with the help of other lives, and as such, artisan lives are never included by themselves."
+            ],
             "type": "Choice",
-            "description": [
-                "This is a Choice",
-                "Let the user pick from a list of values",
-                "allow_custom_value let a player define their own text value",
-                "Currently the only use for Choice in Manual outside of hooks is the goal"
-            ],
             "values": {
-                "start":0,
-                "test":1
-             },
-            "default": 0,
-            "allow_custom_value": false,
-            "group": "Example Options"
+                "single": 1,
+                "combat_single": 2,
+                "combat_double": 3,
+                "combat_all": 4,
+                "gatherer_single": 5,
+                "gatherer_double": 6,
+                "gatherer_all": 7,
+                "artisan_min": 8,
+                "artisan_all": 9,
+                "self_sufficient_single": 10,
+                "self_sufficient_double": 11,
+                "all": 12
+            },
+            "default": 12,
+            "group": "Life Options"
         },
-        "Example_Range":{
-            "type": "Range",
+        "life_start": {
+            "display_name": "Starting Life",
             "description": [
-                "This is a Range",
-                "Allow the player to specify a value between 'start' and 'end'",
-                "if you include a \"values\" you can define the label for certain values",
-                "Currently the only use for Range in Manual outside of hooks is 'filler_trap'"
+                "Set what Life your character will start with, since the game forces you to go with one of the 12 Lives.",
+                "This option does nothing if licenses are not included.",
+                "The starting life must be included in the available lives chosen earlier.",
+                "If it isn't, a random available life will be selected instead.",
+                "",
+                "[any]: Randomly pick between any of the 12 Lives.",
+                "[paladin]: Start as a Paladin.",
+                "[mercenary]: Start as a Mercenary.",
+                "[hunter]: Start as a Hunter.",
+                "[magician]: Start as a Magician.",
+                "[miner]: Start as a Miner.",
+                "[woodcutter]: Start as a Woodcutter.",
+                "[angler]: Start as an Angler.",
+                "[cook]: Start as a Cook.",
+                "[blacksmith]: Start as a Blacksmith.",
+                "[carpenter]: Start as a Carpenter.",
+                "[tailor]: Start as a Tailor.",
+                "[alchemist]: Start as an Alchemist.",
+                "[combat_melee]: Randomly pick between Paladin and Mercenary.",
+                "[combat_range]: Randomly pick between Hunter and Magician.",
+                "[combat]: Randomly pick between Paladin, Mercenary, Hunter and Magician.",
+                "[gatherer]: Randomly pick between Miner, Woodcutter and Angler.",
+                "[artisan]: Randomly pick between Cook, Blacksmith, Carpenter, Tailor and Alchemist."
             ],
-            "range_start": 0,
-            "default": 1,
-            "range_end": 10,
-            "values": {"example": 2},
-            "group": "Example Options"
+            "type": "Choice",
+            "values": {
+                "any": 0,
+                "paladin": 1,
+                "mercenary": 2,
+                "hunter": 3,
+                "magician": 4,
+                "miner": 5,
+                "woodcutter": 6,
+                "angler": 7,
+                "cook": 8,
+                "blacksmith": 9,
+                "carpenter": 10,
+                "tailor": 11,
+                "alchemist": 12,
+                "combat": 13,
+                "combat_melee": 14,
+                "combat_range": 15,
+                "gatherer": 16,
+                "artisan": 17
+            },
+            "default": 14,
+            "group": "Life Options"
         },
-
-        "DLC_enabled":{
-            "display_name": "DLC Enabled",
-            "description": "Is the Dlc enabled?",
+        "character_levels": {
+            "display_name": "Include level up checks?",
+            "description": "Toggles whether to include checks for leveling your character up.",
             "type": "Toggle",
-            "visibility": [
-                "simple_ui",
-                "complex_ui",
-                "template"
+            "default": false,
+            "group": "Level Options"
+        },
+        "character_levels_max": {
+            "display_name": "Highest level up check",
+            "description": [
+                "Sets the highest location you can get a check for leveling up.",
+                "Highest level in the base game is 99, while in Origin Island it's 200."
             ],
-            "default": true
+            "type": "Range",
+            "range_start": 2,
+            "range_end": 200,
+            "default": 20,
+            "group": "Level Options"
+        },
+        "skill_levels": {
+            "display_name": "Include skill level up checks?",
+            "description": [
+                "Toggles whether to include checks for leveling up your skills.",
+                "Although you're free to level up skills as you want, their corresponding checks will not be in logic",
+                "until you've acquired enough licenses or progressed through the story enough.",
+                "The logic levels are:",
+                " - Levels 2 and 3: Fledgling",
+                " - Levels 4 and 5: Apprentice",
+                " - Levels 6 and 7: Adept",
+                " - Levels 8 and 9: Expert",
+                " - Levels 10 and 11: Master",
+                " - Levels 12 and 13: Hero",
+                " - Levels 14 and 15: Legend",
+                " - Levels 16 through 20: Creator"
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Level Options"
+        },
+        "bliss": {
+            "display_name": "Include Bliss Bonuses?",
+            "description": [
+                "Toggles whether to add the bliss bonuses to the pool, like the bigger bag or access to pets.",
+                "When enabled, one early game bonus such as Bigger Bag, Bigger Storage or Shopping + may be chosen."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Bliss Options"
+        },
+        "bliss_available": {
+            "display_name": "Bliss Bonuses available",
+            "description": [
+                "Lets you choose which bonuses should be included into the pool.",
+                "",
+                "[all]: Bag, Storage, Shop, Pets, Animals, Customization and Theatre are all included.",
+                "[useful]: Includes only Bag, Storage and Shop bonuses.",
+                "[exclude_theatre]: Includes all but the Theatre bonuses (Happy Audio and Happy Video)."
+            ],
+            "type": "Choice",
+            "values": {
+                "all": 0,
+                "useful": 1,
+                "exclude_theatre": 2
+            },
+            "default": 2,
+            "group": "Bliss Options"
+        },
+        "bliss_start": {
+            "display_name": "Starting Bliss Bonus",
+            "description": [
+                "Selects which bliss bonus to start with, or picks a random one among the more useful bonuses.",
+                "Very early, before reaching Chapter One, the game will teach about bliss bonuses.",
+                "As there are not many checks the player can do as early, this ensures the player won't have to go out of logic.",
+                "Does nothing if bliss bonuses are not included.",
+                "",
+                "[any]: Starts with any of the included bonuses.",
+                "[bag]: Starts with Bigger Bag.",
+                "[storage]: Starts with Bigger Storage.",
+                "[shopping]: Starts with Shopping +.",
+                "[useful]: Starts with a random one out of those three."
+            ],
+            "type": "Choice",
+            "values": {
+                "any": 0,
+                "bag": 1,
+                "storage": 2,
+                "shopping": 3,
+                "useful": 4
+            },
+            "default": 4,
+            "group": "Bliss Options"
+        },
+        "shops": {
+            "display_name": "Include Shops?",
+            "description": [
+                "Toggles whether to include shop locations in the pool and how they are added.",
+                "Optionally you can also include shop permits, restricting access to purchasing anything from the shop",
+                "until you've acquired their respective permit.",
+                "Only items you can pay in dosh are included, no Lunares Coins."
+            ],
+            "type": "Toggle",
+            "default": false,
+            "group": "Shop Options"
+        },
+        "shops_bliss": {
+            "display_name": "Include Checks Behind Shopping Bliss?",
+            "description": "Toggles whether to include checks for items that require one or more Better Shopping bliss bonuses",
+            "type": "Toggle",
+            "default": false,
+            "group": "Shop Options"
+        },
+        "shops_lives": {
+            "display_name": "Include Checks Behind Specific Lives and Ranks?",
+            "description": "Toggles whether to include checks that require you to be/have a specific life and/or reach a specific rank in it",
+            "type": "Toggle",
+            "default": false,
+            "group": "Shop Options"
+        },
+        "shops_story": {
+            "display_name": "Include Checks Behind Story Progression?",
+            "description": "Toggles whether to include checks that require you to beat the game or do some other story progression before the shop is available",
+            "type": "Toggle",
+            "default": false,
+            "group": "Shop Options"
+        },
+        "shops_fairy": {
+            "display_name": "Include the Mysterious Fairy?",
+            "description": "Toggles whether to include the Mysterious Fairy shop, which requires 3 levels of the Customization bliss bonus",
+            "type": "Toggle",
+            "default": false,
+            "group": "Shop Options"
+        },
+        "shops_dosh": {
+            "display_name": "Max Item Cost",
+            "description": "Sets the highest cost you're willing to pay for a check, removing any locations with a cost higher than this.",
+            "type": "Range",
+            "range_start": 10,
+            "range_end": 100000,
+            "default": 1000,
+            "group": "Shop Options"
+        },
+        "shops_restricted": {
+            "display_name": "Include Shop Restrictions?",
+            "description": "Toggles whether to include permits, preventing you from buying from any shops until you've got its respective permit.",
+            "type": "Toggle",
+            "default": false,
+            "group": "Shop Options"
+        },
+        "passwords": {
+            "display_name": "Include Passwords?",
+            "description": [
+                "Toggles whether to include passwords in the pool. Passwords can be redeemed after Butterfly teaches about Other Requests,",
+                "and there are 42 of them in total. Some grant costumes or even gear with nice stats, while some merely provide furniture",
+                "or consumables.",
+                "",
+                "The passwords displayed on the client are based on the US version; if your game is from a different region please refer to the wiki",
+                "for the correct phrase to enter."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Misc Options"
+        },
+        "chests": {
+            "display_name": "Include Treasure Chests?",
+            "description": [
+                "Include checks for opening treasure chests.",
+                "For red chests, as they drop random items from a list, there will be a check for each item they can drop in each room they appear in.",
+                "While not implemented yet, in the future the remaining chest types (purple, invisible purple, master) will also have checks each."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Misc Options"
+        },
+        "other_requests": {
+            "display_name": "Include Other Requests?",
+            "description": [
+                "Include Other Requests as checks? Forced to [all] when goal is Wish Hunt.",
+                "[none] No requests are included.",
+                "[first] Only the first request is included as a check.",
+                "[second] The first and second requests are included as checks.",
+                "[third] Only the first three requests are included as checks. Covers all non-DLC requests.",
+                "[all] Every request is considered. Does the same as [third] when no DLC."
+            ],
+            "type": "Choice",
+            "values": {
+                "none": 0,
+                "first": 1,
+                "second": 2,
+                "third": 3,
+                "all": 4
+            },
+            "default": 4,
+            "group": "Misc Options"
+        },
+        "item_restrictions": {
+            "display_name": "Enable Item Restrictions?",
+            "description": [
+                "Toggles whether to restrict equipment and consumable usage.",
+                "",
+                "When enabled, any 0 star items remain free to equip while anything 1 star or higher rarity will need to be unlocked first.",
+                "",
+                "Items are restricted by slot and type. There are no restrictions on furniture nor materials.",
+                "",
+                "Each Life has the following tools and weapons associated, higher ranks may also require the respective higher rarities before they're considered in logic:",
+                "* Paladin: Longswords and Shields",
+                "* Mercenary: Greatswords",
+                "* Hunter: Bows",
+                "* Magician: Wands",
+                "* Miner: Pickaxes",
+                "* Woodcutter: Axes",
+                "* Angler: Fishing Rods",
+                "* Cook: Frying Pans",
+                "* Blacksmith: Hammers",
+                "* Carpenter: Saws",
+                "* Tailor: Needles",
+                "* Alchemist: Flasks",
+                "",
+                "Very restrictive, not recommended unless you really want to take on the extra challenge."
+            ],
+            "type": "Toggle",
+            "default": false,
+            "group": "Misc Options"
+        },
+        "map_restrictions": {
+            "display_name": "Enable Map Restrictions?",
+            "description": [
+                "Toggles whether to restrict access to certain locations until you've acquired their respective key item.",
+                "Currently only includes specific caves, grottos and underground locations.",
+                "Subareas, like Nautilus Cave -> Forgotten Tunnel, are free to access once you've got its respective main area's key."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Misc Options"
         }
     }
-
 }

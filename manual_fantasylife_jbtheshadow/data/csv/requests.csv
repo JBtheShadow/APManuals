@@ -1,0 +1,334 @@
+Region,Issuer,#,Name,Rank,Life1,Life2,Life3,Requires,DLC
+Castele Square,Gramps,1,"A Big Egg for Gramps",,,,,,
+Castele Square,Gramps,2,"Old Man's Mustard",,,,,{port_puerto_access()},
+Castele Square,Gramps,3,"Sweetfish Bones",Fledgling,Angler,,,{port_puerto_access()} and {has_license(Fledgling Angler)},
+Castele Square,Helmut,1,"Sleeping on Duty",,,,,,
+Castele Square,Helmut,2,"Sleeping on Duty Again",Fledgling,Alchemist,,,{has_license(Fledgling Alchemist)},
+Castele Square,Helmut,3,"Still Sleeping on Duty",Fledgling,Alchemist,,,{has_license(Fledgling Alchemist)} and ({al_maajik_access()} or {has_license(Fledgling Miner)}),
+Castele Square,Rooftop Kitty,1,"Crucial Request",,,,,,
+Castele Square,Rooftop Kitty,2,"Trout for Kitty",,,,,{better_castele_shopping()} or {has_license(Fledgling Angler)} or {elderwood_village_access()},
+Castele Square,Rooftop Kitty,3,"Catfish for Kitty",Fledgling,Angler,,,{has_license(Fledgling Angler)},
+Castele Square,Prospero,1,"Drive Away the Bandits",,,,,{can_fight()},
+Castele Square,Prospero,2,"Bring Down the Bandit Leaders",,,,,{can_fight()},
+Castele Square,Prospero,3,"Justice Will Prevail",,,,,{can_fight()},
+Castele Square,Postonby,1,"Postbox of Love",Expert,Angler,,,{al_maajik_access()} and {has_license(Expert Angler)},
+Castele Square,Postonby,2,"Love Soup",Expert,Angler,Cook,,{al_maajik_access()} and {has_license(Expert Angler)} and {has_license(Expert Cook)},
+Castele Square,Postonby,3,"Explosive Love",Master,Angler,Cook,Alchemist,{al_maajik_access()} and {has_license(Expert Angler)} and {has_license(Expert Cook)} and {has_license(Master Alchemist)},
+Castele Square,Paige,1,"Scholarly Curiosity 1",,,,,{al_maajik_access()},
+Castele Square,Paige,2,"Scholarly Curiosity 2",,,,,{al_maajik_access()},
+Castele Square,Paige,3,"Scholarly Curiosity 3",,,,,{al_maajik_access()},
+Castele Square,Paige,4,"Scholarly Curiosity 4",,,,,{trials_access()},DLC
+Castele Square,Fernando,1,"Castelian Duds 1",Apprentice,Tailor,,,{has_license(Apprentice Tailor)},
+Castele Square,Fernando,2,"Castelian Duds 2",Apprentice,Tailor,,,{has_license(Apprentice Tailor)},
+Castele Square,Fernando,3,"Castelian Duds 3",Apprentice,Tailor,,,{has_license(Apprentice Tailor)},
+Castele Square,Henrietta,1,"Chickie Treats",,,,,,
+Castele Square,Henrietta,2,"More Chickie Treats",,,,,{snowpeak_access()},
+Castele Square,Henrietta,3,"Don't Cry Henrietta",,,,,{port_puerto_access()},
+Castele Square,Henrietta,4,"Henrietta's Dinner Party",Creator,Cook,,,{origin_island_access()} and {has_license(Creator Cook)},DLC
+Castele Square,Celine,1,"Castelian Veggies, Please",Apprentice,Cook,,,{snowpeak_access()} and {has_license(Apprentice Cook)},
+Castele Square,Celine,2,"Castelian Burger, Please",Apprentice,Cook,,,{snowpeak_access()} and {has_license(Apprentice Cook)} and ({al_maajik_access()} or {better_castele_shopping()}),
+Castele Square,Celine,3,"Castelian Fish, Please",Adept,Angler,Cook,,{snowpeak_access()} and {has_license(Apprentice Cook)} and {has_license(Adept Angler)} and ({al_maajik_access()} or {better_castele_shopping()}),
+Castele Square,Timmy,1,"The Bug Boy 1",,,,,,
+Castele Square,Timmy,2,"The Bug Boy 2",,,,,{west_grassy_plains_access()},
+Castele Square,Timmy,3,"The Bug Boy 3",,,,,{west_grassy_plains_access()},
+Castele Square,Timmy,4,"The Bug Boy 4",,,,,{origin_island_access()},DLC
+Castele Square,Samantha,1,"Beret Nice",Fledgling,Tailor,,,{has_license(Fledgling Tailor)},
+Castele Square,Samantha,2,"Flirty Skirt",Apprentice,Tailor,,,{port_puerto_access()} and {has_license(Apprentice Tailor)},
+Castele Square,Samantha,3,"Sassy Shoes",Adept,Tailor,,,{port_puerto_access()} and {has_license(Adept Tailor)},
+Castele Square,Tilda,1,"A New Chair, Please",Fledgling,Carpenter,,,{has_license(Fledgling Carpenter)},
+Castele Square,Tilda,2,"A New Dining Table, Please",Fledgling,Carpenter,,,{has_license(Fledgling Carpenter)},
+Castele Square,Tilda,3,"A New Bed, Please",Fledgling,Carpenter,,,{has_license(Fledgling Carpenter)} and ({better_castele_shopping()} or {has_license(Fledgling Woodcutter)}),
+Castele Square,Marshal,1,"Shiny Golden Sword",Expert,Blacksmith,,,{al_maajik_access()} and {has_license(Expert Blacksmith)},
+Castele Square,Marshal,2,"Shiny Captain's Sword",Expert,Blacksmith,,,{al_maajik_access()} and {has_license(Expert Blacksmith)},
+Castele Square,Marshal,3,"Shiny Crystal Sword",Master,Miner,Blacksmith,,{terra_nimbus_access()} and {has_license(Master Blacksmith)} and {has_license(Adept Miner)},
+Castele Square,Lettina,1,"Lettina's Delivery Service 1",Adept,Tailor,,,({port_puerto_access()} and {better_port_shopping()} or {al_maajik_access()}) and {has_license(Adept Tailor)},
+Castele Square,Lettina,2,"Lettina's Delivery Service 2",Expert,Tailor,,,({al_maajik_access()} and {better_desert_shopping()} or {elderwood_village_access()}) and {has_license(Expert Tailor)},
+Castele Square,Lettina,3,"Lettina's Delivery Service 3",Master,Tailor,,,({al_maajik_access()} and {better_traveling_shopping()} or {elderwood_village_access()}) and {has_license(Master Tailor)},
+Castele Castle,Rosemary,1,"The Princess and the Grapes",,,,,{west_grassy_plains_access()},
+Castele Castle,Rosemary,2,"Smashing Watermelons",,,,,{port_puerto_access()},
+Castele Castle,Rosemary,3,"Strawberry Shortcake",,,,,{port_puerto_access()},
+Castele Castle,Rosemary,4,"Origin Apples",,,,,{origin_island_access()},DLC
+Castele Castle,Chambers,1,"Scholarly Monocle",,,,,{port_puerto_access()},
+Castele Castle,Chambers,2,"Relaxing Cactus",,,,,{al_maajik_access()},
+Castele Castle,Chambers,3,"That Forest Feeling",,,,,{elderwood_village_access()},
+Castele Castle,Marco,1,"The Charming Paladin 1",Fledgling,Alchemist,,,{has_license(Fledgling Alchemist)},
+Castele Castle,Marco,2,"The Charming Paladin 2",Adept,Alchemist,,,{al_maajik_access()} and {better_desert_shopping()} and {has_license(Adept Alchemist)},
+Castele Castle,Marco,3,"The Charming Paladin 3",Expert,Alchemist,,,{finished_storyline()} and {better_desert_shopping()} and {has_license(Expert Alchemist)},
+Castele Shopping District,Selma,1,"Eels for Dinner",Fledgling,Angler,,,{west_grassy_plains_access()} and {has_license(Fledgling Angler)},
+Castele Shopping District,Selma,2,"Breams for Dinner",Fledgling,Angler,,,{port_puerto_access()} and ({has_license(Fledgling Angler)} and {better_port_shopping()} or {has_license(Apprentice Angler)}),
+Castele Shopping District,Selma,3,"Puffer Fish for Dinner",Apprentice,Angler,,,{port_puerto_access()} and {has_license(Apprentice Angler)},
+Castele Shopping District,Tilly,1,"Lovely Eggs",,,,,,
+Castele Shopping District,Tilly,2,"More Lovely Eggs",,,,,{port_puerto_access()},
+Castele Shopping District,Tilly,3,"Even More Lovely Eggs",,,,,{al_maajik_access()},
+Castele Shopping District,Tilly,4,"Lovely Penguin Eggs",,,,,{origin_island_access()},DLC
+Castele Shopping District,Biff,1,"Gimme Mutton",Fledgling,Cook,,,{has_license(Fledgling Cook)},
+Castele Shopping District,Biff,2,"Gimme Lamb",Apprentice,Cook,,,{has_license(Apprentice Cook)},
+Castele Shopping District,Biff,3,"Gimme Juice",Adept,Cook,,,{elderwood_village_access()} and {has_license(Adept Cook)},
+Castele Shopping District,Biff,4,"Gimme Frappe!",Creator,Cook,,,{origin_island_access()} and {has_license(Creator Cook)},DLC
+Castele Shopping District,Marcel,1,"Dearly Departed Fleas 1",Apprentice,Alchemist,,,({better_castele_shopping()} or {port_puerto_access()}) and {has_license(Apprentice Alchemist)},
+Castele Shopping District,Marcel,2,"Dearly Departed Fleas 2",Master,Alchemist,,,{terra_nimbus_access()} and {has_license(Master Alchemist)},
+Castele Shopping District,Marcel,3,"Dearly Departed Fleas 3",Master,Alchemist,,,{terra_nimbus_access()} and {better_traveling_shopping()} and {has_license(Master Alchemist)},
+Castele Shopping District,Juliet,1,"Mutton, Please",,,,,,
+Castele Shopping District,Juliet,2,"Rice, Please",,,,,{port_puerto_access()},
+Castele Shopping District,Juliet,3,"Sweet Corn, Please",,,,,{al_maajik_access()},
+Castele Shopping District,Harmony,1,"Room of Darkness 1",,,,,({al_maajik_access()} and {better_desert_shopping()}) or ({elderwood_village_access()} and {has_license(Expert Carpenter)}),
+Castele Shopping District,Harmony,2,"Room of Darkness 2",,,,,({al_maajik_access()} and {better_desert_shopping()}) or ({elderwood_village_access()} and {has_license(Expert Carpenter)}),
+Castele Shopping District,Harmony,3,"Room of Darkness 3",,,,,({al_maajik_access()} and {better_desert_shopping()}) or ({elderwood_village_access()} and {has_license(Expert Carpenter)} and {has_license(Expert Woodcutter)}),
+Castele Shopping District,Benedict,1,"Eggs Benedict 1",Apprentice,Cook,,,{port_puerto_access()} and {has_license(Apprentice Cook)},
+Castele Shopping District,Benedict,2,"Eggs Benedict 2",Expert,Cook,,,{al_maajik_access()} and {has_license(Expert Cook)},
+Castele Shopping District,Benedict,3,"Eggs Benedict 3",Master,Cook,,,{elderwood_village_access()} and {has_license(Master Cook)},
+Castele Shopping District,Cassandra,1,"Cursebreaker 1",Master,Carpenter,,,{elderwood_village_access()} and {has_license(Master Carpenter)},
+Castele Shopping District,Cassandra,2,"Cursebreaker 2",Master,Carpenter,,,{elderwood_village_access()} and {has_license(Master Carpenter)},
+Castele Shopping District,Cassandra,3,"Cursebreaker 3",Master,Woodcutter,Carpenter,,{elderwood_village_access()} and {has_license(Master Carpenter)} and {has_license(Master Woodcutter)},
+Castele Shopping District,Geoffrey,1,"Redbell Sunset",,,,,,
+Castele Shopping District,Geoffrey,2,"Bluebell Sky",,,,,{port_puerto_access()},
+Castele Shopping District,Geoffrey,3,"Yellowbell Sands",,,,,{al_maajik_access()},
+Castele Shopping District,Geoffrey,4,"Pink Sky",,,,,{origin_island_access()},DLC
+Castele Artisan's District,Tufts,1,"Plushy Iron Hammer",Apprentice,Blacksmith,,,{has_license(Apprentice Blacksmith)},
+Castele Artisan's District,Tufts,2,"Plushy Silver Hammer",Adept,Blacksmith,,,{port_puerto_access()} and {has_license(Adept Blacksmith)},
+Castele Artisan's District,Tufts,3,"Plushy Super Hammer",Expert,Blacksmith,,,{port_puerto_access()} and {has_license(Expert Blacksmith)},
+Castele Artisan's District,Barker,1,"Fangs!",,,,,,
+Castele Artisan's District,Barker,2,"Fangs! Fangs!",,,,,{snowpeak_access()},
+Castele Artisan's District,Barker,3,"Fangs! Fangs! Fangs!",,,,,{snowpeak_access()},
+Castele Artisan's District,Barker,4,"Fangs! Fangs! Fangs! Fangs!",,,,,{origin_island_access()},DLC
+Castele Artisan's District,Mona,1,"A Gift from Granny",,,,,{port_puerto_access()},
+Castele Artisan's District,Mona,2,"Another Gift from Granny",,,,,{port_puerto_access()},
+Castele Artisan's District,Mona,3,"Yet Another Gift from Granny",Master,Tailor,,,{port_puerto_access()} and ({has_license(Master Tailor)} or {al_maajik_access()}),
+Castele Artisan's District,Paul,1,"Honey for Pancake Paul 1",,,,,,
+Castele Artisan's District,Paul,2,"Honey for Pancake Paul 2",,,,,{snowpeak_access()},
+Castele Artisan's District,Paul,3,"Honey for Pancake Paul 3",,,,,{port_puerto_access()},
+Castele Artisan's District,Paul,4,"Honey for Pancake Paul 4",,,,,{origin_island_access()},DLC
+South Castele,Gaites,1,"Bronze Gaites",Fledgling,Blacksmith,,,{has_license(Fledgling Blacksmith)},
+South Castele,Gaites,2,"Cast-Iron Gaites",Apprentice,Blacksmith,,,{has_license(Apprentice Blacksmith)},
+South Castele,Gaites,3,"Silver Gaites",Adept,Blacksmith,,,{port_puerto_access()} and {has_license(Adept Blacksmith)},
+South Castele,Pom,1,"Apples for Pom",,,,,,
+South Castele,Pom,2,"Rainbow Apples for Pom",,,,,{west_grassy_plains_access()},
+South Castele,Pom,3,"99 Apples for Pom",,,,,{west_grassy_plains_access()},
+South Castele,Pom,4,"Galaxy Apples for Pom",,,,,{trials_access()},DLC
+South Castele,Giles,1,"Carrot Catcher 1",,,,,{can_fight()},
+South Castele,Giles,2,"Carrot Catcher 2",,,,,{can_fight()},
+South Castele,Giles,3,"Carrot Catcher 3",,,,,{can_fight()},
+South Castele,Giles,4,"Carrot Catcher 4",,,,,{origin_island_access()} and {can_fight()},DLC
+South Castele,Hamsvich,1,"A Shady Request",,,,,{west_grassy_plains_access()},
+South Castele,Hamsvich,2,"A Shadier Request",,,,,{west_grassy_plains_access()},
+South Castele,Hamsvich,3,"An Even Shadier Request",,,,,{west_grassy_plains_access()},
+South Castele,Hamsvich,4,"The Shadiest Request",,,,,{trials_access()},DLC
+South Castele,Barley,1,"Firewood, Please",,,,,,
+South Castele,Barley,2,"More Firewood, Please",,,,,{port_puerto_access()},
+South Castele,Barley,3,"Yet More Firewood, Please",,,,,{port_puerto_access()},
+East Castele,Llaeth,1,"Gimme Milk!",,,,,,
+East Castele,Llaeth,2,"Gimme More Milk!",,,,,{better_castele_shopping()} or {al_maajik_access()},
+East Castele,Llaeth,3,"Magical Milkshake for Me",,,,,{al_maajik_access()},
+East Castele,Llaeth,4,"Gimme Milk Gel!",,,,,{origin_island_access()},DLC
+West Castele,Hans,1,"Haniwa Cave Gemstones",,,,,{better_castele_shopping()} or {has_license(Fledgling Miner)},
+West Castele,Hans,2,"Teardrop Gemstones",,,,,{port_puerto_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)}),
+West Castele,Hans,3,"Blood-Red Gemstones",,,,,{port_puerto_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)}),
+West Castele,Hans,4,"Ancient Gemstone",,,,,{trials_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)}),DLC
+West Castele,Reggie,1,"Produce Private Eye",,,,,{west_grassy_plains_access()},
+West Castele,Reggie,2,"Produce Private Eye",,,,,{port_puerto_access()},
+West Castele,Reggie,3,"Produce Private Eye",,,,,{al_maajik_access()},
+West Castele,Reggie,4,"Produce Private Eye",,,,,{origin_island_access()},DLC
+West Castele,Collinsworth,1,"Pie, Please",Expert,Cook,,,{al_maajik_access()} and {has_license(Expert Cook)},
+West Castele,Collinsworth,2,"Pudding, Please",Expert,Cook,,,{al_maajik_access()} and {has_license(Expert Cook)},
+West Castele,Collinsworth,3,"Magical Pie, Please",Master,Cook,,,{al_maajik_access()} and {has_license(Master Cook)},
+East Grassy Plains,Hansel,1,"Furious Fowl",,,,,{snowpeak_access()} and {can_fight()},
+East Grassy Plains,Hansel,2,"Snake Along the Mountain Road",,,,,{snowpeak_access()} and {can_fight()},
+East Grassy Plains,Hansel,3,"Don't Let It Go Ape",,,,,{snowpeak_access()} and {can_fight()},
+East Grassy Plains,Hansel,4,"Bowtaur Ruins Holidays",,,,,{origin_island_access()} and {can_fight()},DLC
+East Grassy Plains,Terry,1,"Protector of the Plains",,,,,{can_fight()},
+East Grassy Plains,Terry,2,"Paladin Savior",,,,,{can_fight()},
+East Grassy Plains,Terry,3,"Spooked-Out Paladin",,Magician,,,{can_cast_magic()},
+West Grassy Plains,Fluffin,1,"The Serpentine Way of Life",,,,,{can_fight()},
+West Grassy Plains,Fluffin,2,"Tale the Bull by the Horns",,,,,{can_fight()},
+West Grassy Plains,Fluffin,3,"Cattle Battle",,,,,{can_fight()},
+Farley's Plantation,Farley,1,"The Freshest Around",,,,,,
+Farley's Plantation,Farley,2,"Mountain Freshness",,,,,{snowpeak_access()}},
+Farley's Plantation,Farley,3,"Water, Water Everywhere",,,,,{port_puerto_access()},
+Farley's Plantation,Farley,4,"Hot Stuff",,,,,{origin_island_access()},DLC
+Farley's Plantation,Jewel,1,"Huntin' Wadishys",,,,,{can_fight()},
+Farley's Plantation,Jewel,2,"Huntin' a Wadishella",,,,,{can_fight()},
+Farley's Plantation,Jewel,3,"Weggie See, Weggie Do",,,,,{can_fight()},
+Mount Snowpeak Summit,Rocco,1,"No Running in the Snow",,,,,{can_fight()},
+Mount Snowpeak Summit,Rocco,2,"Big Cats in the Snow",,,,,{can_fight()},
+Mount Snowpeak Summit,Rocco,3,"Snow Hazard",,,,,{can_fight()},
+Mount Snowpeak Summit,Rocco,4,"Freezing Guard's Last Request",,,,,{can_fight()} and {origin_island_access()},DLC
+Port Puerto Beach District,Polkovich,1,"Calumnus's Prophecy 1",,,,,{al_maajik_access()},
+Port Puerto Beach District,Polkovich,2,"Calumnus's Prophecy 2",,,,,{al_maajik_access()},
+Port Puerto Beach District,Polkovich,3,"Calumnus's Prophecy 3",,,,,{al_maajik_access()},
+Port Puerto Beach District,Jack,1,"Archipelago Conservation",,,,,{can_fight()},
+Port Puerto Beach District,Jack,2,"Monster-Free Archipelago",,,,,{can_fight()},
+Port Puerto Beach District,Jack,3,"Save Tortuga, Spare No Monster",,,,,{can_fight()},
+Port Puerto Beach District,Jack,4,"Champion Abroad",,,,,{can_fight()} and {origin_island_access()},DLC
+Port Puerto Beach District,Eduardo,1,"Scurvy Pirate's Proposal",Apprentice,Alchemist,,,{has_license(Apprentice Alchemist)},
+Port Puerto Beach District,Eduardo,2,"I Be Needin' a Dress",Expert,Tailor,Alchemist,,{has_license(Apprentice Alchemist)} and {has_license(Expert Tailor)},
+Port Puerto Beach District,Eduardo,3,"A Flower fer Me Beauty",Expert,Tailor,Alchemist,,{al_maajik_access()} and {has_license(Apprentice Alchemist)} and {has_license(Expert Tailor)},
+Port Puerto Marina,Karin,1,"Dino Meat and Greet!",,,,,{al_maajik_access()},
+Port Puerto Marina,Karin,2,"A Beastly Feast",,,,,{al_maajik_access()},
+Port Puerto Marina,Karin,3,"Meating Demand",,,,,{al_maajik_access()},
+Port Puerto Marina,Karin,4,"Mysterious Mythical Meat",,,,,{trials_access()},DLC
+Port Puerto Marina,Sami,1,"Swanky Barrel",Apprentice,Carpenter,,,{has_license(Apprentice Carpenter)},
+Port Puerto Marina,Sami,2,"Scarecrow Coat Hanger",Apprentice,Carpenter,,,{port_puerto_access()} and {has_license(Apprentice Carpenter)} and ({better_port_shopping()} or {al_maajik_access()} or {has_license(Adept Tailor)}),
+Port Puerto Marina,Sami,3,"A Chest for My Treasures",Expert,Carpenter,,,{al_maajik_access()} and {has_license(Expert Carpenter)},
+Port Puerto Marina,Sami,4,"Chasing Rainbows",Creator,Carpenter,,,{origin_island_access()} and {has_license(Creator Carpenter)},DLC
+Port Puerto Marina,Bomba,1,"Let's Play Pirates! Pt. 1",Fledgling,Alchemist,,,{has_license(Fledgling Alchemist)},
+Port Puerto Marina,Bomba,2,"Let's Play Pirates! Pt. 2",Adept,Alchemist,,,{has_license(Adept Alchemist)},
+Port Puerto Marina,Bomba,3,"Let's Play Pirates! Pt. 3",Adept,Alchemist,,,{has_license(Adept Alchemist)},
+Port Puerto Marina,Pepperonita,1,"Cheer Me Up!",,,,,{better_port_shopping()} or {al_maajik_access()} or {has_license(Adept Miner)},
+Port Puerto Marina,Pepperonita,2,"Crystal Comfort",,,,,{al_maajik_access()} and ({better_desert_shopping()} or {has_license(Adept Miner)}),
+Port Puerto Marina,Pepperonita,3,"Hear My Story",,,,,{al_maajik_access()} and ({better_desert_shopping()} or {has_license(Adept Miner)}),
+Port Puerto Marina,Swabbie,1,"Snakeskin Scallywag",Apprentice,Blacksmith,,,{has_license(Apprentice Blacksmith)},
+Port Puerto Marina,Swabbie,2,"Snakeskin Scallywag 2",Apprentice,Blacksmith,,,{has_license(Apprentice Blacksmith)}},
+Port Puerto Marina,Swabbie,3,"Snakeskin Scallywag 3",Apprentice,Blacksmith,,,{has_license(Apprentice Blacksmith)},
+Port Puerto Marina,Emilio,1,"A Sea-Scented Elder Log",,,,,,
+Port Puerto Marina,Emilio,2,"Well-Dried Desert Elder Log",,,,,{al_maajik_access()} and ({has_license(Adept Woodcutter)} or {better_traveling_shopping()}),
+Port Puerto Marina,Emilio,3,"Subterranean Elder Log",,,,,{al_maajik_access()} and ({has_license(Expert Woodcutter)} or {better_traveling_shopping()}),
+Port Puerto Palace Way,Pepita,1,"Mules for Pepita",Adept,Tailor,,,{has_license(Adept Tailor)},
+Port Puerto Palace Way,Pepita,2,"Sea Sarong for Pepita",Adept,Tailor,,,{has_license(Adept Tailor)},
+Port Puerto Palace Way,Pepita,3,"Holiday Top for Pepita",Adept,Tailor,,,{has_license(Adept Tailor)},
+Port Puerto Palace Way,Honey,1,"Honey, Fetch Me a Bow!",Apprentice,Carpenter,,,{has_license(Apprentice Carpenter)},
+Port Puerto Palace Way,Honey,2,"Leave Everything to Honey!",Adept,Carpenter,,,{has_license(Adept Carpenter)} and {al_maajik_access()} and ({better_desert_shopping()} or {elderwood_village_access()}),
+Port Puerto Palace Way,Honey,3,"Honey Tries Again",Adept,Carpenter,,,{has_license(Adept Carpenter)} and {al_maajik_access()} and ({better_desert_shopping()} or {elderwood_village_access()}),
+Port Puerto Palace Way,Gibbs,1,"Speedy Postman",,,,,,
+Port Puerto Palace Way,Gibbs,2,"Lucky Postman",,,,,,
+Port Puerto Palace Way,Gibbs,3,"Energetic Postman",,,,,,
+Port Puerto Palace Way,Gibbs,4,"Old-Fashion Postman",,,,,{origin_island_access()},DLC
+Port Puerto Palace Way,Lilac,1,"The Truth about Crocturtle",,,,,,
+Port Puerto Palace Way,Lilac,2,"Tale of the Beast Tail",,,,,,
+Port Puerto Palace Way,Lilac,3,"Gelatinous Creature",,,,,,
+Port Puerto Palace Way,Lilac,4,"Crab Shell Beauty Tea",,,,,{origin_island_access()},DLC
+Port Puerto Palace Way,Cashew,1,"Quality Lava Prawns",,,,,{better_traveling_shopping()} or {has_license(Adept Angler)},
+Port Puerto Palace Way,Cashew,2,"Quality Desert Tuna",,,,,{better_traveling_shopping()} or {has_license(Adept Angler)} and {al_maajik_access()},
+Port Puerto Palace Way,Cashew,3,"Quality Icy Squid",,,,,{better_traveling_shopping()} or {has_license(Adept Angler)} and {al_maajik_access()},
+Port Puerto Palace Way,Cashew,4,"Quality Fossilfish",,,,,{better_traveling_shopping()} or {has_license(Adept Angler)} and {origin_island_access()},DLC
+Port Puerto Palace,Polly,1,"Polly Wants Some Palm Nuts",,,,,,
+Port Puerto Palace,Polly,2,"Please Feed the Bird",,,,,{al_maajik_access()},
+Port Puerto Palace,Polly,3,"Nuts to You",,,,,{elderwood_village_access()},
+Tortuga Archipelago,Shelldon,1,"Zombie Cleanup 1",,,,,{can_fight()},
+Tortuga Archipelago,Shelldon,2,"Zombie Cleanup 2",,,,,{can_fight()},
+Tortuga Archipelago,Shelldon,3,"Zombie Cleanup 3",,,,,{can_fight()},
+Tortuga Archipelago,Danny,1,"Piranha-Free Waters",,,,,{can_fight()},
+Tortuga Archipelago,Danny,2,"Shark Removal",,,,,{can_fight()},
+Tortuga Archipelago,Danny,3,"Turtanic Shell",,,,,{can_fight()},
+Tortuga Archipelago,Alejandro,1,"Help Me, Stranger!",Hero,Cook,,,{terra_nimbus_access()} and {has_license(Hero Cook)},
+Tortuga Archipelago,Alejandro,2,"Fancy Fish",Hero,Angler,Cook,,{terra_nimbus_access()} and {has_license(Hero Cook)} and {has_license(Hero Angler)},
+Tortuga Archipelago,Alejandro,3,"Roast with the Most",Hero,Angler,Cook,,{terra_nimbus_access()} and {has_license(Hero Cook)} and {has_license(Hero Angler)},
+Tortuga Archipelago,Alejandro,4,"Help Me! Good Friend",Creator,Angler,Cook,,{origin_island_access()} and {has_license(Creator Cook)} and {has_license(Hero Angler)},DLC
+Al Maajik Outskirts,Simra,1,"Prehistoric Hunting",,,,,{can_fight()},
+Al Maajik Outskirts,Simra,2,"Desert Dogfight",,,,,{can_fight()},
+Al Maajik Outskirts,Simra,3,"Spooktacular Hunt",,Magician,,,{can_cast_magic()},
+Al Maajik Outskirts,Simra,4,"A Gigataur Task",,Magician,,,{can_cast_magic()} and {origin_island_access()},DLC
+Al Maajik Outskirts,Chai,1,"Forest Furnishings 1",,,,,{elderwood_village_access()},
+Al Maajik Outskirts,Chai,2,"Forest Furnishings 2",,,,,{elderwood_village_access()},
+Al Maajik Outskirts,Chai,3,"Forest Furnishings 3",,,,,{elderwood_village_access()},
+Al Maajik Outskirts,Saffron,1,"Desert Patrol 1",,,,,{can_fight()},
+Al Maajik Outskirts,Saffron,2,"Desert Patrol 2",,,,,{can_fight()},
+Al Maajik Outskirts,Saffron,3,"Desert Patrol 3",,,,,{can_fight()},
+Al Maajik Outskirts,Deskovich,1,"Bone Dragon Resurrection 1",Legend,Miner,,,{has_license(Legend Miner)},
+Al Maajik Outskirts,Deskovich,2,"Bone Dragon Resurrection 2",Legend,Miner,,,{has_license(Legend Miner)},
+Al Maajik Outskirts,Deskovich,3,"Bone Dragon Resurrection 3",Legend,Miner,,,{has_license(Legend Miner)},
+Al Maajik Sandtown,Jem,1,"Cautious Adventuring",Apprentice,Alchemist,,,{has_license(Apprentice Alchemist)},
+Al Maajik Sandtown,Jem,2,"Short and Sweet",Expert,Tailor,Alchemist,,{has_license(Apprentice Alchemist)} and {has_license(Expert Tailor)},
+Al Maajik Sandtown,Jem,3,"Fast Track to Friendship",Expert,Blacksmith,Tailor,Alchemist,{has_license(Apprentice Alchemist)} and {has_license(Expert Tailor)} and {has_license(Expert Blacksmith)},
+Al Maajik Sandtown,Calumnus,1,"Dragonfly Divination",,,,,,
+Al Maajik Sandtown,Calumnus,2,"Under a Stained-Glass Sky",,,,,{terra_nimbus_access()},
+Al Maajik Sandtown,Calumnus,3,"Champion of the Skies",,,,,{terra_nimbus_access()},
+Al Maajik Sandtown,Calumnus,4,"Demonic Insects",,,,,{origin_island_access()},DLC
+Al Maajik Sandtown,Vincent,1,"Risky Ravine",,,,,{can_fight()},
+Al Maajik Sandtown,Vincent,2,"Safety in the Sand",,,,,{can_fight()},
+Al Maajik Sandtown,Vincent,3,"Subterranean Safety",,,,,{can_fight()},
+Al Maajik Sandtown,Omar,1,"Al Maajik Medicine Run",,,,,,
+Al Maajik Sandtown,Omar,2,"Cacto Cove Medicine Run",,,,,,
+Al Maajik Sandtown,Omar,3,"Terra Nimbus Medicine Run",,,,,{terra_nimbus_access()},
+Al Maajik Sandtown,Mabel,1,"It's All So Blurry",Adept,Alchemist,,,{has_license(Adept Alchemist)},
+Al Maajik Sandtown,Mabel,2,"Granny Accessorizes",Expert,Alchemist,,,{has_license(Expert Alchemist)},
+Al Maajik Sandtown,Mabel,3,"Granny's Cool Shades",Master,Alchemist,,,{has_license(Master Alchemist)},
+Al Maajik Sandtown,Xavier,1,"The World Traveler",Expert,Cook,,,{has_license(Expert Cook)},
+Al Maajik Sandtown,Xavier,2,"Rough Days Like This...",Expert,Cook,,,{has_license(Expert Cook)},
+Al Maajik Sandtown,Xavier,3,"The Dragon Within",Master,Cook,,,{has_license(Master Cook)},
+Al Maajik Sandtown,Richie,1,"Present for Father Dearest",Expert,Angler,,,{has_license(Expert Angler)},
+Al Maajik Sandtown,Richie,2,"Snoot's Tantrum",Expert,Angler,Carpenter,,{has_license(Expert Angler)} and {has_license(Adept Carpenter)},
+Al Maajik Sandtown,Richie,3,"Snoot's Legacy",Master,Angler,Blacksmith,Carpenter,{has_license(Expert Angler)} and {has_license(Adept Carpenter)} and {has_license(Master Blacksmith)},
+Al Maajik Sandtown,Richie,4,"A Son's Love",Creator,Angler,Cook,Blacksmith,{has_license(Expert Angler)} and {has_license(Adept Carpenter)} and {has_license(Master Blacksmith)} and {has_license(Creator Cook)},DLC
+Al Maajik Sandtown,Amir,1,"Log of the Earth",,,,,{has_license(Expert Woodcutter)} or {elderwood_village_access()},
+Al Maajik Sandtown,Amir,2,"Waterlogged",,,,,{has_license(Expert Woodcutter)} or {elderwood_village_access()},
+Al Maajik Sandtown,Amir,3,"A Log in the Fire",,,,,{has_license(Expert Woodcutter)} or {elderwood_village_access()},
+Al Maajik Spelltown,Zerk,1,"Dark Knight Zerk",Master,Blacksmith,,,{has_license(Master Blacksmith)},
+Al Maajik Spelltown,Zerk,2,"Maajikal Blacksmith?",Master,Blacksmith,,,{has_license(Master Blacksmith)},
+Al Maajik Spelltown,Zerk,3,"The Final Chance",Master,Blacksmith,,,{has_license(Master Blacksmith)},
+Al Maajik Spelltown,Khubz,1,"Rainbow Hunter",,,,,,
+Al Maajik Spelltown,Khubz,2,"Rising Rainbow",,,,,,
+Al Maajik Spelltown,Khubz,3,"Over the Rainbow",,,,,,
+Al Maajik Spelltown,Akim,1,"Akim's Kitchen Warfare",,,,,,
+Al Maajik Spelltown,Akim,2,"Akim's Food Fight",,,,,,
+Al Maajik Spelltown,Akim,3,"Akim's Last Stand",,,,,,
+Al Maajik Spelltown,Akim,4,"A Golden Opportunity",,,,,{origin_island_access()},DLC
+Al Maajik Spelltown,Libby,1,"Ornately Ornate",Fledgling,Angler,,,{has_license(Fledgling Angler)},
+Al Maajik Spelltown,Libby,2,"Shiver Me Flounders!",Adept,Angler,,,{has_license(Adept Angler)},
+Al Maajik Spelltown,Libby,3,"Sandy Seas",Expert,Angler,,,{has_license(Expert Angler)},
+Al Maajik Spelltown,Libby,4,"Fishy Research",Master,Angler,,,{has_license(Master Angler)} and {trials_access()},DLC
+Dark Sultan's Fortress,Ruck,1,"Dress to Impress",Expert,Tailor,,,{has_license(Expert Tailor)},
+Dark Sultan's Fortress,Ruck,2,"Signs of a True Gentleman",Expert,Tailor,,,{has_license(Expert Tailor)},
+Dark Sultan's Fortress,Ruck,3,"New Look, New Life!",Expert,Tailor,,,{has_license(Expert Tailor)},
+Aridian Desert,Rudy,1,"Mummy's the Word",,,,,{can_fight()},
+Aridian Desert,Rudy,2,"Bringing Down the Bats",,,,,{can_fight()},
+Aridian Desert,Rudy,3,"The Failed Adventurer",,,,,{can_fight()},
+Aridian Desert,Abahkus,1,"The Desert Merchant 1",,,,,{elderwood_village_access()},
+Aridian Desert,Abahkus,2,"The Desert Merchant 2",Master,Miner,,,{elderwood_village_access()} and {has_license(Master Miner)},
+Aridian Desert,Abahkus,3,"The Desert Merchant 3",Master,Miner,,,{terra_nimbus_access()} and {has_license(Master Miner)},
+Aridian Desert,Abahkus,4,"The Desert Merchant 4",Master,Miner,Woodcutter,,{origin_island_access()} and {has_license(Master Miner)} and {has_license(Master Woodcutter)},DLC
+Elderwood Village,Leif,1,"Raingear Tree",,,,,,
+Elderwood Village,Leif,2,"Sea-Breeze-Scented Tree",,,,,,
+Elderwood Village,Leif,3,"Blooming with Joy",,,,,{better_castele_shopping()},
+Elderwood Village,Leif,4,"Lovely Little Weeds",,,,,{better_castele_shopping()} and {origin_island_access()},DLC
+Plushling Camp,Kevin,1,"Delicious Dandelion Puff",,,,,,
+Plushling Camp,Kevin,2,"Scrumptious Sunny Puff",,,,,,
+Plushling Camp,Kevin,3,"Appetizing Angelic Puff",,,,,,
+Plushling Camp,Kevin,4,"Detectable Divine Puff",,,,,{origin_island_access()},DLC
+Central Grassland,Achilles,1,"Floaty Fears",,,,,{can_fight()},DLC
+Central Grassland,Achilles,2,"Super Floaty Fears",,,,,{can_fight()},DLC
+Central Grassland,Achilles,3,"Mega Floaty Fears",,,,,{can_fight()},DLC
+Central Grassland,Daphne,1,"Paladin Maniac",Creator,Tailor,,,{has_license(Creator Tailor)},DLC
+Central Grassland,Daphne,2,"Knight in Colorful Armor",Creator,Tailor,,,{has_license(Creator Tailor)},DLC
+Central Grassland,Daphne,3,"Gear for a Goddess",Creator,Tailor,,,{has_license(Creator Tailor)},DLC
+Central Grassland,Sally,1,"Home, Sweet Marshmall-Home",,,,,,DLC
+Central Grassland,Sally,2,"Giga Giga Girl",Master,Woodcutter,,,{has_license(Master Woodcutter)},DLC
+Central Grassland,Sally,3,"Beetle Buddies",Master,Woodcutter,,,{has_license(Master Woodcutter)},DLC
+Central Grassland,Napollon,1,"A Lovers' Tale",Master,Miner,,,{has_license(Master Miner)},DLC
+Central Grassland,Napollon,2,"A Lovers' Tale",Master,Miner,,,{has_license(Master Miner)},DLC
+Central Grassland,Napollon,3,"A Lovers' Tale",Master,Miner,,,{has_license(Master Miner)},DLC
+Central Grassland,Mallow,1,"Like Divine Bees to Honey",,,,,,DLC
+Central Grassland,Mallow,2,"Fashion and Fruit",,,,,,DLC
+Central Grassland,Mallow,3,"Of Boughs and Blades",Master,Woodcutter,,,{has_license(Master Woodcutter)},DLC
+Central Grassland,Mana,1,"Claws for Thought",,,,,,DLC
+Central Grassland,Mana,2,"Spe-shell Delivery",,,,,,DLC
+Central Grassland,Mana,3,"Shelltacular!",,,,,,DLC
+Forest Shrine,Homeros,1,"Tribal Investigations",,,,,{can_fight()},DLC
+Forest Shrine,Homeros,2,"Strongtaur Studies",,,,,{can_fight()},DLC
+Forest Shrine,Homeros,3,"Shadowy Survey",,,,,{can_fight()} and {trials_access()},DLC
+Forest Shrine,Gladys,1,"Hip 'n' Healthy",Creator,Tailor,,,{has_license(Creator Tailor)},DLC
+Forest Shrine,Gladys,2,"Heavenly Health",Creator,Tailor,Alchemist,,{has_license(Creator Tailor)} and {has_license(Creator Alchemist)},DLC
+Forest Shrine,Gladys,3,"Hard-Boiled Health",Creator,Cook,Tailor,Alchemist,{has_license(Creator Tailor)} and {has_license(Creator Alchemist)} and {has_license(Creator Cook)},DLC
+Forest Shrine,Tate,1,"Mushroom Munchkin",,,,,,DLC
+Forest Shrine,Tate,2,"Truffle Taster",,,,,,DLC
+Forest Shrine,Tate,3,"Bring Home the Broccoil",,,,,,DLC
+Penguin Beach,Sandor,1,"Fishy Kisses",Expert,Angler,,,{has_license(Expert Angler)},DLC
+Penguin Beach,Sandor,2,"Fishy Rainbows",Expert,Angler,,,{has_license(Expert Angler)},DLC
+Penguin Beach,Sandor,3,"Fishy Love",Expert,Angler,,,{has_license(Expert Angler)},DLC
+Penguin Beach,Furkley,1,"The Solitary Gigaga Gourmet",Creator,Cook,,,{has_license(Creator Cook)},DLC
+Penguin Beach,Furkley,2,"Fishy Giga Gourmet",Creator,Cook,,,{has_license(Creator Cook)},DLC
+Penguin Beach,Furkley,3,"Sashimi Giga Gourmet",Creator,Cook,,,{has_license(Creator Cook)},DLC
+Penguin Beach,Furcasso,1,"Furlassso's Humble Beginnings",,,,,,DLC
+Penguin Beach,Furcasso,2,"Furlassso in Love",,,,,,DLC
+Penguin Beach,Furcasso,3,"Furlassso Finds His Muse",,,,,{trials_access()},DLC
+Penguin Beach,Fauna,1,"New Thread",,,,,,DLC
+Penguin Beach,Fauna,2,"Sewing with Confidence",,,,,{trials_access()},DLC
+Penguin Beach,Fauna,3,"Reverian Inspiration",Expert,Tailor,,,{trials_access()} and {has_license(Expert Tailor)},DLC
+Rocky Hill Shrine,Orion,1,"Mighty Helm, Miniature Hero",,,,,,DLC
+Rocky Hill Shrine,Orion,2,"Sturdy Shield, Scrawny Soldier",,,,,{trials_access()},DLC
+Rocky Hill Shrine,Orion,3,"Biting Sword, Bite-size Knight",Hero,Blacksmith,,,{trials_access()} and {has_license(Hero Blacksmith)},DLC
+Rocky Hill Shrine,Maeryn,1,"From a Lady to a Lord 1",Creator,Tailor,,,{has_license(Creator Tailor)},DLC
+Rocky Hill Shrine,Maeryn,2,"From a Lady to a Lord 2",Creator,Carpenter,Tailor,,{has_license(Creator Tailor)} and {has_license(Creator Carpenter)},DLC
+Rocky Hill Shrine,Maeryn,3,"From a Lady to a Lord 3",Creator,Carpenter,Tailor,,{has_license(Creator Tailor)} and {has_license(Creator Carpenter)},DLC
+Rocky Hill Shrine,Sir Loin,1,"Wild-Beast Meat for Breakfast",,,,,,DLC
+Rocky Hill Shrine,Sir Loin,2,"Giant-Beast Meat for Lunch",,,,,,DLC
+Rocky Hill Shrine,Sir Loin,3,"Dragon Meat for Dinner",,,,,,DLC
