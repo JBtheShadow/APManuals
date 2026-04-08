@@ -230,6 +230,14 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
     locationNamesToRemove: list[str] = []  # List of location names
 
+    shops = is_option_enabled(multiworld, player, "shops")
+    shops_prehint = is_option_enabled(multiworld, player, "shops_prehint")
+    if shops and shops_prehint:
+        # locations_names = world.location_name_groups["Shops"]
+        # for location_name in locations_names:
+        #     world.options.start_location_hints.value.add(location_name)
+        world.options.start_location_hints.value.add("Shops")
+
     # Add your code here to calculate which locations to remove
 
     character_levels_max = get_option_value(multiworld, player, "character_levels_max")

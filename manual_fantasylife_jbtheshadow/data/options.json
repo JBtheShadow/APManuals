@@ -370,6 +370,16 @@
             "default": false,
             "group": "Shop Options"
         },
+        "shops_prehint": {
+            "display_name": "Prehint Shop Items?",
+            "description": [
+                "Makes it so every shop location is prehinted.",
+                "In the future this may be replaced with scouted hints once Manual offers support for those."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Shop Options"
+        },
         "shops_bliss": {
             "display_name": "Include Checks Behind Shopping Bliss?",
             "description": "Toggles whether to include checks for items that require one or more Better Shopping bliss bonuses",
