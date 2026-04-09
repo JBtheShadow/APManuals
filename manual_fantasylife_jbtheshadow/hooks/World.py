@@ -20,7 +20,8 @@ from .Helpers import set_option_value, set_option_enabled
 from ..Data import game_table, item_table, location_table, region_table
 
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
-from ..Helpers import is_option_enabled, get_option_value, format_state_prog_items_key, ProgItemsCat
+from ..Helpers import is_option_enabled, get_option_value, format_state_prog_items_key, ProgItemsCat, \
+    remove_specific_item
 
 # calling logging.info("message") anywhere below in this file will output the message to both console and log file
 import logging
@@ -137,8 +138,6 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             case 12:
                 set_available_lives(all_lives)
 
-    logging.info(f"Lives available: {", ".join(Life(i).description for i in get_available_lives())}.")
-
     if not dlc:
         if lives_max_rank == 8:
             logging.warning("Creator rank not available without the DLC")
@@ -232,10 +231,7 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
 
     shops = is_option_enabled(multiworld, player, "shops")
     shops_prehint = is_option_enabled(multiworld, player, "shops_prehint")
-    if shops and shops_prehint:
-        # locations_names = world.location_name_groups["Shops"]
-        # for location_name in locations_names:
-        #     world.options.start_location_hints.value.add(location_name)
+    if shops and shops_prehint and "Shops" not in world.options.start_location_hints.value:
         world.options.start_location_hints.value.add("Shops")
 
     # Add your code here to calculate which locations to remove
@@ -270,12 +266,27 @@ def before_create_items_all(
     lives_progressive = is_option_enabled(multiworld, player, "lives_progressive")
     lives_fast = is_option_enabled(multiworld, player, "lives_fast")
     lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
+    bliss = is_option_enabled(multiworld, player, "bliss")
+
+    shops_lives = is_option_enabled(multiworld, player, "shops_lives")
+    shops_story = is_option_enabled(multiworld, player, "shops_story")
+    shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
+    shops_dosh = get_option_value(multiworld, player, "shops_dosh")
+    shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
+
+    if shops_restricted:
+        for unused_shop_storage_key in get_unused_shop_storage_keys(dlc, shops_lives, shops_story, shops_fairy, shops_dosh):
+            item_config[unused_shop_storage_key] = {"progression": 0}
 
     if goal in [0, 2]:
         item_config["Lost Wish"] = {"progression": wish_hunt_total}
 
     if not dlc:
         item_config["Progressive Chapter"] = {"progression": 7}
+
+        if bliss:
+            item_config["Bigger Bag"] = {"progression": 3}
+            item_config["Bigger Storage"] = {"progression": 3}
 
     if life_licenses and lives_progressive:
         available_lives = get_available_lives()
@@ -300,18 +311,62 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     item_names_to_remove = []  # List of item names
     starting_inventory = []
 
+    # region Place_item Override
+    locations = multiworld.get_unfilled_locations(player)
+    for location in locations:
+        manual_loc = world.location_name_to_location.get(location.name, {})
+        p_items_names = manual_loc.get("place_item", manual_loc.get("make_place_item", []))
+
+        # category
+        for cat in manual_loc.get("place_item_category", []):
+            p_items_names.extend(world.item_name_groups.get(cat, []))
+
+        if p_items_names:
+            if not manual_loc.get("make_place_item"):
+                logging.debug(f"Found the Manual location '{location.name}' that will get a fix to its place_item")
+            # forbidding
+            forbid_names: list[str] = manual_loc.get("dont_place_item", [])
+            for cat in manual_loc.get("dont_place_item_category", []):
+                forbid_names.extend(world.item_name_groups.get(cat, []))
+
+            for name in forbid_names:
+                if name in p_items_names:
+                    p_items_names.remove(name)
+
+            # Grabbing the existing items
+            p_items = [i for i in item_pool if i.name in p_items_names]
+            if not p_items:  # empty
+                raise ValueError(
+                    f"location {location.name} could not have any forced placed item from this list [{p_items_names}] none could be found in item_pool")
+            p_item = world.random.choice(p_items)
+            location.place_locked_item(p_item)
+            remove_specific_item(item_pool, p_item)
+
+            manual_loc.pop("place_item", None)
+            manual_loc.pop("place_item_category", None)
+            manual_loc.pop("dont_place_item_category", None)
+            manual_loc.pop("dont_place_item", None)
+
+            # make_place_item exists so other players will still get the item placement just pre processed
+            manual_loc["make_place_item"] = p_items_names
+            pass
+
+    # endregion
+
     # Add your code here to calculate which items to remove.
     #
     # Because multiple copies of an item can exist, you need to add an item name
     # to the list multiple times if you want to remove multiple copies of it.
 
-    # Licenses, Starting Life and DLC
-    dlc = is_option_enabled(multiworld, player, "dlc")
-
+    bliss = is_option_enabled(multiworld, player, "bliss")
+    bliss_available = get_option_value(multiworld, player, "bliss_available")
+    bliss_start = get_option_value(multiworld, player, "bliss_start")
     life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    life_start = get_option_value(multiworld, player, "life_start")
     available_lives = get_available_lives()
+
+    logging.info(f"Lives available: {", ".join(Life(i).description for i in available_lives)}.")
     if life_licenses:
-        life_start = get_option_value(multiworld, player, "life_start")
         life_name = ""
         match life_start:
             case 0:
@@ -351,17 +406,10 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             starting_inventory.append(item_name)
             logging.info(f"Starting life: {life_name}.")
 
-    # Bliss Bonuses
-    bliss = is_option_enabled(multiworld, player, "bliss")
     if bliss:
-        if not dlc:
-            item_names_to_remove += ["Bigger Bag", "Bigger Bag", "Bigger Storage", "Bigger Storage"]
-
-        bliss_start = get_option_value(multiworld, player, "bliss_start")
         item_name = ""
         match bliss_start:
             case 0:
-                bliss_available = get_option_value(multiworld, player, "bliss_available")
                 choices = ["Bigger Bag", "Bigger Storage", "Better Shopping"]
                 if bliss_available == 2:
                     choices += ["More Pets", "More Animals", "More Customization"]
@@ -380,25 +428,15 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         if item_name:
             starting_inventory.append(item_name)
 
-    # Restricted shop items
-    shops_lives = is_option_enabled(multiworld, player, "shops_lives")
-    shops_story = is_option_enabled(multiworld, player, "shops_story")
-    shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
-    shops_dosh = get_option_value(multiworld, player, "shops_dosh")
-    shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
-    if shops_restricted:
-        item_names_to_remove += list(get_unused_shop_storage_keys(dlc, shops_lives, shops_story, shops_fairy, shops_dosh))
-
     for item_name in item_names_to_remove:
-        to_remove = [i for i in item_pool if i.name == item_name]
-        if len(to_remove) > 0:
-            item = to_remove[0]
-            item_pool.remove(item)
+        item = next(i for i in item_pool if i.name == item_name)
+        remove_specific_item(item_pool, item)
 
     for item_name in starting_inventory:
         item = next(i for i in item_pool if i.name == item_name)
         multiworld.push_precollected(item)
-        item_pool.remove(item)
+        remove_specific_item(item_pool, item)
+
     return item_pool
 
     # Some other useful hook options:
