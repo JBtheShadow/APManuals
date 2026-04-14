@@ -26,6 +26,11 @@ def after_load_item_file(item_table: list) -> list:
         "progression": True
     } for name in { entry["Shop"] for entry in shops }]
 
+    # Wish Hunt - append it after everything else to see if Lost Wishes are placed last in the progression placement step
+    # this is because lost wishes only ever unlock the goal and certain settings may force locations to become invalid
+    # Think I'll also remove the skip_balancing part as a test
+    item_table += [{ "count": 0, "name": "Lost Wish", "category": [ "Wish Hunt" ], "progression": True }]
+
     return item_table
 
 # NOTE: Progressive items are not currently supported in Manual. Once they are,
@@ -40,23 +45,23 @@ def after_load_location_file(location_table: list) -> list:
         for i in range(2, 5):
             location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ] })
         for i in range(5, 10):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:1|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:1|)}" })
         for i in range(10, 15):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:2|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:2|)}" })
         for i in range(15, 20):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:3|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:3|)}" })
         for i in range(20, 30):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:4|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:4|)}" })
         for i in range(30, 40):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:5|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:5|)}" })
         for i in range(40, 50):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:6|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:6|)}" })
         for i in range(50, 99):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "|Progressive Chapter:7|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:7|)}" })
         for i in range(100, 150):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "|Progressive Chapter:8|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "{OptOne(|Progressive Chapter:8|)}" })
         for i in range(150, 201):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "|Progressive Chapter:9|" })
+            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "{OptOne(|Progressive Chapter:9|)}" })
     build_level_up_locations()
 
     def build_skill_level_locations():
@@ -167,6 +172,17 @@ def after_load_location_file(location_table: list) -> list:
                 category.append("Fairy Shop")
             if entry["Group"] == "Story":
                 category.append("Story Shop")
+            match entry["Group"]:
+                case "Castele":
+                    category.append("Castele Shop")
+                case "Port Puerto":
+                    category.append("Port Shop")
+                case "Al Maajik":
+                    category.append("Desert Shop")
+                case "DLC":
+                    category.append("DLC Shop")
+                case _:
+                    category.append("Other Shop")
             return category
         def build_requires(entry: dict):
             require_list = [ f"{{OptOne(|{entry["Shop"]} Storage Key|)}}" ]
@@ -183,9 +199,9 @@ def after_load_location_file(location_table: list) -> list:
                     case "Other":
                         require_list.append("{better_traveling_shopping()}")
             if "Level:" in entry["Requirement"]:
-                require_list.append("|Progressive Chapter:9|" if "DLC" in entry["Requirement"] else "|Progressive Chapter:7|")
+                require_list.append("{OptOne(|Progressive Chapter:9|)}" if "DLC" in entry["Requirement"] else "{OptOne(|Progressive Chapter:7|)}")
             elif "DLC" in entry["Requirement"]:
-                require_list.append("|Progressive Chapter:9|")
+                require_list.append("{OptOne(|Progressive Chapter:9|)}")
             if entry["Group"] == "Fairy":
                 require_list.append("{has_fairy_access()}")
             return " and ".join(require_list)
@@ -194,7 +210,7 @@ def after_load_location_file(location_table: list) -> list:
             "region": entry["Region"],
             "category": build_category(entry),
             "requires": build_requires(entry),
-            "dont_place_item_category": ["Shop Restrictions"]
+            "dont_place_item_category": []
         } for entry in shops]
     location_table += build_shop_locations()
 
@@ -240,8 +256,8 @@ def set_available_lives(value: list[int]):
     global available_lives
     available_lives = value
 
-def get_base_checks(dlc):
-    return 100 if dlc else 80
+def get_base_checks(story, dlc):
+    return 15 if not story else 80 if not dlc else 100
 
 def get_life_challenges_checks(dlc, max_rank):
     formated_lives = [Life(i).description for i in available_lives]

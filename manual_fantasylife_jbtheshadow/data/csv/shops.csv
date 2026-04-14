@@ -9,7 +9,7 @@ Castele,Castele Shopping District,Castele Butcher,Bird Meat,60,
 Castele,Castele Shopping District,Castele Butcher,Beef,100,Bliss
 Castele,Castele Shopping District,Castele Butcher,Eggs,20,
 Castele,Castele Shopping District,Castele Butcher,Big Egg,600,Bliss
-Castele,Castele Shopping District,Castele Butcher,Cow's Milk,20,
+Castele,Castele Shopping District,Castele Butcher,Cows' Milk,20,
 Castele,Castele Shopping District,Castele Butcher,Extra Creamy Milk,60,Bliss
 Castele,Castele Shopping District,Castele Greengrocer,Carrot,20,
 Castele,Castele Shopping District,Castele Greengrocer,Dalkon Radish,40,
@@ -135,12 +135,12 @@ Castele,Castele Square,Castele General Goods,Iron Needle,1440,Bliss
 Castele,Castele Square,Castele General Goods,Bronze Frying Pan,840,
 Castele,Castele Square,Castele General Goods,Iron Frying Pan,1520,Bliss
 Castele,Castele Square,Castele General Goods,Science Flask,2800,
-Castele,Castele Square,Castele General Goods,Inventor’s Flask,3400,Bliss
+Castele,Castele Square,Castele General Goods,Inventor's Flask,3400,Bliss
 Castele,Castele Square,Castele General Goods,Teddy Bear,1800,
 Castele,Castele Square,Castele Fashion Boutique,Castele Blouse,420,
 Castele,Castele Square,Castele Fashion Boutique,Castele Shirt,420,
 Castele,Castele Square,Castele Fashion Boutique,Highland Top,800,
-Castele,Castele Square,Castele Fashion Boutique,Artisan’s Apron,1800,
+Castele,Castele Square,Castele Fashion Boutique,Artisan's Apron,1800,
 Castele,Castele Square,Castele Fashion Boutique,Duelling Outfit,2600,Bliss
 Castele,Castele Square,Castele Fashion Boutique,Quilted Coat,2400,Bliss
 Castele,Castele Square,Castele Fashion Boutique,Castele Skirt,600,
@@ -148,7 +148,7 @@ Castele,Castele Square,Castele Fashion Boutique,Striped Skirt,1800,Bliss
 Castele,Castele Square,Castele Fashion Boutique,Sunshine Skirt,2000,
 Castele,Castele Square,Castele Fashion Boutique,Castele Slacks,600,
 Castele,Castele Square,Castele Fashion Boutique,Highland Kilt,800,
-Castele,Castele Square,Castele Fashion Boutique,Artisan’s Puffy Shorts,1600,
+Castele,Castele Square,Castele Fashion Boutique,Artisan's Puffy Shorts,1600,
 Castele,Castele Square,Castele Fashion Boutique,Duelling Bottoms,2200,Bliss
 Castele,Castele Square,Castele Fashion Boutique,Quilted Bottoms,2000,Bliss
 Castele,Castele Square,Castele Fashion Boutique,Formal Trousers,16000,Bliss
@@ -206,7 +206,7 @@ Castele,Castele Artisan's District,Castele Ores & Metals,Topaz,1000,Bliss
 Castele,Castele Artisan's District,Castele Ores & Metals,Beginner's Pickaxe,400,
 Castele,Castele Artisan's District,Castele Ores & Metals,Bronze Pickaxe,1000,
 Castele,Castele Artisan's District,Castele Ores & Metals,Iron Pickaxe,1800,Bliss
-Castele,Castele Artisan's District,Castele Ores & Metals,Fledgling’s Hammer,400,
+Castele,Castele Artisan's District,Castele Ores & Metals,Fledgling's Hammer,400,
 Castele,Castele Artisan's District,Castele Ores & Metals,Bronze Hammer,1160,
 Castele,Castele Artisan's District,Castele Ores & Metals,Iron Hammer,2100,Bliss
 Castele,Castele Artisan's District,Castele Odds & Ends,Healweed,10,
@@ -229,7 +229,7 @@ Castele,Castele Artisan's District,Castele Odds & Ends,Suspicious Object,200,
 Castele,Castele Artisan's District,Castele Odds & Ends,Animal Droppings,10,
 Castele,Castele Artisan's District,Castele Odds & Ends,Experimental Flask,400,
 Castele,Castele Artisan's District,Castele Odds & Ends,Science Flask,2800,
-Castele,Castele Artisan's District,Castele Odds & Ends,Inventor’s Flask,3400,Bliss
+Castele,Castele Artisan's District,Castele Odds & Ends,Inventor's Flask,3400,Bliss
 Castele,Castele Artisan's District,Appleseed Cafe,Apple Juice,100,
 Castele,Castele Artisan's District,Appleseed Cafe,Mushroom Quiche,320,Bliss
 Castele,Castele Artisan's District,Appleseed Cafe,Honey Pudding,300,
@@ -252,7 +252,7 @@ Other,East Grassy Plains,East Grassy Plains Travelling Seller,Topaz,1000,Bliss
 Other,East Grassy Plains,East Grassy Plains Travelling Seller,Oak Log,60,
 Other,West Grassy Plains,Farley's Plantation,Eggs,20,
 Other,West Grassy Plains,Farley's Plantation,Royal Eggs,60,
-Other,West Grassy Plains,Farley's Plantation,Cows’ Milk,20,
+Other,West Grassy Plains,Farley's Plantation,Cows' Milk,20,
 Other,West Grassy Plains,Farley's Plantation,Extra Creamy Milk,60,Bliss
 Other,West Grassy Plains,Farley's Plantation,Maajik Beans,20,
 Other,West Grassy Plains,Farley's Plantation,Grassy Plains Barley,20,
@@ -333,7 +333,7 @@ Life,West Grassy Plains,Campsite Hunter Life Store,Animal Claws,40,
 Life,West Grassy Plains,Campsite Hunter Life Store,Hard Claws,240,Master: Hunter
 Life,West Grassy Plains,Campsite Hunter Life Store,Animal Fang,60,
 Life,West Grassy Plains,Campsite Hunter Life Store,Thick Fang,360,Master: Hunter
-Life,West Grassy Plains,Campsite Hunter Life Store,Hunter’s Bow,400,
+Life,West Grassy Plains,Campsite Hunter Life Store,Hunter's Bow,400,
 Life,West Grassy Plains,Campsite Hunter Life Store,Oak Bow,1200,
 Life,West Grassy Plains,Campsite Hunter Life Store,Pine Bow,1800,
 Life,West Grassy Plains,Campsite Hunter Life Store,Palm Bow,2400,Master: Hunter
@@ -370,13 +370,13 @@ Other,Mount Snowpeak,Mount Snowpeak Travelling Seller,Oak Log,60,
 Other,Mount Snowpeak,Mount Snowpeak Travelling Seller,Pine Log,80,
 Other,Mount Snowpeak,Mount Snowpeak Travelling Seller,Elder Pine Log,480,Bliss
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Crit Aid,2500,Master: Paladin
-Life,Mount Snowpeak,Champion's House Paladin Life Store,Squire’s Sword,400,
+Life,Mount Snowpeak,Champion's House Paladin Life Store,Squire's Sword,400,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Bronze Sword,800,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Iron Sword,1600,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Silver Sword,3600,Master: Paladin
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Gold Sword,5000,Master: Paladin
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Captain's Sword,9000,Master: Paladin
-Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin’s Sword,24000,Master: Paladin
+Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin's Sword,24000,Master: Paladin
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin's Shield,400,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Bronze Shield,1600,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Iron Shield,2000,
@@ -389,12 +389,12 @@ Life,Mount Snowpeak,Champion's House Paladin Life Store,Iron Armour,1200,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Iron Leg Guards,1200,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Iron Gauntlets,840,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Iron Boots,840,
-Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin’s Armour,400,
-Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin’s Breastplate,400,
-Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin Leg Guards (♂),400,
-Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin Leg Guards (♀),400,
-Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin’s Gauntlets,400,
-Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin’s Boots,400,
+Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin's Armour,400,
+Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin's Breastplate,400,
+Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin Leg Guards (M),400,
+Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin Leg Guards (F),400,
+Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin's Gauntlets,400,
+Life,Mount Snowpeak,Champion's House Paladin Life Store,Paladin's Boots,400,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Cape,800,
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Long Cape,8000,Master: Paladin
 Life,Mount Snowpeak,Champion's House Paladin Life Store,Short Cape,9800,Master: Paladin
@@ -463,21 +463,21 @@ Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Topaz,1000,
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Amethyst,1500,Master: Blacksmith
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Emerald,2800,Master: Blacksmith
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Sapphire,3000,Master: Blacksmith
-Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Beginner’s Pickaxe,400,
+Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Beginner's Pickaxe,400,
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Bronze Pickaxe,1000,
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Iron Pickaxe,1800,
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Silver Pickaxe,2900,Master: Blacksmith
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Gold Pickaxe,4800,Master: Blacksmith
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Lava Pickaxe,8000,Master: Blacksmith
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Mole Pickaxe,26000,Master: Blacksmith
-Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner’s Cuirass,400,
-Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner’s Frock,400,
+Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner's Cuirass,400,
+Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner's Frock,400,
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Rock Bottoms,400,
 Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner Short-Shorts,400,
-Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner’s Helmet,400,
-Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner’s Puffy Helmet,400,
-Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner’s Mitts,400,
-Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner’s Boots,400,
+Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner's Helmet,400,
+Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner's Puffy Helmet,400,
+Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner's Mitts,400,
+Life,Mount Snowpeak Summit,Royal Cabin Well Miner Life Store,Miner's Boots,400,
 Other,Mount Snowpeak Summit,Mount Snowpeak Summit Travelling Seller,HP Potion,60,
 Other,Mount Snowpeak Summit,Mount Snowpeak Summit Travelling Seller,Hi-HP Potion,320,
 Other,Mount Snowpeak Summit,Mount Snowpeak Summit Travelling Seller,SP Potion,120,
@@ -517,7 +517,7 @@ Port Puerto,Port Puerto Marina,Port Puerto Butcher,Beef,100,Bliss
 Port Puerto,Port Puerto Marina,Port Puerto Butcher,Eggs,20,
 Port Puerto,Port Puerto Marina,Port Puerto Butcher,Big Egg,600,
 Port Puerto,Port Puerto Marina,Port Puerto Butcher,Royal Eggs,60,Bliss
-Port Puerto,Port Puerto Marina,Port Puerto Butcher,Cows’ Milk,20,
+Port Puerto,Port Puerto Marina,Port Puerto Butcher,Cows' Milk,20,
 Port Puerto,Port Puerto Marina,Port Puerto Butcher,Extra Creamy Milk,60,Bliss
 Port Puerto,Port Puerto Marina,Port Puerto Fishmonger,Sardine,140,
 Port Puerto,Port Puerto Marina,Port Puerto Fishmonger,Squid,180,
@@ -644,7 +644,7 @@ Port Puerto,Port Puerto Marina,Port Puerto Odds & Ends,Stunning Coral,180,Bliss
 Port Puerto,Port Puerto Marina,Port Puerto Odds & Ends,Suspicious Object,200,
 Port Puerto,Port Puerto Marina,Port Puerto Odds & Ends,Scrap of Cloth,10,
 Port Puerto,Port Puerto Marina,Port Puerto Odds & Ends,Port Puerto Bloom,40,
-Port Puerto,Port Puerto Marina,Port Puerto Odds & Ends,Inventor’s Flask,3400,
+Port Puerto,Port Puerto Marina,Port Puerto Odds & Ends,Inventor's Flask,3400,
 Port Puerto,Port Puerto Marina,Port Puerto Odds & Ends,Bubbling Flask,5200,
 Port Puerto,Port Puerto Marina,Eyepatch and Cutlass Bar,Southern Papaya,60,
 Port Puerto,Port Puerto Marina,Eyepatch and Cutlass Bar,Barley Juice,600,
@@ -723,7 +723,7 @@ Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Iron Needle,1440,
 Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Silver Needle,2300,
 Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Iron Frying Pan,1520,
 Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Silver Frying Pan,2400,
-Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Inventor’s Flask,3400,
+Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Inventor's Flask,3400,
 Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Bubbling Flask,5200,
 Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Aquamarine Ring,4000,
 Port Puerto,Port Puerto Palace Way,Snoot's Emporium Item Goods,Amethyst Ring,6000,
@@ -799,20 +799,20 @@ Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Silver Frying
 Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Gold Frying Pan,4000,Master: Cook
 Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Clam Frying Pan,8000,Master: Cook
 Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Foreign Frying Pan,16000,Master: Cook
-Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Chef's Apron (♂),400,
-Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Chef's Apron (♀),400,
+Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Chef's Apron (M),400,
+Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Chef's Apron (F),400,
 Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Pan-Fried Helm,400,
 Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Potluck Helm,400,
 Life,Port Puerto Palace Way,Cocina Rica Restaurant Cook Life Store,Cook's Gloves,400,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Harbour Hunny Suit,2200,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Harbour Hunk Suit,2800,
-Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Seafarer’s Outfit,4800,
+Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Seafarer's Outfit,4800,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Twin Tail Jacket,6400,Bliss
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Harbour Hunny Skirt,1800,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Lined Skirt,2800,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Frilly Skirt,5000,Bliss
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Harbour Hunk Slacks,1800,
-Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Seafarer’s Capris,4000,
+Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Seafarer's Capris,4000,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Watermeloons,3800,Bliss
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Netted Hat,3800,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Holiday Top,4200,
@@ -822,7 +822,7 @@ Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Sea Trunks,4000,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Flower Hairclip,2400,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Diving Mask,6400,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Harbour Sandals,720,
-Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Warrior’s Sandals,1800,
+Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Warrior's Sandals,1800,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Ribbon-Laced Shoes,3300,Bliss
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Beach Sandals,3600,
 Port Puerto,Port Puerto Palace Way,Port Puerto Fashion Boutique,Mules,4800,
@@ -872,10 +872,10 @@ Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Bronze Needle,800,
 Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Iron Needle,1440,
 Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Silver Needle,2300,
 Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Gold Needle,3800,
-Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Fashionista’s Needle,6400,Master: Tailor
+Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Fashionista's Needle,6400,Master: Tailor
 Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,New Wave Needle,15000,Master: Tailor
 Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Industry Needle,30000,Master: Tailor
-Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Weaver’s Outfit,400,
+Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Weaver's Outfit,400,
 Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Seamstress's Dress,400,
 Life,Port Puerto Palace Way,Madame Purl's Tailor Life Store,Tailor's Shoes,400,
 Life,Port Puerto Palace Way,Angler's Association Angler Life Store,Sweet Fish Pastry,2000,Master: Angler
@@ -899,7 +899,7 @@ Life,Port Puerto Palace Way,Angler's Association Angler Life Store,Carp Trousers
 Life,Port Puerto Palace Way,Angler's Association Angler Life Store,Fishy Green Hood,400,
 Life,Port Puerto Palace Way,Angler's Association Angler Life Store,Fishy Pink Hood,400,
 Life,Port Puerto Palace Way,Angler's Association Angler Life Store,Shark Hat,30000,Master: Angler
-Life,Port Puerto Palace Way,Angler's Association Angler Life Store,Angler’s Goggles,4800,
+Life,Port Puerto Palace Way,Angler's Association Angler Life Store,Angler's Goggles,4800,
 Other,Tortuga Archipelago,Tortuga Archipelago Merchant,Beach Watermelon,150,
 Other,Tortuga Archipelago,Tortuga Archipelago Merchant,Healweed,10,
 Other,Tortuga Archipelago,Tortuga Archipelago Merchant,HP Potion,60,
@@ -942,7 +942,7 @@ Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Mysterious Objec
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Curious Object,1050,Master: Alchemist
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Experimental Flask,400,
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Science Flask,2800,
-Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Inventor’s Flask,3400,
+Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Inventor's Flask,3400,
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Bubbling Flask,5200,
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Wisdom Flask,6000,
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Sol Flask,9000,Master: Alchemist
@@ -950,7 +950,7 @@ Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Icicle Flask,125
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Bolt Flask,18000,Master: Alchemist
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Alchemic Coat,400,
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Alchemic Dress,400,
-Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Alchemist’s Bandana,400,
+Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Alchemist's Bandana,400,
 Life,Al Maajik Sandtown,Professor Snooze's Alchemist Life Store,Alchemist's Shoes,400,
 Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Healweed,10,
 Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Alcheweed,20,
@@ -979,7 +979,7 @@ Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Yellow Gel,300,Bliss
 Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Green Cactus,72,
 Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Yellow Cactus,360,Bliss
 Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Monster Dung,20,
-Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Inventor’s Flask,3400,
+Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Inventor's Flask,3400,
 Al Maajik,Al Maajik Sandtown,Al Maajik Odds & Ends,Bubbling Flask,5200,
 Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,HP Potion,60,
 Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Hi-HP Potion,320,
@@ -1014,7 +1014,7 @@ Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Iron Needle,1440,
 Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Gold Needle,3800,
 Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Iron Frying Pan,1520,
 Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Gold Frying Pan,4000,
-Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Inventor’s Flask,3400,
+Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Inventor's Flask,3400,
 Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Wisdom Flask,6000,
 Al Maajik,Al Maajik Sandtown,Al Maajik General Goods,Toy Camel,7000,
 Al Maajik,Al Maajik Sandtown,Al Maajik Fashion Boutique,Twilight Top,4400,
@@ -1200,14 +1200,14 @@ Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Daredevil Aid,2
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Little Tail,60,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Big Tail,300,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Beast Tail,1200,Master: Mercenary
-Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Novice’s Claymore,400,
+Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Novice's Claymore,400,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Bronze Claymore,1100,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Iron Claymore,1800,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Silver Claymore,3800,Master: Mercenary
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Gold Claymore,5800,Master: Mercenary
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Arcana Blade,16000,Master: Mercenary
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Flamberge,20000,Master: Mercenary
-Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Slugger’s Helm,400,
+Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Slugger's Helm,400,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Plain Helmet,400,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Cloth Merc Armour,400,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Light Merc Armour,400,
@@ -1215,7 +1215,7 @@ Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Mercenary's Gre
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Mercenary's Greaves (F),400,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Merc Gauntlets,400,
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Mercenary's Boots,400,
-Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Gladiator’s Helm,8000,Master: Mercenary
+Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Gladiator's Helm,8000,Master: Mercenary
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Gladiator's Armour,9400,Master: Mercenary
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Gladiator's Leg Guards,9400,Master: Mercenary
 Life,Al Maajik Spelltown,Al Maajik Merchant Mercenary Life Store,Gladiator's Wristbands,6000,Master: Mercenary
@@ -1226,7 +1226,7 @@ Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Fire Mana,3000,
 Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Water Mana,3000,
 Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Earth Mana,3000,
 Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Wind Mana,3000,
-Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Novice’s Staff,400,
+Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Novice's Staff,400,
 Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Oak Staff,1500,
 Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Pine Staff,2500,
 Life,Al Maajik Spelltown,Esmerelda's Magician Life Store,Palm Staff,3500,Master: Magician
@@ -1294,14 +1294,14 @@ Al Maajik,Al Maajik Spelltown,Al Maajik Butcher,Royal Eggs,60,
 Al Maajik,Al Maajik Spelltown,Al Maajik Butcher,Magic Eggs,400,Bliss
 Al Maajik,Al Maajik Spelltown,Al Maajik Butcher,Cows' Milk,20,
 Al Maajik,Al Maajik Spelltown,Al Maajik Butcher,Extra Creamy Milk,60,
-Al Maajik,Al Maajik Spelltown,Al Maajik Grengrocer,Sweetcorn,40,
-Al Maajik,Al Maajik Spelltown,Al Maajik Grengrocer,Pumpkin,40,
-Al Maajik,Al Maajik Spelltown,Al Maajik Grengrocer,Sweet Potato,40,
-Al Maajik,Al Maajik Spelltown,Al Maajik Grengrocer,Desert Pear,80,
-Al Maajik,Al Maajik Spelltown,Al Maajik Grengrocer,Maajik Melon,300,Bliss
-Al Maajik,Al Maajik Spelltown,Al Maajik Grengrocer,Grassy Plains Barley,20,Bliss
-Al Maajik,Al Maajik Spelltown,Al Maajik Grengrocer,Port Rice,20,Bliss
-Al Maajik,Al Maajik Spelltown,Al Maajik Grengrocer,Maajik Beans,20,
+Al Maajik,Al Maajik Spelltown,Al Maajik Greengrocer,Sweetcorn,40,
+Al Maajik,Al Maajik Spelltown,Al Maajik Greengrocer,Pumpkin,40,
+Al Maajik,Al Maajik Spelltown,Al Maajik Greengrocer,Sweet Potato,40,
+Al Maajik,Al Maajik Spelltown,Al Maajik Greengrocer,Desert Pear,80,
+Al Maajik,Al Maajik Spelltown,Al Maajik Greengrocer,Maajik Melon,300,Bliss
+Al Maajik,Al Maajik Spelltown,Al Maajik Greengrocer,Grassy Plains Barley,20,Bliss
+Al Maajik,Al Maajik Spelltown,Al Maajik Greengrocer,Port Rice,20,Bliss
+Al Maajik,Al Maajik Spelltown,Al Maajik Greengrocer,Maajik Beans,20,
 Al Maajik,Al Maajik Spelltown,The Spice Rack,Pumpkin Soup,840,
 Al Maajik,Al Maajik Spelltown,The Spice Rack,Sultan's Stew,3200,Bliss
 Al Maajik,Al Maajik Spelltown,The Spice Rack,Monstrous Sauté,2500,Bliss
@@ -1458,7 +1458,7 @@ Life,Elderwood Village,Elderwood Woodcutter Life Store,Pine Axe,1900,
 Life,Elderwood Village,Elderwood Woodcutter Life Store,Palm Axe,3045,
 Life,Elderwood Village,Elderwood Woodcutter Life Store,Sugar Axe,5040,
 Life,Elderwood Village,Elderwood Woodcutter Life Store,Sparkle Axe,8400,
-Life,Elderwood Village,Elderwood Woodcutter Life Store,Goddess’s Axe,27000,Master: Woodcutter
+Life,Elderwood Village,Elderwood Woodcutter Life Store,Goddess's Axe,27000,Master: Woodcutter
 Life,Elderwood Village,Elderwood Woodcutter Life Store,Kodama Tunic,400,
 Life,Elderwood Village,Elderwood Woodcutter Life Store,Kodama Dress,400,
 Life,Elderwood Village,Elderwood Woodcutter Life Store,Kodama Pantaloons,400,

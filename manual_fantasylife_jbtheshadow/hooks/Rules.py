@@ -42,17 +42,17 @@ def requiresMelee():
 
 
 def beat_story(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    def can_beat_story():
-        return state.has("Progressive Chapter", player, 7)
+    def has_beat_story():
+        return "{OptOne(|Beat Main Story|)}"
 
-    def can_beat_dlc():
-        return state.has("Progressive Chapter", player, 9)
+    def has_beat_dlc():
+        return "{OptOne(|Beat DLC Story|)}"
 
     story_goal = is_option_enabled(multiworld, player, "story_goal")
     dlc = is_option_enabled(multiworld, player, "dlc")
     dlc_goal = is_option_enabled(multiworld, player, "dlc_goal")
 
-    return not story_goal or can_beat_story() and (not dlc or not dlc_goal or can_beat_dlc())
+    return not story_goal or has_beat_story() and (not dlc or not dlc_goal or has_beat_dlc())
 
 
 def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
@@ -171,7 +171,8 @@ def can_heal(world: World, multiworld: MultiWorld, state: CollectionState, playe
 def completed_chapter(world: World, multiworld: MultiWorld, state: CollectionState, player: int, chapter_str: str):
     chapter_str = chapter_str.strip()
     chapter = int(chapter_str) if chapter_str.isnumeric() else 1
-    return state.has("Progressive Chapter", player, chapter)
+    return "{OptOne(|Progressive Chapter:" + str(chapter) + "|)}"
+    #return state.has("Progressive Chapter", player, chapter)
 
 
 def west_grassy_plains_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
@@ -203,11 +204,11 @@ def finished_storyline(world: World, multiworld: MultiWorld, state: CollectionSt
 
 
 def origin_island_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "7") # TODO: also add event here for the right location that gives access to this
+    return completed_chapter(world, multiworld, state, player, "8") # TODO: also add event here for the right location that gives access to this
 
 
 def trials_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "8") # TODO: also add event here for the right location that gives access to this
+    return completed_chapter(world, multiworld, state, player, "9") # TODO: also add event here for the right location that gives access to this
 
 
 def has_fairy_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):

@@ -51,6 +51,9 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     """
 
     goal = get_option_value(multiworld, player, 'goal')
+    story = is_option_enabled(multiworld, player, 'story')
+    story_pool = is_option_enabled(multiworld, player, 'story_pool')
+    story_local = is_option_enabled(multiworld, player, 'story_local')
     wish_hunt_required = get_option_value(multiworld, player, "wish_hunt_required")
     wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
     wish_hunt_local = get_option_value(multiworld, player, "wish_hunt_local")
@@ -77,6 +80,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     bliss_available = get_option_value(multiworld, player, "bliss_available")
     map_restrictions = get_option_value(multiworld, player, "map_restrictions")
     game_seed = get_option_value(multiworld, player, "game_seed")
+
+    world.options.generate_region_diagram.value = True
 
     if game_seed < 0:
         seed = world.random.randint(1, 999999999999)
@@ -155,7 +160,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
         shops_fairy = False
         set_option_enabled(multiworld, player, "shops_fairy", shops_fairy)
 
-    spare_checks = get_base_checks(dlc)
+    spare_checks = get_base_checks(story, dlc)
     if life_challenges:
         spare_checks += get_life_challenges_checks(dlc, lives_max_rank)
     if other_requests:
@@ -181,6 +186,11 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             set_option_enabled(multiworld, player, "item_restrictions", item_restrictions)
         else:
             spare_checks -= 130
+
+    if story and story_pool and story_local:
+        local_items = multiworld.worlds[player].options.local_items
+        if "Chapter Unlocker" not in local_items.value:
+            local_items.value.add("Chapter Unlocker")
 
     if goal in [0, 2]:
         if wish_hunt_local:
@@ -259,6 +269,8 @@ def before_create_items_all(
     item_config: dict[str, int | dict], world: World, multiworld: MultiWorld, player: int
 ) -> dict[str, int | dict]:
 
+    story = is_option_enabled(multiworld, player, "story")
+    story_pool = is_option_enabled(multiworld, player, "story_pool")
     goal = get_option_value(multiworld, player, "goal")
     dlc = is_option_enabled(multiworld, player, "dlc")
     wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
@@ -282,7 +294,10 @@ def before_create_items_all(
         item_config["Lost Wish"] = {"progression": wish_hunt_total}
 
     if not dlc:
-        item_config["Progressive Chapter"] = {"progression": 7}
+        if story:
+            item_config["Progressive Chapter"] = {"progression": 7}
+            if story_pool:
+                item_config["Chapter Unlocker"] = {"progression": 7}
 
         if bliss:
             item_config["Bigger Bag"] = {"progression": 3}

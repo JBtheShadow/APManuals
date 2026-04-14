@@ -44,7 +44,10 @@
         { "count": 1, "name": "Password \"Sports ball\"", "category": [ "Claimable Passwords" ], "progression": true },
         { "count": 1, "name": "Password \"Shell of a time\"", "category": [ "Claimable Passwords" ], "progression": true },
 
-        { "count": 9, "name": "Progressive Chapter", "category": [ "Story Progression" ], "progression_skip_balancing": true },
+        { "count": 9, "name": "Progressive Chapter", "category": [ "Story", "Story Progression" ], "progression_skip_balancing": true },
+        { "count": 8, "name": "Chapter Unlocker", "category": [ "Story", "Story Progression", "Story Unlock"] },
+        { "count": 1, "name": "Beat Main Story", "category": [ "Story", "Story Progression" ], "progression_skip_balancing": true },
+        { "count": 1, "name": "Beat DLC Story", "category": [ "Story", "Story Progression", "DLC" ], "progression_skip_balancing": true },
 
         { "count": 5, "name": "Bigger Bag", "category": [ "Bliss Bonuses", "Progressive Bliss", "Bag Bonus" ], "progression": true },
         { "count": 5, "name": "Bigger Storage", "category": [ "Bliss Bonuses", "Progressive Bliss", "Storage Bonus" ], "progression": true },
@@ -131,8 +134,6 @@
         { "name": "Ancient Ruins Key", "category": ["Map Restrictions"], "progression": true },
         { "name": "Cacto Cove Key", "category": ["Map Restrictions"], "progression": true },
         { "name": "Fluffkin Grotto Key", "category": ["Map Restrictions", "DLC"], "progression": true },
-
-        { "count": 0, "name": "Lost Wish", "category": [ "Wish Hunt" ], "progression_skip_balancing": true },
 
         { "count": 0, "name": "Carrot Soup", "category": [ "Filler" ], "filler": true },
         { "count": 0, "name": "Fluffy Omelette", "category": [ "Filler" ], "filler": true },

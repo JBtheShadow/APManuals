@@ -47,11 +47,18 @@
     "Carpenter": { "hidden": true },
     "Tailor": { "hidden": true },
     "Alchemist": { "hidden": true },
+    "Story": { "yaml_option": ["story"], "hidden": true },
+    "Story Unlock": { "yaml_option": ["story", "story_pool"], "hidden": true },
     "Treasure Chests": { "yaml_option": ["chests"], "hidden": true },
     "Shops": { "yaml_option": ["shops"], "hidden": true },
     "Life Shop": { "yaml_option": ["shops", "shops_lives"], "hidden": true },
     "Bliss Shop": { "yaml_option": ["shops", "shops_bliss"], "hidden": true },
     "Fairy Shop": { "yaml_option": ["shops", "shops_fairy"], "hidden": true },
     "Story Shop": { "yaml_option": ["shops", "shops_story"], "hidden": true },
-    "Shop Restrictions": { "yaml_option": ["shops", "shops_restricted"] }
+    "Shop Restrictions": { "yaml_option": ["shops", "shops_restricted"] },
+    "Castele Shop": { "hidden": true },
+    "Port Shop": { "hidden": true },
+    "Desert Shop": { "hidden": true },
+    "Other Shop": { "hidden": true },
+    "DLC Shop": { "hidden": true }
 }

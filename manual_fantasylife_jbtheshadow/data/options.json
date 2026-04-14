@@ -3,7 +3,15 @@
     "core": {
         "goal": {
             "display_name": "Goal",
-            "description": "How to End your Randomized playthrough.",
+            "description": [
+                "Sets what your goal for this Manual will be:",
+                "[wish_hunt]: find a number of Lost Wishes (mcguffins);",
+                "[life_mastery]: rank up a number of lives to a specific rank;",
+                "[wish_hunt_mastery]: the two goals above combined!;",
+                "",
+                "Optionally you'll also be able to set whether beating the main story or dlc will be required as an",
+                "additional objective."
+            ],
             "aliases": {
                 "wish_hunt": 0,
                 "life_mastery": 1,
@@ -21,15 +29,60 @@
         }
     },
     "user": {
+        "story": {
+            "display_name": "Include Story Checks?",
+            "description": [
+                "Adds several checks for the story chapters and Butterfly requests.",
+                "Disabling this will also remove the Progressive Chapter item and locations will no longer be restricted by story access.",
+                "It's recommended to leave this option on if you plan to run this Manual on a fresh save file, as this adds several locations.",
+                "",
+                "Not recommended on an existing save unless you and everyone else involved is fine with you sending every location you've",
+                "already done on it. There are about 10 locations per chapter including the prologue, give or take, so a complete save file",
+                "could end up sending 80+ checks on a vanilla game or 100+ with Origin Island."
+            ],
+            "type": "Toggle",
+            "default": true
+        },
+        "story_pool": {
+            "display_name": "Include Story Progression into the pool?",
+            "description": [
+                "Normally, talking to Butterfly after doing all of her requests gives you a Progressive Chapter and lets you start the",
+                "next one immediately.",
+                "This option adds a new item called Chapter Unlocker that must also be found before you're allows to progress through the",
+                "story.",
+                "Does nothing if story locations are not included.",
+                "",
+                "Not recommended on an existing save."
+            ],
+            "type": "Toggle",
+            "default": false
+        },
+        "story_local": {
+            "display_name": "Make Story Progression Local?",
+            "description": [
+                "Forces Chapter Unlocker items to be local. Does nothing if story progression is not included in the pool."
+            ],
+            "type": "Toggle",
+            "default": true
+        },
         "story_goal": {
             "display_name": "Require beating the game's main story to goal?",
-            "description": "If the goal also requires completing the Prologue and Chapters 1 through 7.",
+            "description": [
+                "If the goal also requires completing the Prologue and Chapters 1 through 7.",
+                "Does nothing if story checks are not included.",
+                "",
+                "Not recommended on an existing save."
+            ],
             "type": "Toggle",
             "default": false
         },
         "dlc": {
             "display_name": "Include the Origin Island DLC?",
-            "description": "Toggles whether to include items and locations related to the Origin Island DLC.",
+            "description": [
+                "Toggles whether to include items and locations related to the Origin Island DLC.",
+                "This also disables some features that may appear earlier than the start of Origin Island, such as",
+                "the two extra bigger bag and two extra bigger storage bliss bonuses."
+            ],
             "type": "Toggle",
             "default": false
         },
@@ -37,7 +90,7 @@
             "display_name": "Require beating the game's DLC to goal?",
             "description": [
                 "If the goal also requires completing the DLC Chapters 1 and 2.",
-                "Does nothing if story goal is also not enabled."
+                "Does nothing if story checks are not included or if story goal is also not enabled."
             ],
             "type": "Toggle",
             "default": false
@@ -57,11 +110,14 @@
             "display_name": "Amount of Lost Wishes in total",
             "description": [
                 "If the goal is set to Wish Hunt, sets the amount of Lost Wishes that will be added to the item pool.",
-                "Cannot be smaller than the required amount."
+                "Cannot be smaller than the required amount.",
+                "",
+                "This limit is a lot lower than the potential amount of locations both to ensure practically any generation succeeds",
+                "and so the time it takes to generate doesn't get ridiculously long."
             ],
             "type": "Range",
             "range_start": 1,
-            "range_end": 4000,
+            "range_end": 1000,
             "default": 50,
             "group": "Wish Hunt Options"
         },
@@ -114,7 +170,10 @@
             "display_name": "Include life licenses?",
             "description": [
                 "Toggles whether to include life licenses in the pool.",
-                "This also includes locations for both ranks and life challenges."
+                "This also includes locations for reaching each of the available ranks.",
+                "",
+                "This option should be fine in an existing save file, simply make sure you only check rank locations for",
+                "ranks you have logical access to and have achieved already."
             ],
             "type": "Toggle",
             "default": true,
@@ -122,7 +181,13 @@
         },
         "life_challenges": {
             "display_name": "Include life challenges?",
-            "description": "Adds checks for each of the life challenges.",
+            "description": [
+                "Adds checks for each of the life challenges.",
+                "",
+                "This option *may* be fine in an existing save file, so long as you only check the challenges you have",
+                "logical access to and have completed. If in doubt, though, or if using a single license per life,",
+                "toggle this off."
+            ],
             "type": "Toggle",
             "default": true,
             "group": "Life Options"
@@ -148,7 +213,10 @@
             "display_name": "Progressive life ranks?",
             "description": [
                 "Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.",
-                "If disabled, a single license unlocks all ranks. Does nothing if life licenses are not included."
+                "If disabled, a single license unlocks all ranks. Does nothing if life licenses are not included.",
+                "",
+                "Not recommended to turn it off in an existing save file, as a single license per life could potentially mean too many locations",
+                "sent at once."
             ],
             "type": "Toggle",
             "default": true,
@@ -268,16 +336,34 @@
         },
         "character_levels": {
             "display_name": "Include level up checks?",
-            "description": "Toggles whether to include checks for leveling your character up.",
+            "description": [
+                "Toggles whether to include checks for leveling your character up.",
+                "",
+                "If using an existing save, provided you're not at the highest level possible, it's recommended to set",
+                "character_levels_min to your current level + 1"
+            ],
             "type": "Toggle",
             "default": false,
+            "group": "Level Options"
+        },
+        "character_levels_min": {
+            "display_name": "Lowest level up check",
+            "description": [
+                "Sets the lowest location you can get a check for leveling up.",
+                "Highest level in the base game is 99, while in Origin Island it's 200."
+            ],
+            "type": "Range",
+            "range_start": 2,
+            "range_end": 200,
+            "default": 2,
             "group": "Level Options"
         },
         "character_levels_max": {
             "display_name": "Highest level up check",
             "description": [
                 "Sets the highest location you can get a check for leveling up.",
-                "Highest level in the base game is 99, while in Origin Island it's 200."
+                "Highest level in the base game is 99, while in Origin Island it's 200.",
+                "Cannot be lower than the lowest level chosen."
             ],
             "type": "Range",
             "range_start": 2,
