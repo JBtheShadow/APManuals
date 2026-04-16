@@ -69,7 +69,7 @@ the game;
     * Passwords;
     * Shop storage keys to access their respective shops;
     * Map restrictions;
-      * Currently only cave keys;
+      * Currently only cave passes;
   * Checks: 
     * Reaching specific ranks or completing life challenges;
     * Claiming bliss bonuses;

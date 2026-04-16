@@ -590,9 +590,9 @@
         "map_restrictions": {
             "display_name": "Enable Map Restrictions?",
             "description": [
-                "Toggles whether to restrict access to certain locations until you've acquired their respective key item.",
+                "Toggles whether to restrict access to certain locations until you've acquired their respective pass.",
                 "Currently only includes specific caves, grottos and underground locations.",
-                "Subareas, like Nautilus Cave -> Forgotten Tunnel, are free to access once you've got its respective main area's key."
+                "Subareas, like Nautilus Cave -> Forgotten Tunnel, are free to access once you've got its respective main area's pass."
             ],
             "type": "Toggle",
             "default": true,
