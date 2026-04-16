@@ -7,11 +7,10 @@ from BaseClasses import MultiWorld, CollectionState, Item
 from ..Items import ManualItem
 from ..Locations import ManualLocation
 
-from .Data import FILLER_ITEMS, FillerCategory, Life, Skill, \
-    Rank, set_available_lives, get_available_lives, get_available_shop_checks, get_unused_shop_storage_keys, \
-    get_other_requests_checks, get_chests_checks, get_skill_levels_checks, get_life_challenges_checks, \
-    get_fast_license_count, get_prog_license_count, get_base_checks, get_map_restrictions_count, \
-    get_item_restrictions_count
+from .Data import Life, Rank, set_available_lives, get_available_lives, get_available_shop_checks, \
+    get_unused_shop_storage_keys, get_other_requests_checks, get_chests_checks, get_skill_levels_checks, \
+    get_life_challenges_checks, get_fast_license_count, get_prog_license_count, get_base_checks, \
+    get_map_restrictions_count, get_item_restrictions_count, get_filler_categories, get_filler_items_by_category
 from .Helpers import set_option_value, set_option_enabled
 
 # Raw JSON data from the Manual apworld, respectively:
@@ -42,7 +41,9 @@ import logging
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
 def hook_get_filler_item_name(world: World, multiworld: MultiWorld, player: int) -> str | bool:
-    return world.random.choice(FILLER_ITEMS[world.random.choice(list(FillerCategory))])
+    category = world.random.choice(list(get_filler_categories()))
+    filler = world.random.choice(list(get_filler_items_by_category(category)))
+    return filler
 
 def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> None:
     """

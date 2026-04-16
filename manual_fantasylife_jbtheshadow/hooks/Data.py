@@ -12,12 +12,13 @@ def after_load_item_file(item_table: list) -> list:
 
     # Extra Data
     from ..Helpers import load_data_csv
-    global shops, chests, requests, challenges, lives
+    global shops, chests, requests, challenges, lives, filler
     shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
     requests = load_data_csv("csv", "requests.csv")
     challenges = load_data_csv("csv", "challenges.csv")
     lives = load_data_csv("csv", "lives.csv")
+    filler = load_data_csv("csv", "filler.csv")
 
     # Shop Items
     item_table += [{
@@ -118,7 +119,8 @@ def after_load_location_file(location_table: list) -> list:
             "name": f"{entry["Rank"]} {entry["Life"]}: {entry["Name"]}",
             "region": f"{entry["Rank"]} Challenges",
             "category": build_category(entry),
-            "requires": build_requires(entry)
+            "requires": build_requires(entry),
+            "dont_place_item_category": [entry["Life"]]
         } for entry in challenges]
     location_table += build_challenge_locations()
 
@@ -251,6 +253,13 @@ chests = []
 requests = []
 challenges = []
 lives = []
+filler = []
+
+def get_filler_categories():
+    return {entry["Group"] for entry in filler}
+
+def get_filler_items_by_category(category):
+    return {entry["Filler"] for entry in filler if entry["Group"] == category}
 
 def get_available_lives():
     return available_lives
@@ -260,7 +269,7 @@ def set_available_lives(value: list[int]):
     available_lives = value
 
 def get_base_checks(story, dlc):
-    return 0 if not story else 80 if not dlc else 100
+    return 0 if not story else 65 if not dlc else 85
 
 def get_life_challenges_checks(dlc, max_rank):
     formated_lives = [Life(i).description for i in available_lives]
@@ -567,33 +576,3 @@ class Rank(Enum):
     @property
     def pronoun(self):
         return "an" if self.description.startswith(("A", "E")) else "a"
-
-
-class FillerCategory(Enum):
-    FOOD = 1
-    POTIONS = 2
-    ANTIDOTES = 3
-    CURES = 4
-    BOMBS = 5
-
-
-FILLER_ITEMS = {
-    FillerCategory.FOOD: [
-        "Carrot Soup",
-        "Fluffy Omelette",
-        "Well-Done Burger",
-        "Steak",
-        "Winter Stew",
-        "Grilled Crucian",
-        "Barley Juice",
-        "Roast Mutton",
-        "Tasty Kebab",
-        "Boiled Egg",
-        "Apple Juice",
-        "Honey Pudding",
-    ],
-    FillerCategory.POTIONS: ["HP Potion", "SP Potion"],
-    FillerCategory.ANTIDOTES: ["Poison Antidote", "Stun Antidote", "Sleep Antidote"],
-    FillerCategory.CURES: ["Life Cure"],
-    FillerCategory.BOMBS: ["Mini Bomb"],
-}
