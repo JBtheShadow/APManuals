@@ -128,7 +128,8 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
     if not lives_progressive:
         return state.has(f"{life.description} License", player)
 
-    if rank.min_chapter and not state.has("Progressive Chapter", player, rank.min_chapter):
+    story = is_option_enabled(multiworld, player, "story")
+    if rank.min_chapter and story and not state.has("Progressive Chapter", player, rank.min_chapter):
         return False
 
     lives_fast = is_option_enabled(multiworld, player, "lives_fast")

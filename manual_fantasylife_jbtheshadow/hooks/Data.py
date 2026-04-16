@@ -74,22 +74,25 @@ def after_load_location_file(location_table: list) -> list:
             })
         for skill in Skill:
             life = skill.life
-            for rank in [rank for rank in Rank if 0 < rank.value < 8]:
-                requires = f"{{has_any_license({rank.description})}}" if life is None else f"{{has_license({rank.description} {life.description})}}"
-                categories = [ "Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}", rank.description ]
+            ranks = {
+                "Fledgling": [2,3],
+                "Apprentice": [4,5,6],
+                "Adept": [7,8,9],
+                "Expert": [10,11,12],
+                "Master": [13,14,15],
+                "Creator": [16,17,18,19,20],
+            }
+
+            for rank in ranks:
+                requires = f"{{has_any_license({rank})}}" if life is None else f"{{has_license({rank} {life.description})}}"
+                categories = [ "Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}", rank ]
                 if life is not None:
                     categories.append(life.description)
-                for level in range(2 * rank.value, 2 * rank.value + 2):
+                if rank == "Creator":
+                    requires += " AND {origin_island_access()}"
+                    categories.append("DLC")
+                for level in ranks[rank]:
                     append_skill(skill, level, categories, requires)
-
-            requires = "{has_any_license(Creator)}" if life is None else f"{{has_license(Creator {life.description})}}"
-            requires += " AND {origin_island_access()}"
-            categories = ["Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}",
-                          "DLC", "Creator"]
-            if life is not None:
-                categories.append(life.description)
-            for level in range(16, 21):
-                append_skill(skill, level, categories, requires)
     build_skill_level_locations()
 
     def build_challenge_locations():
@@ -257,7 +260,7 @@ def set_available_lives(value: list[int]):
     available_lives = value
 
 def get_base_checks(story, dlc):
-    return 15 if not story else 80 if not dlc else 100
+    return 0 if not story else 80 if not dlc else 100
 
 def get_life_challenges_checks(dlc, max_rank):
     formated_lives = [Life(i).description for i in available_lives]
@@ -287,20 +290,17 @@ def get_other_requests_checks(dlc, request_count, max_rank):
     ])
 
 def get_skill_levels_checks(dlc, max_rank):
+    levels_per_rank = { 1: 2, 2: 3, 3: 3, 4: 3, 5: 3, 8: 5 }
+    levels_max_rank = sum(levels_per_rank[i] for i in levels_per_rank if i <= max_rank and (max_rank < 8 or dlc))
     formated_lives = ["Any"] + [Life(i).description for i in available_lives]
     skill_count = len([
         entry for entry in lives
         if (entry["Skill"]) and (entry["Life"] in formated_lives)
     ])
-    return (2 * max_rank * skill_count if max_rank < 8
-            else 14 * skill_count if not dlc and max_rank == 8
-            else 19 * skill_count)
+    return levels_max_rank * skill_count
 
 def get_chests_checks(dlc):
-    return len([
-        entry for entry in chests
-        if (dlc or "DLC" not in entry["DLC"])
-    ])
+    return 260 if dlc else 130
 
 def get_used_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh):
     return {

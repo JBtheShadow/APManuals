@@ -67,6 +67,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
     chests = is_option_enabled(multiworld, player, "chests")
     character_levels = is_option_enabled(multiworld, player, "character_levels")
+    character_levels_min = get_option_value(multiworld, player, "character_levels_min")
     character_levels_max = get_option_value(multiworld, player, "character_levels_max")
     skill_levels = is_option_enabled(multiworld, player, "skill_levels")
     other_requests = get_option_value(multiworld, player, "other_requests")
@@ -80,8 +81,6 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     bliss_available = get_option_value(multiworld, player, "bliss_available")
     map_restrictions = get_option_value(multiworld, player, "map_restrictions")
     game_seed = get_option_value(multiworld, player, "game_seed")
-
-    world.options.generate_region_diagram.value = True
 
     if game_seed < 0:
         seed = world.random.randint(1, 999999999999)
@@ -143,17 +142,30 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             case 12:
                 set_available_lives(all_lives)
 
+    if character_levels and character_levels_min > character_levels_max:
+        logging.warning("Maximum character level cannot be lower than minimum")
+        logging.warning("Swapping their values")
+        character_levels_min, character_levels_max = character_levels_max, character_levels_min
+        set_option_value(multiworld, player, "character_levels_min", character_levels_min)
+        set_option_value(multiworld, player, "character_levels_max", character_levels_max)
+
     if not dlc:
         if lives_max_rank == 8:
             logging.warning("Creator rank not available without the DLC")
             logging.warning(f"Setting lives_max_rank to Legend")
             lives_max_rank = 7
             set_option_value(multiworld, player, "lives_max_rank", lives_max_rank)
-        if character_levels and character_levels_max > 99:
-            logging.warning("Maximum character level without the DLC is 99")
-            logging.warning("Lowering character_levels_max to that")
-            character_levels_max = 99
-            set_option_value(multiworld, player, "character_levels_max", character_levels_max)
+        if character_levels:
+            if character_levels_min > 99:
+                logging.warning("Minimum character level without the DLC is 99")
+                logging.warning("Lowering character_levels_min to that")
+                character_levels_min = 99
+                set_option_value(multiworld, player, "character_levels_min", character_levels_min)
+            if character_levels_max > 99:
+                logging.warning("Maximum character level without the DLC is 99")
+                logging.warning("Lowering character_levels_max to that")
+                character_levels_max = 99
+                set_option_value(multiworld, player, "character_levels_max", character_levels_max)
 
     if bliss_available == 1 and shops and shops_fairy:
         logging.warning("Cannot enable Mysterious Fairy when available bliss bonuses are set to only useful.")
@@ -170,22 +182,21 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     if skill_levels:
         spare_checks += get_skill_levels_checks(dlc, lives_max_rank)
     if character_levels:
-        spare_checks += character_levels_max - 1
+        spare_checks += character_levels_max - character_levels_min + 1
     if shops:
         spare_checks += get_available_shop_checks(dlc, shops_bliss, shops_lives, lives_max_rank, shops_story, shops_fairy, shops_dosh, shops_restricted)
     if map_restrictions:
         spare_checks -= get_map_restrictions_count(dlc)
 
     if item_restrictions:
-        wish_hunt_min = 50
         item_restrictions_count = get_item_restrictions_count()
-        if spare_checks - (wish_hunt_min if goal in [0, 2] else 0) < item_restrictions_count:
+        if spare_checks < item_restrictions_count:
             logging.warning("Not enough spare locations to include item restrictions")
             logging.warning(f"Toggling item_restrictions to false")
             item_restrictions = False
             set_option_enabled(multiworld, player, "item_restrictions", item_restrictions)
         else:
-            spare_checks -= 130
+            spare_checks -= item_restrictions_count
 
     if story and story_pool and story_local:
         local_items = multiworld.worlds[player].options.local_items
@@ -205,8 +216,15 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             set_option_value(multiworld, player, "wish_hunt_total", wish_hunt_total)
             set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_required)
 
-        if wish_hunt_total > spare_checks:
+        if spare_checks <= 0:
+            logging.warning("Not enough spare locations for Wish Hunt goal")
+            logging.warning("Changing it to Life Mastery")
+            goal = 1
+            set_option_value(multiworld, player, "goal", goal)
+        elif wish_hunt_total > spare_checks:
             new_wish_hunt_required = int((wish_hunt_required / wish_hunt_total) * spare_checks)
+            if new_wish_hunt_required < 1:
+                new_wish_hunt_required = 1
             logging.warning("Not enough spare locations for current Wish Hunt goal")
             logging.warning(f"Lowering wish_hunt_total to {spare_checks}")
             logging.warning(f"Lowering wish_hunt_required to {new_wish_hunt_required}")
@@ -237,7 +255,7 @@ def before_create_regions(world: World, multiworld: MultiWorld, player: int):
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
-    locationNamesToRemove: list[str] = []  # List of location names
+    location_names_to_remove: list[str] = []  # List of location names
 
     shops = is_option_enabled(multiworld, player, "shops")
     shops_prehint = is_option_enabled(multiworld, player, "shops_prehint")
@@ -246,14 +264,14 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
 
     # Add your code here to calculate which locations to remove
 
+    character_levels_min = get_option_value(multiworld, player, "character_levels_min")
     character_levels_max = get_option_value(multiworld, player, "character_levels_max")
-    if character_levels_max < 200:
-        locationNamesToRemove += [f"Reached Level {i}" for i in range(character_levels_max + 1, 201)]
+    location_names_to_remove += [f"Reached Level {i}" for i in range(2, 201) if i < character_levels_min or i > character_levels_max]
 
     for region in multiworld.regions:
         if region.player == player:
             for location in list(region.locations):
-                if location.name in locationNamesToRemove:
+                if location.name in location_names_to_remove:
                     region.locations.remove(location)
 
 
@@ -380,7 +398,6 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     life_start = get_option_value(multiworld, player, "life_start")
     available_lives = get_available_lives()
 
-    logging.info(f"Lives available: {", ".join(Life(i).description for i in available_lives)}.")
     if life_licenses:
         life_name = ""
         match life_start:
@@ -419,7 +436,6 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                 ]
             )
             starting_inventory.append(item_name)
-            logging.info(f"Starting life: {life_name}.")
 
     if bliss:
         item_name = ""

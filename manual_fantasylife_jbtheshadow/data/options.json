@@ -129,7 +129,7 @@
             ],
             "type": "Range",
             "range_start": 1,
-            "range_end": 4000,
+            "range_end": 1000,
             "default": 30,
             "group": "Wish Hunt Options"
         },
@@ -368,7 +368,7 @@
             "type": "Range",
             "range_start": 2,
             "range_end": 200,
-            "default": 20,
+            "default": 30,
             "group": "Level Options"
         },
         "skill_levels": {
@@ -379,13 +379,15 @@
                 "until you've acquired enough licenses or progressed through the story enough.",
                 "The logic levels are:",
                 " - Levels 2 and 3: Fledgling",
-                " - Levels 4 and 5: Apprentice",
-                " - Levels 6 and 7: Adept",
-                " - Levels 8 and 9: Expert",
-                " - Levels 10 and 11: Master",
-                " - Levels 12 and 13: Hero",
-                " - Levels 14 and 15: Legend",
-                " - Levels 16 through 20: Creator"
+                " - Levels 4, 5 and 6: Apprentice",
+                " - Levels 7, 8 and 9: Adept",
+                " - Levels 10, 11 and 12: Expert",
+                " - Levels 13, 14 and 15: Master",
+                " - Levels 16 through 20: Creator",
+                "",
+                "Initially I wanted to split the level requirements across all ranks but unfortunately there are some lives",
+                "with Master rank challenges about reaching level 15 in a specific skill, too. Yes, this does mean if you have",
+                "both skill levels and life challenges then you'll be able to check both locations upon reaching skill level 15"
             ],
             "type": "Toggle",
             "default": true,
