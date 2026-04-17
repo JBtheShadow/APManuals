@@ -62,7 +62,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
     life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
     lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
-    lives_available = get_option_value(multiworld, player, "lives_available")
+    lives_available = world.options.lives_available.value
     life_licenses = is_option_enabled(multiworld, player, "life_licenses")
     life_challenges = is_option_enabled(multiworld, player, "life_challenges")
     item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
@@ -88,60 +88,68 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
         set_option_value(multiworld, player, "game_seed", seed)
     world.random.seed(game_seed)
 
-    all_lives = [x for x in range(1, 13)]
+    possible_melee = {"Paladin", "Mercenary"}
+    possible_ranged = {"Hunter", "Magician"}
+    possible_combat = possible_melee | possible_ranged
+    possible_gatherer = {"Miner", "Woodcutter", "Angler"}
+    possible_artisan = {"Cook", "Blacksmith", "Carpenter", "Tailor", "Alchemist"}
+    possible_lives = possible_combat | possible_gatherer | possible_artisan
+    actual_lives_available = set()
+
+    def add_random_life(choices):
+        diff = choices - actual_lives_available
+        if diff:
+            choice = world.random.choice(list(diff))
+            actual_lives_available.add(choice)
 
     fake_gen = getattr(multiworld, "generation_is_fake", False)
-    if fake_gen or not life_licenses or lives_available == 12:
-        set_available_lives(all_lives)
+    if fake_gen or not life_licenses or not len(lives_available):
+        actual_lives_available.update(possible_lives)
     else:
-        all_melee = [1, 2]
-        all_range = [3, 4]
-        all_combat = all_melee + all_range
-        all_gatherer = [5, 6, 7]
-        all_single = all_combat + all_gatherer
-        all_artisan = [8, 9, 10, 11, 12]
-        artisan_dep = {
-            8: [7, 8],
-            9: [5, 6, 9, 10, 11],
-            10: [5, 6, 9, 10, 11],
-            11: [5, 6, 9, 10, 11],
-            12: [5, 6, 9, 10, 11, 12],
-        }
-        match lives_available:
-            case 1:
-                single = world.random.choice(all_single)
-                set_available_lives([single])
-            case 2:
-                single = world.random.choice(all_combat)
-                set_available_lives([single])
-            case 3:
-                melee = world.random.choice(all_melee)
-                ranged = world.random.choice(all_range)
-                set_available_lives([melee, ranged])
-            case 4:
-                set_available_lives(all_combat)
-            case 5:
-                single = world.random.choice(all_gatherer)
-                set_available_lives([single])
-            case 6:
-                gatherer = world.random.sample(all_gatherer, 2)
-                set_available_lives(gatherer)
-            case 7:
-                set_available_lives(all_gatherer)
-            case 8:
-                artisan = world.random.choice(all_artisan)
-                set_available_lives(artisan_dep[artisan])
-            case 9:
-                set_available_lives(all_gatherer + all_artisan)
-            case 10:
-                single = world.random.choice(all_combat)
-                set_available_lives([single] + all_gatherer + all_artisan)
-            case 11:
-                melee = world.random.choice(all_melee)
-                ranged = world.random.choice(all_range)
-                set_available_lives([melee, ranged] + all_gatherer + all_artisan)
-            case 12:
-                set_available_lives(all_lives)
+        for item in lives_available:
+            match item:
+                case "All":
+                    actual_lives_available.update(possible_lives)
+                case "All Combat":
+                    actual_lives_available.update(possible_combat)
+                case "All Melee":
+                    actual_lives_available.update(possible_melee)
+                case "All Ranged":
+                    actual_lives_available.update(possible_ranged)
+                case "All Gatherer":
+                    actual_lives_available.update(possible_gatherer)
+                case "All Artisan":
+                    actual_lives_available.update(possible_artisan)
+                case "Any":
+                    add_random_life(possible_lives)
+                case "Any Combat":
+                    add_random_life(possible_combat)
+                case "Any Melee":
+                    add_random_life(possible_melee)
+                case "Any Ranged":
+                    add_random_life(possible_ranged)
+                case "Any Gatherer":
+                    add_random_life(possible_gatherer)
+                case "Any Artisan":
+                    add_random_life(possible_artisan)
+                case life:
+                    actual_lives_available.add(life)
+
+    # This may be removed later but for now I'm just tackling this option, not the free licenses or removing the fast ones
+    if len(actual_lives_available) < 12:
+        deps = [
+            ({"Cook"}, {"Cook", "Angler"}),
+            ({"Blacksmith", "Carpenter", "Tailor"}, {"Woodcutter", "Miner", "Blacksmith", "Carpenter", "Tailor"}),
+            ({"Alchemist"}, {"Woodcutter", "Miner", "Blacksmith", "Carpenter", "Tailor", "Alchemist"})
+        ]
+        for items, values in deps:
+            if items.intersection(actual_lives_available):
+                actual_lives_available.update(values)
+
+    available_lives = [i for i in range(1,13) if Life(i).description in actual_lives_available]
+    set_available_lives(available_lives)
+    lives_available = list(actual_lives_available)
+    world.options.lives_available.value = lives_available
 
     if character_levels and character_levels_min > character_levels_max:
         logging.warning("Maximum character level cannot be lower than minimum")

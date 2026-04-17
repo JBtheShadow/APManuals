@@ -1,5 +1,5 @@
 # Object classes from AP that represent different types of options that you can create
-from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions
+from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions, OptionList
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
 from ..Helpers import is_option_enabled, get_option_value
 from typing import Type, Any
@@ -33,8 +33,40 @@ class TotalCharactersToWinWith(Range):
     default = 50
 
 
+class LivesAvailable(OptionList):
+    """Set which lives will be included in the playthrough, removing all the others and locations that require them.
+    Does nothing if licenses are not enabled or are free.
+    Any of the existing lives are allowed. Additional values:
+
+    ["All"]: All 12 lives will be included.
+    ["Any"]: A random live among all the 12 will be included.
+    ["All Combat"]: Paladin, Mercenary, Hunter and Magician will be included.
+    ["Any Combat"]: A random combat life will be included.
+    ["All Melee"]: Paladin and Mercenary will be included.
+    ["Any Melee"]: A random life between Paladin and Mercenary will be included.
+    ["All Ranged"]: Hunter and Magician will be included.
+    ["Any Ranged"]: A random life between Hunter and Magician will be included.
+    ["All Gatherer"]: Miner, Woodcutter and Angler will be included.
+    ["Any Gatherer"]: A random gatherer life will be included.
+    ["All Artisan"]: Cook, Blacksmith, Carpenter, Tailor and Alchemist will be included.
+    ["Any Artisan"]: A random artisan life will be included.
+
+    You can also include more than one value, for example:
+    ["Any Ranged", "All Gatherer", "Cook", "Alchemist"]
+    will add a random ranged life, all three gatherer lives, a cook and an alchemist."""
+    display_name = "Available Lives"
+    valid_keys = [
+        "All", "Any", "All Combat", "Any Combat", "All Melee", "Any Melee",
+        "All Ranged", "Any Ranged", "All Gatherer", "Any Gatherer", "All Artisan", "Any Artisan",
+        "Paladin", "Mercenary", "Hunter", "Magician", "Miner", "Woodcutter",
+        "Angler", "Cook", "Blacksmith", "Carpenter", "Tailor", "Alchemist"
+    ]
+    default = ["All"]
+
+
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
+    options["lives_available"] = LivesAvailable
     return options
 
 # This is called after any manual options are defined, in case you want to see what options are defined or want to modify the defined options
@@ -52,6 +84,7 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
+    groups["Life Options"] = [LivesAvailable]
     return groups
 
 def after_option_groups_created(groups: list[OptionGroup]) -> list[OptionGroup]:

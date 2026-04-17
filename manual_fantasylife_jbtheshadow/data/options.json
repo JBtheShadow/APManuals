@@ -237,52 +237,6 @@
             "default": false,
             "group": "Life Options"
         },
-        "lives_available": {
-            "display_name": "Available Lives",
-            "description": [
-                "Set how many lives will be included in the playthrough, removing all of the others and locations that require them.",
-                "Does nothing if licenses are not enabled.",
-                "",
-                "[single]: One life will be included at random among the combat and gatherer ones.",
-                "[combat_single]: One combat life will be included at random.",
-                "[combat_double]: Two combat lives will be included, one for melee (Paladin, Mercenary) and one for range (Hunter, Magician).",
-                "[combat_all]: All four combat lives will be included.",
-                "[gatherer_single]: One gatherer life will be included.",
-                "[gatherer_double]: Two gatherer lives will be included.",
-                "[gatherer_all]: All gatherer lives will be included.",
-                "[artisan_min]: One artisan live will be included at random along with any other lives it depends on, as well as their dependencies.",
-                "For each of the artisan lives the included dependencies are as follows:",
-                " - Cook: Angler",
-                " - Blacksmith: Woodcutter, Miner, Carpenter, Tailor",
-                " - Carpenter: Woodcutter, Miner, Blacksmith, Tailor",
-                " - Tailor: Woodcutter, Miner, Carpenter, Blacksmith",
-                " - Alchemist: Woodcutter, Miner, Carpenter, Blacksmith, Tailor",
-                "[artisan_all]: All gatherer and artisan lives will be included.",
-                "[self_sufficient_single]: [combat_single] and [artisan_all] combined.",
-                "[self_sufficient_double]: [combat_double] and [artisan_all] combined.",
-                "[all]: All lives will be included.",
-                "",
-                "PS: Some challenges for artisan lives require items only obtainable from lives, or at the very least more easily available",
-                "with the help of other lives, and as such, artisan lives are never included by themselves."
-            ],
-            "type": "Choice",
-            "values": {
-                "single": 1,
-                "combat_single": 2,
-                "combat_double": 3,
-                "combat_all": 4,
-                "gatherer_single": 5,
-                "gatherer_double": 6,
-                "gatherer_all": 7,
-                "artisan_min": 8,
-                "artisan_all": 9,
-                "self_sufficient_single": 10,
-                "self_sufficient_double": 11,
-                "all": 12
-            },
-            "default": 12,
-            "group": "Life Options"
-        },
         "life_start": {
             "display_name": "Starting Life",
             "description": [
