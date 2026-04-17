@@ -41,35 +41,42 @@ def requiresMelee():
     return "|Figher Level:15| or |Black Belt Level:15| or |Thief Level:15|"
 
 
+def goal(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
+    goal_requirements = world.options.goal_requirements.value
+
+    if "Beat Story" in goal_requirements:
+        if not beat_story(world, multiworld, state, player):
+            return False
+
+    if "Beat DLC" in goal_requirements:
+        if not beat_dlc(world, multiworld,state, player):
+            return False
+
+    if "Wish Hunt" in goal_requirements:
+        if not wish_hunt(world, multiworld,state, player):
+            return False
+
+    if "Life Mastery" in goal_requirements:
+        if not life_mastery(world, multiworld,state, player):
+            return False
+
+    return True
+
+
 def beat_story(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    def has_beat_story():
-        return "{OptOne(|Beat Main Story|)}"
+    return state.has("Beat Main Story", player)
 
-    def has_beat_dlc():
-        return "{OptOne(|Beat DLC Story|)}"
 
-    story_goal = is_option_enabled(multiworld, player, "story_goal")
-    dlc = is_option_enabled(multiworld, player, "dlc")
-    dlc_goal = is_option_enabled(multiworld, player, "dlc_goal")
-
-    return not story_goal or has_beat_story() and (not dlc or not dlc_goal or has_beat_dlc())
+def beat_dlc(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
+    return state.has("Beat DLC Story", player)
 
 
 def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    goal = get_option_value(multiworld, player, "goal")
-    if goal not in [0, 2]:
-        return True
-
     required = get_option_value(multiworld, player, "wish_hunt_required")
-
     return state.has("Lost Wish", player, required)
 
 
 def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    goal = get_option_value(multiworld, player, "goal")
-    if goal not in [1, 2]:
-        return True
-
     life_licenses = is_option_enabled(multiworld, player, "life_licenses")
     if not life_licenses:
         return True

@@ -1,9 +1,7 @@
 {
 	"$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
     "data": [
-        { "name": "Wish Hunt", "category": [ "Goal" ], "victory": true, "requires": "{wish_hunt()} AND {beat_story()}" },
-        { "name": "Life Mastery", "category": [ "Goal" ], "victory": true, "requires": "{life_mastery()} AND {beat_story()}" },
-        { "name": "Wish Hunt Mastery", "category": [ "Goal" ], "victory": true, "requires": "{wish_hunt()} AND {life_mastery()} AND {beat_story()}" },
+        { "name": "Goal", "category": [ "Goal" ], "victory": true, "requires": "{goal()}" },
 
         { "name": "Claim password \"Reveria\"", "region": "Passwords", "category": [ "Claimable Passwords" ], "requires": "|Password \"Reveria\"|" },
         { "name": "Claim password \"Butting in\"", "region": "Passwords", "category": [ "Claimable Passwords" ], "requires": "|Password \"Butting in\"|" },

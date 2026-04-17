@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
     "core": {
-        "goal": {
+        "_goal": {
             "display_name": "Goal",
             "description": [
                 "Sets what your goal for this Manual will be:",
@@ -65,7 +65,7 @@
             "type": "Toggle",
             "default": true
         },
-        "story_goal": {
+        "_story_goal": {
             "display_name": "Require beating the game's main story to goal?",
             "description": [
                 "If the goal also requires completing the Prologue and Chapters 1 through 7.",
@@ -86,7 +86,7 @@
             "type": "Toggle",
             "default": false
         },
-        "dlc_goal": {
+        "_dlc_goal": {
             "display_name": "Require beating the game's DLC to goal?",
             "description": [
                 "If the goal also requires completing the DLC Chapters 1 and 2.",

@@ -33,6 +33,19 @@ class TotalCharactersToWinWith(Range):
     default = 50
 
 
+class GoalRequirements(OptionList):
+    """Set what the goal requirements will be.
+    You can choose one or more out of the following:
+
+    ["Beat Story"]: Reach the end of the main story. Story checks must be included.
+    ["Beat DLC"]: Reach the end of the DLC story. Story checks and DLC must be included.
+    ["Life Mastery"]: Rank up a number of lives to a specific rank.
+    ["Wish Hunt"]: Find a number of Lost Wishes (mcguffins)."""
+    display_name = "Goal Requirements"
+    valid_keys = ["Beat Story", "Beat DLC", "Life Mastery", 'Wish Hunt']
+    default = ["Wish Hunt"]
+
+
 class LivesAvailable(OptionList):
     """Set which lives will be included in the playthrough, removing all the others and locations that require them.
     Does nothing if licenses are not enabled or are free.
@@ -66,6 +79,7 @@ class LivesAvailable(OptionList):
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
+    options["goal_requirements"] = GoalRequirements
     options["lives_available"] = LivesAvailable
     return options
 
@@ -84,6 +98,7 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
+    groups["Goal Options"] = [GoalRequirements]
     groups["Life Options"] = [LivesAvailable]
     return groups
 

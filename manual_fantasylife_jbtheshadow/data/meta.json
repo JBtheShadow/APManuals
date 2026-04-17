@@ -30,10 +30,9 @@
             ],
             "options_presets": {
                 "Life Master": {
-                    "goal": 1,
+                    "goal_requirements": ["Life Mastery"],
                     "story": true,
                     "story_pool": false,
-                    "story_goal": false,
                     "dlc": false,
                     "life_mastery_rank": "master",
                     "life_mastery_count": 1,
@@ -42,7 +41,7 @@
                     "lives_max_rank": "master",
                     "lives_progressive": true,
                     "lives_fast": false,
-                    "lives_available": "all",
+                    "lives_available": ["All"],
                     "life_start": "any",
                     "character_levels": false,
                     "skill_levels": false,
@@ -55,10 +54,9 @@
                     "map_restrictions": false
                 },
                 "Wish Maker": {
-                    "goal": 0,
+                    "goal_requirements": ["Wish Hunt"],
                     "story": true,
                     "story_pool": false,
-                    "story_goal": false,
                     "dlc": false,
                     "wish_hunt_total": 100,
                     "wish_hunt_required": 70,
@@ -75,7 +73,7 @@
                     "map_restrictions": false
                 },
                 "Treasure Hunter": {
-                    "goal": 0,
+                   "goal_requirements": ["Wish Hunt"],
                     "story": false,
                     "dlc": false,
                     "wish_hunt_total": 50,
@@ -93,7 +91,7 @@
                     "map_restrictions": true
                 },
                 "Mystery Shopper": {
-                    "goal": 0,
+                    "goal_requirements": ["Wish Hunt"],
                     "story": false,
                     "wish_hunt_total": 400,
                     "wish_hunt_required": 100,

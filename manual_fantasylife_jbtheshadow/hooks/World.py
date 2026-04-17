@@ -51,7 +51,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     Use it to check or modify incompatible options, or to set up variables for later use.
     """
 
-    goal = get_option_value(multiworld, player, 'goal')
+    goal_requirements = world.options.goal_requirements.value
     story = is_option_enabled(multiworld, player, 'story')
     story_pool = is_option_enabled(multiworld, player, 'story_pool')
     story_local = is_option_enabled(multiworld, player, 'story_local')
@@ -82,6 +82,21 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     bliss_available = get_option_value(multiworld, player, "bliss_available")
     map_restrictions = get_option_value(multiworld, player, "map_restrictions")
     game_seed = get_option_value(multiworld, player, "game_seed")
+
+    if "Beat Story" in goal_requirements and not story:
+        logging.warning("Beat Story goal requirement not possible without story checks, removing it")
+        goal_requirements.remove("Beat Story")
+        world.options.goal_requirements.value = goal_requirements
+
+    if "Beat DLC" in goal_requirements and not (story and dlc):
+        logging.warning("Beat DLC goal requirement not possible without story checks and dlc, removing it")
+        goal_requirements.remove("Beat DLC")
+        world.options.goal_requirements.value = goal_requirements
+
+    if not goal_requirements:
+        logging.warning("Invalid goal requirements, defaulting to Wish Hunt")
+        goal_requirements = ["Wish Hunt"]
+        world.options.goal_requirements.value = goal_requirements
 
     if game_seed < 0:
         seed = world.random.randint(1, 999999999999)
@@ -212,7 +227,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
         if "Chapter Unlocker" not in local_items.value:
             local_items.value.add("Chapter Unlocker")
 
-    if goal in [0, 2]:
+    if "Wish Hunt" in goal_requirements:
         if wish_hunt_local:
             local_items = multiworld.worlds[player].options.local_items
             if "Lost Wish" not in local_items.value:
@@ -228,8 +243,10 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
         if spare_checks <= 0:
             logging.warning("Not enough spare locations for Wish Hunt goal")
             logging.warning("Changing it to Life Mastery")
-            goal = 1
-            set_option_value(multiworld, player, "goal", goal)
+            goal_requirements.remove("Wish Hunt")
+            if not "Life Mastery" in goal_requirements:
+                goal_requirements.append("Life Mastery")
+            world.options.goal_requirements.value = goal_requirements
         elif wish_hunt_total > spare_checks:
             new_wish_hunt_required = int((wish_hunt_required / wish_hunt_total) * spare_checks)
             if new_wish_hunt_required < 1:
@@ -242,7 +259,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             set_option_value(multiworld, player, "wish_hunt_total", wish_hunt_total)
             set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_required)
 
-    if goal in [1, 2]:
+    if "Life Mastery" in goal_requirements:
         if life_mastery_rank > lives_max_rank:
             logging.warning("life_mastery_rank cannot be greater than lives_max_rank")
             logging.warning(f"Setting life_mastery_rank to {Rank(lives_max_rank).description}")
@@ -298,7 +315,7 @@ def before_create_items_all(
 
     story = is_option_enabled(multiworld, player, "story")
     story_pool = is_option_enabled(multiworld, player, "story_pool")
-    goal = get_option_value(multiworld, player, "goal")
+    goal_requirements = world.options.goal_requirements.value
     dlc = is_option_enabled(multiworld, player, "dlc")
     wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
     life_licenses = is_option_enabled(multiworld, player, "life_licenses")
@@ -317,7 +334,7 @@ def before_create_items_all(
         for unused_shop_storage_key in get_unused_shop_storage_keys(dlc, shops_lives, shops_story, shops_fairy, shops_dosh):
             item_config[unused_shop_storage_key] = {"progression": 0}
 
-    if goal in [0, 2]:
+    if "Wish Hunt" in goal_requirements:
         item_config["Lost Wish"] = {"progression": wish_hunt_total}
 
     if not dlc:
