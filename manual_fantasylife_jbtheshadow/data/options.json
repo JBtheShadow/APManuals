@@ -507,7 +507,11 @@
         },
         "shops_restricted": {
             "display_name": "Include Shop Restrictions?",
-            "description": "Toggles whether to include permits, preventing you from buying from any shops until you've got its respective permit.",
+            "description": [
+                "Toggles whether to include permits, preventing you from buying from any shops until you've got its respective permit.",
+                "Can cause gen failures due to complex logic (shop A holds key to shop B which holds key to shop C which... which holds",
+                "key to shop A)."
+            ],
             "type": "Toggle",
             "default": false,
             "group": "Shop Options"
@@ -581,7 +585,18 @@
                 "* Tailor: Needles",
                 "* Alchemist: Flasks",
                 "",
-                "Very restrictive, not recommended unless you really want to take on the extra challenge."
+                "The amount of rarities required per rank is as follows:",
+                "* Fledgling: none",
+                "* Apprentice: 1",
+                "* Adept: 2",
+                "* Expert: 3",
+                "* Master: 3",
+                "* Hero: 4",
+                "* Legend: 4",
+                "* Creator: 5",
+                "",
+                "Very restrictive, not recommended unless you really want to take on the extra challenge. May cause gen failure",
+                "because of the increase of requirements this adds to some locations."
             ],
             "type": "Toggle",
             "default": false,
