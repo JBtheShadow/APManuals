@@ -1,25 +1,6 @@
 {
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
     "core": {
-        "_goal": {
-            "display_name": "Goal",
-            "description": [
-                "Sets what your goal for this Manual will be:",
-                "[wish_hunt]: find a number of Lost Wishes (mcguffins);",
-                "[life_mastery]: rank up a number of lives to a specific rank;",
-                "[wish_hunt_mastery]: the two goals above combined!;",
-                "",
-                "Optionally you'll also be able to set whether beating the main story or dlc will be required as an",
-                "additional objective."
-            ],
-            "aliases": {
-                "wish_hunt": 0,
-                "life_mastery": 1,
-                "wish_hunt_mastery": 2
-            },
-            "group": "Goal Options",
-            "hidden": false
-        },
         "death_link": {
             "default": false,
             "visibility": "none"
@@ -40,6 +21,7 @@
                 "already done on it. There are about 10 locations per chapter including the prologue, give or take, so a complete save file",
                 "could end up sending 80+ checks on a vanilla game or 100+ with Origin Island."
             ],
+            "group": "Game Options",
             "type": "Toggle",
             "default": true
         },
@@ -54,6 +36,7 @@
                 "",
                 "Not recommended on an existing save."
             ],
+            "group": "Game Options",
             "type": "Toggle",
             "default": false
         },
@@ -62,19 +45,9 @@
             "description": [
                 "Forces Chapter Unlocker items to be local. Does nothing if story progression is not included in the pool."
             ],
+            "group": "Game Options",
             "type": "Toggle",
             "default": true
-        },
-        "_story_goal": {
-            "display_name": "Require beating the game's main story to goal?",
-            "description": [
-                "If the goal also requires completing the Prologue and Chapters 1 through 7.",
-                "Does nothing if story checks are not included.",
-                "",
-                "Not recommended on an existing save."
-            ],
-            "type": "Toggle",
-            "default": false
         },
         "dlc": {
             "display_name": "Include the Origin Island DLC?",
@@ -83,15 +56,7 @@
                 "This also disables some features that may appear earlier than the start of Origin Island, such as",
                 "the two extra bigger bag and two extra bigger storage bliss bonuses."
             ],
-            "type": "Toggle",
-            "default": false
-        },
-        "_dlc_goal": {
-            "display_name": "Require beating the game's DLC to goal?",
-            "description": [
-                "If the goal also requires completing the DLC Chapters 1 and 2.",
-                "Does nothing if story checks are not included or if story goal is also not enabled."
-            ],
+            "group": "Game Options",
             "type": "Toggle",
             "default": false
         },
