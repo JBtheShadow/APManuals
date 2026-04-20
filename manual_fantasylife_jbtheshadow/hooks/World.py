@@ -9,7 +9,7 @@ from ..Locations import ManualLocation
 
 from .Data import Life, Rank, set_available_lives, get_available_lives, get_available_shop_checks, \
     get_unused_shop_storage_keys, get_other_requests_checks, get_chests_checks, get_skill_levels_checks, \
-    get_life_challenges_checks, get_fast_license_count, get_prog_license_count, get_base_checks, \
+    get_life_challenges_checks, get_prog_license_count, get_base_checks, get_free_lives, set_free_lives, \
     get_map_restrictions_count, get_item_restrictions_count, get_filler_categories, get_filler_items_by_category
 from .Helpers import set_option_value, set_option_enabled
 
@@ -63,7 +63,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
     lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
     lives_available = world.options.lives_available.value
-    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    life_licenses = get_option_value(multiworld, player, "life_licenses")
     life_challenges = is_option_enabled(multiworld, player, "life_challenges")
     item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
     chests = is_option_enabled(multiworld, player, "chests")
@@ -110,6 +110,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     possible_artisan = {"Cook", "Blacksmith", "Carpenter", "Tailor", "Alchemist"}
     possible_lives = possible_combat | possible_gatherer | possible_artisan
     actual_lives_available = set()
+    free_lives_available = set()
 
     def add_random_life(choices):
         diff = choices - actual_lives_available
@@ -118,7 +119,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             actual_lives_available.add(choice)
 
     fake_gen = getattr(multiworld, "generation_is_fake", False)
-    if fake_gen or not life_licenses or not len(lives_available):
+    if fake_gen or life_licenses in (0, 1) or not len(lives_available):
         actual_lives_available.update(possible_lives)
     else:
         for item in lives_available:
@@ -150,7 +151,6 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
                 case life:
                     actual_lives_available.add(life)
 
-    # This may be removed later but for now I'm just tackling this option, not the free licenses or removing the fast ones
     if len(actual_lives_available) < 12:
         deps = [
             ({"Cook"}, {"Cook", "Angler"}),
@@ -159,12 +159,18 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
         ]
         for items, values in deps:
             if items.intersection(actual_lives_available):
-                actual_lives_available.update(values)
+                missing = values - actual_lives_available
+                if missing:
+                    free_lives_available.update(missing)
+                    actual_lives_available.update(missing)
 
     available_lives = [i for i in range(1,13) if Life(i).description in actual_lives_available]
     set_available_lives(available_lives)
     lives_available = list(actual_lives_available)
     world.options.lives_available.value = lives_available
+
+    if free_lives_available:
+        set_free_lives([i for i in range(1,13) if Life(i).description in free_lives_available])
 
     if character_levels and character_levels_min > character_levels_max:
         logging.warning("Maximum character level cannot be lower than minimum")
@@ -318,9 +324,7 @@ def before_create_items_all(
     goal_requirements = world.options.goal_requirements.value
     dlc = is_option_enabled(multiworld, player, "dlc")
     wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
-    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
-    lives_progressive = is_option_enabled(multiworld, player, "lives_progressive")
-    lives_fast = is_option_enabled(multiworld, player, "lives_fast")
+    life_licenses = get_option_value(multiworld, player, "life_licenses")
     lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
     bliss = is_option_enabled(multiworld, player, "bliss")
 
@@ -347,14 +351,17 @@ def before_create_items_all(
             item_config["Bigger Bag"] = {"progression": 3}
             item_config["Bigger Storage"] = {"progression": 3}
 
-    if life_licenses and lives_progressive:
+    if life_licenses == 1:
+        item_config["Free Omni License"] = {"progression": 1}
+    if life_licenses == 3:
         available_lives = get_available_lives()
-        if lives_fast:
-            for life in [x for x in Life if x.value in available_lives]:
-                item_config[f"Fast Progressive {life.description} License"] = {"progression": get_fast_license_count(dlc, lives_max_rank)}
-        else:
-            for life in [x for x in Life if x.value in available_lives]:
-                item_config[f"Progressive {life.description} License"] = {"progression": get_prog_license_count(dlc, lives_max_rank)}
+        for life in [x for x in Life if x.value in available_lives]:
+            item_config[f"Progressive {life.description} License"] = {"progression": get_prog_license_count(dlc, lives_max_rank)}
+
+    free_licenses = get_free_lives()
+    if free_licenses:
+        for life in (Life(i) for i in free_licenses):
+            item_config[f"Free {life.description} License"] = {"progression": 1}
 
     return item_config
 
@@ -420,29 +427,37 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     bliss = is_option_enabled(multiworld, player, "bliss")
     bliss_available = get_option_value(multiworld, player, "bliss_available")
     bliss_start = get_option_value(multiworld, player, "bliss_start")
-    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
+    life_licenses = get_option_value(multiworld, player, "life_licenses")
     life_start = get_option_value(multiworld, player, "life_start")
-    available_lives = get_available_lives()
+    all_available_lives = get_available_lives()
+    free_lives = get_free_lives()
+    available_lives = list(set(all_available_lives) - set(free_lives))
 
-    if life_licenses:
+    if life_licenses == 1:
+        starting_inventory.append("Free Omni License")
+    elif life_licenses in (2, 3):
         life_name = ""
         match life_start:
             case 0:
                 choice = world.random.choice(available_lives)
                 life_name = Life(choice).description
             case 13:
-                choices = list({1, 2} & set(available_lives))
-                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
-                life_name = Life(choice).description
-            case 14:
                 choices = list({1, 2, 3, 4} & set(available_lives))
                 choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
                 life_name = Life(choice).description
+            case 14:
+                choices = list({1, 2} & set(available_lives))
+                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
+                life_name = Life(choice).description
             case 15:
-                choices = list({5, 6, 7} & set(available_lives))
+                choices = list({3, 4} & set(available_lives))
                 choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
                 life_name = Life(choice).description
             case 16:
+                choices = list({5, 6, 7} & set(available_lives))
+                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
+                life_name = Life(choice).description
+            case 17:
                 choices = list({8, 9, 10, 11, 12} & set(available_lives))
                 choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
                 life_name = Life(choice).description
@@ -451,17 +466,12 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
                 choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
                 life_name = Life(choice).description
         if life_name and len(life_name) > 0:
-            item_name = next(
-                x.name
-                for x in item_pool
-                if x.name
-                in [
-                    f"{life_name} License",
-                    f"Progressive {life_name} License",
-                    f"Fast Progressive {life_name} License",
-                ]
-            )
+            item_name = f"Progressive {life_name} License" if life_licenses == 3 else f"{life_name} License"
             starting_inventory.append(item_name)
+
+    for life in (Life(i) for i in free_lives):
+        item_name = f"Free {life.description} License"
+        starting_inventory.append(item_name)
 
     if bliss:
         item_name = ""

@@ -2,8 +2,9 @@ from typing import Optional
 from worlds.AutoWorld import World
 from ..Helpers import clamp, get_items_with_value, get_option_value, is_option_enabled
 from BaseClasses import MultiWorld, CollectionState
+from .. import Rules as rootRules
 
-from .Data import Life, Rank
+from .Data import Life, Rank, get_available_lives, get_free_lives
 
 import re
 
@@ -77,26 +78,16 @@ def wish_hunt(world: World, multiworld: MultiWorld, state: CollectionState, play
 
 
 def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
-    if not life_licenses:
+    life_licenses = get_option_value(multiworld, player, "life_licenses")
+    if life_licenses in (0, 1):
         return True
 
-    lives_progressive = is_option_enabled(multiworld, player, "lives_progressive")
-    lives_fast = is_option_enabled(multiworld, player, "lives_fast")
     life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
     life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
 
-    if not lives_progressive:
-        item_name = "{life} License"
-        item_count = 1
-    else:
-        item_name = "Fast Progressive {life} License" if lives_fast else "Progressive {life} License"
-        rank = Rank(life_mastery_rank)
-        item_count = rank.fast_requirement if lives_fast else rank.full_requirement
-
     life_count = 0
     for life in Life:
-        if state.has(item_name.replace("{life}", life.description), player, item_count):
+        if rootRules.ItemValue(state, player, f"{life.description}:{life_mastery_rank}"):
             life_count += 1
         if life_count >= life_mastery_count:
             return True
@@ -104,8 +95,37 @@ def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, p
     return False
 
 def has_any_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_name: str):
-    for life in Life:
-        if has_license(world, multiworld, state, player, f"{rank_name} {life.description}"):
+    lives = set(get_available_lives())
+    free = set(get_free_lives())
+    available = list(lives - free)
+
+    rank = Rank.from_description(rank_name)
+
+    story = is_option_enabled(multiworld, player, "story")
+    if rank.min_chapter and story and not state.has("Progressive Chapter", player, rank.min_chapter):
+        return False
+
+    life_licenses = get_option_value(multiworld, player, "life_licenses")
+    if life_licenses in (0, 1):
+        return True
+
+    if state.has("Free Omni License", player):
+        return True
+
+    item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
+    for life in (Life(i) for i in available):
+        restrictions_ok = True
+        if item_restrictions:
+            for item_name in life.required_items:
+                if rank.item_rarity < 1:
+                    continue
+                if not state.has(item_name, player, rank.item_rarity):
+                    restrictions_ok = False
+                    break
+        if not restrictions_ok:
+            continue
+
+        if rootRules.ItemValue(state, player, f"{life.description}:{rank.requirement}"):
             return True
 
     return False
@@ -116,12 +136,18 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
         raise Exception(f"Invalid rank and life parameter '{rank_and_life}'.")
 
     life = Life.from_description(parts[1])
+    rank = Rank.from_description(parts[0])
 
-    life_licenses = is_option_enabled(multiworld, player, "life_licenses")
-    if not life_licenses:
+    story = is_option_enabled(multiworld, player, "story")
+    if rank.min_chapter and story and not state.has("Progressive Chapter", player, rank.min_chapter):
+        return False
+
+    life_licenses = get_option_value(multiworld, player, "life_licenses")
+    if life_licenses in (0, 1):
         return True
 
-    rank = Rank.from_description(parts[0])
+    if state.has_any([f"Free {life.description} License", "Free Omni License"], player):
+        return True
 
     item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
     if item_restrictions:
@@ -131,19 +157,7 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
             if not state.has(item_name, player, rank.item_rarity):
                 return False
 
-    lives_progressive = is_option_enabled(multiworld, player, "lives_progressive")
-    if not lives_progressive:
-        return state.has(f"{life.description} License", player)
-
-    story = is_option_enabled(multiworld, player, "story")
-    if rank.min_chapter and story and not state.has("Progressive Chapter", player, rank.min_chapter):
-        return False
-
-    lives_fast = is_option_enabled(multiworld, player, "lives_fast")
-    if not lives_fast:
-        return state.has(f"Progressive {life.description} License", player, rank.full_requirement)
-
-    return state.has(f"Fast Progressive {life.description} License", player, rank.fast_requirement)
+    return rootRules.ItemValue(state, player, f"{life.description}:{rank.requirement}")
 
 
 def can_fight(world: World, multiworld: MultiWorld, state: CollectionState, player: int):

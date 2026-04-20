@@ -4,19 +4,26 @@ from unittest import case
 from BaseClasses import MultiWorld
 
 from .. import Helpers as rootHelpers
-from .Data import get_available_lives
+from .Data import get_available_lives, get_free_lives
 
 # Use this if you want to override the default behavior of is_option_enabled
 # Return True to enable the category, False to disable it, or None to use the default behavior
 def before_is_category_enabled(multiworld: MultiWorld, player: int, category_name: str) -> Optional[bool]:
+    life_licenses = rootHelpers.get_option_value(multiworld, player, "life_licenses")
     other_requests = rootHelpers.get_option_value(multiworld, player, "other_requests")
     goal = rootHelpers.get_option_value(multiworld, player, "goal")
     lives_max_rank = rootHelpers.get_option_value(multiworld, player, "lives_max_rank")
     shops_dosh = rootHelpers.get_option_value(multiworld, player, "shops_dosh")
     bliss_available = rootHelpers.get_option_value(multiworld, player, "bliss_available")
     available_lives = get_available_lives()
+    free_lives = get_free_lives()
+    strict_lives = list(set(available_lives) - set(free_lives))
 
     match category_name:
+        case "Single Licenses" if life_licenses != 2:
+            return False
+        case "Progressive Licenses" if life_licenses != 3:
+            return False
         case "Other Requests 1" if other_requests < 1:
             return False
         case "Other Requests 2" if other_requests < 2:
@@ -74,6 +81,30 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
         case "Tailor" if 11 not in available_lives:
             return False
         case "Alchemist" if 12 not in available_lives:
+            return False
+        case "Paladin Strict" if 1 not in strict_lives:
+            return False
+        case "Mercenary Strict" if 2 not in strict_lives:
+            return False
+        case "Hunter Strict" if 3 not in strict_lives:
+            return False
+        case "Magician Strict" if 4 not in strict_lives:
+            return False
+        case "Miner Strict" if 5 not in strict_lives:
+            return False
+        case "Woodcutter Strict" if 6 not in strict_lives:
+            return False
+        case "Angler Strict" if 7 not in strict_lives:
+            return False
+        case "Cook Strict" if 8 not in strict_lives:
+            return False
+        case "Blacksmith Strict" if 9 not in strict_lives:
+            return False
+        case "Carpenter Strict" if 10 not in strict_lives:
+            return False
+        case "Tailor Strict" if 11 not in strict_lives:
+            return False
+        case "Alchemist Strict" if 12 not in strict_lives:
             return False
         case x if x.startswith("Shop Price:"):
             price = int(x.split(":")[1].strip())

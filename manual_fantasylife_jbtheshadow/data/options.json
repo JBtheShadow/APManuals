@@ -134,13 +134,25 @@
         "life_licenses": {
             "display_name": "Include life licenses?",
             "description": [
-                "Toggles whether to include life licenses in the pool.",
+                "Sets whether to include life licenses in the pool and how.",
                 "This also includes locations for reaching each of the available ranks.",
                 "",
-                "This option should be fine in an existing save file, simply make sure you only check rank locations for",
+                "[disabled]: No licenses will be included nor any related locations.",
+                "[free]: You'll start with all licenses and they're free to use.",
+                "[single]: You'll start with one license and you'll have to find the others in the pool.",
+                "[progressive]: You'll start with one license and only have access to the fledgling rank, and must find",
+                "more licenses and ranks in the pool.",
+                "",
+                "Any of these options should be fine in an existing save file, simply make sure you only check rank locations for",
                 "ranks you have logical access to and have achieved already."
             ],
-            "type": "Toggle",
+            "type": "Choice",
+            "values": {
+                "disabled": 0,
+                "free": 1,
+                "single": 2,
+                "progressive": 3
+            },
             "default": true,
             "group": "Life Options"
         },
@@ -174,34 +186,6 @@
             "default": 4,
             "group": "Life Options"
         },
-        "lives_progressive": {
-            "display_name": "Progressive life ranks?",
-            "description": [
-                "Toggles whether licenses should be unlocked one rank at a time, with the first license unlocking both Novice and Fledgling ranks.",
-                "If disabled, a single license unlocks all ranks. Does nothing if life licenses are not included.",
-                "",
-                "Not recommended to turn it off in an existing save file, as a single license per life could potentially mean too many locations",
-                "sent at once."
-            ],
-            "type": "Toggle",
-            "default": true,
-            "group": "Life Options"
-        },
-        "lives_fast": {
-            "display_name": "Fast progressive licenses?",
-            "description": [
-                "Toggles whether progressive licenses should be grouped together, to reduce item count.",
-                "Does nothing if licenses are not included nor if progressive licenses are disabled.",
-                "The unlocked ranks per license become as follows:",
-                "Novice, Fledgling, Apprentice -> 1 license",
-                "Adept, Expert -> 2 licenses",
-                "Master, Hero, Legend -> 3 licenses",
-                "Demi-Creator, Creator -> 4 licenses (DLC)"
-            ],
-            "type": "Toggle",
-            "default": false,
-            "group": "Life Options"
-        },
         "life_start": {
             "display_name": "Starting Life",
             "description": [
@@ -210,7 +194,7 @@
                 "The starting life must be included in the available lives chosen earlier.",
                 "If it isn't, a random available life will be selected instead.",
                 "",
-                "[any]: Randomly pick between any of the 12 Lives.",
+                "[any]: Randomly pick between any of the available lives.",
                 "[paladin]: Start as a Paladin.",
                 "[mercenary]: Start as a Mercenary.",
                 "[hunter]: Start as a Hunter.",

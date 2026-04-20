@@ -88,7 +88,7 @@ def after_load_location_file(location_table: list) -> list:
                 requires = f"{{has_any_license({rank})}}" if life is None else f"{{has_license({rank} {life.description})}}"
                 categories = [ "Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}", rank ]
                 if life is not None:
-                    categories.append(life.description)
+                    categories.append(life.description + " Strict")
                 if rank == "Creator":
                     requires += " AND {origin_island_access()}"
                     categories.append("DLC")
@@ -102,11 +102,10 @@ def after_load_location_file(location_table: list) -> list:
                 "Life Challenges",
                 f"Challenges: {entry["Rank"]} {entry["Life"]}",
                 entry["Rank"],
-                entry["Life"]
+                entry["Life"] + " Strict"
             ]
-            categories += [extra for extra in [
-                entry["Dependency1"], entry["Dependency2"], entry["Dependency3"], entry["Dependency4"], entry["DLC"]
-            ] if len(extra)]
+            if len(entry["DLC"]):
+                categories += "DLC"
             return categories
         def build_requires(entry: dict):
             requires = [
@@ -248,6 +247,7 @@ def after_load_meta_file(meta_table: dict) -> dict:
     return meta_table
 
 available_lives = []
+free_lives = []
 shops = []
 chests = []
 requests = []
@@ -267,6 +267,13 @@ def get_available_lives():
 def set_available_lives(value: list[int]):
     global available_lives
     available_lives = value
+
+def get_free_lives():
+    return free_lives
+
+def set_free_lives(value: list[int]):
+    global free_lives
+    free_lives = value
 
 def get_base_checks(story, dlc):
     return 0 if not story else 65 if not dlc else 85
@@ -511,15 +518,15 @@ class Life(Enum):
 
 
 class Rank(Enum):
-    NOVICE = 0, "Novice", 1, 1, 0, 0
-    FLEDGLING = 1, "Fledgling", 1, 1, 0, 0
-    APPRENTICE = 2, "Apprentice", 1, 2, 0, 1
-    ADEPT = 3, "Adept", 2, 3, 2, 2
-    EXPERT = 4, "Expert", 2, 4, 3, 3
-    MASTER = 5, "Master", 3, 5, 4, 3
-    HERO = 6, "Hero", 3, 6, 6, 4
-    LEGEND = 7, "Legend", 3, 7, 7, 4
-    CREATOR = 8, "Creator", 4, 8, 8, 5
+    NOVICE = 0, "Novice", 1, 0, 0
+    FLEDGLING = 1, "Fledgling", 1, 0, 0
+    APPRENTICE = 2, "Apprentice", 2, 0, 1
+    ADEPT = 3, "Adept", 3, 2, 2
+    EXPERT = 4, "Expert", 4, 3, 3
+    MASTER = 5, "Master", 5, 4, 3
+    HERO = 6, "Hero", 6, 6, 4
+    LEGEND = 7, "Legend", 7, 7, 4
+    CREATOR = 8, "Creator", 8, 8, 5
 
     def __new__(cls, *args, **kwds):
         obj = object.__new__(cls)
@@ -530,13 +537,11 @@ class Rank(Enum):
         self,
         _: int,
         description: str = None,
-        fast_requirement: int = 1,
         full_requirement: int = 1,
         min_chapter: int = 0,
         item_rarity: int = 0
     ):
         self._description_ = description
-        self._fast_requirement_ = fast_requirement
         self._full_requirement_ = full_requirement
         self._min_chapter_ = min_chapter
         self._item_rarity_ = item_rarity
@@ -550,11 +555,7 @@ class Rank(Enum):
         return self._description_
 
     @property
-    def fast_requirement(self):
-        return self._fast_requirement_
-
-    @property
-    def full_requirement(self):
+    def requirement(self):
         return self._full_requirement_
 
     @property
