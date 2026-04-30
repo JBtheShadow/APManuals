@@ -172,7 +172,7 @@ def can_heal(world: World, multiworld: MultiWorld, state: CollectionState, playe
     return True
 
 
-def completed_chapter(world: World, multiworld: MultiWorld, state: CollectionState, player: int, chapter_str: str):
+def chapter_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int, chapter_str: str):
     chapter_str = chapter_str.strip()
     chapter = int(chapter_str) if chapter_str.isnumeric() else 1
     return "{OptOne(|Progressive Chapter:" + str(chapter) + "|)}"
@@ -180,39 +180,39 @@ def completed_chapter(world: World, multiworld: MultiWorld, state: CollectionSta
 
 
 def west_grassy_plains_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "1")
+    return chapter_access(world, multiworld, state, player, "1")
 
 
 def snowpeak_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "2")
+    return chapter_access(world, multiworld, state, player, "2")
 
 
 def port_puerto_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "3")
+    return chapter_access(world, multiworld, state, player, "3")
 
 
 def al_maajik_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "4")
+    return chapter_access(world, multiworld, state, player, "4")
 
 
 def elderwood_village_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "5")
+    return chapter_access(world, multiworld, state, player, "5")
 
 
 def terra_nimbus_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "6")
+    return chapter_access(world, multiworld, state, player, "6")
 
 
 def finished_storyline(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "7")
+    return chapter_access(world, multiworld, state, player, "7")
 
 
 def origin_island_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "8") # TODO: also add event here for the right location that gives access to this
+    return chapter_access(world, multiworld, state, player, "8")
 
 
 def trials_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return completed_chapter(world, multiworld, state, player, "9") # TODO: also add event here for the right location that gives access to this
+    return chapter_access(world, multiworld, state, player, "9")
 
 
 def has_fairy_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):

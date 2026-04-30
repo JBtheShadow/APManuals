@@ -42,7 +42,7 @@ class GoalRequirements(OptionList):
     ["Life Mastery"]: Rank up a number of lives to a specific rank.
     ["Wish Hunt"]: Find a number of Lost Wishes (mcguffins)."""
     display_name = "Goal Requirements"
-    valid_keys = ["Beat Story", "Beat DLC", "Life Mastery", 'Wish Hunt']
+    valid_keys = ["Beat Story", "Beat DLC", "Life Mastery", "Wish Hunt"]
     default = ["Wish Hunt"]
 
 
@@ -98,8 +98,10 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
-    groups["Game Options"].append(GoalRequirements)
-    groups["Life Options"].append(LivesAvailable)
+    # groups["Game Options"].append(GoalRequirements)
+    # groups["Life Options"].append(LivesAvailable)
+    groups["Game Options"] = [GoalRequirements]
+    groups["Life Options"] = [LivesAvailable]
     return groups
 
 def after_option_groups_created(groups: list[OptionGroup]) -> list[OptionGroup]:

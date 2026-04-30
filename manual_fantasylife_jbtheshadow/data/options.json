@@ -162,8 +162,21 @@
                 "Adds checks for each of the life challenges.",
                 "",
                 "This option *may* be fine in an existing save file, so long as you only check the challenges you have",
-                "logical access to and have completed. If in doubt, though, or if using a single license per life,",
-                "toggle this off."
+                "logical access to and have completed."
+            ],
+            "type": "Toggle",
+            "default": true,
+            "group": "Life Options"
+        },
+        "life_recipes": {
+            "display_name": "Include crafting recipes?",
+            "description": [
+                "Adds checks for crafting recipes for each artisan life included.",
+                "",
+                "If you're playing with only artisan lives this can be an alternative to life challenges, as crafting",
+                "almost one of everything will help you towards promoting ranks.",
+                "",
+                "This has no effect if no artisan lives are included. Safe to use for existing saves."
             ],
             "type": "Toggle",
             "default": true,
@@ -418,6 +431,22 @@
             "type": "Toggle",
             "default": false,
             "group": "Shop Options"
+        },
+        "tasks": {
+            "display_name": "Include Tasks?",
+            "description": [
+                "Tasks are randomly generated locations awarding checks for things like gathering 10 castele apples or fighting 5",
+                "bandits or mining 3 topazes. They're an alternative to life challenges and requests, possibly ideal if you want to",
+                "play this Manual on an existing save file.",
+                "",
+                "Tasks requiring Mining, Woodcutting or Fishing may be included if the respective licenses are included too.",
+                "Otherwise, only items from free gathering spots, monsters, their drops and bounties may be considered."
+            ],
+            "type": "Range",
+            "range_start": 0,
+            "range_end": 1000,
+            "default": 0,
+            "group": "Misc Options"
         },
         "passwords": {
             "display_name": "Include Passwords?",

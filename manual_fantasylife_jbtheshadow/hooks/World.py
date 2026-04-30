@@ -10,7 +10,8 @@ from ..Locations import ManualLocation
 from .Data import Life, Rank, set_available_lives, get_available_lives, get_available_shop_checks, \
     get_unused_shop_storage_keys, get_other_requests_checks, get_chests_checks, get_skill_levels_checks, \
     get_life_challenges_checks, get_prog_license_count, get_base_checks, get_free_lives, set_free_lives, \
-    get_map_restrictions_count, get_item_restrictions_count, get_filler_categories, get_filler_items_by_category
+    get_map_restrictions_count, get_item_restrictions_count, get_filler_categories, get_filler_items_by_category, \
+    get_life_recipe_checks
 from .Helpers import set_option_value, set_option_enabled
 
 # Raw JSON data from the Manual apworld, respectively:
@@ -65,6 +66,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     lives_available = world.options.lives_available.value
     life_licenses = get_option_value(multiworld, player, "life_licenses")
     life_challenges = is_option_enabled(multiworld, player, "life_challenges")
+    life_recipes = is_option_enabled(multiworld, player, "life_recipes")
     item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
     chests = is_option_enabled(multiworld, player, "chests")
     character_levels = is_option_enabled(multiworld, player, "character_levels")
@@ -205,6 +207,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     spare_checks = get_base_checks(story, dlc)
     if life_challenges:
         spare_checks += get_life_challenges_checks(dlc, lives_max_rank)
+    if life_recipes:
+        spare_checks += get_life_recipe_checks(dlc, lives_max_rank)
     if other_requests:
         spare_checks += get_other_requests_checks(dlc, other_requests, lives_max_rank)
     if chests:
@@ -272,7 +276,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             life_mastery_rank = lives_max_rank
             set_option_value(multiworld, player, "life_mastery_rank", life_mastery_rank)
 
-        lives_count = len(get_available_lives())
+        lives_count = len(set(get_available_lives()) - set(get_free_lives()))
         if life_mastery_count > lives_count:
             logging.warning("Cannot achieve life mastery goal with the available lives")
             logging.warning(f"Changing life_mastery_count from {life_mastery_count} to {lives_count}")

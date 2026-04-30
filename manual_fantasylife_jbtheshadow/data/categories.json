@@ -72,5 +72,6 @@
     "Port Shop": { "hidden": true },
     "Desert Shop": { "hidden": true },
     "Other Shop": { "hidden": true },
-    "DLC Shop": { "hidden": true }
+    "DLC Shop": { "hidden": true },
+    "Crafting Recipes": { "yaml_option": ["life_recipes"], "hidden": true }
 }

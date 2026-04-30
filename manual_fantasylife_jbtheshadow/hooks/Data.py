@@ -12,13 +12,19 @@ def after_load_item_file(item_table: list) -> list:
 
     # Extra Data
     from ..Helpers import load_data_csv
-    global shops, chests, requests, challenges, lives, filler
+    global shops, chests, requests, challenges, lives, filler, combat, fish, ground, ores, trees, recipes
     shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
     requests = load_data_csv("csv", "requests.csv")
     challenges = load_data_csv("csv", "challenges.csv")
     lives = load_data_csv("csv", "lives.csv")
     filler = load_data_csv("csv", "filler.csv")
+    combat = load_data_csv("csv", "combat.csv")
+    fish = load_data_csv("csv", "fish.csv")
+    ground = load_data_csv("csv", "ground.csv")
+    ores = load_data_csv("csv", "ores.csv")
+    trees = load_data_csv("csv", "trees.csv")
+    recipes = load_data_csv("csv", "recipes.csv")
 
     # Shop Items
     item_table += [{
@@ -122,6 +128,40 @@ def after_load_location_file(location_table: list) -> list:
             "dont_place_item_category": [entry["Life"]]
         } for entry in challenges]
     location_table += build_challenge_locations()
+
+    def build_recipe_locations():
+        def build_name(entry: dict):
+            pronoun = "a" if entry["Item"].startswith("Pair of") else \
+                      "some" if entry["Item"].endswith("s") else \
+                      "an" if entry["Item"].startswith("A") or \
+                              entry["Item"].startswith("E") or \
+                              entry["Item"].startswith("I") or \
+                              entry["Item"].startswith("O") or \
+                              entry["Item"].startswith("U") else "a"
+            return f"Craft {pronoun} {entry['Item']}"
+        def build_category(entry: dict):
+            logic_rank = entry["Rank"] if entry["Rank"] != "Demi-Creator" else "Creator"
+            categories = [
+                "Crafting Recipes",
+                f"Crafting: {entry["Rank"]} {entry["Life"]}",
+                logic_rank,
+                entry["Life"] + " Strict"
+            ]
+            if logic_rank == "Creator":
+                categories += "DLC"
+            return categories
+        def build_requires(entry: dict):
+            logic_rank = entry["Rank"] if entry["Rank"] != "Demi-Creator" else "Creator"
+            requires = [f"{{has_license({logic_rank} {entry["Life"]})}}"]
+            return " and ".join(requires)
+        return [{
+            "name": build_name(entry),
+            "region": f"{entry["Rank"]} Challenges" if entry["Rank"] != "Demi-Creator" else "Creator Challenges",
+            "category": build_category(entry),
+            "requires": build_requires(entry),
+            "dont_place_item_category": [entry["Life"]]
+        } for entry in recipes]
+    location_table += build_recipe_locations()
 
     def build_request_locations():
         def build_category(entry: dict):
@@ -254,6 +294,12 @@ requests = []
 challenges = []
 lives = []
 filler = []
+combat = []
+fish = []
+ground = []
+ores = []
+trees = []
+recipes = []
 
 def get_filler_categories():
     return {entry["Group"] for entry in filler}
@@ -279,7 +325,8 @@ def get_base_checks(story, dlc):
     return 0 if not story else 65 if not dlc else 85
 
 def get_life_challenges_checks(dlc, max_rank):
-    formated_lives = [Life(i).description for i in available_lives]
+    strict_lives = list(set(available_lives) - set(free_lives))
+    formated_lives = [Life(i).description for i in strict_lives]
     formated_ranks = [Rank(i).description for i in range(1, max_rank + 1)]
     return len([
         entry for entry in challenges
@@ -290,6 +337,18 @@ def get_life_challenges_checks(dlc, max_rank):
            and (not entry["Dependency2"] or entry["Dependency2"] in formated_lives)
            and (not entry["Dependency3"] or entry["Dependency3"] in formated_lives)
            and (not entry["Dependency4"] or entry["Dependency4"] in formated_lives)
+    ])
+
+def get_life_recipe_checks(dlc, max_rank):
+    strict_lives = list(set(available_lives) - set(free_lives))
+    formated_lives = [Life(i).description for i in strict_lives]
+    formated_ranks = [Rank(i).description for i in range(1, max_rank + 1)]
+    if dlc and max_rank >= 8:
+        formated_ranks.append("Demi-Creator")
+    return len([
+        entry for entry in recipes
+        if (entry["Rank"] in formated_ranks)
+           and (entry["Life"] in formated_lives)
     ])
 
 def get_other_requests_checks(dlc, request_count, max_rank):
@@ -308,7 +367,8 @@ def get_other_requests_checks(dlc, request_count, max_rank):
 def get_skill_levels_checks(dlc, max_rank):
     levels_per_rank = { 1: 2, 2: 3, 3: 3, 4: 3, 5: 3, 8: 5 }
     levels_max_rank = sum(levels_per_rank[i] for i in levels_per_rank if i <= max_rank and (max_rank < 8 or dlc))
-    formated_lives = ["Any"] + [Life(i).description for i in available_lives]
+    strict_lives = list(set(available_lives) - set(free_lives))
+    formated_lives = ["Any"] + [Life(i).description for i in strict_lives]
     skill_count = len([
         entry for entry in lives
         if (entry["Skill"]) and (entry["Life"] in formated_lives)
@@ -349,17 +409,6 @@ def get_available_shop_checks(dlc, with_bliss, with_lives, max_rank, with_story,
         total_checks -= len(get_used_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh))
     return total_checks
 
-def get_fast_license_count(dlc, max_rank):
-    match max_rank:
-        case 1 | 2:
-            return 1
-        case 3 | 4:
-            return 2
-        case 5 | 6 | 7:
-            return 3
-        case 8 | _:
-            return 4 if dlc else 3
-
 def get_prog_license_count(dlc, max_rank):
     if max_rank < 8:
         return max_rank
@@ -370,7 +419,8 @@ def get_map_restrictions_count(dlc):
     return 11 if dlc else 10
 
 def get_item_restrictions_count():
-    formated_lives = ["Any"] + [Life(i).description for i in available_lives]
+    strict_lives = list(set(available_lives) - set(free_lives))
+    formated_lives = ["Any"] + [Life(i).description for i in strict_lives]
     return 5 * len({
         entry["Item"] for entry in lives
         if (entry["Item"]) and (entry["Life"] in formated_lives)
