@@ -432,22 +432,6 @@
             "default": false,
             "group": "Shop Options"
         },
-        "tasks": {
-            "display_name": "Include Tasks?",
-            "description": [
-                "Tasks are randomly generated locations awarding checks for things like gathering 10 castele apples or fighting 5",
-                "bandits or mining 3 topazes. They're an alternative to life challenges and requests, possibly ideal if you want to",
-                "play this Manual on an existing save file.",
-                "",
-                "Tasks requiring Mining, Woodcutting or Fishing may be included if the respective licenses are included too.",
-                "Otherwise, only items from free gathering spots, monsters, their drops and bounties may be considered."
-            ],
-            "type": "Range",
-            "range_start": 0,
-            "range_end": 1000,
-            "default": 0,
-            "group": "Misc Options"
-        },
         "passwords": {
             "display_name": "Include Passwords?",
             "description": [

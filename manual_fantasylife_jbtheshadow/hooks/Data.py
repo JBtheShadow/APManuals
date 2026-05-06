@@ -12,18 +12,13 @@ def after_load_item_file(item_table: list) -> list:
 
     # Extra Data
     from ..Helpers import load_data_csv
-    global shops, chests, requests, challenges, lives, filler, combat, fish, ground, ores, trees, recipes
+    global shops, chests, requests, challenges, lives, filler, recipes
     shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
     requests = load_data_csv("csv", "requests.csv")
     challenges = load_data_csv("csv", "challenges.csv")
     lives = load_data_csv("csv", "lives.csv")
     filler = load_data_csv("csv", "filler.csv")
-    combat = load_data_csv("csv", "combat.csv")
-    fish = load_data_csv("csv", "fish.csv")
-    ground = load_data_csv("csv", "ground.csv")
-    ores = load_data_csv("csv", "ores.csv")
-    trees = load_data_csv("csv", "trees.csv")
     recipes = load_data_csv("csv", "recipes.csv")
 
     # Shop Items
@@ -294,11 +289,6 @@ requests = []
 challenges = []
 lives = []
 filler = []
-combat = []
-fish = []
-ground = []
-ores = []
-trees = []
 recipes = []
 
 def get_filler_categories():
