@@ -1,8 +1,16 @@
-[
-  {
-    "name": "Test",
-    "victory": true,
-    "category": [],
-    "requires": ""
-  }
-]
+{
+	"$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
+    "data": [
+        { "name": "Defeat the Boss in Stage 1 - Relic Reward", "sort-key": "clear-01", "region": "Stage 1", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 1 - Stage Reward", "sort-key": "clear-02", "region": "Stage 1", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 2 - Relic Reward", "sort-key": "clear-03", "region": "Stage 2", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 2 - Stage Reward", "sort-key": "clear-04", "region": "Stage 2", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 3 - Relic Reward", "sort-key": "clear-05", "region": "Stage 3", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 3 - Stage Reward", "sort-key": "clear-06", "region": "Stage 3", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 4 - Relic Reward", "sort-key": "clear-07", "region": "Stage 4", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 4 - Stage Reward", "sort-key": "clear-08", "region": "Stage 4", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 5 - Relic Reward", "sort-key": "clear-09", "region": "Stage 5", "category": ["Stage Clear"] },
+        { "name": "Defeat the Boss in Stage 5 - Stage Reward", "sort-key": "clear-10", "region": "Stage 5", "category": ["Stage Clear"] },
+        { "name": "Defeat Dracula", "sort-key": "clear-11", "region": "Stage 6", "category": ["Stage Clear"], "requires": "|@Vlad Relics:5|", "victory": true }
+    ]
+}

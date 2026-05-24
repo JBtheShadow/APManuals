@@ -32,8 +32,33 @@ class TotalCharactersToWinWith(Range):
     range_end = 50
     default = 50
 
+class IncludeStages(Toggle):
+    """Allows stage progression to appear anywhere in the multiworld. Disable this to only receive them from defeating bosses."""
+    display_name = "Include Stages"
+
+class ProgressiveStages(DefaultOnToggle):
+    """Stage progression is unlocked sequentially. Disable this to unlock them in any order. Does nothing if stages aren't included."""
+    display_name = "Progressive Stages"
+
+class EnableFastTravel(DefaultOnToggle):
+    """Allows you to travel between any unlocked stagesLets you freely travel to the first or last tile of any stage you've unlocked to any stage you've unlocked."""
+    display_name = "Enable Fast Travel"
+
+class IncludeRelics(Toggle):
+    """Allows the Vlad relics to appear anywhere in the multiworld. Disable this to only receive them from defeating bosses."""
+    display_name = "Include Relics"
+
+class EnableTilesanity(Toggle):
+    """Enables tilesanity, where each non-boss tile on the board has an associated location for revealing/landing on it the first time"""
+    display_name = "Tilesanity"
+
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
+    options["include_stages"] = IncludeStages
+    options["progressive_stages"] = ProgressiveStages
+    options["fast_travel"] = EnableFastTravel
+    options["include_relics"] = IncludeRelics
+    options["tilesanity"] = EnableTilesanity
     return options
 
 # This is called after any manual options are defined, in case you want to see what options are defined or want to modify the defined options

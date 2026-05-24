@@ -1,1 +1,5 @@
-{}
+{
+    "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.categories.schema.json",
+    "Fixed Stages": { "yaml_option": ["!progressive_stages"], "hidden": true },
+    "Progressive Stages": { "yaml_option": ["progressive_stages"], "hidden": true }
+}

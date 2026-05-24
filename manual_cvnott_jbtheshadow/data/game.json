@@ -3,5 +3,8 @@
   "game": "CVNotT",
   "creator": "JBtheShadow",
   "filler_item_name": "Treasure",
-  "starting_items": []
+  "starting_items": [
+      { "items": ["Stage 1"], "random": 1, "yaml_option": ["!progressive_stages"] },
+      { "items": ["Progressive Stage"], "random": 1, "yaml_option": ["progressive_stages"] }
+  ]
 }

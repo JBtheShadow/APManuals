@@ -1,8 +1,18 @@
-[
-  {
-    "count": 1,
-    "name": "Test",
-    "category": [],
-    "filler": true
-  }
-]
+{
+    "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.items.schema.json",
+    "data": [
+        { "count": 1, "name": "Stage 1", "category": ["Stages", "Fixed Stages"], "progression": true },
+        { "count": 1, "name": "Stage 2", "category": ["Stages", "Fixed Stages"], "progression": true },
+        { "count": 1, "name": "Stage 3", "category": ["Stages", "Fixed Stages"], "progression": true },
+        { "count": 1, "name": "Stage 4", "category": ["Stages", "Fixed Stages"], "progression": true },
+        { "count": 1, "name": "Stage 5", "category": ["Stages", "Fixed Stages"], "progression": true },
+        { "count": 1, "name": "Stage 6", "category": ["Stages", "Fixed Stages"], "progression": true },
+        { "count": 6, "name": "Progressive Stage", "category": ["Stages", "Progressive Stages"], "progressive": true },
+
+        { "count": 1, "name": "Heart of Vlad", "category": ["Vlad Relics"], "progression": true },
+        { "count": 1, "name": "Eye of Vlad", "category": ["Vlad Relics"], "progression": true },
+        { "count": 1, "name": "Rib of Vlad", "category": ["Vlad Relics"], "progression": true },
+        { "count": 1, "name": "Ring of Vlad", "category": ["Vlad Relics"], "progression": true },
+        { "count": 1, "name": "Tooth of Vlad", "category": ["Vlad Relics"], "progression": true }
+    ]
+}

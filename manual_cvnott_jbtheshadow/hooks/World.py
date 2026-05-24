@@ -86,6 +86,33 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     # Because multiple copies of an item can exist, you need to add an item name
     # to the list multiple times if you want to remove multiple copies of it.
 
+    #region Stages
+    include_stages = is_option_enabled(multiworld, player, "include_relics")
+    progressive_stages = is_option_enabled(multiworld, player, "progressive_stages")
+    if not include_stages:
+        stage_clear_locations = [f"Defeat the Boss in Stage {stage} - Stage Reward" for stage in range(1,6)]
+        stage_clear_items = ["Progressive Stage"] * 5 if progressive_stages else [f"Stage {stage}" for stage in range(2,7)]
+        for location_name, item_name in zip(stage_clear_locations, stage_clear_items):
+            location = next(l for l in multiworld.get_unfilled_locations(player) if l.name == location_name)
+            item_to_place = next(i for i in item_pool if i.name == item_name)
+            location.place_locked_item(item_to_place)
+            remove_specific_item(item_pool, item_to_place)
+    #endregion
+
+    #region Relics
+    include_relics = is_option_enabled(multiworld, player, "include_relics")
+    if not include_relics:
+        stage_clear_locations = [f"Defeat the Boss in Stage {stage} - Relic Reward" for stage in range(1,6)]
+        vlad_relics = [f"{thing} of Vlad" for thing in ["Eye", "Rib", "Tooth", "Heart", "Ring"]]
+        for location_name in stage_clear_locations:
+            location = next(l for l in multiworld.get_unfilled_locations(player) if l.name == location_name)
+            relic_to_place = world.random.choice(vlad_relics)
+            vlad_relics.remove(relic_to_place)
+            item_to_place = next(i for i in item_pool if i.name == relic_to_place)
+            location.place_locked_item(item_to_place)
+            remove_specific_item(item_pool, item_to_place)
+    #endregion
+
     for itemName in itemNamesToRemove:
         item = next(i for i in item_pool if i.name == itemName)
         remove_specific_item(item_pool, item)

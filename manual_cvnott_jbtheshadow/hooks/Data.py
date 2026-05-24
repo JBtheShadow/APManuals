@@ -14,6 +14,20 @@ def after_load_progressive_item_file(progressive_item_table: list) -> list:
 # called after the locations.json file has been loaded, before any location loading or processing has occurred
 # if you need access to the locations after processing to add ids, etc., you should use the hooks in World.py
 def after_load_location_file(location_table: list) -> list:
+    #region Tilesanity locations
+    def tilesanity_locations():
+        tiles = { 1: 24, 2: 26, 3: 31, 4: 29, 5: 34, 6: 34 }
+        return [
+            {
+                "name": f"Revealed Tile {stage}-{tile:02d}",
+                "category": f"Stage {stage} Tilesanity",
+                "region": f"Stage {stage}"
+            }
+            for stage, count in tiles.items()
+            for tile in range(1, count + 1)
+        ]
+    location_table += tilesanity_locations()
+    #endregion
     return location_table
 
 # called after the events.json file has been loaded, before any processing has occurred

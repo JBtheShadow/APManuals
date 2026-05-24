@@ -1,6 +1,46 @@
 {
-  "undefined": {
-    "connects_to": [],
-    "requires": ""
-  }
+    "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
+    "Start": { "connects_to": ["Stage 1"], "starting": true },
+    "Stage 1": {
+        "connects_to": ["Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6"],
+        "requires": "{OptOne(|Stage 1|)} or {OptOne(|Progressive Stage:1|)}",
+        "exit_requires": {
+            "Stage 3": "{YamlEnabled(fast_travel)}",
+            "Stage 4": "{YamlEnabled(fast_travel)}",
+            "Stage 5": "{YamlEnabled(fast_travel)}",
+            "Stage 6": "{YamlEnabled(fast_travel)}"
+        }
+    },
+    "Stage 2": {
+        "connects_to": ["Stage 3", "Stage 4", "Stage 5", "Stage 6"],
+        "requires": "{OptOne(|Stage 2|)} or {OptOne(|Progressive Stage:2|)}",
+        "exit_requires": {
+            "Stage 4": "{YamlEnabled(fast_travel)}",
+            "Stage 5": "{YamlEnabled(fast_travel)}",
+            "Stage 6": "{YamlEnabled(fast_travel)}"
+        }
+    },
+    "Stage 3": {
+        "connects_to": ["Stage 4", "Stage 5", "Stage 6"],
+        "requires": "{OptOne(|Stage 3|)} or {OptOne(|Progressive Stage:3|)}",
+        "exit_requires": {
+            "Stage 5": "{YamlEnabled(fast_travel)}",
+            "Stage 6": "{YamlEnabled(fast_travel)}"
+        }
+    },
+    "Stage 4": {
+        "connects_to": ["Stage 5", "Stage 6"],
+        "requires": "{OptOne(|Stage 4|)} or {OptOne(|Progressive Stage:4|)}",
+        "exit_requires": {
+            "Stage 6": "{YamlEnabled(fast_travel)}"
+        }
+    },
+    "Stage 5": {
+        "connects_to": ["Stage 6"],
+        "requires": "{OptOne(|Stage 5|)} or {OptOne(|Progressive Stage:5|)}"
+    },
+    "Stage 6": {
+        "connects_to": ["Stage 6"],
+        "requires": "{OptOne(|Stage 6|)} or {OptOne(|Progressive Stage:6|)}"
+    }
 }
