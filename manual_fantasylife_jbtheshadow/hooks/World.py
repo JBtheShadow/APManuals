@@ -1,5 +1,7 @@
 # Object classes from AP core, to represent an entire MultiWorld and this individual World that's part of it
-from typing import Any
+from typing import Any, TypeVar
+from unittest import case
+
 from worlds.AutoWorld import World
 from BaseClasses import MultiWorld, CollectionState, Item
 
@@ -7,12 +9,8 @@ from BaseClasses import MultiWorld, CollectionState, Item
 from ..Items import ManualItem
 from ..Locations import ManualLocation
 
-from .Data import Life, Rank, set_available_lives, get_available_lives, get_available_shop_checks, \
-    get_unused_shop_storage_keys, get_other_requests_checks, get_chests_checks, get_skill_levels_checks, \
-    get_life_challenges_checks, get_prog_license_count, get_base_checks, get_free_lives, set_free_lives, \
-    get_map_restrictions_count, get_item_restrictions_count, get_filler_categories, get_filler_items_by_category, \
-    get_life_recipe_checks
-from .Helpers import set_option_value, set_option_enabled
+from .Data import (life_names, rank_names, skill_names, get_filler_categories, get_filler_items_by_category,
+                   get_unused_shop_storage_keys, get_wish_hunt_available_location_count)
 
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
@@ -21,7 +19,7 @@ from ..Data import game_table, item_table, location_table, region_table
 
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
 from ..Helpers import is_option_enabled, get_option_value, format_state_prog_items_key, ProgItemsCat, \
-    remove_specific_item
+    remove_specific_item, is_item_name_enabled
 
 # calling logging.info("message") anywhere below in this file will output the message to both console and log file
 import logging
@@ -38,6 +36,22 @@ import logging
 ## The fill_slot_data method will be used to send data to the Manual client for later use, like deathlink.
 ########################################################################################
 
+T = TypeVar("T")
+
+
+def get_option(world: World, name: str, default: T):
+    try:
+        return getattr(world.options, name).value
+    except AttributeError:
+        return default
+
+def set_option(world: World, name: str, value: T):
+    try:
+        option = getattr(world.options, name)
+        option.value = value
+        setattr(world.options, name, option)
+    except AttributeError:
+        pass
 
 # Use this function to change the valid filler items to be created to replace item links or starting items.
 # Default value is the `filler_item_name` from game.json
@@ -51,238 +65,349 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     This is the earliest hook called during generation, before anything else is done.
     Use it to check or modify incompatible options, or to set up variables for later use.
     """
-
-    goal_requirements = world.options.goal_requirements.value
-    story = is_option_enabled(multiworld, player, 'story')
-    story_pool = is_option_enabled(multiworld, player, 'story_pool')
-    story_local = is_option_enabled(multiworld, player, 'story_local')
-    wish_hunt_required = get_option_value(multiworld, player, "wish_hunt_required")
-    wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
-    wish_hunt_local = get_option_value(multiworld, player, "wish_hunt_local")
-    dlc = get_option_value(multiworld, player, "dlc")
-    life_mastery_rank = get_option_value(multiworld, player, "life_mastery_rank")
-    life_mastery_count = get_option_value(multiworld, player, "life_mastery_count")
-    lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
-    lives_available = world.options.lives_available.value
-    life_licenses = get_option_value(multiworld, player, "life_licenses")
-    life_challenges = is_option_enabled(multiworld, player, "life_challenges")
-    life_recipes = is_option_enabled(multiworld, player, "life_recipes")
-    item_restrictions = is_option_enabled(multiworld, player, "item_restrictions")
-    chests = is_option_enabled(multiworld, player, "chests")
-    character_levels = is_option_enabled(multiworld, player, "character_levels")
-    character_levels_min = get_option_value(multiworld, player, "character_levels_min")
-    character_levels_max = get_option_value(multiworld, player, "character_levels_max")
-    skill_levels = is_option_enabled(multiworld, player, "skill_levels")
-    other_requests = get_option_value(multiworld, player, "other_requests")
-    shops = is_option_enabled(multiworld, player, "shops")
-    shops_bliss = is_option_enabled(multiworld, player, "shops_bliss")
-    shops_lives = is_option_enabled(multiworld, player, "shops_lives")
-    shops_story = is_option_enabled(multiworld, player, "shops_story")
-    shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
-    shops_dosh = get_option_value(multiworld, player, "shops_dosh")
-    shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
-    bliss_available = get_option_value(multiworld, player, "bliss_available")
-    map_restrictions = get_option_value(multiworld, player, "map_restrictions")
-    game_seed = get_option_value(multiworld, player, "game_seed")
-
-    if "Beat Story" in goal_requirements and not story:
-        logging.warning("Beat Story goal requirement not possible without story checks, removing it")
-        goal_requirements.remove("Beat Story")
-        world.options.goal_requirements.value = goal_requirements
-
-    if "Beat DLC" in goal_requirements and not (story and dlc):
-        logging.warning("Beat DLC goal requirement not possible without story checks and dlc, removing it")
-        goal_requirements.remove("Beat DLC")
-        world.options.goal_requirements.value = goal_requirements
-
-    if not goal_requirements:
-        logging.warning("Invalid goal requirements, defaulting to Wish Hunt")
-        goal_requirements = ["Wish Hunt"]
-        world.options.goal_requirements.value = goal_requirements
-
-    if game_seed < 0:
-        seed = world.random.randint(1, 999999999999)
-        set_option_value(multiworld, player, "game_seed", seed)
-    world.random.seed(game_seed)
-
-    possible_melee = {"Paladin", "Mercenary"}
-    possible_ranged = {"Hunter", "Magician"}
-    possible_combat = possible_melee | possible_ranged
-    possible_gatherer = {"Miner", "Woodcutter", "Angler"}
-    possible_artisan = {"Cook", "Blacksmith", "Carpenter", "Tailor", "Alchemist"}
-    possible_lives = possible_combat | possible_gatherer | possible_artisan
-    actual_lives_available = set()
-    free_lives_available = set()
-
-    def add_random_life(choices):
-        diff = choices - actual_lives_available
-        if diff:
-            choice = world.random.choice(list(diff))
-            actual_lives_available.add(choice)
-
+    game_seed = get_option(world, "game_seed", "")
+    story_goal = get_option(world, "story_goal", False)
+    dlc_goal = get_option(world, "dlc_goal", False)
+    life_mastery_goal = get_option(world, "life_mastery_goal", False)
+    wish_hunt_goal = get_option(world, "wish_hunt_goal", False)
+    include_dlc = get_option(world, "include_dlc", False)
+    include_story = get_option(world, "include_story", False)
+    include_dlc_story = get_option(world, "include_dlc_story", False)
+    include_challenges = get_option(world, "include_challenges", False)
+    include_crafting = get_option(world, "include_crafting", False)
+    include_requests = get_option(world, "include_requests", False)
+    include_levels = get_option(world, "include_levels", False)
+    include_skills = get_option(world, "include_skills", False)
+    include_shops = get_option(world, "include_shops", False)
+    include_chests = get_option(world, "include_chests", False)
+    life_mastery_rank = get_option(world, "life_mastery_rank", 0)
+    life_mastery_count = get_option(world, "life_mastery_count", 0)
+    wish_hunt_total = get_option(world, "wish_hunt_total", 0)
+    wish_hunt_required = get_option(world, "wish_hunt_required", 0)
+    wish_hunt_local = get_option(world, "wish_hunt_local", False)
+    licenses_available = get_option(world, "licenses_available", 0)
+    licenses_custom = get_option(world, "licenses_custom", [])
+    licenses_max_rank = get_option(world, "licenses_max_rank", 0)
+    licenses_start = get_option(world, "licenses_start", 0)
+    requests_count = get_option(world, "requests_count", 0)
+    requests_dlc = get_option(world, "requests_dlc", False)
+    include_bliss = get_option(world, "include_bliss", False)
+    bliss_inventory = get_option(world, "bliss_inventory", False)
+    bliss_storage = get_option(world, "bliss_storage", False)
+    bliss_shopping = get_option(world, "bliss_shopping", False)
+    bliss_animal = get_option(world, "bliss_animal", False)
+    bliss_pet = get_option(world, "bliss_pet", False)
+    bliss_customization = get_option(world, "bliss_customization", False)
+    bliss_theater = get_option(world, "bliss_theater", False)
+    bliss_start = get_option(world, "bliss_start", 0)
+    experience_max_level = get_option(world, "experience_max_level", 0)
+    experience_logic = get_option(world, "experience_logic", False)
+    experience_pack_size = get_option(world, "experience_pack_size", 1)
+    skill_min_level = get_option(world, "skill_min_level", 0)
+    skill_max_level = get_option(world, "skill_max_level", 0)
+    skill_logic = get_option(world, "skill_logic", False)
+    skill_pack_size = get_option(world, "skill_pack_size", 1)
+    shops_story = get_option(world, "shops_story", False)
+    shops_dlc = get_option(world, "shops_dlc", False)
+    shops_bliss = get_option(world, "shops_bliss", False)
+    shops_fairy = get_option(world, "shops_fairy", False)
+    shops_level = get_option(world, "shops_level", False)
+    shops_master = get_option(world, "shops_master", False)
+    shops_cost = get_option(world, "shops_cost", 0)
+    shops_restricted = get_option(world, "shops_restricted", False)
+    local_items = get_option(world, "local_items", {})
     fake_gen = getattr(multiworld, "generation_is_fake", False)
-    if fake_gen or life_licenses in (0, 1) or not len(lives_available):
-        actual_lives_available.update(possible_lives)
-    else:
-        for item in lives_available:
-            match item:
-                case "All":
-                    actual_lives_available.update(possible_lives)
-                case "All Combat":
-                    actual_lives_available.update(possible_combat)
-                case "All Melee":
-                    actual_lives_available.update(possible_melee)
-                case "All Ranged":
-                    actual_lives_available.update(possible_ranged)
-                case "All Gatherer":
-                    actual_lives_available.update(possible_gatherer)
-                case "All Artisan":
-                    actual_lives_available.update(possible_artisan)
-                case "Any":
-                    add_random_life(possible_lives)
-                case "Any Combat":
-                    add_random_life(possible_combat)
-                case "Any Melee":
-                    add_random_life(possible_melee)
-                case "Any Ranged":
-                    add_random_life(possible_ranged)
-                case "Any Gatherer":
-                    add_random_life(possible_gatherer)
-                case "Any Artisan":
-                    add_random_life(possible_artisan)
-                case life:
-                    actual_lives_available.add(life)
 
-    if len(actual_lives_available) < 12:
-        deps = [
-            ({"Cook"}, {"Cook", "Angler"}),
-            ({"Blacksmith", "Carpenter", "Tailor"}, {"Woodcutter", "Miner", "Blacksmith", "Carpenter", "Tailor"}),
-            ({"Alchemist"}, {"Woodcutter", "Miner", "Blacksmith", "Carpenter", "Tailor", "Alchemist"})
-        ]
-        for items, values in deps:
-            if items.intersection(actual_lives_available):
-                missing = values - actual_lives_available
-                if missing:
-                    free_lives_available.update(missing)
-                    actual_lives_available.update(missing)
+    #region Seed
+    seed = hash(game_seed) if game_seed else world.random.randint(1, 999999999999)
+    world.random.seed(seed)
+    #endregion
 
-    available_lives = [i for i in range(1,13) if Life(i).description in actual_lives_available]
-    set_available_lives(available_lives)
-    lives_available = list(actual_lives_available)
-    world.options.lives_available.value = lives_available
+    #region DLC
+    from .Options import RankChoice, OtherRequestsCount, LevelRange, SkillLevelRange
+    if not include_dlc:
+        if include_dlc_story:
+            include_dlc_story = False
+            set_option(world, "include_dlc_story", include_dlc_story)
 
-    if free_lives_available:
-        set_free_lives([i for i in range(1,13) if Life(i).description in free_lives_available])
+        if licenses_max_rank == RankChoice.option_creator:
+            logging.warning("Creator rank not available in vanilla. Lowering the highest license rank to Legend.")
+            licenses_max_rank = RankChoice.option_legend
+            set_option(world, "licenses_max_rank", licenses_max_rank)
 
-    if character_levels and character_levels_min > character_levels_max:
-        logging.warning("Maximum character level cannot be lower than minimum")
-        logging.warning("Swapping their values")
-        character_levels_min, character_levels_max = character_levels_max, character_levels_min
-        set_option_value(multiworld, player, "character_levels_min", character_levels_min)
-        set_option_value(multiworld, player, "character_levels_max", character_levels_max)
+        if life_mastery_goal and life_mastery_rank == RankChoice.option_creator:
+            logging.warning("Creator rank not available in vanilla. Lowering the life mastery goal rank to Legend.")
+            life_mastery_rank = RankChoice.option_legend
+            set_option(world, "life_mastery_rank", life_mastery_rank)
 
-    if not dlc:
-        if lives_max_rank == 8:
-            logging.warning("Creator rank not available without the DLC")
-            logging.warning(f"Setting lives_max_rank to Legend")
-            lives_max_rank = 7
-            set_option_value(multiworld, player, "lives_max_rank", lives_max_rank)
-        if character_levels:
-            if character_levels_min > 99:
-                logging.warning("Minimum character level without the DLC is 99")
-                logging.warning("Lowering character_levels_min to that")
-                character_levels_min = 99
-                set_option_value(multiworld, player, "character_levels_min", character_levels_min)
-            if character_levels_max > 99:
-                logging.warning("Maximum character level without the DLC is 99")
-                logging.warning("Lowering character_levels_max to that")
-                character_levels_max = 99
-                set_option_value(multiworld, player, "character_levels_max", character_levels_max)
+        if requests_dlc:
+            requests_dlc = False
+            set_option(world, "requests_dlc", requests_dlc)
 
-    if bliss_available == 1 and shops and shops_fairy:
-        logging.warning("Cannot enable Mysterious Fairy when available bliss bonuses are set to only useful.")
-        shops_fairy = False
-        set_option_enabled(multiworld, player, "shops_fairy", shops_fairy)
+        if shops_dlc:
+            shops_dlc = False
+            set_option(world, "shops_dlc", shops_dlc)
 
-    spare_checks = get_base_checks(story, dlc)
-    if life_challenges:
-        spare_checks += get_life_challenges_checks(dlc, lives_max_rank)
-    if life_recipes:
-        spare_checks += get_life_recipe_checks(dlc, lives_max_rank)
-    if other_requests:
-        spare_checks += get_other_requests_checks(dlc, other_requests, lives_max_rank)
-    if chests:
-        spare_checks += get_chests_checks(dlc)
-    if skill_levels:
-        spare_checks += get_skill_levels_checks(dlc, lives_max_rank)
-    if character_levels:
-        spare_checks += character_levels_max - character_levels_min + 1
-    if shops:
-        spare_checks += get_available_shop_checks(dlc, shops_bliss, shops_lives, lives_max_rank, shops_story, shops_fairy, shops_dosh, shops_restricted)
-    if map_restrictions:
-        spare_checks -= get_map_restrictions_count(dlc)
+        if experience_max_level > LevelRange.range_end_vanilla:
+            logging.warning(
+                f"Highest experience level exceeds vanilla max level. Lowering it to {LevelRange.range_end_vanilla}.")
+            experience_max_level = LevelRange.range_end_vanilla
+            set_option(world, "experience_max_level", experience_max_level)
 
-    if item_restrictions:
-        item_restrictions_count = get_item_restrictions_count()
-        if spare_checks < item_restrictions_count:
-            logging.warning("Not enough spare locations to include item restrictions")
-            logging.warning(f"Toggling item_restrictions to false")
-            item_restrictions = False
-            set_option_enabled(multiworld, player, "item_restrictions", item_restrictions)
+        if skill_min_level > SkillLevelRange.range_end_vanilla:
+            logging.warning(
+                f"Lowest skill level exceeds vanilla max level. Lowering it to {SkillLevelRange.range_end_vanilla}.")
+            skill_min_level = SkillLevelRange.range_end_vanilla
+            set_option(world, "skill_min_level", skill_min_level)
+
+        if skill_max_level > SkillLevelRange.range_end_vanilla:
+            logging.warning(
+                f"Highest skill level exceeds vanilla max level. Lowering it to {SkillLevelRange.range_end_vanilla}.")
+            skill_max_level = SkillLevelRange.range_end_vanilla
+            set_option(world, "skill_max_level", skill_max_level)
+
+    if not requests_dlc and requests_count > OtherRequestsCount.range_end_vanilla:
+        requests_count = OtherRequestsCount.range_end_vanilla
+        set_option(world, "requests_count", requests_count)
+    #endregion
+
+    #region Available Licenses
+    from .Options import StartingLicense, AvailableLicenses
+    melee_pool = ["Paladin", "Mercenary"]
+    ranged_pool = ["Hunter", "Magician"]
+    combat_pool = melee_pool + ranged_pool
+    gatherer_pool = ["Miner", "Woodcutter", "Angler"]
+    artisan_pool = ["Cook", "Blacksmith", "Carpenter", "Tailor", "Alchemist"]
+    complete_pool = combat_pool + gatherer_pool + artisan_pool
+
+    starting_life = ""
+    match licenses_start:
+        case StartingLicense.option_any:
+            starting_life = world.random.choice(complete_pool)
+        case x if 0 < x < 13:
+            starting_life = life_names[x]
+        case StartingLicense.option_combat:
+            starting_life = world.random.choice(combat_pool)
+        case StartingLicense.option_melee:
+            starting_life = world.random.choice(melee_pool)
+        case StartingLicense.option_ranged:
+            starting_life = world.random.choice(ranged_pool)
+        case StartingLicense.option_gatherer:
+            starting_life = world.random.choice(gatherer_pool)
+        case StartingLicense.option_artisan:
+            starting_life = world.random.choice(artisan_pool)
+
+    chosen_lives = []
+    match licenses_available:
+        case _ if fake_gen:
+            chosen_lives = complete_pool
+        case AvailableLicenses.option_all:
+            chosen_lives = complete_pool
+        case AvailableLicenses.option_half:
+            chosen_lives.append(starting_life)
+            pool = set(complete_pool) - {starting_life}
+            chosen_lives += world.random.sample(list(pool), 5)
+        case AvailableLicenses.option_trio:
+            chosen_lives.append(starting_life)
+            pool = set(complete_pool) - {starting_life}
+            chosen_lives += world.random.sample(list(pool), 2)
+        case AvailableLicenses.option_solo:
+            chosen_lives.append(starting_life)
+        case AvailableLicenses.option_combat:
+            chosen_lives = combat_pool
+        case AvailableLicenses.option_gatherer:
+            chosen_lives = gatherer_pool
+        case AvailableLicenses.option_artisan:
+            chosen_lives = artisan_pool
+        case AvailableLicenses.option_custom if not licenses_custom:
+            chosen_lives = complete_pool
+        case AvailableLicenses.option_custom if "All" in licenses_custom:
+            chosen_lives = complete_pool
+        case AvailableLicenses.option_custom:
+            for option in licenses_custom:
+                match option:
+                    case x if x in complete_pool:
+                        chosen_lives.append(x)
+                    case "Any Combat":
+                        chosen_lives.append(world.random.choice(combat_pool))
+                    case "All Combat":
+                        chosen_lives += combat_pool
+                    case "Any Melee":
+                        chosen_lives.append(world.random.choice(melee_pool))
+                    case "All Melee":
+                        chosen_lives += melee_pool
+                    case "Any Ranged":
+                        chosen_lives.append(world.random.choice(ranged_pool))
+                    case "All Ranged":
+                        chosen_lives += ranged_pool
+                    case "Any Gatherer":
+                        chosen_lives.append(world.random.choice(gatherer_pool))
+                    case "All Gatherer":
+                        chosen_lives += gatherer_pool
+                    case "Any Artisan":
+                        chosen_lives.append(world.random.choice(artisan_pool))
+                    case "All Artisan":
+                        chosen_lives += artisan_pool
+                    case "Any" if starting_life not in chosen_lives:
+                        chosen_lives.append(starting_life)
+                    case "Any":
+                        chosen_lives.append(world.random.choice(complete_pool))
+            chosen_lives = list(set(chosen_lives))
+
+    if starting_life not in chosen_lives:
+        logging.warning(f"{starting_life} isn't one of the available licenses. Choosing one at random.")
+        starting_life = world.random.choice(chosen_lives)
+    world.available_lives = chosen_lives
+    world.starting_life = starting_life
+    logging.info(f"Available lives: {chosen_lives}")
+    logging.info(f"Starting life: {starting_life}")
+    #endregion
+
+    #region Bliss Bonuses
+    if include_bliss:
+        from .Options import StartingBlissBonus
+        useful_bliss = ["Bigger Bag", "Bigger Storage", "Better Shopping"]
+        available_bliss = []
+        if bliss_inventory:
+            available_bliss.append("Bigger Bag")
+        if bliss_storage:
+            available_bliss.append("Bigger Storage")
+        if bliss_shopping:
+            available_bliss.append("Better Shopping")
+        if bliss_animal:
+            available_bliss.append("More Animals")
+        if bliss_pet:
+            available_bliss.append("More Pets")
+        if bliss_customization:
+            available_bliss.append("More Customization")
+        if bliss_theater:
+            available_bliss.append("Theater")
+
+        if not available_bliss:
+            logging.warning("At least one of the bliss bonus types must be enabled. Disabling it.")
+            include_bliss = False
+            set_option(world, "include_bliss", include_bliss)
         else:
-            spare_checks -= item_restrictions_count
+            starting_bliss = ""
+            match bliss_start:
+                case StartingBlissBonus.option_any:
+                    starting_bliss = world.random.choice(available_bliss)
+                case StartingBlissBonus.option_inventory:
+                    starting_bliss = "Bigger Bag"
+                case StartingBlissBonus.option_storage:
+                    starting_bliss = "Bigger Storage"
+                case StartingBlissBonus.option_shopping:
+                    starting_bliss = "Better Shopping"
+                case StartingBlissBonus.option_animal:
+                    starting_bliss = "More Animals"
+                case StartingBlissBonus.option_pet:
+                    starting_bliss = "More Pets"
+                case StartingBlissBonus.option_customization:
+                    starting_bliss = "More Customization"
+                case StartingBlissBonus.option_theater:
+                    starting_bliss = "Theater"
+                case StartingBlissBonus.option_useful:
+                    starting_bliss = world.random.choice(useful_bliss)
 
-    if story and story_pool and story_local:
-        local_items = multiworld.worlds[player].options.local_items
-        if "Chapter Unlocker" not in local_items.value:
-            local_items.value.add("Chapter Unlocker")
+            if starting_bliss not in available_bliss:
+                logging.warning("Starting bliss bonus not one of the available options. Picking one at random.")
+                starting_bliss = world.random.choice(available_bliss)
+            world.starting_bliss = starting_bliss
+            logging.info(f"Available bliss bonuses: {available_bliss}")
+            logging.info(f"Starting bliss bonus: {starting_bliss}")
+    #endregion
 
-    if "Wish Hunt" in goal_requirements:
+    #region Shops
+    if include_shops:
+        if shops_master and licenses_max_rank < RankChoice.option_master:
+            logging.warning("Cannot include master shop locations unless the highest license rank available is at Master or higher.")
+            shops_master = False
+            set_option(world, "shops_master", shops_master)
+    #endregion
+
+    #region Goals
+    if not story_goal and not dlc_goal and not life_mastery_goal and not wish_hunt_goal:
+        logging.warning("At least one goal option must be chosen, defaulting to story goal.")
+        story_goal = True
+        set_option(world, "story_goal", story_goal)
+
+    if life_mastery_goal:
+        if life_mastery_rank > licenses_max_rank:
+            logging.warning("life_mastery_rank cannot be greater than licenses_max_rank, lowering it.")
+            life_mastery_rank = licenses_max_rank
+            set_option(world, "life_mastery_rank", life_mastery_rank)
+
+        if life_mastery_count > len(world.available_lives):
+            logging.warning(f"Not enough lives to set life mastery goal count to {life_mastery_count}. Lowering it to {len(world.available_lives)}.")
+            life_mastery_count = len(world.available_lives)
+            set_option(world, "life_mastery_count", life_mastery_count)
+
+    if wish_hunt_goal:
         if wish_hunt_local:
-            local_items = multiworld.worlds[player].options.local_items
-            if "Lost Wish" not in local_items.value:
-                local_items.value.add("Lost Wish")
+            if "Lost Wish" not in local_items:
+                local_items.add("Lost Wish")
+                set_option(world, "local_items", local_items)
 
         if wish_hunt_required > wish_hunt_total:
-            logging.warning("Wish Hunt requirement cannot be larger than total Lost Wishes available")
-            logging.warning("Swapping their values")
+            logging.warning("Wish Hunt requirement cannot be larger than total Lost Wishes available. Swapping their values.")
             wish_hunt_total, wish_hunt_required = wish_hunt_required, wish_hunt_total
-            set_option_value(multiworld, player, "wish_hunt_total", wish_hunt_total)
-            set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_required)
+            set_option(world, "wish_hunt_total", wish_hunt_total)
+            set_option(world, "wish_hunt_required", wish_hunt_required)
 
-        if spare_checks <= 0:
-            logging.warning("Not enough spare locations for Wish Hunt goal")
-            logging.warning("Changing it to Life Mastery")
-            goal_requirements.remove("Wish Hunt")
-            if not "Life Mastery" in goal_requirements:
-                goal_requirements.append("Life Mastery")
-            world.options.goal_requirements.value = goal_requirements
-        elif wish_hunt_total > spare_checks:
-            new_wish_hunt_required = int((wish_hunt_required / wish_hunt_total) * spare_checks)
+        spare_locations = get_wish_hunt_available_location_count(
+            include_dlc,
+            include_story,
+            include_dlc_story,
+            include_challenges,
+            include_crafting,
+            include_requests,
+            include_levels,
+            include_skills,
+            include_chests,
+            include_shops,
+            licenses_max_rank,
+            requests_dlc,
+            requests_count,
+            experience_max_level,
+            experience_logic,
+            experience_pack_size,
+            skill_max_level,
+            skill_logic,
+            skill_pack_size,
+            shops_dlc,
+            shops_bliss,
+            shops_fairy,
+            shops_master,
+            shops_story,
+            shops_level,
+            shops_cost,
+            shops_restricted,
+            world.available_lives,
+        )
+
+        if not spare_locations:
+            logging.warning("Not enough spare locations for Wish Hunt goal, disabling it.")
+            wish_hunt_goal = False
+            set_option(world, "wish_hunt_goal", wish_hunt_goal)
+
+            if not story_goal and not dlc_goal and not life_mastery_goal:
+                logging.warning("At least one goal option must be chosen, defaulting to story goal.")
+                story_goal = True
+                set_option(world, "story_goal", story_goal)
+
+        elif wish_hunt_total > spare_locations:
+            new_wish_hunt_required = int((wish_hunt_required / wish_hunt_total) * spare_locations)
             if new_wish_hunt_required < 1:
                 new_wish_hunt_required = 1
-            logging.warning("Not enough spare locations for current Wish Hunt goal")
-            logging.warning(f"Lowering wish_hunt_total to {spare_checks}")
-            logging.warning(f"Lowering wish_hunt_required to {new_wish_hunt_required}")
-            wish_hunt_total = spare_checks
+            logging.warning("Not enough spare locations for current Wish Hunt goal.")
+            logging.warning(f"Lowering wish_hunt_total to {spare_locations}.")
+            logging.warning(f"Lowering wish_hunt_required to {new_wish_hunt_required}.")
+            wish_hunt_total = spare_locations
             wish_hunt_required = new_wish_hunt_required
-            set_option_value(multiworld, player, "wish_hunt_total", wish_hunt_total)
-            set_option_value(multiworld, player, "wish_hunt_required", wish_hunt_required)
+            set_option(world, "wish_hunt_total", wish_hunt_total)
+            set_option(world, "wish_hunt_required", wish_hunt_required)
 
-    if "Life Mastery" in goal_requirements:
-        if life_mastery_rank > lives_max_rank:
-            logging.warning("life_mastery_rank cannot be greater than lives_max_rank")
-            logging.warning(f"Setting life_mastery_rank to {Rank(lives_max_rank).description}")
-            life_mastery_rank = lives_max_rank
-            set_option_value(multiworld, player, "life_mastery_rank", life_mastery_rank)
-
-        lives_count = len(set(get_available_lives()) - set(get_free_lives()))
-        if life_mastery_count > lives_count:
-            logging.warning("Cannot achieve life mastery goal with the available lives")
-            logging.warning(f"Changing life_mastery_count from {life_mastery_count} to {lives_count}")
-            life_mastery_count = lives_count
-            set_option_value(multiworld, player, "life_mastery_count", life_mastery_count)
-
+    #endregion
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
@@ -293,16 +418,34 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
     location_names_to_remove: list[str] = []  # List of location names
 
-    shops = is_option_enabled(multiworld, player, "shops")
-    shops_prehint = is_option_enabled(multiworld, player, "shops_prehint")
-    if shops and shops_prehint and "Shops" not in world.options.start_location_hints.value:
-        world.options.start_location_hints.value.add("Shops")
-
     # Add your code here to calculate which locations to remove
 
-    character_levels_min = get_option_value(multiworld, player, "character_levels_min")
-    character_levels_max = get_option_value(multiworld, player, "character_levels_max")
-    location_names_to_remove += [f"Reached Level {i}" for i in range(2, 201) if i < character_levels_min or i > character_levels_max]
+    from .Options import LevelRange, SkillLevelRange
+
+    include_dlc = get_option(world, "include_dlc", False)
+
+    experience_min_level = LevelRange.range_start
+    experience_max_level = get_option(world, "experience_max_level", LevelRange.range_end if include_dlc else LevelRange.range_end_vanilla)
+    location_names_to_remove += [
+        f"Reached Level {level}"
+        for level in range(
+            LevelRange.range_start,
+            (LevelRange.range_end if include_dlc else LevelRange.range_end_vanilla) + 1
+        )
+        if level < experience_min_level or level > experience_max_level
+    ]
+
+    skill_min_level = SkillLevelRange.range_start
+    skill_max_level = get_option(world, "skill_max_level", SkillLevelRange.range_end)
+    location_names_to_remove += [
+        f"Reached {skill} Level {level}"
+        for level in range(
+            SkillLevelRange.range_start,
+            (SkillLevelRange.range_end if include_dlc else SkillLevelRange.range_end_vanilla) + 1
+        )
+        for skill in skill_names
+        if level < skill_min_level or level > skill_max_level
+    ]
 
     for region in multiworld.regions:
         if region.player == player:
@@ -323,49 +466,68 @@ def before_create_items_all(
     item_config: dict[str, int | dict], world: World, multiworld: MultiWorld, player: int
 ) -> dict[str, int | dict]:
 
-    story = is_option_enabled(multiworld, player, "story")
-    story_pool = is_option_enabled(multiworld, player, "story_pool")
-    goal_requirements = world.options.goal_requirements.value
-    dlc = is_option_enabled(multiworld, player, "dlc")
-    wish_hunt_total = get_option_value(multiworld, player, "wish_hunt_total")
-    life_licenses = get_option_value(multiworld, player, "life_licenses")
-    lives_max_rank = get_option_value(multiworld, player, "lives_max_rank")
-    bliss = is_option_enabled(multiworld, player, "bliss")
+    wish_hunt_goal = get_option(world, "wish_hunt_goal", False)
+    wish_hunt_total = get_option(world, "wish_hunt_total", 0)
+    include_dlc = get_option(world, "include_dlc", False)
+    include_licenses = get_option(world, "include_licenses", False)
+    include_bliss = get_option(world, "include_bliss", False)
+    licenses_progressive = get_option(world, "licenses_progressive", False)
+    licenses_max_rank = get_option(world, "licenses_max_rank", 0)
+    bliss_inventory = get_option(world, "bliss_inventory", False)
+    bliss_storage = get_option(world, "bliss_storage", False)
+    include_levels = get_option(world, "include_levels", False)
+    include_skills = get_option(world, "include_skills", False)
+    experience_max_level = get_option(world, "experience_max_level", 0)
+    experience_logic = get_option(world, "experience_logic", False)
+    experience_pack_size = get_option(world, "experience_pack_size", 0)
+    skill_max_level = get_option(world, "skill_max_level", 0)
+    skill_logic = get_option(world, "skill_logic", False)
+    skill_pack_size = get_option(world, "skill_pack_size", 0)
 
-    shops_lives = is_option_enabled(multiworld, player, "shops_lives")
-    shops_story = is_option_enabled(multiworld, player, "shops_story")
-    shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
-    shops_dosh = get_option_value(multiworld, player, "shops_dosh")
-    shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
+    shops_dlc = get_option(world, "shops_dlc", False)
+    shops_master = get_option(world, "shops_master", False)
+    shops_level = get_option(world, "shops_level", False)
+    shops_story = get_option(world, "shops_story", False)
+    shops_fairy = get_option(world, "shops_fairy", False)
+    shops_cost = get_option(world, "shops_cost", False)
+    shops_restricted = get_option(world, "shops_restricted", False)
 
-    if shops_restricted:
-        for unused_shop_storage_key in get_unused_shop_storage_keys(dlc, shops_lives, shops_story, shops_fairy, shops_dosh):
-            item_config[unused_shop_storage_key] = {"progression": 0}
-
-    if "Wish Hunt" in goal_requirements:
+    if wish_hunt_goal:
         item_config["Lost Wish"] = {"progression": wish_hunt_total}
 
-    if not dlc:
-        if story:
-            item_config["Progressive Chapter"] = {"progression": 7}
-            if story_pool:
-                item_config["Chapter Unlocker"] = {"progression": 7}
+    if not include_dlc:
+        item_config["Progressive Chapter"] = {"progression": 7}
 
-        if bliss:
-            item_config["Bigger Bag"] = {"progression": 3}
-            item_config["Bigger Storage"] = {"progression": 3}
+        if include_bliss:
+            if bliss_inventory:
+                item_config["Bigger Bag"] = {"progression": 3}
+            if bliss_storage:
+                item_config["Bigger Storage"] = {"progression": 3}
 
-    if life_licenses == 1:
-        item_config["Free Omni License"] = {"progression": 1}
-    if life_licenses == 3:
-        available_lives = get_available_lives()
-        for life in [x for x in Life if x.value in available_lives]:
-            item_config[f"Progressive {life.description} License"] = {"progression": get_prog_license_count(dlc, lives_max_rank)}
+    if include_licenses and licenses_progressive:
+        available_lives = world.available_lives
+        for life in available_lives:
+            item_config[f"Progressive {life} License"] = {"progression": licenses_max_rank}
 
-    free_licenses = get_free_lives()
-    if free_licenses:
-        for life in (Life(i) for i in free_licenses):
-            item_config[f"Free {life.description} License"] = {"progression": 1}
+    if include_levels and experience_logic:
+        item_name = "Level" if experience_pack_size == 1 else f"Level Pack ({experience_pack_size}x)"
+        count = experience_max_level / experience_pack_size
+        count = int(count) + (count % 2 > 0)
+        item_config[item_name] = {"progression": int(count) + 1}
+        logging.info({item_name: item_config[item_name]})
+
+    if include_skills and skill_logic:
+        count = skill_max_level / skill_logic
+        count = int(count) + (count % 2 > 0)
+        for skill in skill_names:
+            item_name = f"{skill} Level" if skill_pack_size == 1 else f"{skill} Level Pack ({skill_pack_size}x)"
+            if is_item_name_enabled(multiworld, player, item_name):
+                item_config[item_name] = {"progression": int(count) + 1}
+                logging.info({item_name: item_config[item_name]})
+
+    if shops_restricted:
+        for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
+            item_config[unused_shop_storage_key] = {"progression": 0}
 
     return item_config
 
@@ -428,76 +590,37 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     # Because multiple copies of an item can exist, you need to add an item name
     # to the list multiple times if you want to remove multiple copies of it.
 
-    bliss = is_option_enabled(multiworld, player, "bliss")
-    bliss_available = get_option_value(multiworld, player, "bliss_available")
-    bliss_start = get_option_value(multiworld, player, "bliss_start")
-    life_licenses = get_option_value(multiworld, player, "life_licenses")
-    life_start = get_option_value(multiworld, player, "life_start")
-    all_available_lives = get_available_lives()
-    free_lives = get_free_lives()
-    available_lives = list(set(all_available_lives) - set(free_lives))
+    include_licenses = get_option(world, "include_licenses", False)
+    licenses_progressive = get_option(world, "licenses_progressive", False)
+    include_bliss = get_option(world, "include_bliss", False)
 
-    if life_licenses == 1:
-        starting_inventory.append("Free Omni License")
-    elif life_licenses in (2, 3):
-        life_name = ""
-        match life_start:
-            case 0:
-                choice = world.random.choice(available_lives)
-                life_name = Life(choice).description
-            case 13:
-                choices = list({1, 2, 3, 4} & set(available_lives))
-                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
-                life_name = Life(choice).description
-            case 14:
-                choices = list({1, 2} & set(available_lives))
-                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
-                life_name = Life(choice).description
-            case 15:
-                choices = list({3, 4} & set(available_lives))
-                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
-                life_name = Life(choice).description
-            case 16:
-                choices = list({5, 6, 7} & set(available_lives))
-                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
-                life_name = Life(choice).description
-            case 17:
-                choices = list({8, 9, 10, 11, 12} & set(available_lives))
-                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
-                life_name = Life(choice).description
-            case x if 0 < x < 13:
-                choices = list({x} & set(available_lives))
-                choice = world.random.choice(choices) if len(choices) > 0 else world.random.choice(available_lives)
-                life_name = Life(choice).description
-        if life_name and len(life_name) > 0:
-            item_name = f"Progressive {life_name} License" if life_licenses == 3 else f"{life_name} License"
-            starting_inventory.append(item_name)
+    include_levels = get_option(world, "include_levels", False)
+    include_skills = get_option(world, "include_skills", False)
+    experience_logic = get_option(world, "experience_logic", False)
+    experience_pack_size = get_option(world, "experience_pack_size", 0)
+    skill_logic = get_option(world, "skill_logic", False)
+    skill_pack_size = get_option(world, "skill_pack_size", 0)
 
-    for life in (Life(i) for i in free_lives):
-        item_name = f"Free {life.description} License"
+    starting_life = getattr(world, "starting_life", "")
+    starting_bliss = getattr(world, "starting_bliss", "")
+
+    if include_licenses:
+        item_name = f"Progressive {starting_life} License" if licenses_progressive else f"{starting_life} License"
         starting_inventory.append(item_name)
 
-    if bliss:
-        item_name = ""
-        match bliss_start:
-            case 0:
-                choices = ["Bigger Bag", "Bigger Storage", "Better Shopping"]
-                if bliss_available == 2:
-                    choices += ["More Pets", "More Animals", "More Customization"]
-                if bliss_available == 0:
-                    choices += ["More Pets", "More Animals", "More Customization", "Theatre"]
+    if include_bliss:
+        item_name = starting_bliss
+        starting_inventory.append(item_name)
 
-                item_name = world.random.choice(choices)
-            case 1:
-                item_name = "Bigger Bag"
-            case 2:
-                item_name = "Bigger Storage"
-            case 3:
-                item_name = "Better Shopping"
-            case 4:
-                item_name = world.random.choice(["Bigger Bag", "Bigger Storage", "Better Shopping"])
-        if item_name:
-            starting_inventory.append(item_name)
+    if include_levels and experience_logic:
+        item_name = "Level" if experience_pack_size == 1 else f"Level Pack ({experience_pack_size}x)"
+        starting_inventory.append(item_name)
+
+    if include_skills and skill_logic:
+        for skill in skill_names:
+            item_name = f"{skill} Level" if skill_pack_size == 1 else f"{skill} Level Pack ({experience_pack_size}x)"
+            if is_item_name_enabled(multiworld, player, item_name):
+                starting_inventory.append(item_name)
 
     for item_name in item_names_to_remove:
         item = next(i for i in item_pool if i.name == item_name)

@@ -1,10 +1,6 @@
 {
     "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
-    "Game": { "connects_to": ["Bliss Bonuses", "Chapters", "Other Requests", "Passwords"], "requires": "", "starting": true },
-
-    "Bliss Bonuses": { "connects_to": [], "requires": "" },
-
-    "Passwords": { "connects_to": [], "requires": "" },
+    "Game": { "connects_to": ["Chapters", "Other Requests"], "requires": "", "starting": true },
 
     "Chapters" : { "connects_to": [ "Prologue" ], "requires": "" },
     "Prologue" : { "connects_to": [ "Chapter 1", "Fledgling Challenges" ], "requires": "" },
@@ -35,7 +31,7 @@
     "South Castele": { "connects_to": [ "East Castele", "West Castele", "East Grassy Plains" ], "requires": "" },
     "East Castele": { "connects_to": [], "requires": "" },
     "West Castele": { "connects_to": [], "requires": "" },
-    "East Grassy Plains": { "connects_to": [ "Haniwa Cave", "West Grassy Plains", "Mount Snowpeak", "Elderwood Village" ], "requires": "" },
+    "East Grassy Plains": { "connects_to": [ "Haniwa Cave", "West Grassy Plains", "Mount Snowpeak", "Elderwood Grotto" ], "requires": "" },
     "Haniwa Cave": { "connects_to": [], "requires": "{OptOne(|Haniwa Cave Pass|)}" },
     "West Grassy Plains": { "connects_to": [ "Farley's Plantation", "Port Puerto Beach District", "Al Maajik Outskirts" ], "requires": "{OptOne(|Progressive Chapter:1|)} and {OptOne(|Haniwa Cave Pass|)}" },
     "Farley's Plantation": { "connects_to": [], "requires": "" },
@@ -64,7 +60,8 @@
     "Subterranean Lake": { "connects_to": [], "requires": "{OptOne(|Subterranean Lake Pass|)}" },
     "Ancient Ruins": { "connects_to": [ "Chamber of Gold" ], "requires": "{OptOne(|Ancient Ruins Pass|)}" },
     "Chamber of Gold": { "connects_to": [], "requires": "" },
-    "Elderwood Village": { "connects_to": ["Starlight Garden"], "requires": "{OptOne(|Progressive Chapter:5|)} and {OptOne(|Elderwood Grotto Pass|)}" },
+    "Elderwood Grotto": { "connects_to": ["Elderwood Village"], "requires": "{OptOne(|Progressive Chapter:4|)} and {OptOne(|Elderwood Grotto Pass|)}" },
+    "Elderwood Village": { "connects_to": ["Starlight Garden"], "requires": "{OptOne(|Progressive Chapter:5|)}" },
     "Levitania": { "connects_to": [ "East Levitania", "West Levitania", "Central Levitania" ], "requires": "{OptOne(|Progressive Chapter:6|)}" },
     "East Levitania": { "connects_to": [ "Plushling Camp" ], "requires": "" },
     "West Levitania": { "connects_to": [], "requires": "" },

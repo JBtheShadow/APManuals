@@ -1,18 +1,22 @@
-from enum import Enum, auto
 from unittest import case
 
+shops = []
+chests = []
+requests = []
+challenges = []
+lives = []
+filler = []
+recipes = []
+
+rank_names = ["Dummy Rank", "Fledgling", "Apprentice", "Adept", "Expert", "Master", "Hero", "Legend", "Creator"]
+life_names = ["Dummy License", "Paladin", "Mercenary", "Hunter", "Magician", "Miner", "Woodcutter", "Angler", "Cook", "Blacksmith", "Carpenter", "Tailor", "Alchemist"]
+skill_names = ["Dummy Skill"]
 
 # called after the game.json file has been loaded
 def after_load_game_file(game_table: dict) -> dict:
-    return game_table
-
-# called after the items.json file has been loaded, before any item loading or processing has occurred
-# if you need access to the items after processing to add ids, etc., you should use the hooks in World.py
-def after_load_item_file(item_table: list) -> list:
-
-    # Extra Data
+    # region Extra Data
     from ..Helpers import load_data_csv
-    global shops, chests, requests, challenges, lives, filler, recipes
+    global shops, chests, requests, challenges, lives, filler, recipes, skill_names
     shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
     requests = load_data_csv("csv", "requests.csv")
@@ -21,17 +25,72 @@ def after_load_item_file(item_table: list) -> list:
     filler = load_data_csv("csv", "filler.csv")
     recipes = load_data_csv("csv", "recipes.csv")
 
-    # Shop Items
-    item_table += [{
-        "name": f"{name} Storage Key",
-        "category": ["Shop Restrictions"],
-        "progression": True
-    } for name in { entry["Shop"] for entry in shops }]
+    skill_names += list({entry["Skill"] for entry in lives if entry["Skill"] is not None})
+    # endregion
 
-    # Wish Hunt - append it after everything else to see if Lost Wishes are placed last in the progression placement step
-    # this is because lost wishes only ever unlock the goal and certain settings may force locations to become invalid
-    # Think I'll also remove the skip_balancing part as a test
-    item_table += [{ "count": 0, "name": "Lost Wish", "category": [ "Wish Hunt" ], "progression": True }]
+    return game_table
+
+# called after the items.json file has been loaded, before any item loading or processing has occurred
+# if you need access to the items after processing to add ids, etc., you should use the hooks in World.py
+def after_load_item_file(item_table: list) -> list:
+    #region Item Rarities
+    def build_item_rarities_items():
+        def build_category(life):
+            categories = [ "Item Rarities" ]
+            if life is not None and life != "Any":
+                categories.append(life)
+            return categories
+        return [{
+            "count": 5,
+            "name": f"{item} Rarity",
+            "category": build_category(life),
+            "progression": True
+        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if entry["Item"] is not None}]
+    item_table += build_item_rarities_items()
+    #endregion
+
+    #region Experience Levels
+    def build_level_items():
+        from .Options import LogicalLevelsPerLevelPack
+        return [{
+            "count": 200,
+            "name": "Level" if size == 1 else f"Level Pack ({size}x)",
+            "category": [ "Levels", f"Level Pack ({size}x)" ],
+            "progression": True,
+            "value": { "Levels": size }
+        } for size in range(LogicalLevelsPerLevelPack.range_start, LogicalLevelsPerLevelPack.range_end + 1)]
+    item_table += build_level_items()
+    #endregion
+
+    #region Skill Levels
+    def build_skill_level_items():
+        from .Options import LogicalSkillLevelsPerLevelPack
+        def build_category(life, size):
+            categories = [ "Skill Levels", f"Skill Level Pack ({size}x)" ]
+            if life is not None and life != "Any":
+                categories.append(life)
+            return categories
+        return [{
+            "count": 20,
+            "name": f"{skill} Level" if size == 1 else f"{skill} Level Pack ({size}x)",
+            "category": build_category(life, size),
+            "progression": True,
+            "value": { f"{skill} Levels": size }
+        } for (skill, life) in {
+            (entry["Skill"], entry["Life"]) for entry in lives if entry["Skill"] is not None
+        } for size in range(LogicalSkillLevelsPerLevelPack.range_start, LogicalSkillLevelsPerLevelPack.range_end + 1)]
+    item_table += build_skill_level_items()
+    #endregion
+
+    #region Shop Items
+    def build_shop_items():
+        return [{
+            "name": f"{name} Key",
+            "category": ["Shop Keys"],
+            "progression": True
+        } for name in { entry["Shop"] for entry in shops }]
+    item_table += build_shop_items()
+    #endregion
 
     return item_table
 
@@ -43,67 +102,77 @@ def after_load_progressive_item_file(progressive_item_table: list) -> list:
 # called after the locations.json file has been loaded, before any location loading or processing has occurred
 # if you need access to the locations after processing to add ids, etc., you should use the hooks in World.py
 def after_load_location_file(location_table: list) -> list:
+    #region Item Rarities
+    def build_item_rarity_locations():
+        def build_name(action, item, rarity):
+            if item == "Consumable" and action == "Equip":
+                action = "Use"
+            return f"{action} a {rarity}-Star {item}"
+        def build_category(item, life):
+            categories = [ "Item Rarities Hidden", f"Item Rarities: {item}" ]
+            if life is not None and life != "Any":
+                categories.append(life)
+            return categories
+        def build_requires(action, item, rarity):
+            if action == "Find":
+                rarity -= 1
+            if rarity == 0:
+                return ""
+            return "{OptOne(|" + item + " Rarity:" + str(rarity) + "|)}"
+        return [{
+            "name": build_name(action, item, rarity),
+            "category": build_category(item, life),
+            "requires": build_requires(action, item, rarity)
+        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if entry["Item"] is not None}
+        for rarity in range(1, 6)
+        for action in ("Find", "Equip")]
+    location_table += build_item_rarity_locations()
+    #endregion
+
+    #region Experience Level Up
     def build_level_up_locations():
-        for i in range(2, 5):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ] })
-        for i in range(5, 10):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:1|)}" })
-        for i in range(10, 15):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:2|)}" })
-        for i in range(15, 20):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:3|)}" })
-        for i in range(20, 30):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:4|)}" })
-        for i in range(30, 40):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:5|)}" })
-        for i in range(40, 50):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:6|)}" })
-        for i in range(50, 99):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks" ], "requires": "{OptOne(|Progressive Chapter:7|)}" })
-        for i in range(100, 150):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "{OptOne(|Progressive Chapter:8|)}" })
-        for i in range(150, 201):
-            location_table.append({ "name": f"Reached Level {i}", "sort-key": f"level-{i:03d}", "category": [ "Level Up Checks", "DLC" ], "requires": "{OptOne(|Progressive Chapter:9|)}" })
-    build_level_up_locations()
+        def build_category(level):
+            categories = [ "Level Up Checks" ]
+            if level > 99:
+                categories.append("DLC")
+            return categories
+        return [{
+            "name": f"Reached Level {level}",
+            "sort-key": f"level-{level:03d}",
+            "category": build_category(level),
+            "requires": "{has_level(" + str(level) + ")}"
+        } for level in range(2, 201)]
+    location_table += build_level_up_locations()
+    #endregion
 
-    def build_skill_level_locations():
-        def append_skill(s: Skill, l: int, c: list[str], r: str):
-            location_table.append({
-                "name": f"Reached {s.name} Level {l}",
-                "sort-key": f"skill-{s.value:02d}-{l:02d}",
-                "category": c,
-                "requires": r
-            })
-        for skill in Skill:
-            life = skill.life
-            ranks = {
-                "Fledgling": [2,3],
-                "Apprentice": [4,5,6],
-                "Adept": [7,8,9],
-                "Expert": [10,11,12],
-                "Master": [13,14,15],
-                "Creator": [16,17,18,19,20],
-            }
+    #region Skill Level Up
+    def build_skill_level_up_locations():
+        def build_category(skill, life, level):
+            categories = [ "Skill Level Checks", f"Level Up Checks: {skill}" ]
+            if life is not None and life != "Any":
+                categories.append(life)
+            if level > 15:
+                categories.append("DLC")
+            return categories
+        return [{
+            "name": f"Reached {skill} Level {level}",
+            "sort-key": f"skill-{skill_names.index(skill)}-{level:02d}",
+            "category": build_category(skill, life, level),
+            "requires": "{has_skill(" + skill + ", " + str(level) + ")}"
+        } for (skill, life) in {
+            (entry["Skill"], entry["Life"]) for entry in lives if entry["Skill"] is not None
+        } for level in range(2, 21)]
+    location_table += build_skill_level_up_locations()
+    #endregion
 
-            for rank in ranks:
-                requires = f"{{has_any_license({rank})}}" if life is None else f"{{has_license({rank} {life.description})}}"
-                categories = [ "Skill Level Checks", f"Life: {("Any" if life is None else life.description)} - {skill.name}", rank ]
-                if life is not None:
-                    categories.append(life.description + " Strict")
-                if rank == "Creator":
-                    requires += " AND {origin_island_access()}"
-                    categories.append("DLC")
-                for level in ranks[rank]:
-                    append_skill(skill, level, categories, requires)
-    build_skill_level_locations()
-
+    #region Life Challenges
     def build_challenge_locations():
         def build_category(entry: dict):
             categories = [
                 "Life Challenges",
                 f"Challenges: {entry["Rank"]} {entry["Life"]}",
                 entry["Rank"],
-                entry["Life"] + " Strict"
+                entry["Life"]
             ]
             if len(entry["DLC"]):
                 categories += "DLC"
@@ -123,6 +192,7 @@ def after_load_location_file(location_table: list) -> list:
             "dont_place_item_category": [entry["Life"]]
         } for entry in challenges]
     location_table += build_challenge_locations()
+    #endregion
 
     def build_recipe_locations():
         def build_name(entry: dict):
@@ -140,7 +210,7 @@ def after_load_location_file(location_table: list) -> list:
                 "Crafting Recipes",
                 f"Crafting: {entry["Rank"]} {entry["Life"]}",
                 logic_rank,
-                entry["Life"] + " Strict"
+                entry["Life"]
             ]
             if logic_rank == "Creator":
                 categories += "DLC"
@@ -224,7 +294,7 @@ def after_load_location_file(location_table: list) -> list:
                     category.append("Other Shop")
             return category
         def build_requires(entry: dict):
-            require_list = [ f"{{OptOne(|{entry["Shop"]} Storage Key|)}}" ]
+            require_list = [ f"{{OptOne(|{entry["Shop"]} Key|)}}" ]
             if entry["Requirement"].startswith("Master:"):
                 require_list.append(f"{{has_license(Master {entry["Requirement"].split(":")[1].strip()})}}")
             if entry["Requirement"] == "Bliss":
@@ -267,7 +337,23 @@ def after_load_region_file(region_table: dict) -> dict:
 
 # called after the categories.json file has been loaded
 def after_load_category_file(category_table: dict) -> dict:
-    category_table.update({ f"Shop Price: {10 * price}": { "hidden": True } for price in range(1, 10000) })
+    from .Options import LogicalLevelsPerLevelPack, LogicalSkillLevelsPerLevelPack, ShopMaxItemCost
+
+    category_table.update({
+        f"Level Pack {size}x": { "hidden": True }
+        for size in range(LogicalLevelsPerLevelPack.range_start, LogicalLevelsPerLevelPack.range_end + 1)
+    })
+
+    category_table.update({
+        f"Skill Level Pack ({size}x)": { "hidden": True }
+        for size in range(LogicalSkillLevelsPerLevelPack.range_start, LogicalSkillLevelsPerLevelPack.range_end + 1)
+    })
+
+    category_table.update({
+        f"Shop Price: {10 * price}": { "hidden": True }
+        for price in range(ShopMaxItemCost.range_start, ShopMaxItemCost.range_end + 1)
+    })
+
     return category_table
 
 # called after the categories.json file has been loaded
@@ -281,43 +367,90 @@ def after_load_option_file(option_table: dict) -> dict:
 def after_load_meta_file(meta_table: dict) -> dict:
     return meta_table
 
-available_lives = []
-free_lives = []
-shops = []
-chests = []
-requests = []
-challenges = []
-lives = []
-filler = []
-recipes = []
-
 def get_filler_categories():
     return {entry["Group"] for entry in filler}
 
 def get_filler_items_by_category(category):
     return {entry["Filler"] for entry in filler if entry["Group"] == category}
 
-def get_available_lives():
-    return available_lives
+def get_wish_hunt_available_location_count(
+        include_dlc = False,
+        include_story = False,
+        include_dlc_story = False,
+        include_challenges = False,
+        include_crafting = False,
+        include_requests = False,
+        include_levels = False,
+        include_skills = False,
+        include_chests = False,
+        include_shops = False,
+        licenses_max_rank = 0,
+        requests_dlc = False,
+        requests_count = 0,
+        experience_max_level = 200,
+        experience_logic = False,
+        experience_pack_size = 1,
+        skill_max_level = 200,
+        skill_logic = False,
+        skill_pack_size = 1,
+        shops_dlc = False,
+        shops_bliss = False,
+        shops_fairy = False,
+        shops_master = False,
+        shops_story = False,
+        shops_level = False,
+        shops_cost = 0,
+        shops_restricted = False,
+        available_lives = None
+):
+    if available_lives is None:
+        available_lives = []
 
-def set_available_lives(value: list[int]):
-    global available_lives
-    available_lives = value
+    count = 19 if include_dlc else 16
 
-def get_free_lives():
-    return free_lives
+    if include_story:
+        count += 66
 
-def set_free_lives(value: list[int]):
-    global free_lives
-    free_lives = value
+    if include_dlc_story:
+        count += 23
 
-def get_base_checks(story, dlc):
-    return 0 if not story else 65 if not dlc else 85
+    if include_challenges:
+        count += get_life_challenges_checks(include_dlc, licenses_max_rank, available_lives)
 
-def get_life_challenges_checks(dlc, max_rank):
-    strict_lives = list(set(available_lives) - set(free_lives))
-    formated_lives = [Life(i).description for i in strict_lives]
-    formated_ranks = [Rank(i).description for i in range(1, max_rank + 1)]
+    if include_crafting:
+        count += get_life_recipe_checks(include_dlc, licenses_max_rank, available_lives)
+
+    if include_requests:
+        count += get_other_requests_checks(requests_dlc, requests_count, licenses_max_rank, available_lives)
+
+    if include_levels:
+        experience_min_level = 2
+        available = experience_max_level - experience_min_level + 1
+        if experience_logic:
+            available -= int(available / experience_pack_size)
+        count += available
+
+    if include_skills:
+        skill_min_level = 2
+        available = skill_max_level - skill_min_level + 1
+        if skill_logic:
+            available -= int(available / skill_pack_size)
+        count += available * len({
+            entry["Skill"]
+            for entry in lives if entry["Skill"] is not None and entry["Life"] in available_lives
+        })
+
+    if include_chests:
+        count += 260 if include_dlc else 130
+
+    if include_shops:
+        count += get_available_shop_checks(shops_dlc, shops_bliss, shops_master, shops_level, licenses_max_rank, shops_story, shops_fairy, shops_cost * 10, shops_restricted, available_lives)
+
+    return count
+
+def get_life_challenges_checks(dlc, max_rank, strict_lives):
+    formated_lives = strict_lives
+    formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
     return len([
         entry for entry in challenges
         if (dlc or "DLC" not in entry["DLC"])
@@ -329,10 +462,9 @@ def get_life_challenges_checks(dlc, max_rank):
            and (not entry["Dependency4"] or entry["Dependency4"] in formated_lives)
     ])
 
-def get_life_recipe_checks(dlc, max_rank):
-    strict_lives = list(set(available_lives) - set(free_lives))
-    formated_lives = [Life(i).description for i in strict_lives]
-    formated_ranks = [Rank(i).description for i in range(1, max_rank + 1)]
+def get_life_recipe_checks(dlc, max_rank, strict_lives):
+    formated_lives = strict_lives
+    formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
     if dlc and max_rank >= 8:
         formated_ranks.append("Demi-Creator")
     return len([
@@ -341,9 +473,9 @@ def get_life_recipe_checks(dlc, max_rank):
            and (entry["Life"] in formated_lives)
     ])
 
-def get_other_requests_checks(dlc, request_count, max_rank):
-    formated_lives = [Life(i).description for i in available_lives]
-    formated_ranks = [Rank(i).description for i in range(1, max_rank + 1)]
+def get_other_requests_checks(dlc, request_count, max_rank, available_lives):
+    formated_lives = available_lives
+    formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
     return len([
         entry for entry in requests
         if (dlc or "DLC" not in entry["DLC"])
@@ -354,266 +486,35 @@ def get_other_requests_checks(dlc, request_count, max_rank):
            and (not entry["Life3"] or entry["Life3"] in formated_lives)
     ])
 
-def get_skill_levels_checks(dlc, max_rank):
-    levels_per_rank = { 1: 2, 2: 3, 3: 3, 4: 3, 5: 3, 8: 5 }
-    levels_max_rank = sum(levels_per_rank[i] for i in levels_per_rank if i <= max_rank and (max_rank < 8 or dlc))
-    strict_lives = list(set(available_lives) - set(free_lives))
-    formated_lives = ["Any"] + [Life(i).description for i in strict_lives]
-    skill_count = len([
-        entry for entry in lives
-        if (entry["Skill"]) and (entry["Life"] in formated_lives)
-    ])
-    return levels_max_rank * skill_count
-
-def get_chests_checks(dlc):
-    return 260 if dlc else 130
-
-def get_used_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh):
+def get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
     return {
-        f"{entry["Shop"]} Storage Key" for entry in shops
-        if (with_lives or entry["Group"] != "Life")
+        f"{entry["Shop"]} Key" for entry in shops
+        if (with_lives or "Master:" not in entry["Requirement"])
            and (with_story or entry["Group"] != "Story")
+           and (with_level or "Level:" not in entry["Requirement"])
            and (with_fairy or entry["Group"] != "Fairy")
            and (max_dosh >= int(entry["Dosh"]))
            and (dlc or entry["Group"] != "DLC")
     }
 
-def get_unused_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh):
-    all_keys = { f"{entry["Shop"]} Storage Key" for entry in shops }
-    used_keys = get_used_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh)
+def get_unused_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
+    all_keys = { f"{entry["Shop"]} Key" for entry in shops }
+    used_keys = get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh)
     return all_keys - used_keys
 
-def get_available_shop_checks(dlc, with_bliss, with_lives, max_rank, with_story, with_fairy, max_dosh, shops_restricted):
-    formated_lives = [f"Master: {Life(x).description}" for x in available_lives]
+def get_available_shop_checks(dlc, with_bliss, with_lives, with_level, max_rank, with_story, with_fairy, max_dosh, shops_restricted, available_lives):
+    formated_lives = [f"Master: {x}" for x in available_lives]
     total_checks = len([
         entry for entry in shops
         if (dlc or (entry["Group"] != "DLC" and "DLC" not in entry["Requirement"]))
            and (with_bliss or "Bliss" not in entry["Requirement"])
-           and (with_lives or entry["Group"] != "Life")
+           and (with_level or "Level:" not in entry["Requirement"])
+           and (with_lives or "Master:" not in entry["Requirement"])
            and ((max_rank >= 5 and entry["Requirement"] in formated_lives) or "Master:" not in entry["Requirement"])
            and (with_story or entry["Group"] != "Story")
            and (with_fairy or entry["Group"] != "Fairy")
            and (max_dosh >= int(entry["Dosh"]))
     ])
     if shops_restricted:
-        total_checks -= len(get_used_shop_storage_keys(dlc, with_lives, with_story, with_fairy, max_dosh))
+        total_checks -= len(get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh))
     return total_checks
-
-def get_prog_license_count(dlc, max_rank):
-    if max_rank < 8:
-        return max_rank
-    else:
-        return 8 if dlc else 7
-
-def get_map_restrictions_count(dlc):
-    return 11 if dlc else 10
-
-def get_item_restrictions_count():
-    strict_lives = list(set(available_lives) - set(free_lives))
-    formated_lives = ["Any"] + [Life(i).description for i in strict_lives]
-    return 5 * len({
-        entry["Item"] for entry in lives
-        if (entry["Item"]) and (entry["Life"] in formated_lives)
-    })
-
-class Skill(Enum):
-    DASH = auto(), "Dash", 0
-    SNEAKING = auto(), "Sneaking", 0
-    DAGGER = auto(), "Dagger Skill", 0
-    LONGSWORD = auto(), "Longsword Skill", 1
-    SHIELD = auto(), "Shield Skill", 1
-    GREATSWORD = auto(), "Greatsword Skill", 2
-    ARCHERY = auto(), "Archery", 3
-    MAGIC = auto(), "Magic Skill", 4
-    WIND_MAGIC = auto(), "Wind Magic", 4
-    WATER_MAGIC = auto(), "Water Magic", 4
-    EARTH_MAGIC = auto(), "Earth Magic", 4
-    FIRE_MAGIC = auto(), "Fire Magic", 4
-    MINING = auto(), "Mining", 5
-    WOODCUTTING = auto(), "Woodcutting", 6
-    FISHING = auto(), "Fishing", 7
-    COOKING = auto(), "Cooking", 8
-    MEAT_CUISINE = auto(), "Meat Cuisine", 8
-    SEAFOOD_CUISINE = auto(), "Seafood Cuisine", 8
-    EGG_VEG_CUISINE = auto(), "Egg & Veg Cuisine", 8
-    SMITHING = auto(), "Smithing", 9
-    WEAPONSMITHING = auto(), "Weaponsmithing", 9
-    ARMORSMITHING = auto(), "Armorsmithing", 9
-    TOOL_SMITHING = auto(), "Metal Tool Smithing", 9
-    CARPENTRY = auto(), "Carpentry", 10
-    FURNITURE_CARPENTRY = auto(), "Furniture Carpentry", 10
-    WEAPONS_CARPENTRY = auto(), "Weapons Carpentry", 10
-    TOOLS_CARPENTRY = auto(), "Tools Carpentry", 10
-    SEWING = auto(), "Sewing", 11
-    GARMENT_TAILORING = auto(), "Garment Tailoring", 11
-    MISC_TAILORING = auto(), "Misc. Tailoring", 11
-    FABRIC_TAILORING = auto(), "Fabric Tailoring", 11
-    ALCHEMY = auto(), "Alchemy", 12
-    COMPOUND_ALCHEMY = auto(), "Compound Alchemy", 12
-    ACCESSORY_ALCHEMY = auto(), "Accessory Alchemy", 12
-
-    def __new__(cls, *args, **kwds):
-        obj = object.__new__(cls)
-        obj._value_ = args[0]
-        return obj
-
-    def __init__(self, _: int, name: str = None, life: int = None):
-        self._name_ = name
-        self._life_ = life
-
-    @property
-    def name(self):
-        return self._name_
-
-    @property
-    def life(self):
-        return Life(self._life_) if 1 <= self._life_ <= 12 else None
-
-
-class Life(Enum):
-    PALADIN = 1, "Paladin", ["Longsword Rarity", "Shield Rarity"], [Skill.LONGSWORD, Skill.SHIELD]
-    MERCENARY = 2, "Mercenary", ["Greatsword Rarity"], [Skill.GREATSWORD]
-    HUNTER = 3, "Hunter", ["Bow Rarity"], [Skill.ARCHERY]
-    MAGICIAN = (
-        4,
-        "Magician",
-        ["Wand Rarity"],
-        [Skill.MAGIC, Skill.WIND_MAGIC, Skill.WATER_MAGIC, Skill.EARTH_MAGIC, Skill.FIRE_MAGIC],
-    )
-    MINER = 5, "Miner", ["Pickaxe Rarity"], [Skill.MINING]
-    WOODCUTTER = 6, "Woodcutter", ["Axe Rarity"], [Skill.WOODCUTTING]
-    ANGLER = 7, "Angler", ["Fishing Rod Rarity"], [Skill.FISHING]
-    COOK = 8, "Cook", ["Frying Pan Rarity"], [Skill.COOKING, Skill.MEAT_CUISINE, Skill.SEAFOOD_CUISINE, Skill.EGG_VEG_CUISINE]
-    BLACKSMITH = (
-        9,
-        "Blacksmith",
-        ["Hammer Rarity"],
-        [Skill.SMITHING, Skill.WEAPONSMITHING, Skill.ARMORSMITHING, Skill.TOOL_SMITHING],
-    )
-    CARPENTER = (
-        10,
-        "Carpenter",
-        ["Saw Rarity"],
-        [Skill.CARPENTRY, Skill.FURNITURE_CARPENTRY, Skill.WEAPONS_CARPENTRY, Skill.TOOLS_CARPENTRY],
-    )
-    TAILOR = (
-        11,
-        "Tailor",
-        ["Needle Rarity"],
-        [Skill.SEWING, Skill.GARMENT_TAILORING, Skill.MISC_TAILORING, Skill.FABRIC_TAILORING],
-    )
-    ALCHEMIST = 12, "Alchemist", ["Flask Rarity"], [Skill.ALCHEMY, Skill.COMPOUND_ALCHEMY, Skill.ACCESSORY_ALCHEMY]
-
-    def __new__(cls, *args, **kwds):
-        obj = object.__new__(cls)
-        obj._value_ = args[0]
-        return obj
-
-    def __init__(
-        self, _: int, description: str = None, required_items: list[str] = None, related_skills: list[Skill] = None
-    ):
-        self._description_ = description
-        self._required_items_ = required_items
-        self._related_skills_ = related_skills
-
-    @property
-    def description(self):
-        return self._description_
-
-    @property
-    def required_items(self):
-        return self._required_items_
-
-    @property
-    def related_skills(self):
-        return self._related_skills_
-
-    @property
-    def pronoun(self):
-        return "an" if self.description.startswith("A") else "a"
-
-    @classmethod
-    def easy_combat(cls):
-        return [Life.PALADIN, Life.MERCENARY]
-
-    @classmethod
-    def combat(cls):
-        return [Life.PALADIN, Life.MERCENARY, Life.HUNTER, Life.MAGICIAN]
-
-    @classmethod
-    def gatherer(cls):
-        return [Life.MINER, Life.WOODCUTTER, Life.ANGLER]
-
-    @classmethod
-    def artisan(cls):
-        return [Life.COOK, Life.BLACKSMITH, Life.CARPENTER, Life.TAILOR, Life.ALCHEMIST]
-
-    @classmethod
-    def from_description(cls, description: str):
-        for life in Life:
-            if life.description == description:
-                return life
-
-        raise Exception(f"'{description}' is not a valid Life!")
-
-
-class Rank(Enum):
-    NOVICE = 0, "Novice", 1, 0, 0
-    FLEDGLING = 1, "Fledgling", 1, 0, 0
-    APPRENTICE = 2, "Apprentice", 2, 0, 1
-    ADEPT = 3, "Adept", 3, 2, 2
-    EXPERT = 4, "Expert", 4, 3, 3
-    MASTER = 5, "Master", 5, 4, 3
-    HERO = 6, "Hero", 6, 6, 4
-    LEGEND = 7, "Legend", 7, 7, 4
-    CREATOR = 8, "Creator", 8, 8, 5
-
-    def __new__(cls, *args, **kwds):
-        obj = object.__new__(cls)
-        obj._value_ = args[0]
-        return obj
-
-    def __init__(
-        self,
-        _: int,
-        description: str = None,
-        full_requirement: int = 1,
-        min_chapter: int = 0,
-        item_rarity: int = 0
-    ):
-        self._description_ = description
-        self._full_requirement_ = full_requirement
-        self._min_chapter_ = min_chapter
-        self._item_rarity_ = item_rarity
-
-    @property
-    def value(self) -> int:
-        return self._value_
-
-    @property
-    def description(self):
-        return self._description_
-
-    @property
-    def requirement(self):
-        return self._full_requirement_
-
-    @property
-    def min_chapter(self):
-        return self._min_chapter_
-
-    @classmethod
-    def from_description(cls, description: str):
-        for rank in Rank:
-            if rank.description == description:
-                return rank
-
-        raise Exception(f"'{description}' is not a valid Rank!")
-
-    @property
-    def item_rarity(self):
-        return self._item_rarity_
-
-    @property
-    def pronoun(self):
-        return "an" if self.description.startswith(("A", "E")) else "a"
