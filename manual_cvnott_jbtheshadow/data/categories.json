@@ -1,5 +1,8 @@
 {
     "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.categories.schema.json",
     "Fixed Stages": { "yaml_option": ["!progressive_stages"], "hidden": true },
-    "Progressive Stages": { "yaml_option": ["progressive_stages"], "hidden": true }
+    "Progressive Stages": { "yaml_option": ["progressive_stages"], "hidden": true },
+    "Trevor Together": { "yaml_option": ["!split_trevor_grant_sypha"], "hidden": true },
+    "Trevor Split": { "yaml_option": ["split_trevor_grant_sypha"], "hidden": true },
+    "Play as Hunter": { "yaml_option": ["include_hunters", "!tilesanity"] }
 }

@@ -48,6 +48,14 @@ class IncludeRelics(Toggle):
     """Allows the Vlad relics to appear anywhere in the multiworld. Disable this to only receive them from defeating bosses."""
     display_name = "Include Relics"
 
+class IncludeHunters(Toggle):
+    """Unlock the ability to use different characters by finding them in the multiworld."""
+    display_name = "Include Hunters"
+
+class SplitTrevorGrantSypha(Toggle):
+    """Trevor Belmont, Grant Danasty and Sypha Belnades are three characters in one. Enable this to treat them to unlock each individually."""
+    display_name = "Split Trevor, Grant and Sypha"
+
 class EnableTilesanity(Toggle):
     """Enables tilesanity, where each non-boss tile on the board has an associated location for revealing/landing on it the first time"""
     display_name = "Tilesanity"
@@ -58,6 +66,8 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["progressive_stages"] = ProgressiveStages
     options["fast_travel"] = EnableFastTravel
     options["include_relics"] = IncludeRelics
+    options["include_hunters"] = IncludeHunters
+    options["split_trevor_grant_sypha"] = SplitTrevorGrantSypha
     options["tilesanity"] = EnableTilesanity
     return options
 
