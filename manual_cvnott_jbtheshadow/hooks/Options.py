@@ -56,6 +56,40 @@ class SplitTrevorGrantSypha(Toggle):
     """Trevor Belmont, Grant Danasty and Sypha Belnades are three characters in one. Enable this to treat them to unlock each individually."""
     display_name = "Split Trevor, Grant and Sypha"
 
+class IncludeAbilities(Toggle):
+    """Unlock character abilities by finding them in the multiworld."""
+    display_name = "Include Abilities"
+
+class ProgressiveWeapons(Toggle):
+    """Requires abilities to be included. Unlocks weapons in order of weakest to strongest. Disable this for weapons to appear in any order."""
+    display_name = "Progressive Weapons"
+
+class IncludeEricAuraBlast(Toggle):
+    """Require abilities to be included. Makes it so Eric's aura blast abilities are locked until the aura coin is found first."""
+    display_name = "Include Eric's Aura Blast"
+
+class ProgressiveEricAuraBlast(Toggle):
+    """Require abilities to be included. Makes it so Eric's aura blast abilities are unlocked in progressive order."""
+    display_name = "Progressive Eric's Aura Blast"
+
+class SplitEricAuraBlast(Toggle):
+    """Require abilities to be included. Makes it so Eric's aura blast abilities of the same level are found separately.
+    If aura blast is included then the aura coin is split into its Holy Aura and Von Viltheim Aura  sides, requiring both before being able to switch between them."""
+    display_name = "Split Eric's Aura Blast"
+
+class IncludeHenryMissingChildren(Toggle):
+    """Require abilities to be included. Henry has a mechanic that grants him bonuses by saving some children via doing a specific action in each stage.
+    This adds those rewards into the pool and those actions as locations."""
+    display_name = "Include Henry's Missing Children"
+
+class AllowJusteBraceletStart(DefaultOnToggle):
+    """Require abilities to be included. Lets Juste start with his bracelet."""
+    display_name = "Allows Juste to Start with his Bracelet"
+
+class IncludeSomaSouls(Toggle):
+    """Soma's abilities are normally found from defeating specific monsters. This adds those souls into the pool too."""
+    display_name = "Include Soma's Souls"
+
 class EnableTilesanity(Toggle):
     """Enables tilesanity, where each non-boss tile on the board has an associated location for revealing/landing on it the first time"""
     display_name = "Tilesanity"
@@ -68,6 +102,9 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["include_relics"] = IncludeRelics
     options["include_hunters"] = IncludeHunters
     options["split_trevor_grant_sypha"] = SplitTrevorGrantSypha
+    options["include_abilities"] = IncludeAbilities
+    options["progressive_weapons"] = ProgressiveWeapons
+    options["include_soma_souls"] = IncludeSomaSouls
     options["tilesanity"] = EnableTilesanity
     return options
 

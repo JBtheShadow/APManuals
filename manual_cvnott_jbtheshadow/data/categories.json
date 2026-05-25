@@ -4,5 +4,5 @@
     "Progressive Stages": { "yaml_option": ["progressive_stages"], "hidden": true },
     "Trevor Together": { "yaml_option": ["!split_trevor_grant_sypha"], "hidden": true },
     "Trevor Split": { "yaml_option": ["split_trevor_grant_sypha"], "hidden": true },
-    "Play as Hunter": { "yaml_option": ["include_hunters", "!tilesanity"] }
+    "Play as Hunter": { "yaml_option": ["include_hunters", "!tilesanity"] },
 }

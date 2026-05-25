@@ -5,6 +5,7 @@
   "filler_item_name": "Heart",
   "starting_items": [
       { "items": ["Stage 1"], "random": 1, "yaml_option": ["!progressive_stages"] },
-      { "items": ["Progressive Stage"], "random": 1, "yaml_option": ["progressive_stages"] }
+      { "items": ["Progressive Stage"], "random": 1, "yaml_option": ["progressive_stages"] },
+      { "item_categories": ["Hunter"], "random": 1, "yaml_option": ["include_hunters"] }
   ]
 }
