@@ -31,9 +31,9 @@
     "Other Requests 4": { "hidden": true },
 
 
-    "Level Up Checks": { "yaml_option": ["character_levels"] },
-    "Skill Level Checks": { "yaml_option": ["skill_levels"], "hidden": true },
-    "Life Challenges": { "yaml_option": ["life_challenges"], "hidden": true },
+    "Level Up Checks": { "yaml_option": ["include_levels"] },
+    "Skill Level Checks": { "yaml_option": ["include_skills"], "hidden": true },
+    "Life Challenges": { "yaml_option": ["include_challenges"], "hidden": true },
 
     "Fledgling": { "hidden": true },
     "Apprentice": { "hidden": true },
@@ -56,19 +56,20 @@
     "Tailor": { "hidden": true },
     "Alchemist": { "hidden": true },
 
-    "Treasure Chests": { "yaml_option": ["chests"], "hidden": true },
+    "Treasure Chests": { "yaml_option": ["include_chests"], "hidden": true },
+    "DLC Chests": { "yaml_option": ["chests_dlc"], "hidden": true },
+    "Trial Chests": { "yaml_option": ["chests_trials"], "hidden": true },
 
-    "Shops": { "yaml_option": ["shops"], "hidden": true },
-    "Life Shop": { "yaml_option": ["shops", "shops_lives"], "hidden": true },
-    "Bliss Shop": { "yaml_option": ["shops", "shops_bliss"], "hidden": true },
-    "Fairy Shop": { "yaml_option": ["shops", "shops_fairy"], "hidden": true },
-    "Story Shop": { "yaml_option": ["shops", "shops_story"], "hidden": true },
-
+    "Shops": { "yaml_option": ["include_shops"], "hidden": true },
+    "Life Shop": { "hidden": true },
+    "Bliss Shop": { "yaml_option": ["include_shops", "shops_bliss"], "hidden": true },
+    "Fairy Shop": { "yaml_option": ["include_shops", "shops_fairy"], "hidden": true },
+    "Story Shop": { "yaml_option": ["include_shops", "shops_story"], "hidden": true },
 
     "Castele Shop": { "hidden": true },
     "Port Shop": { "hidden": true },
     "Desert Shop": { "hidden": true },
     "Other Shop": { "hidden": true },
     "DLC Shop": { "hidden": true },
-    "Crafting Recipes": { "yaml_option": ["life_recipes"], "hidden": true }
+    "Crafting Recipes": { "yaml_option": ["include_crafting"], "hidden": true }
 }

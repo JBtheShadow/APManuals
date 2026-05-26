@@ -70,6 +70,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     dlc_goal = get_option(world, "dlc_goal", False)
     life_mastery_goal = get_option(world, "life_mastery_goal", False)
     wish_hunt_goal = get_option(world, "wish_hunt_goal", False)
+    include_chapters = get_option(world, "include_chapters", False)
     include_dlc = get_option(world, "include_dlc", False)
     include_story = get_option(world, "include_story", False)
     include_dlc_story = get_option(world, "include_dlc_story", False)
@@ -80,6 +81,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     include_skills = get_option(world, "include_skills", False)
     include_shops = get_option(world, "include_shops", False)
     include_chests = get_option(world, "include_chests", False)
+    chests_dlc = get_option(world, "chests_dlc", False)
+    chests_trials = get_option(world, "chests_trials", False)
     life_mastery_rank = get_option(world, "life_mastery_rank", 0)
     life_mastery_count = get_option(world, "life_mastery_count", 0)
     wish_hunt_total = get_option(world, "wish_hunt_total", 0)
@@ -126,6 +129,11 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     #region DLC
     from .Options import RankChoice, OtherRequestsCount, LevelRange, SkillLevelRange
     if not include_dlc:
+        if dlc_goal:
+            logging.warning("DLC goal but DLC not included. Disabling that goal.")
+            dlc_goal = False
+            set_option(world, "dlc_goal", dlc_goal)
+
         if include_dlc_story:
             include_dlc_story = False
             set_option(world, "include_dlc_story", include_dlc_story)
@@ -166,9 +174,17 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             skill_max_level = SkillLevelRange.range_end_vanilla
             set_option(world, "skill_max_level", skill_max_level)
 
+        if chests_dlc:
+            chests_dlc = False
+            set_option(world, "chests_dlc", chests_dlc)
+
     if not requests_dlc and requests_count > OtherRequestsCount.range_end_vanilla:
         requests_count = OtherRequestsCount.range_end_vanilla
         set_option(world, "requests_count", requests_count)
+
+    if not chests_dlc and chests_trials:
+        chests_trials = False
+        set_option(world, "chests_trials", chests_trials)
     #endregion
 
     #region Available Licenses
@@ -358,6 +374,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             include_dlc,
             include_story,
             include_dlc_story,
+            include_chapters,
             include_challenges,
             include_crafting,
             include_requests,
@@ -382,6 +399,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             shops_level,
             shops_cost,
             shops_restricted,
+            chests_dlc,
+            chests_trials,
             world.available_lives,
         )
 
@@ -436,7 +455,7 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     ]
 
     skill_min_level = SkillLevelRange.range_start
-    skill_max_level = get_option(world, "skill_max_level", SkillLevelRange.range_end)
+    skill_max_level = get_option(world, "skill_max_level", SkillLevelRange.range_end if include_dlc else SkillLevelRange.range_end_vanilla)
     location_names_to_remove += [
         f"Reached {skill} Level {level}"
         for level in range(
@@ -510,24 +529,24 @@ def before_create_items_all(
             item_config[f"Progressive {life} License"] = {"progression": licenses_max_rank}
 
     if include_levels and experience_logic:
-        item_name = "Level" if experience_pack_size == 1 else f"Level Pack ({experience_pack_size}x)"
-        count = experience_max_level / experience_pack_size
-        count = int(count) + (count % 2 > 0)
-        item_config[item_name] = {"progression": int(count) + 1}
+        item_name = f"Level Pack ({experience_pack_size}x)"
+        count = int(experience_max_level / experience_pack_size) + (experience_max_level % experience_pack_size > 0)
+        item_config[item_name] = {"progression": int(count)}
         logging.info({item_name: item_config[item_name]})
 
     if include_skills and skill_logic:
-        count = skill_max_level / skill_logic
-        count = int(count) + (count % 2 > 0)
+        count = int(skill_max_level / skill_pack_size) + (skill_max_level % skill_pack_size > 0)
         for skill in skill_names:
-            item_name = f"{skill} Level" if skill_pack_size == 1 else f"{skill} Level Pack ({skill_pack_size}x)"
+            if skill is None or len(skill) <= 0:
+                continue
+            item_name = f"{skill} Level Pack ({skill_pack_size}x)"
             if is_item_name_enabled(multiworld, player, item_name):
-                item_config[item_name] = {"progression": int(count) + 1}
+                item_config[item_name] = {"progression": int(count)}
                 logging.info({item_name: item_config[item_name]})
 
-    if shops_restricted:
-        for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
-            item_config[unused_shop_storage_key] = {"progression": 0}
+    # if shops_restricted:
+    #     for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
+    #         item_config[unused_shop_storage_key] = {"progression": 0}
 
     return item_config
 
@@ -613,12 +632,12 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         starting_inventory.append(item_name)
 
     if include_levels and experience_logic:
-        item_name = "Level" if experience_pack_size == 1 else f"Level Pack ({experience_pack_size}x)"
+        item_name = f"Level Pack ({experience_pack_size}x)"
         starting_inventory.append(item_name)
 
     if include_skills and skill_logic:
         for skill in skill_names:
-            item_name = f"{skill} Level" if skill_pack_size == 1 else f"{skill} Level Pack ({experience_pack_size}x)"
+            item_name = f"{skill} Level Pack ({experience_pack_size}x)"
             if is_item_name_enabled(multiworld, player, item_name):
                 starting_inventory.append(item_name)
 

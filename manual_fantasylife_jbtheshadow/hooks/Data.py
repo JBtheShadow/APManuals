@@ -8,9 +8,9 @@ lives = []
 filler = []
 recipes = []
 
-rank_names = ["Dummy Rank", "Fledgling", "Apprentice", "Adept", "Expert", "Master", "Hero", "Legend", "Creator"]
-life_names = ["Dummy License", "Paladin", "Mercenary", "Hunter", "Magician", "Miner", "Woodcutter", "Angler", "Cook", "Blacksmith", "Carpenter", "Tailor", "Alchemist"]
-skill_names = ["Dummy Skill"]
+rank_names = [None, "Fledgling", "Apprentice", "Adept", "Expert", "Master", "Hero", "Legend", "Creator"]
+life_names = [None, "Paladin", "Mercenary", "Hunter", "Magician", "Miner", "Woodcutter", "Angler", "Cook", "Blacksmith", "Carpenter", "Tailor", "Alchemist"]
+skill_names = [None]
 
 # called after the game.json file has been loaded
 def after_load_game_file(game_table: dict) -> dict:
@@ -25,7 +25,7 @@ def after_load_game_file(game_table: dict) -> dict:
     filler = load_data_csv("csv", "filler.csv")
     recipes = load_data_csv("csv", "recipes.csv")
 
-    skill_names += list({entry["Skill"] for entry in lives if entry["Skill"] is not None})
+    skill_names += list({entry["Skill"] for entry in lives if len(entry["Skill"] or "") > 0})
     # endregion
 
     return game_table
@@ -37,7 +37,7 @@ def after_load_item_file(item_table: list) -> list:
     def build_item_rarities_items():
         def build_category(life):
             categories = [ "Item Rarities" ]
-            if life is not None and life != "Any":
+            if len(life or "") > 0 and life != "Any":
                 categories.append(life)
             return categories
         return [{
@@ -45,7 +45,7 @@ def after_load_item_file(item_table: list) -> list:
             "name": f"{item} Rarity",
             "category": build_category(life),
             "progression": True
-        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if entry["Item"] is not None}]
+        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}]
     item_table += build_item_rarities_items()
     #endregion
 
@@ -53,8 +53,8 @@ def after_load_item_file(item_table: list) -> list:
     def build_level_items():
         from .Options import LogicalLevelsPerLevelPack
         return [{
-            "count": 200,
-            "name": "Level" if size == 1 else f"Level Pack ({size}x)",
+            "count": int(200 / size) + (200 % size > 0),
+            "name": f"Level Pack ({size}x)",
             "category": [ "Levels", f"Level Pack ({size}x)" ],
             "progression": True,
             "value": { "Levels": size }
@@ -67,17 +67,17 @@ def after_load_item_file(item_table: list) -> list:
         from .Options import LogicalSkillLevelsPerLevelPack
         def build_category(life, size):
             categories = [ "Skill Levels", f"Skill Level Pack ({size}x)" ]
-            if life is not None and life != "Any":
+            if len(life or "") > 0 and life != "Any":
                 categories.append(life)
             return categories
         return [{
-            "count": 20,
-            "name": f"{skill} Level" if size == 1 else f"{skill} Level Pack ({size}x)",
+            "count": int(20 / size) + (20 % size > 0),
+            "name": f"{skill} Level Pack ({size}x)",
             "category": build_category(life, size),
             "progression": True,
             "value": { f"{skill} Levels": size }
         } for (skill, life) in {
-            (entry["Skill"], entry["Life"]) for entry in lives if entry["Skill"] is not None
+            (entry["Skill"], entry["Life"]) for entry in lives if len(entry["Skill"] or "") > 0
         } for size in range(LogicalSkillLevelsPerLevelPack.range_start, LogicalSkillLevelsPerLevelPack.range_end + 1)]
     item_table += build_skill_level_items()
     #endregion
@@ -89,7 +89,7 @@ def after_load_item_file(item_table: list) -> list:
             "category": ["Shop Keys"],
             "progression": True
         } for name in { entry["Shop"] for entry in shops }]
-    item_table += build_shop_items()
+    #item_table += build_shop_items()
     #endregion
 
     return item_table
@@ -110,7 +110,7 @@ def after_load_location_file(location_table: list) -> list:
             return f"{action} a {rarity}-Star {item}"
         def build_category(item, life):
             categories = [ "Item Rarities Hidden", f"Item Rarities: {item}" ]
-            if life is not None and life != "Any":
+            if len(life or "") > 0 and life != "Any":
                 categories.append(life)
             return categories
         def build_requires(action, item, rarity):
@@ -123,7 +123,7 @@ def after_load_location_file(location_table: list) -> list:
             "name": build_name(action, item, rarity),
             "category": build_category(item, life),
             "requires": build_requires(action, item, rarity)
-        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if entry["Item"] is not None}
+        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}
         for rarity in range(1, 6)
         for action in ("Find", "Equip")]
     location_table += build_item_rarity_locations()
@@ -149,7 +149,7 @@ def after_load_location_file(location_table: list) -> list:
     def build_skill_level_up_locations():
         def build_category(skill, life, level):
             categories = [ "Skill Level Checks", f"Level Up Checks: {skill}" ]
-            if life is not None and life != "Any":
+            if len(life or "") > 0 and life != "Any":
                 categories.append(life)
             if level > 15:
                 categories.append("DLC")
@@ -160,7 +160,7 @@ def after_load_location_file(location_table: list) -> list:
             "category": build_category(skill, life, level),
             "requires": "{has_skill(" + skill + ", " + str(level) + ")}"
         } for (skill, life) in {
-            (entry["Skill"], entry["Life"]) for entry in lives if entry["Skill"] is not None
+            (entry["Skill"], entry["Life"]) for entry in lives if len(entry["Skill"] or "") > 0
         } for level in range(2, 21)]
     location_table += build_skill_level_up_locations()
     #endregion
@@ -191,7 +191,7 @@ def after_load_location_file(location_table: list) -> list:
             "requires": build_requires(entry),
             "dont_place_item_category": [entry["Life"]]
         } for entry in challenges]
-    location_table += build_challenge_locations()
+    #location_table += build_challenge_locations()
     #endregion
 
     def build_recipe_locations():
@@ -226,7 +226,7 @@ def after_load_location_file(location_table: list) -> list:
             "requires": build_requires(entry),
             "dont_place_item_category": [entry["Life"]]
         } for entry in recipes]
-    location_table += build_recipe_locations()
+    #location_table += build_recipe_locations()
 
     def build_request_locations():
         def build_category(entry: dict):
@@ -244,7 +244,7 @@ def after_load_location_file(location_table: list) -> list:
             "category": build_category(entry),
             "requires": entry["Requires"],
         } for entry in requests ]
-    location_table += build_request_locations()
+    #location_table += build_request_locations()
 
     def build_chest_locations():
         def build_category(entry: dict):
@@ -253,7 +253,9 @@ def after_load_location_file(location_table: list) -> list:
                 f"Location: {entry["Region"]} - Red Chest"
             ]
             if "DLC" in entry["DLC"]:
-                category.append("DLC")
+                category += ["DLC", "DLC Chests"]
+            if "Trial" in entry["Region"]:
+                category.append("Trial Chests")
             return category
         return [{
             "name": f"{entry["Region"]} Red Chest: {entry["Item"]}",
@@ -321,7 +323,7 @@ def after_load_location_file(location_table: list) -> list:
             "requires": build_requires(entry),
             "dont_place_item_category": []
         } for entry in shops]
-    location_table += build_shop_locations()
+    #location_table += build_shop_locations()
 
     return location_table
 
@@ -377,6 +379,7 @@ def get_wish_hunt_available_location_count(
         include_dlc = False,
         include_story = False,
         include_dlc_story = False,
+        include_chapters = False,
         include_challenges = False,
         include_crafting = False,
         include_requests = False,
@@ -401,27 +404,32 @@ def get_wish_hunt_available_location_count(
         shops_level = False,
         shops_cost = 0,
         shops_restricted = False,
+        chests_dlc = False,
+        chests_trials = False,
         available_lives = None
 ):
     if available_lives is None:
         available_lives = []
 
-    count = 19 if include_dlc else 16
+    count = 15 if include_dlc else 10
 
     if include_story:
-        count += 66
+        count += 60
 
     if include_dlc_story:
-        count += 23
+        count += 20
 
-    if include_challenges:
-        count += get_life_challenges_checks(include_dlc, licenses_max_rank, available_lives)
+    if include_chapters:
+        count -= 9 if include_dlc else 7
 
-    if include_crafting:
-        count += get_life_recipe_checks(include_dlc, licenses_max_rank, available_lives)
+    # if include_challenges:
+    #     count += get_life_challenges_checks(include_dlc, licenses_max_rank, available_lives)
 
-    if include_requests:
-        count += get_other_requests_checks(requests_dlc, requests_count, licenses_max_rank, available_lives)
+    # if include_crafting:
+    #     count += get_life_recipe_checks(include_dlc, licenses_max_rank, available_lives)
+
+    # if include_requests:
+    #     count += get_other_requests_checks(requests_dlc, requests_count, licenses_max_rank, available_lives)
 
     if include_levels:
         experience_min_level = 2
@@ -430,21 +438,25 @@ def get_wish_hunt_available_location_count(
             available -= int(available / experience_pack_size)
         count += available
 
-    if include_skills:
-        skill_min_level = 2
-        available = skill_max_level - skill_min_level + 1
-        if skill_logic:
-            available -= int(available / skill_pack_size)
-        count += available * len({
-            entry["Skill"]
-            for entry in lives if entry["Skill"] is not None and entry["Life"] in available_lives
-        })
+    # if include_skills:
+    #     skill_min_level = 2
+    #     available = skill_max_level - skill_min_level + 1
+    #     if skill_logic:
+    #         available -= int(available / skill_pack_size)
+    #     count += available * len({
+    #         entry["Skill"]
+    #         for entry in lives if len(entry["Skill"] or "") > 0 and (entry["Life"] in available_lives or entry["Life"] == "Any")
+    #     })
 
     if include_chests:
-        count += 260 if include_dlc else 130
+        count += len([
+            entry for entry in chests
+            if (chests_dlc or "DLC" not in entry["DLC"])
+            and (chests_trials or "Trial" not in entry["Region"])
+        ])
 
-    if include_shops:
-        count += get_available_shop_checks(shops_dlc, shops_bliss, shops_master, shops_level, licenses_max_rank, shops_story, shops_fairy, shops_cost * 10, shops_restricted, available_lives)
+    # if include_shops:
+    #     count += get_available_shop_checks(shops_dlc, shops_bliss, shops_master, shops_level, licenses_max_rank, shops_story, shops_fairy, shops_cost * 10, shops_restricted, available_lives)
 
     return count
 
@@ -509,8 +521,7 @@ def get_available_shop_checks(dlc, with_bliss, with_lives, with_level, max_rank,
         if (dlc or (entry["Group"] != "DLC" and "DLC" not in entry["Requirement"]))
            and (with_bliss or "Bliss" not in entry["Requirement"])
            and (with_level or "Level:" not in entry["Requirement"])
-           and (with_lives or "Master:" not in entry["Requirement"])
-           and ((max_rank >= 5 and entry["Requirement"] in formated_lives) or "Master:" not in entry["Requirement"])
+           and (with_lives and max_rank >= 5 and entry["Requirement"] in formated_lives or "Master:" not in entry["Requirement"])
            and (with_story or entry["Group"] != "Story")
            and (with_fairy or entry["Group"] != "Fairy")
            and (max_dosh >= int(entry["Dosh"]))

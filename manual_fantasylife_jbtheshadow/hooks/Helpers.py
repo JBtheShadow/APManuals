@@ -12,8 +12,10 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
     include_requests = get_option_value(multiworld, player, "include_requests")
     requests_count = get_option_value(multiworld, player, "requests_count")
     licenses_max_rank = get_option_value(multiworld, player, "licenses_max_rank")
+    include_levels = get_option_value(multiworld, player, "include_levels")
     experience_logic = get_option_value(multiworld, player, "experience_logic")
     experience_pack_size = get_option_value(multiworld, player, "experience_pack_size")
+    include_skills = get_option_value(multiworld, player, "include_skills")
     skill_logic = get_option_value(multiworld, player, "skill_logic")
     skill_pack_size = get_option_value(multiworld, player, "skill_pack_size")
     shops_cost = get_option_value(multiworld, player, "shops_cost")
@@ -31,13 +33,13 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
             if number > requests_count:
                 return False
         case x if x.startswith("Level Pack "):
-            if not experience_logic:
+            if not include_levels or not experience_logic:
                 return False
             size = int(x.replace("Level Pack (", "").replace("x)", ""))
             if size != experience_pack_size:
                 return False
         case x if x.startswith("Skill Level Pack "):
-            if not skill_logic:
+            if not include_skills or not skill_logic:
                 return False
             size = int(x.replace("Skill Level Pack (", "").replace("x)", ""))
             if size != skill_pack_size:

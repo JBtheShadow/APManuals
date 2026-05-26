@@ -31,19 +31,19 @@ class GameSeed(FreeText):
 
 class StoryGoal(Toggle):
     """Beating the main story is required for the goal."""
-    display_name = "Beat the Main Story"
+    display_name = "Beat the Main Story as a Goal Requirement"
 
 class DlcGoal(Toggle):
     """Beating the Origin Island DLC story is required for the goal."""
-    display_name = "Beat the Origin Island DLC Story"
+    display_name = "Beat the Origin Island DLC Story as a Goal Requirement"
 
 class LifeMasteryGoal(Toggle):
     """Reaching a specified license rank in a number of lives is required for the goal."""
-    display_name = "Life Mastery"
+    display_name = "Life Mastery as a Goal Requirement"
 
 class WishHuntGoal(DefaultOnToggle):
     """Finding a number of lost wishes is required for the goal."""
-    display_name = "Wish Hunt"
+    display_name = "Wish Hunt as a Goal Requirement"
 
 class IncludeDlcContent(Toggle):
     """Adds content and locations for the Origin Island DLC, which includes:
@@ -119,9 +119,17 @@ class IncludeShopLocations(Toggle):
     display_name = "Include Shop Locations"
 
 class IncludeChestLocations(Toggle):
-    """Adds up to 266 locations for all the possible red chest drops.
+    """Adds up to 297 locations for all the possible red chest drops.
     If two areas share similar drop tables then each drop counts as a separate location."""
     display_name = "Include Chest Locations"
+
+class IncludeDlcChests(Toggle):
+    """Toggle to include all DLC chest locations."""
+    display_name = "Include DLC Chests"
+
+class IncludeTrialChests(Toggle):
+    """Requires DLC chests to be included. Toggle to include chests found within each of the Ancient Tower trials. Not recommended."""
+    display_name = "Include Ancient Tower Chests"
 
 class RankChoice(Choice):
     option_fledgling = 1
@@ -270,9 +278,9 @@ class IncludeExperienceLevelLogic(DefaultOnToggle):
 class LogicalLevelsPerLevelPack(Range):
     """Sets how many logical levels are expected per level pack."""
     display_name = "Logical Levels per Level Pack"
-    range_start = 1
+    range_start = 2
     range_end = 10
-    default = 3
+    default = 5
 
 class SkillLevelRange(Range):
     range_start = 2
@@ -291,7 +299,7 @@ class IncludeSkillLevelLogic(DefaultOnToggle):
 class LogicalSkillLevelsPerLevelPack(Range):
     """Sets how many logical skill levels are expected per level pack."""
     display_name = "Logical Skill Levels per Level Pack"
-    range_start = 1
+    range_start = 2
     range_end = 5
     default = 3
 
@@ -376,52 +384,36 @@ class IncludeShopRestrictions(Toggle):
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
     options["game_seed"] = GameSeed
 
-    options["story_goal"] = StoryGoal
-    options["dlc_goal"] = DlcGoal
-    options["life_mastery_goal"] = LifeMasteryGoal
-    options["wish_hunt_goal"] = WishHuntGoal
-
-    options["include_dlc"] = IncludeDlcContent
-    options["include_bliss"] = IncludeBlissBonuses
-    options["include_passwords"] = IncludePasswords
     options["include_chapters"] = IncludeChapters
-    options["include_licenses"] = IncludeLicenses
-    options["include_rarities"] = IncludeItemRarities
-    options["include_caves"] = IncludeCaves
-
     options["include_story"] = IncludeStoryLocations
+    options["story_goal"] = StoryGoal
+    options["include_dlc"] = IncludeDlcContent
     options["include_dlc_story"] = IncludeDlcStoryLocations
-    options["include_challenges"] = IncludeChallengeLocations
-    options["include_crafting"] = IncludeCraftingLocations
-    options["include_requests"] = IncludeRequestLocations
-    options["include_levels"] = IncludeLevelUpLocations
-    options["include_skills"] = IncludeSkillLevelUpLocations
-    options["include_shops"] = IncludeShopLocations
-    options["include_chests"] = IncludeChestLocations
+    options["dlc_goal"] = DlcGoal
 
-    options["life_mastery_rank"] = LifeMasteryRank
-    options["life_mastery_count"] = LifeMasteryCount
-
+    options["wish_hunt_goal"] = WishHuntGoal
     options["wish_hunt_total"] = WishHuntTotal
     options["wish_hunt_required"] = WishHuntRequired
     options["wish_hunt_local"] = WishHuntLocal
 
+    options["life_mastery_goal"] = LifeMasteryGoal
+    options["life_mastery_rank"] = LifeMasteryRank
+    options["life_mastery_count"] = LifeMasteryCount
+
+    options["include_licenses"] = IncludeLicenses
     options["licenses_progressive"] = ProgressiveLicenses
     options["licenses_available"] = AvailableLicenses
     options["licenses_custom"] = CustomAvailableLicenses
     options["licenses_max_rank"] = MaxLicenseRank
     options["licenses_start"] = StartingLicense
+    options["include_challenges"] = IncludeChallengeLocations
+    options["include_crafting"] = IncludeCraftingLocations
 
+    options["include_requests"] = IncludeRequestLocations
     options["requests_count"] = OtherRequestsCount
     options["requests_dlc"] = OtherRequestsDlc
 
-    options["experience_max_level"] = MaxExperienceLevel
-    options["experience_logic"] = IncludeExperienceLevelLogic
-    options["experience_pack_size"] = LogicalLevelsPerLevelPack
-    options["skill_max_level"] = MaxSkillLevel
-    options["skill_logic"] = IncludeSkillLevelLogic
-    options["skill_pack_size"] = LogicalSkillLevelsPerLevelPack
-
+    options["include_bliss"] = IncludeBlissBonuses
     options["bliss_inventory"] = IncludeInventoryBlissBonuses
     options["bliss_storage"] = IncludeStorageBlissBonuses
     options["bliss_shopping"] = IncludeShoppingBlissBonuses
@@ -431,6 +423,16 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["bliss_theater"] = IncludeTheaterBlissBonuses
     options["bliss_start"] = StartingBlissBonus
 
+    options["include_levels"] = IncludeLevelUpLocations
+    options["experience_max_level"] = MaxExperienceLevel
+    options["experience_logic"] = IncludeExperienceLevelLogic
+    options["experience_pack_size"] = LogicalLevelsPerLevelPack
+    options["include_skills"] = IncludeSkillLevelUpLocations
+    options["skill_max_level"] = MaxSkillLevel
+    options["skill_logic"] = IncludeSkillLevelLogic
+    options["skill_pack_size"] = LogicalSkillLevelsPerLevelPack
+
+    options["include_shops"] = IncludeShopLocations
     options["shops_story"] = IncludeStoryShopLocations
     options["shops_dlc"] = IncludeDlcShopLocations
     options["shops_bliss"] = IncludeBlissShopLocations
@@ -439,6 +441,14 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["shops_master"] = IncludeMasterShopLocations
     options["shops_cost"] = ShopMaxItemCost
     options["shops_restricted"] = IncludeShopRestrictions
+
+    options["include_chests"] = IncludeChestLocations
+    options["chests_dlc"] = IncludeDlcChests
+    options["chests_trials"] = IncludeTrialChests
+
+    options["include_passwords"] = IncludePasswords
+    options["include_rarities"] = IncludeItemRarities
+    options["include_caves"] = IncludeCaves
 
     return options
 
@@ -457,15 +467,42 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
-    groups["Goal Requirements"] = [StoryGoal, DlcGoal, LifeMasteryGoal, WishHuntGoal]
-    groups["Features"] = [IncludeDlcContent, IncludeBlissBonuses, IncludePasswords, IncludeChapters, IncludeLicenses, IncludeItemRarities, IncludeCaves]
-    groups["Extra Locations"] = [IncludeStoryLocations, IncludeDlcStoryLocations, IncludeChallengeLocations, IncludeCraftingLocations, IncludeRequestLocations, IncludeLevelUpLocations, IncludeSkillLevelUpLocations, IncludeShopLocations, IncludeChestLocations]
-    groups["Life Mastery Tweaks"] = [LifeMasteryRank, LifeMasteryCount]
-    groups["Wish Hunt Tweaks"] = [WishHuntTotal, WishHuntRequired, WishHuntLocal]
-    groups["License Tweaks"] = [ProgressiveLicenses, AvailableLicenses, CustomAvailableLicenses, MaxLicenseRank, StartingLicense]
-    groups["Level Up Tweaks"] = [MaxExperienceLevel, IncludeExperienceLevelLogic, LogicalLevelsPerLevelPack, MaxSkillLevel, IncludeSkillLevelLogic, LogicalSkillLevelsPerLevelPack]
-    groups["Bliss Bonus Tweaks"] = [IncludeInventoryBlissBonuses, IncludeStorageBlissBonuses, IncludeShoppingBlissBonuses, IncludeAnimalBlissBonuses, IncludePetBlissBonuses, IncludeCustomizationBlissBonuses, IncludeTheaterBlissBonuses, StartingBlissBonus]
-    groups["Shops Tweaks"] = [IncludeStoryShopLocations, IncludeDlcShopLocations, IncludeBlissShopLocations, IncludeFairyShopLocations, IncludeLevelShopLocations, IncludeMasterShopLocations, ShopMaxItemCost, IncludeShopRestrictions]
+    groups["Story and DLC"] = [
+        IncludeChapters, IncludeStoryLocations, StoryGoal, IncludeDlcContent, IncludeDlcStoryLocations, DlcGoal
+    ]
+    groups["Wish Hunt"] = [
+        WishHuntGoal, WishHuntTotal, WishHuntRequired, WishHuntLocal
+    ]
+    groups["Life Mastery"] = [
+        LifeMasteryGoal, LifeMasteryRank, LifeMasteryCount
+    ]
+    groups["Lives and Licenses"] = [
+        IncludeLicenses, ProgressiveLicenses, AvailableLicenses, CustomAvailableLicenses,
+        MaxLicenseRank, StartingLicense, IncludeChallengeLocations, IncludeCraftingLocations
+    ]
+    groups["Other Requests"] = [
+        IncludeRequestLocations, OtherRequestsCount, OtherRequestsDlc
+    ]
+    groups["Bliss Bonuses"] = [
+        IncludeBlissBonuses, IncludeInventoryBlissBonuses, IncludeStorageBlissBonuses, IncludeShoppingBlissBonuses,
+        IncludeAnimalBlissBonuses, IncludePetBlissBonuses, IncludeCustomizationBlissBonuses,
+        IncludeTheaterBlissBonuses, StartingBlissBonus
+    ]
+    groups["Levels"] = [
+        IncludeLevelUpLocations, MaxExperienceLevel, IncludeExperienceLevelLogic, LogicalLevelsPerLevelPack,
+        IncludeSkillLevelUpLocations, MaxSkillLevel, IncludeSkillLevelLogic, LogicalSkillLevelsPerLevelPack
+    ]
+    groups["Shops"] = [
+        IncludeShopLocations, IncludeStoryShopLocations, IncludeDlcShopLocations, IncludeBlissShopLocations,
+        IncludeFairyShopLocations, IncludeLevelShopLocations, IncludeMasterShopLocations, ShopMaxItemCost,
+        IncludeShopRestrictions
+    ]
+    groups["Chests"] = [
+        IncludeChestLocations, IncludeDlcChests, IncludeTrialChests
+    ]
+    groups["Miscellaneous"] = [
+        IncludePasswords, IncludeItemRarities, IncludeCaves
+    ]
     return groups
 
 def after_option_groups_created(groups: list[OptionGroup]) -> list[OptionGroup]:
