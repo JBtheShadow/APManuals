@@ -1,5 +1,8 @@
 from unittest import case
+import logging
 
+global_location_table = []
+global_item_table = []
 shops = []
 chests = []
 requests = []
@@ -33,6 +36,8 @@ def after_load_game_file(game_table: dict) -> dict:
 # called after the items.json file has been loaded, before any item loading or processing has occurred
 # if you need access to the items after processing to add ids, etc., you should use the hooks in World.py
 def after_load_item_file(item_table: list) -> list:
+    global global_item_table
+
     #region Item Rarities
     def build_item_rarities_items():
         def build_category(life):
@@ -92,6 +97,7 @@ def after_load_item_file(item_table: list) -> list:
     #item_table += build_shop_items()
     #endregion
 
+    global_item_table = item_table
     return item_table
 
 # NOTE: Progressive items are not currently supported in Manual. Once they are,
@@ -102,6 +108,8 @@ def after_load_progressive_item_file(progressive_item_table: list) -> list:
 # called after the locations.json file has been loaded, before any location loading or processing has occurred
 # if you need access to the locations after processing to add ids, etc., you should use the hooks in World.py
 def after_load_location_file(location_table: list) -> list:
+    global global_location_table
+
     #region Item Rarities
     def build_item_rarity_locations():
         def build_name(action, item, rarity):
@@ -191,7 +199,7 @@ def after_load_location_file(location_table: list) -> list:
             "requires": build_requires(entry),
             "dont_place_item_category": [entry["Life"]]
         } for entry in challenges]
-    #location_table += build_challenge_locations()
+    # location_table += build_challenge_locations()
     #endregion
 
     def build_recipe_locations():
@@ -226,11 +234,12 @@ def after_load_location_file(location_table: list) -> list:
             "requires": build_requires(entry),
             "dont_place_item_category": [entry["Life"]]
         } for entry in recipes]
-    #location_table += build_recipe_locations()
+    # location_table += build_recipe_locations()
 
     def build_request_locations():
         def build_category(entry: dict):
             categories = [
+                f"Other Requests",
                 f"Other Requests {entry["#"]}",
                 f"Location: {entry["Region"]} - Requests",
             ]
@@ -244,7 +253,7 @@ def after_load_location_file(location_table: list) -> list:
             "category": build_category(entry),
             "requires": entry["Requires"],
         } for entry in requests ]
-    #location_table += build_request_locations()
+    # location_table += build_request_locations()
 
     def build_chest_locations():
         def build_category(entry: dict):
@@ -325,6 +334,7 @@ def after_load_location_file(location_table: list) -> list:
         } for entry in shops]
     #location_table += build_shop_locations()
 
+    global_location_table = location_table
     return location_table
 
 # called after the events.json file has been loaded, before any processing has occurred
@@ -429,24 +439,24 @@ def get_wish_hunt_available_location_count(
     #     count += get_life_recipe_checks(include_dlc, licenses_max_rank, available_lives)
 
     # if include_requests:
-    #     count += get_other_requests_checks(requests_dlc, requests_count, licenses_max_rank, available_lives)
+    #     count += get_other_requests_checks(include_dlc and requests_dlc, requests_count, licenses_max_rank, available_lives)
 
     if include_levels:
         experience_min_level = 2
         available = experience_max_level - experience_min_level + 1
         if experience_logic:
-            available -= int(available / experience_pack_size)
+            available -= (int(available / experience_pack_size) + (available % experience_pack_size > 0))
         count += available
 
-    # if include_skills:
-    #     skill_min_level = 2
-    #     available = skill_max_level - skill_min_level + 1
-    #     if skill_logic:
-    #         available -= int(available / skill_pack_size)
-    #     count += available * len({
-    #         entry["Skill"]
-    #         for entry in lives if len(entry["Skill"] or "") > 0 and (entry["Life"] in available_lives or entry["Life"] == "Any")
-    #     })
+    if include_skills:
+        skill_min_level = 2
+        available = skill_max_level - skill_min_level + 1
+        if skill_logic:
+            available -= (int(available / skill_pack_size) + (available % skill_pack_size > 0))
+        count += available * len({
+            entry["Skill"]
+            for entry in lives if len(entry["Skill"] or "") > 0 and (entry["Life"] in available_lives or entry["Life"] == "Any")
+        })
 
     if include_chests:
         count += len([
@@ -461,7 +471,7 @@ def get_wish_hunt_available_location_count(
     return count
 
 def get_life_challenges_checks(dlc, max_rank, strict_lives):
-    formated_lives = strict_lives
+    formated_lives = [name for name in life_names if name in strict_lives]
     formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
     return len([
         entry for entry in challenges
@@ -475,7 +485,7 @@ def get_life_challenges_checks(dlc, max_rank, strict_lives):
     ])
 
 def get_life_recipe_checks(dlc, max_rank, strict_lives):
-    formated_lives = strict_lives
+    formated_lives = [name for name in life_names if name in strict_lives]
     formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
     if dlc and max_rank >= 8:
         formated_ranks.append("Demi-Creator")
@@ -486,17 +496,21 @@ def get_life_recipe_checks(dlc, max_rank, strict_lives):
     ])
 
 def get_other_requests_checks(dlc, request_count, max_rank, available_lives):
-    formated_lives = available_lives
+    formated_lives = [name for name in life_names if name in available_lives]
     formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
-    return len([
-        entry for entry in requests
+    logging.info(formated_lives)
+    logging.info(formated_ranks)
+    request_locations = [
+        entry["Name"] for entry in requests
         if (dlc or "DLC" not in entry["DLC"])
            and (request_count >= int(entry["#"]))
-           and (not entry["Rank"] or entry["Rank"] in formated_ranks)
-           and (not entry["Life1"] or entry["Life1"] in formated_lives)
-           and (not entry["Life2"] or entry["Life2"] in formated_lives)
-           and (not entry["Life3"] or entry["Life3"] in formated_lives)
-    ])
+           and (len(entry["Rank"] or "") == 0 or entry["Rank"] in formated_ranks)
+           and (len(entry["Life1"] or "") == 0 or entry["Life1"] in formated_lives)
+           and (len(entry["Life2"] or "") == 0 or entry["Life2"] in formated_lives)
+           and (len(entry["Life3"] or "") == 0 or entry["Life3"] in formated_lives)
+    ]
+
+    return len(request_locations)
 
 def get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
     return {

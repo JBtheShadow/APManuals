@@ -25,6 +25,7 @@
     "Cave Passes": { "yaml_option": ["include_caves"] },
     "Shop Keys": { "yaml_option": ["include_shops", "shops_restricted"] },
 
+    "Other Requests": { "yaml_option": ["include_requests"], "hidden": true },
     "Other Requests 1": { "hidden": true },
     "Other Requests 2": { "hidden": true },
     "Other Requests 3": { "hidden": true },

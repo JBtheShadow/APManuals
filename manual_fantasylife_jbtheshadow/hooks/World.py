@@ -532,7 +532,6 @@ def before_create_items_all(
         item_name = f"Level Pack ({experience_pack_size}x)"
         count = int(experience_max_level / experience_pack_size) + (experience_max_level % experience_pack_size > 0)
         item_config[item_name] = {"progression": int(count)}
-        logging.info({item_name: item_config[item_name]})
 
     if include_skills and skill_logic:
         count = int(skill_max_level / skill_pack_size) + (skill_max_level % skill_pack_size > 0)
@@ -542,7 +541,6 @@ def before_create_items_all(
             item_name = f"{skill} Level Pack ({skill_pack_size}x)"
             if is_item_name_enabled(multiworld, player, item_name):
                 item_config[item_name] = {"progression": int(count)}
-                logging.info({item_name: item_config[item_name]})
 
     # if shops_restricted:
     #     for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
@@ -637,7 +635,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
 
     if include_skills and skill_logic:
         for skill in skill_names:
-            item_name = f"{skill} Level Pack ({experience_pack_size}x)"
+            item_name = f"{skill} Level Pack ({skill_pack_size}x)"
             if is_item_name_enabled(multiworld, player, item_name):
                 starting_inventory.append(item_name)
 

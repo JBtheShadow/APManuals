@@ -26,10 +26,10 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
             return False
         case x if x in life_names and x not in available_lives:
             return False
-        case x if x.startswith("Other Requests "):
+        case x if x.startswith("Other Requests #"):
             if not include_requests:
                 return False
-            number = int(x.replace("Other Requests ", ""))
+            number = int(x.replace("Other Requests #", ""))
             if number > requests_count:
                 return False
         case x if x.startswith("Level Pack "):
