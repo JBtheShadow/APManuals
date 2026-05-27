@@ -84,6 +84,7 @@ class IncludeItemRarities(Toggle):
 class IncludeCaves(Toggle):
     """Restricts access to select caves, grottos and underground locations behind finding their respective passes as
     well as locations for accessing them for the first time."""
+    display_name = "Include Cave Passes"
 
 class IncludeStoryLocations(DefaultOnToggle):
     """Adds several extra locations for story points you're forced to do when starting from a fresh save."""
@@ -188,6 +189,7 @@ class AvailableLicenses(Choice):
     option_gatherer = 6
     option_artisan = 7
     option_custom = 8
+    default = 1
 
 class CustomAvailableLicenses(OptionList):
     """Lets you specify which licenses should be included in the pool if available licenses are set to custom.
@@ -359,6 +361,7 @@ class IncludeBlissShopLocations(Toggle):
 
 class IncludeFairyShopLocations(Toggle):
     """Includes shop locations from the Mysterious Fairy, unlocked with bliss."""
+    display_name = "Include Mysterious Fairy Shop Locations"
 
 class IncludeLevelShopLocations(Toggle):
     """Includes locations unlocked by reaching a specific experience level."""
@@ -371,7 +374,7 @@ class IncludeMasterShopLocations(Toggle):
 class ShopMaxItemCost(Range):
     """Sets how expensive a shop item can be to be included.
     All shop items are in multiples of 10G, so a value of 100 means 1000G will be the highest cost allowed."""
-    display_name = "Highest Shop Item Cost"
+    display_name = "Highest Shop Item Cost x10"
     range_start = 1
     range_end = 10000
     default = 100
@@ -384,8 +387,8 @@ class IncludeShopRestrictions(Toggle):
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
     options["game_seed"] = GameSeed
 
-    options["include_chapters"] = IncludeChapters
     options["include_story"] = IncludeStoryLocations
+    options["include_chapters"] = IncludeChapters
     options["story_goal"] = StoryGoal
     options["include_dlc"] = IncludeDlcContent
     options["include_dlc_story"] = IncludeDlcStoryLocations

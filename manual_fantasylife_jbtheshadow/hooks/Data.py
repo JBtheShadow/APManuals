@@ -354,7 +354,7 @@ def after_load_category_file(category_table: dict) -> dict:
     from .Options import LogicalLevelsPerLevelPack, LogicalSkillLevelsPerLevelPack, ShopMaxItemCost
 
     category_table.update({
-        f"Level Pack {size}x": { "hidden": True }
+        f"Level Pack ({size}x)": { "hidden": True }
         for size in range(LogicalLevelsPerLevelPack.range_start, LogicalLevelsPerLevelPack.range_end + 1)
     })
 

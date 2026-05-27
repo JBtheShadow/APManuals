@@ -124,7 +124,10 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     fake_gen = getattr(multiworld, "generation_is_fake", False)
 
     #region Seed
-    seed = hash(game_seed) if game_seed else world.random.randint(1, 999999999999)
+    if not game_seed:
+        game_seed = str(world.random.randint(1, 999999999999))
+        set_option(world, "game_seed", game_seed)
+    seed = hash(game_seed)
     world.random.seed(seed)
     #endregion
 
