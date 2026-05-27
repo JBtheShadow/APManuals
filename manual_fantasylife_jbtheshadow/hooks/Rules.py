@@ -145,6 +145,25 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
     return ItemValue(state, player, f"{life}:{requirement}")
 
 
+def has_soft_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
+    from .Data import rank_names
+    from ..Rules import ItemValue
+
+    parts = rank_and_life.split()
+    if len(parts) != 2:
+        raise Exception(f"Invalid rank and life parameter '{rank_and_life}'.")
+
+    life = parts[1]
+    rank = parts[0]
+    requirement = rank_names.index(rank)
+
+    include_licenses = is_option_enabled(multiworld, player, "include_licenses")
+    if not include_licenses or life not in world.available_lives:
+        return True
+
+    return ItemValue(state, player, f"{life}:{requirement}")
+
+
 def can_fight(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     return True
 

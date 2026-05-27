@@ -90,11 +90,11 @@ def after_load_item_file(item_table: list) -> list:
     #region Shop Items
     def build_shop_items():
         return [{
-            "name": f"{name} Key",
+            "name": f"{name} Keys",
             "category": ["Shop Keys"],
             "progression": True
         } for name in { entry["Shop"] for entry in shops }]
-    #item_table += build_shop_items()
+    item_table += build_shop_items()
     #endregion
 
     global_item_table = item_table
@@ -186,11 +186,13 @@ def after_load_location_file(location_table: list) -> list:
                 categories += "DLC"
             return categories
         def build_requires(entry: dict):
-            requires = [
-                f"{{has_license({entry["Rank"]} {life})}}"
-            for life in [x for x in [
-                    entry["Life"], entry["Dependency1"], entry["Dependency2"], entry["Dependency3"], entry["Dependency4"]
-                ] if len(x)]]
+            requires = ["{has_license(" + entry["Rank"] + " " + entry["Life"] + ")}"]
+            requires += [
+                "{has_soft_license(" + entry["Rank"] + " " + life + ")}"
+                for life in [x for x in [
+                    entry["Dependency1"], entry["Dependency2"], entry["Dependency3"], entry["Dependency4"]
+                ] if len(x)]
+            ]
             return " and ".join(requires)
         return [{
             "name": f"{entry["Rank"]} {entry["Life"]}: {entry["Name"]}",
@@ -199,7 +201,7 @@ def after_load_location_file(location_table: list) -> list:
             "requires": build_requires(entry),
             "dont_place_item_category": [entry["Life"]]
         } for entry in challenges]
-    # location_table += build_challenge_locations()
+    location_table += build_challenge_locations()
     #endregion
 
     def build_recipe_locations():
@@ -234,7 +236,7 @@ def after_load_location_file(location_table: list) -> list:
             "requires": build_requires(entry),
             "dont_place_item_category": [entry["Life"]]
         } for entry in recipes]
-    # location_table += build_recipe_locations()
+    location_table += build_recipe_locations()
 
     def build_request_locations():
         def build_category(entry: dict):
@@ -253,7 +255,7 @@ def after_load_location_file(location_table: list) -> list:
             "category": build_category(entry),
             "requires": entry["Requires"],
         } for entry in requests ]
-    # location_table += build_request_locations()
+    location_table += build_request_locations()
 
     def build_chest_locations():
         def build_category(entry: dict):
@@ -305,7 +307,7 @@ def after_load_location_file(location_table: list) -> list:
                     category.append("Other Shop")
             return category
         def build_requires(entry: dict):
-            require_list = [ f"{{OptOne(|{entry["Shop"]} Key|)}}" ]
+            require_list = [ f"{{OptOne(|{entry["Shop"]} Keys|)}}" ]
             if entry["Requirement"].startswith("Master:"):
                 require_list.append(f"{{has_license(Master {entry["Requirement"].split(":")[1].strip()})}}")
             if entry["Requirement"] == "Bliss":
@@ -330,9 +332,9 @@ def after_load_location_file(location_table: list) -> list:
             "region": entry["Region"],
             "category": build_category(entry),
             "requires": build_requires(entry),
-            "dont_place_item_category": []
+            "dont_place_item_category": ["Shop Keys"]
         } for entry in shops]
-    #location_table += build_shop_locations()
+    location_table += build_shop_locations()
 
     global_location_table = location_table
     return location_table
@@ -432,14 +434,14 @@ def get_wish_hunt_available_location_count(
     if include_chapters:
         count -= 9 if include_dlc else 7
 
-    # if include_challenges:
-    #     count += get_life_challenges_checks(include_dlc, licenses_max_rank, available_lives)
+    if include_challenges:
+        count += get_life_challenges_checks(include_dlc, licenses_max_rank, available_lives)
 
-    # if include_crafting:
-    #     count += get_life_recipe_checks(include_dlc, licenses_max_rank, available_lives)
+    if include_crafting:
+        count += get_life_recipe_checks(include_dlc, licenses_max_rank, available_lives)
 
-    # if include_requests:
-    #     count += get_other_requests_checks(include_dlc and requests_dlc, requests_count, licenses_max_rank, available_lives)
+    if include_requests:
+        count += get_other_requests_checks(include_dlc and requests_dlc, requests_count, licenses_max_rank, available_lives)
 
     if include_levels:
         experience_min_level = 2
@@ -465,8 +467,8 @@ def get_wish_hunt_available_location_count(
             and (chests_trials or "Trial" not in entry["Region"])
         ])
 
-    # if include_shops:
-    #     count += get_available_shop_checks(shops_dlc, shops_bliss, shops_master, shops_level, licenses_max_rank, shops_story, shops_fairy, shops_cost * 10, shops_restricted, available_lives)
+    if include_shops:
+        count += get_available_shop_checks(shops_dlc, shops_bliss, shops_master, shops_level, licenses_max_rank, shops_story, shops_fairy, shops_cost * 10, shops_restricted, available_lives)
 
     return count
 
@@ -478,10 +480,10 @@ def get_life_challenges_checks(dlc, max_rank, strict_lives):
         if (dlc or "DLC" not in entry["DLC"])
            and (entry["Rank"] in formated_ranks)
            and (entry["Life"] in formated_lives)
-           and (not entry["Dependency1"] or entry["Dependency1"] in formated_lives)
-           and (not entry["Dependency2"] or entry["Dependency2"] in formated_lives)
-           and (not entry["Dependency3"] or entry["Dependency3"] in formated_lives)
-           and (not entry["Dependency4"] or entry["Dependency4"] in formated_lives)
+           # and (not entry["Dependency1"] or entry["Dependency1"] in formated_lives)
+           # and (not entry["Dependency2"] or entry["Dependency2"] in formated_lives)
+           # and (not entry["Dependency3"] or entry["Dependency3"] in formated_lives)
+           # and (not entry["Dependency4"] or entry["Dependency4"] in formated_lives)
     ])
 
 def get_life_recipe_checks(dlc, max_rank, strict_lives):
@@ -498,8 +500,6 @@ def get_life_recipe_checks(dlc, max_rank, strict_lives):
 def get_other_requests_checks(dlc, request_count, max_rank, available_lives):
     formated_lives = [name for name in life_names if name in available_lives]
     formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
-    logging.info(formated_lives)
-    logging.info(formated_ranks)
     request_locations = [
         entry["Name"] for entry in requests
         if (dlc or "DLC" not in entry["DLC"])

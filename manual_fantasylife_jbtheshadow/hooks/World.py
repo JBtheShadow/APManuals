@@ -88,6 +88,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     wish_hunt_total = get_option(world, "wish_hunt_total", 0)
     wish_hunt_required = get_option(world, "wish_hunt_required", 0)
     wish_hunt_local = get_option(world, "wish_hunt_local", False)
+    include_licenses = get_option(world, "include_licenses", False)
+    licenses_progressive = get_option(world, "licenses_progressive", False)
     licenses_available = get_option(world, "licenses_available", 0)
     licenses_custom = get_option(world, "licenses_custom", [])
     licenses_max_rank = get_option(world, "licenses_max_rank", 0)
@@ -188,6 +190,14 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     #endregion
 
     #region Available Licenses
+    if include_challenges or include_crafting:
+        if not include_licenses or not licenses_progressive:
+            logging.warning("Progressive licenses are required when including challenges or crafting recipes. Toggling both on.")
+            include_licenses = True
+            set_option(world, "include_licenses", include_licenses)
+            licenses_progressive = True
+            set_option(world, "licenses_progressive", licenses_progressive)
+
     from .Options import StartingLicense, AvailableLicenses
     melee_pool = ["Paladin", "Mercenary"]
     ranged_pool = ["Hunter", "Magician"]
@@ -277,6 +287,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     world.starting_life = starting_life
     logging.info(f"Available lives: {chosen_lives}")
     logging.info(f"Starting life: {starting_life}")
+    available_ranks = [rank_names[i] for i in range(1, licenses_max_rank + 1)]
+    logging.info(f"Available ranks: {available_ranks}")
     #endregion
 
     #region Bliss Bonuses
@@ -542,9 +554,9 @@ def before_create_items_all(
             if is_item_name_enabled(multiworld, player, item_name):
                 item_config[item_name] = {"progression": int(count)}
 
-    # if shops_restricted:
-    #     for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
-    #         item_config[unused_shop_storage_key] = {"progression": 0}
+    if shops_restricted:
+        for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
+            item_config[unused_shop_storage_key] = {"progression": 0}
 
     return item_config
 
