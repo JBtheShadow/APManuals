@@ -26,65 +26,38 @@ files.
 
 ## How to play
 
-This manual was intended to be played on a fresh save file, with the two main goals
-being:
-* Life Mastery: reach a target license rank in a number of lives;
-* Wish Hunt: find a number of Lost Wishes (mcguffins);
+Originally this manual was intended to be played on a fresh save file, though it might
+still be possible to use an existing save with a few caveats. Currently there are 4 possible
+requirements to goal and you can toggle each on or off as desired, so long as at least one
+of the following remains on:
+* Beat the main story
+* Beat the DLC story
+* Reach a target license rank in a number of lives, also called Life Mastery
+* Find a number of lost wishes throughout the multiworld, also called Wish Hunt
 
-Optionally, you might also need to beat the main story (or the DLC).
-
-### Playing on an existing save
-
-Now _technically_ there's nothing stopping you from running this Manual on an existing
-save, however keep in mind this may raise some concerns or pose issues towards several
-checks, especially ones related to story or anything you can only do once in game.
-
-However, it may still be possible to do so if you really want to. Check the yaml options
-for what's recommended or what to do if playing on an existing save.
+With additional tweaks to these requirements.
 
 ## The work so far
 
-* About 80+ story checks (100+ with Origin Island) mirroring the story progression of
-the game;
-  * There's an item called Progressive Chapter that enables locations dependent on specific
-  chapters;
-  * This is an artificial gating, as normally chapters themselves don't really have hard
-  requirements in game, aside from maybe a few combat stats for the unavoidable encounters;
-  * There is also the option to toss Chapter Unlockers into the pool;
-    * These are used as a second gating mechanism, one which helps the story be a little less
-    linear or encourage the player to do some of the side content before continuing;
-* A few more checks inspired by the bliss tracked in game:
-  * Sleeping at inns;
-    * Different inns are gated by the chapter you gain access to them;
-  * Amassing enough dosh;
-    * Slightly altered, with higher amounts gated by later chapters;
-  * Playing for hours;
-    * Altered to arguably more reasonable values;
-    * Use the save time to track it;
-* Additionally there are options to include the following:
-  * Items:
-    * Progressive life licenses;
-    * Progressive item rarity restrictions;
-    * Progressive bliss bonuses;
-    * Passwords;
-    * Shop storage keys to access their respective shops;
-    * Map restrictions;
-      * Currently only cave passes;
-  * Checks: 
-    * Reaching specific ranks or completing life challenges;
-    * Claiming bliss bonuses;
-    * Claiming passwords;
-    * Completing other requests;
-    * Leveling up your character;
-    * Leveling up your skills;
-    * Purchasing shop items;
-    * Finding loot in red chests;
+After a major rework from the previous versions, this manual includes:
+* Story locations
+* Life licenses
+* Life challenges
+* Crafting recipes
+* Levels and skill levels
+* Bliss bonuses
+* Passwords
+* Red chests
+* Item restrictions
+* Cave access restrictions
+* Shops and shop keys
 
 ## What's missing yet?
 
 * Expand on the map restrictions to include all locations;
-* Add tasks, an alternative means to add locations by giving the player tasks such as
-harvesting a number of items, finding them as drops, defeating an amount of enemies or
+* Potentially Add tasks, a possible replacement for challenges for someone intending
+to play on an existing save file;
+  * Tasks could involve things like harvesting a number of items, finding them as drops, defeating an amount of enemies or
 deliver bounties;
 * Create example yamls for different "game modes", such as:
   * Treasure Hunter (focus on chests);
