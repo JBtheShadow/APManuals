@@ -1,35 +1,69 @@
-# So what's the game about?
+# Fantasy Life (3DS) Manual AP 
 
-So with the new Switch game announced a little while ago, and hopefully it doesn't get delayed further but who knows, I've been reminded of the original on the 3DS.
+## So what's the game about?
 
-I think it's easiest to compare it to OSRS. It's an RPG with several different skills, with some related to combat while others are suited for gathering or crafting, which the game calls Lives.
+I think it's easiest to compare it to OSRS.
+It's an RPG with several different skills, with some related to combat while others
+are suited for gathering or crafting, which the game calls Lives.
 
-There's a main story (and a DLC with some extra content) though if you wanted you could stick to just one Life or a few and never touch the others. Or you could try out _all_ the twelve Lives offered.
+There's a main story (and a DLC with some extra content) though if you wanted you
+could stick to just one Life or a few and never touch the others. Or you could try
+out _all_ the twelve Lives offered.
 
-None of them are really _required_ to beating the game although you'd probably still pick up on at least one combat Life and a few supportive ones for gear.
+None of them are really _required_ to beating the game although you'd probably still
+pick up on at least one combat Life and a few supportive ones for gear.
 
-# Why make a manual for it?
+## Why make a manual for it?
 
-Well, firstly cuz as far as I know there's no modding for this game available yet, and it was published in... 2014.
+Well, firstly cuz as far as I know there's no modding for this game available yet,
+and it was published in... 2014.
 
-I have no knowledge in 3ds game coding and it would likely more effort than I can afford at the moment. However I still think there's some potential for it, and creating a manual is a lot more doable. Not necessarily easy to get it to a working state, but at least I can work with ironing out some logic and editing some json files.
+I have no knowledge in 3ds game coding and it would likely more effort than I can
+afford at the moment. However I still think there's some potential for it, and
+creating a manual is a lot more doable. Not necessarily easy to get it to a working
+state, but at least I can work with ironing out some logic and editing some json
+files.
 
-# The work so far
+## How to play
 
-* Everything that awards Bliss has been turned into a location. I figured that was one of the easiest things for the player to track while they play through their game, since the game notifies you one way or another that you've done it (and then there are the Butterfly Bliss Checks which also tally those awards).
-* Additionally there are settings for some extra checks on level ups or amount of skills that reached a specific level milestone.
-* Chapters have turned into self unlocking locations, which I intend to use to fine tune logic later on for which locations are in fact accessible or not.
-* Post Office passwords can be added to the pool.
-* There are different ways license access can be randomized, see the yaml for more info.
-* There are currently two main goal types:
-  * Wish Hunt, which has you looking for an amount of mcguffins.
-  * Life Mastery, which requires you to reach a specific rank in an amount of lives.
-  * Both goals currently also require you to beat the story.
-    * Might change that later so that beating the story becomes optional.
+Originally this manual was intended to be played on a fresh save file, though it might
+still be possible to use an existing save with a few caveats. Currently there are 4 possible
+requirements to goal and you can toggle each on or off as desired, so long as at least one
+of the following remains on:
+* Beat the main story
+* Beat the DLC story
+* Reach a target license rank in a number of lives, also called Life Mastery
+* Find a number of lost wishes throughout the multiworld, also called Wish Hunt
 
-# What's missing yet?
+With additional tweaks to these requirements.
 
-* Item access randomization; currently there are no restrictions on item use, be it their type, quality or rarity. Once I implement more locations there are plans to add an option for that
-* Turn other requests and life challenges into location checks
-* More options for Life Mastery goal, more specifically rather than mastering a number of any lives have it so you have a number of *specific* lives
-* Potentially look into other possible goals
+## The work so far
+
+After a major rework from the previous versions, this manual includes:
+* Story locations
+* Life licenses
+* Life challenges
+* Crafting recipes
+* Levels and skill levels
+* Bliss bonuses
+* Passwords
+* Red chests
+* Item restrictions
+* Cave access restrictions
+* Shops and shop keys
+
+## What's missing yet?
+
+* Expand on the map restrictions to include all locations;
+* Potentially Add tasks, a possible replacement for challenges for someone intending
+to play on an existing save file;
+  * Tasks could involve things like harvesting a number of items, finding them as drops, defeating an amount of enemies or
+deliver bounties;
+* Create example yamls for different "game modes", such as:
+  * Treasure Hunter (focus on chests);
+  * Shopkeeper (focus on shops);
+  * Wishmaker (focus on other requests);
+  * Taskmaster (focus on tasks);
+  * Solo or minimal life challenges;
+* Look into other ways to make it feasible to play this Manual with an existing save file;
+* Look for other improvements;

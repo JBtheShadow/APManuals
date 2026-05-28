@@ -28,12 +28,7 @@
                     "_comment": "if you don't include the authors it will use creator from game.json"
                 }
             ],
-            "_options_presets": {
-                "Easy":{
-                    "Option1": true,
-                    "Option2": "potato"
-                }
-            }
+            "options_presets": {}
         }
     }
 }

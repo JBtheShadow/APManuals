@@ -17,7 +17,7 @@ Angler,Fishing,Fishing Rod
 Cook,Cooking,Frying Pan
 Cook,Meat Cuisine,Frying Pan
 Cook,Seafood Cuisine,Frying Pan
-Cook,Egg & Veg Cuisine,Frying Pan
+Cook,Egg and Veg Cuisine,Frying Pan
 Blacksmith,Smithing,Hammer
 Blacksmith,Weaponsmithing,Hammer
 Blacksmith,Armorsmithing,Hammer
@@ -38,9 +38,4 @@ Any,,Leg Armor
 Any,,Gloves
 Any,,Footwear
 Any,,Accessory
-Any,,HP Recovery Item
-Any,,SP Recovery Item
-Any,,Status Recovery Item
-Any,,Reviving Item
-Any,,Stat Boosting Item
-Any,,Damaging Item
+Any,,Consumable

@@ -1,0 +1,849 @@
+Life,Rank,Group,Item,High Level
+Alchemist,Fledgling,Medicine,HP Potion,
+Alchemist,Fledgling,Medicine,SP Potion,
+Alchemist,Fledgling,Medicine,Poison Antidote,
+Alchemist,Fledgling,Medicine,Stun Antidote,
+Alchemist,Fledgling,Medicine,Sleep Antidote,
+Alchemist,Apprentice,Medicine,Life Cure,true
+Alchemist,Apprentice,Medicine,Hi-HP Potion,
+Alchemist,Apprentice,Medicine,Hi-SP Potion,
+Alchemist,Adept,Medicine,Healing Powder,
+Alchemist,Adept,Medicine,Energy Powder,
+Alchemist,Adept,Medicine,Power Aid,
+Alchemist,Adept,Medicine,Resistance Aid,
+Alchemist,Adept,Medicine,Magic Aid,
+Alchemist,Adept,Medicine,Panacea,true
+Alchemist,Expert,Medicine,Maxheal Dust,
+Alchemist,Expert,Medicine,Hi-Energy Powder,
+Alchemist,Expert,Medicine,Power Spray,
+Alchemist,Expert,Medicine,Resistance Spray,
+Alchemist,Expert,Medicine,Magic Spray,
+Alchemist,Master,Medicine,Mega Aid,true
+Alchemist,Master,Medicine,Charge Up Aid,true
+Alchemist,Master,Medicine,Crit Aid,true
+Alchemist,Master,Medicine,Daredevil Aid,true
+Alchemist,Master,Medicine,Elixir,true
+Alchemist,Master,Medicine,Spraylixir,true
+Alchemist,Demi-Creator,Medicine,Angelic Remedy,
+Alchemist,Demi-Creator,Medicine,Godly Spray,true
+Alchemist,Demi-Creator,Medicine,Miracle,
+Alchemist,Demi-Creator,Medicine,Luck Potion,
+Alchemist,Demi-Creator,Medicine,Berserk Potion,
+Alchemist,Creator,Medicine,Intelligence Candy,true
+Alchemist,Creator,Medicine,Focus Candy,true
+Alchemist,Creator,Medicine,Luck Candy,true
+Alchemist,Fledgling,Explosive,Mini Bomb,
+Alchemist,Apprentice,Explosive,Sleep Bomb,
+Alchemist,Adept,Explosive,Poison Bomb,
+Alchemist,Adept,Explosive,Stun Bomb,
+Alchemist,Adept,Explosive,Medium Bomb,true
+Alchemist,Master,Explosive,Love Bomb,true
+Alchemist,Hero,Explosive,Great Bomb,true
+Alchemist,Demi-Creator,Explosive,Divine Bomb,
+Alchemist,Demi-Creator,Explosive,Demonic Bomb,
+Alchemist,Fledgling,Tool,Science Flask,true
+Alchemist,Apprentice,Tool,Inventor's Flask,true
+Alchemist,Adept,Tool,Bubbling Flask,true
+Alchemist,Expert,Tool,Wisdom Flask,true
+Alchemist,Master,Tool,Sol Flask,true
+Alchemist,Master,Tool,Icicle Flask,true
+Alchemist,Master,Tool,Bolt Flask,true
+Alchemist,Hero,Tool,Forbidden Flask,true
+Alchemist,Demi-Creator,Tool,Flask of Dawn,
+Alchemist,Demi-Creator,Tool,Big Bang Flask,true
+Alchemist,Creator,Tool,Yggdrasil Flask,true
+Alchemist,Creator,Tool,Miracle Flask,true
+Alchemist,Fledgling,Accessory,Charm,
+Alchemist,Fledgling,Accessory,Claw Necklace,
+Alchemist,Fledgling,Accessory,Round Specs,
+Alchemist,Apprentice,Accessory,Savage Necklace,
+Alchemist,Apprentice,Accessory,Topaz Ring,true
+Alchemist,Apprentice,Accessory,Aquamarine Ring,true
+Alchemist,Adept,Accessory,Durable Charm,
+Alchemist,Adept,Accessory,Coral Necklace,
+Alchemist,Adept,Accessory,Marine Necklace,
+Alchemist,Adept,Accessory,Stylish Specs,
+Alchemist,Adept,Accessory,Diving Mask,
+Alchemist,Adept,Accessory,Flower Hairclip,
+Alchemist,Adept,Accessory,Amethyst Ring,true
+Alchemist,Expert,Accessory,Reinforced Charm,
+Alchemist,Expert,Accessory,Beastly Necklace,true
+Alchemist,Expert,Accessory,Sea Necklace,true
+Alchemist,Expert,Accessory,Classy Monocle,true
+Alchemist,Expert,Accessory,Black-Rimmed Glasses,
+Alchemist,Expert,Accessory,Ruby Ring,true
+Alchemist,Expert,Accessory,Sapphire Ring,true
+Alchemist,Expert,Accessory,Emerald Ring,true
+Alchemist,Master,Accessory,Red-Rimmed Glasses,
+Alchemist,Master,Accessory,Wild Side Shades,true
+Alchemist,Master,Accessory,Mini Specs,
+Alchemist,Master,Accessory,Black Onyx Ring,true
+Alchemist,Master,Accessory,Diamond Ring,true
+Alchemist,Hero,Accessory,Philosopher's Stone,true
+Alchemist,Demi-Creator,Accessory,Tidal Necklace,
+Alchemist,Demi-Creator,Accessory,Fluffkin Fuzzband,
+Alchemist,Creator,Accessory,Destiny Charm,true
+Alchemist,Creator,Accessory,Demonic Necklace,true
+Alchemist,Creator,Accessory,Celestial Ring,true
+Alchemist,Creator,Accessory,Double-Edged Stone,true
+Alchemist,Creator,Accessory,Monarch's Stone,true
+Alchemist,Creator,Accessory,Djinn Talisman,true
+Alchemist,Creator,Accessory,Tsunami Talisman,true
+Blacksmith,Fledgling,Material,Bronze Ingot,
+Blacksmith,Apprentice,Material,Iron Ingot,
+Blacksmith,Adept,Material,Silver Ingot,
+Blacksmith,Expert,Material,Gold Ingot,
+Blacksmith,Expert,Material,Platinum Ingot,
+Blacksmith,Master,Material,Magma Ingot,
+Blacksmith,Master,Material,Marine Ingot,
+Blacksmith,Master,Material,Magic Ingot,
+Blacksmith,Hero,Material,Celestial Ingot,
+Blacksmith,Demi-Creator,Material,Ancient Ingot,
+Blacksmith,Demi-Creator,Material,Demonic Ingot,
+Blacksmith,Fledgling,Weapon,Bronze Dagger,
+Blacksmith,Fledgling,Weapon,Bronze Sword,
+Blacksmith,Fledgling,Weapon,Bronze Claymore,
+Blacksmith,Apprentice,Weapon,Iron Dagger,
+Blacksmith,Apprentice,Weapon,Iron Sword,
+Blacksmith,Apprentice,Weapon,Iron Claymore,
+Blacksmith,Adept,Weapon,Silver Dagger,
+Blacksmith,Adept,Weapon,Silver Sword,
+Blacksmith,Adept,Weapon,Silver Claymore,
+Blacksmith,Expert,Weapon,Gold Dagger,
+Blacksmith,Expert,Weapon,Gold Sword,
+Blacksmith,Expert,Weapon,Gold Claymore,
+Blacksmith,Expert,Weapon,Rogue's Dagger,true
+Blacksmith,Expert,Weapon,Captain's Sword,true
+Blacksmith,Expert,Weapon,Azure Rose,true
+Blacksmith,Expert,Weapon,Bone Sword,true
+Blacksmith,Expert,Weapon,Key Cutter,true
+Blacksmith,Master,Weapon,Maajik Blade,true
+Blacksmith,Master,Weapon,Flamberge,true
+Blacksmith,Master,Weapon,Arcana Blade,true
+Blacksmith,Master,Weapon,Crystal Sword,true
+Blacksmith,Master,Weapon,Paladin's Sword,true
+Blacksmith,Master,Weapon,Demonic Void,true
+Blacksmith,Hero,Weapon,Joyeuse,true
+Blacksmith,Demi-Creator,Weapon,Ancient Dagger,
+Blacksmith,Demi-Creator,Weapon,Relic Sword,
+Blacksmith,Demi-Creator,Weapon,Champion's Blade,
+Blacksmith,Demi-Creator,Weapon,Dungeon Truncheon,
+Blacksmith,Demi-Creator,Weapon,Demonic Dagger,true
+Blacksmith,Demi-Creator,Weapon,Blossom Blade,true
+Blacksmith,Demi-Creator,Weapon,Rune Sword,true
+Blacksmith,Demi-Creator,Weapon,Crabtastrophe,true
+Blacksmith,Demi-Creator,Weapon,Berserker's Rage,true
+Blacksmith,Creator,Weapon,Adventurer's Sword,true
+Blacksmith,Creator,Weapon,Crescent Blade,true
+Blacksmith,Creator,Weapon,Divine Dagger,
+Blacksmith,Creator,Weapon,Divine Blade,true
+Blacksmith,Creator,Weapon,Lunares Blade,true
+Blacksmith,Creator,Weapon,Gallant Blade,true
+Blacksmith,Creator,Weapon,Giga Buster,
+Blacksmith,Creator,Weapon,Sword of Heroes,true
+Blacksmith,Fledgling,Tool,Bronze Hammer,true
+Blacksmith,Fledgling,Tool,Bronze Pickaxe,
+Blacksmith,Fledgling,Tool,Bronze Needle,
+Blacksmith,Fledgling,Tool,Bronze Frying Pan,
+Blacksmith,Apprentice,Tool,Iron Hammer,true
+Blacksmith,Apprentice,Tool,Iron Pickaxe,
+Blacksmith,Apprentice,Tool,Iron Needle,
+Blacksmith,Apprentice,Tool,Iron Frying Pan,
+Blacksmith,Adept,Tool,Silver Hammer,true
+Blacksmith,Adept,Tool,Silver Pickaxe,
+Blacksmith,Adept,Tool,Silver Needle,
+Blacksmith,Adept,Tool,Silver Frying Pan,
+Blacksmith,Expert,Tool,Gold Hammer,true
+Blacksmith,Expert,Tool,Gold Pickaxe,
+Blacksmith,Expert,Tool,Gold Needle,
+Blacksmith,Expert,Tool,Gold Frying Pan,
+Blacksmith,Expert,Tool,Super Hammer,true
+Blacksmith,Expert,Tool,Fashionista's Needle,true
+Blacksmith,Expert,Tool,Clam Frying Pan,true
+Blacksmith,Master,Tool,New Wave Needle,true
+Blacksmith,Master,Tool,Flame Hammer,true
+Blacksmith,Master,Tool,Rockcrusher Hammer,true
+Blacksmith,Master,Tool,Lava Pickaxe,true
+Blacksmith,Master,Tool,Deep Sea Pickaxe,true
+Blacksmith,Master,Tool,Mole Pickaxe,true
+Blacksmith,Master,Tool,Industry Needle,true
+Blacksmith,Master,Tool,Foreign Frying Pan,true
+Blacksmith,Hero,Tool,Spark Hammer,true
+Blacksmith,Demi-Creator,Tool,Hornet Needle,
+Blacksmith,Demi-Creator,Tool,Gothic Needle,true
+Blacksmith,Demi-Creator,Tool,Enchanted Frying Pan,true
+Blacksmith,Demi-Creator,Tool,Ancient Pickaxe,true
+Blacksmith,Demi-Creator,Tool,Ancient Frying Pan,
+Blacksmith,Demi-Creator,Tool,Gigaga Pickaxe,
+Blacksmith,Demi-Creator,Tool,Vintage Needle,
+Blacksmith,Demi-Creator,Tool,Gigaga Hammer,true
+Blacksmith,Demi-Creator,Tool,Clockwork Hammer,true
+Blacksmith,Demi-Creator,Tool,Phoenix Frying Pan,
+Blacksmith,Demi-Creator,Tool,Demonic Pickaxe,
+Blacksmith,Demi-Creator,Tool,Vogue Needle,
+Blacksmith,Creator,Tool,Star Smasher,true
+Blacksmith,Creator,Tool,Pan de Cuisine,
+Blacksmith,Creator,Tool,Spirit Pickaxe,
+Blacksmith,Creator,Tool,Athena's Needle,
+Blacksmith,Creator,Tool,Spirit Hammer,true
+Blacksmith,Creator,Tool,Solar Pickaxe,true
+Blacksmith,Creator,Tool,Haute Needle,true
+Blacksmith,Creator,Tool,Frymaster 2000,true
+Blacksmith,Fledgling,Armor,Bronze Shield,
+Blacksmith,Fledgling,Armor,Leather Cap,
+Blacksmith,Fledgling,Armor,Leather Armor,true
+Blacksmith,Fledgling,Armor,Leather Leggings,
+Blacksmith,Fledgling,Armor,Leather Gauntlets,
+Blacksmith,Fledgling,Armor,Leather Boots,
+Blacksmith,Apprentice,Armor,Iron Shield,
+Blacksmith,Apprentice,Armor,Iron Helmet,
+Blacksmith,Apprentice,Armor,Iron Armor,true
+Blacksmith,Apprentice,Armor,Iron Leg Guards,
+Blacksmith,Apprentice,Armor,Iron Gauntlets,
+Blacksmith,Apprentice,Armor,Iron Boots,
+Blacksmith,Apprentice,Armor,Snakeskin Helm,
+Blacksmith,Apprentice,Armor,Snakeskin Mail,true
+Blacksmith,Apprentice,Armor,Snakeskin Leggings,
+Blacksmith,Apprentice,Armor,Snakeskin Gloves,
+Blacksmith,Apprentice,Armor,Snakeskin Boots,
+Blacksmith,Adept,Armor,Silver Shield,
+Blacksmith,Adept,Armor,Savage Cap,
+Blacksmith,Adept,Armor,Savage Armor,true
+Blacksmith,Adept,Armor,Savage Leggings,
+Blacksmith,Adept,Armor,Savage Gauntlets,
+Blacksmith,Adept,Armor,Savage Boots,
+Blacksmith,Adept,Armor,Mermaid Helm,
+Blacksmith,Adept,Armor,Mermaid Mail,true
+Blacksmith,Adept,Armor,Mermaid Leggings,
+Blacksmith,Adept,Armor,Mermaid Gloves,
+Blacksmith,Adept,Armor,Mermaid Boots,
+Blacksmith,Expert,Armor,Shellmet,
+Blacksmith,Expert,Armor,Shell Armor,true
+Blacksmith,Expert,Armor,Shell Bottoms,
+Blacksmith,Expert,Armor,Shell Gauntlets,
+Blacksmith,Expert,Armor,Shell Boots,
+Blacksmith,Expert,Armor,Gold Helm,
+Blacksmith,Expert,Armor,Gold Armor,
+Blacksmith,Expert,Armor,Gold Leg Guards,
+Blacksmith,Expert,Armor,Gold Gauntlets,
+Blacksmith,Expert,Armor,Gold Boots,
+Blacksmith,Expert,Armor,Gold Shield,
+Blacksmith,Expert,Armor,Captain's Shield,true
+Blacksmith,Expert,Armor,Rose Shield,true
+Blacksmith,Expert,Armor,Gladiator's Helm,true
+Blacksmith,Expert,Armor,Gladiator's Armor,true
+Blacksmith,Expert,Armor,Gladiator's Leg Guards,
+Blacksmith,Expert,Armor,Gladiator's Wrist Bands,
+Blacksmith,Expert,Armor,Gladiator's Metal Boots,
+Blacksmith,Expert,Armor,Beastly Cap,true
+Blacksmith,Expert,Armor,Beastly Armor,true
+Blacksmith,Expert,Armor,Beastly Leggings,
+Blacksmith,Expert,Armor,Beastly Gauntlets,
+Blacksmith,Expert,Armor,Beastly Boots,
+Blacksmith,Master,Armor,Magicbane Shield,true
+Blacksmith,Master,Armor,Knightly Shield,true
+Blacksmith,Master,Armor,Inferno Helm,true
+Blacksmith,Master,Armor,Inferno Armor,true
+Blacksmith,Master,Armor,Inferno Leggings,
+Blacksmith,Master,Armor,Inferno Gauntlets,
+Blacksmith,Master,Armor,Inferno Boots,
+Blacksmith,Master,Armor,Magic Helm,true
+Blacksmith,Master,Armor,Magic Armor,true
+Blacksmith,Master,Armor,Magic Leg Guards,
+Blacksmith,Master,Armor,Magic Gauntlets,
+Blacksmith,Master,Armor,Magic Boots,
+Blacksmith,Master,Armor,Tidal Helm,true
+Blacksmith,Master,Armor,Tidal Armor,true
+Blacksmith,Master,Armor,Tidal Leggings,
+Blacksmith,Master,Armor,Tidal Gauntlets,
+Blacksmith,Master,Armor,Tidal Boots,
+Blacksmith,Master,Armor,Dragon Helm,true
+Blacksmith,Master,Armor,Dragon Mail,true
+Blacksmith,Master,Armor,Dragon Leggings,
+Blacksmith,Master,Armor,Dragon Gloves,
+Blacksmith,Master,Armor,Dragon Boots,
+Blacksmith,Hero,Armor,Holy Helm,true
+Blacksmith,Hero,Armor,Holy Armor,true
+Blacksmith,Hero,Armor,Holy Leggings,
+Blacksmith,Hero,Armor,Holy Gauntlets,
+Blacksmith,Hero,Armor,Holy Boots,
+Blacksmith,Demi-Creator,Armor,Fafnir's Helm,true
+Blacksmith,Demi-Creator,Armor,Fafnir's Mail,true
+Blacksmith,Demi-Creator,Armor,Fafnir's Gloves,
+Blacksmith,Demi-Creator,Armor,Fafnir's Boots,
+Blacksmith,Demi-Creator,Armor,Fafnir's Leggings,
+Blacksmith,Demi-Creator,Armor,Godly Helm,true
+Blacksmith,Demi-Creator,Armor,Godly Armor,true
+Blacksmith,Demi-Creator,Armor,Godly Leggings,
+Blacksmith,Demi-Creator,Armor,Godly Gauntlets,
+Blacksmith,Demi-Creator,Armor,Godly Boots,
+Blacksmith,Demi-Creator,Armor,Rune Helm,true
+Blacksmith,Demi-Creator,Armor,Rune Armor,true
+Blacksmith,Demi-Creator,Armor,Rune Leg Guards,
+Blacksmith,Demi-Creator,Armor,Rune Gauntlets,
+Blacksmith,Demi-Creator,Armor,Rune Boots,
+Blacksmith,Demi-Creator,Armor,Shadow Cap,true
+Blacksmith,Demi-Creator,Armor,Shadow Armor,true
+Blacksmith,Demi-Creator,Armor,Shadow Leg Guards,
+Blacksmith,Demi-Creator,Armor,Shadow Gauntlets,
+Blacksmith,Demi-Creator,Armor,Shadow Boots,
+Blacksmith,Demi-Creator,Armor,Officer's Helm,true
+Blacksmith,Demi-Creator,Armor,Officer's Armor,true
+Blacksmith,Demi-Creator,Armor,Officer's Hand Guards,
+Blacksmith,Demi-Creator,Armor,Officer's Tabi,
+Blacksmith,Demi-Creator,Armor,Ancient Shield,true
+Blacksmith,Creator,Armor,Lord's Helm,true
+Blacksmith,Creator,Armor,Lord's Armor,true
+Blacksmith,Creator,Armor,Lord's Hand Guards,
+Blacksmith,Creator,Armor,Lord's Tabi,
+Blacksmith,Creator,Armor,Shogun Helm,true
+Blacksmith,Creator,Armor,Shogun Armor,true
+Blacksmith,Creator,Armor,Shogun Hand Guards,
+Blacksmith,Creator,Armor,Shogun Tabi,
+Blacksmith,Creator,Armor,Aegis Shield,true
+Blacksmith,Creator,Armor,Ares Circlet,true
+Blacksmith,Creator,Armor,Ares Armor,true
+Blacksmith,Creator,Armor,Ares Guard,
+Blacksmith,Creator,Armor,Ares Hand Guards,
+Blacksmith,Creator,Armor,Ares Sandals,
+Blacksmith,Creator,Armor,Ares Cape,
+Blacksmith,Creator,Armor,Crusader's Circlet,true
+Blacksmith,Creator,Armor,Crusader's Tiara,true
+Blacksmith,Creator,Armor,Crusader's Leg Guards,
+Blacksmith,Creator,Armor,Crusader's Gauntlets,
+Blacksmith,Creator,Armor,Crusader's Boots,
+Blacksmith,Creator,Armor,Crusader's Plating,true
+Blacksmith,Creator,Armor,Avalanche Helmet,
+Blacksmith,Creator,Armor,Grand Miner's Cuirass,
+Blacksmith,Creator,Armor,Steel Helm,true
+Blacksmith,Creator,Armor,Berserker's Armor,true
+Blacksmith,Creator,Armor,Tough Leg Guards,
+Blacksmith,Creator,Armor,Metal Gauntlets,
+Blacksmith,Creator,Armor,Steel-Toe Shoes,
+Blacksmith,Creator,Armor,Gallant Shield,true
+Blacksmith,Creator,Armor,Cursed Dragon Helm,true
+Carpenter,Fledgling,Material,Oak Beam,
+Carpenter,Apprentice,Material,Pine Beam,
+Carpenter,Apprentice,Material,Palm Beam,
+Carpenter,Adept,Material,Sugar Beam,
+Carpenter,Adept,Material,Mangrove Beam,
+Carpenter,Expert,Material,Fir Beam,
+Carpenter,Expert,Material,Desert Beam,
+Carpenter,Master,Material,Fire Beam,
+Carpenter,Master,Material,Wind Beam,
+Carpenter,Master,Material,Water Beam,
+Carpenter,Master,Material,Earth Beam,
+Carpenter,Master,Material,Skytree Beam,
+Carpenter,Master,Material,Starry Beam,
+Carpenter,Demi-Creator,Material,Gigaga Beam,
+Carpenter,Demi-Creator,Material,Divine Beam,
+Carpenter,Fledgling,Weapon,Oak Staff,
+Carpenter,Fledgling,Weapon,Oak Bow,
+Carpenter,Apprentice,Weapon,Pine Staff,
+Carpenter,Apprentice,Weapon,Pine Bow,
+Carpenter,Apprentice,Weapon,Palm Staff,
+Carpenter,Apprentice,Weapon,Palm Bow,
+Carpenter,Adept,Weapon,Sugar Staff,
+Carpenter,Adept,Weapon,Sugar Bow,
+Carpenter,Expert,Weapon,Mooncrest Staff,true
+Carpenter,Expert,Weapon,Orca Bow,true
+Carpenter,Master,Weapon,Star Staff,true
+Carpenter,Master,Weapon,Purrfection Staff,true
+Carpenter,Master,Weapon,Bat Wing Staff,true
+Carpenter,Master,Weapon,Flaming Bow,true
+Carpenter,Hero,Weapon,Destiny Bow,true
+Carpenter,Hero,Weapon,Serpent Staff,true
+Carpenter,Demi-Creator,Weapon,Dragon Staff,
+Carpenter,Demi-Creator,Weapon,Wyvern Bow,
+Carpenter,Demi-Creator,Weapon,Bon Bon-Bon,true
+Carpenter,Demi-Creator,Weapon,Hermes's Bow,true
+Carpenter,Demi-Creator,Weapon,Chaos Bringer,true
+Carpenter,Demi-Creator,Weapon,Heartbreaker,true
+Carpenter,Creator,Weapon,Dragon's Tail,true
+Carpenter,Creator,Weapon,Wyvern's Breath,true
+Carpenter,Creator,Weapon,Staff of Dawn,true
+Carpenter,Creator,Weapon,Thunderstrike Bow,true
+Carpenter,Creator,Weapon,Forest Bow,true
+Carpenter,Creator,Weapon,Staff of Wisdom,true
+Carpenter,Fledgling,Tool,Oak Rod,
+Carpenter,Fledgling,Tool,Oak Axe,
+Carpenter,Fledgling,Tool,Oak Saw,
+Carpenter,Apprentice,Tool,Pine Rod,
+Carpenter,Apprentice,Tool,Pine Axe,
+Carpenter,Apprentice,Tool,Pine Saw,
+Carpenter,Apprentice,Tool,Palm Rod,
+Carpenter,Apprentice,Tool,Palm Axe,
+Carpenter,Apprentice,Tool,Palm Saw,
+Carpenter,Adept,Tool,Sugar Rod,
+Carpenter,Adept,Tool,Sugar Axe,
+Carpenter,Adept,Tool,Sugar Saw,
+Carpenter,Expert,Tool,Sparkle Axe,true
+Carpenter,Expert,Tool,Royal Saw,true
+Carpenter,Expert,Tool,Famous Angler's Rod,true
+Carpenter,Master,Tool,Marine Axe,true
+Carpenter,Master,Tool,Sea Saw,true
+Carpenter,Master,Tool,Whirlpool Rod,true
+Carpenter,Master,Tool,Sandstorm Rod,true
+Carpenter,Master,Tool,Gold Saw,true
+Carpenter,Master,Tool,Goddess's Axe,true
+Carpenter,Demi-Creator,Tool,Giant's Axe,true
+Carpenter,Demi-Creator,Tool,Ancient Saw,true
+Carpenter,Demi-Creator,Tool,Gigaga Fishing Rod,
+Carpenter,Demi-Creator,Tool,Gigaga Axe,
+Carpenter,Demi-Creator,Tool,Gigaga Saw,
+Carpenter,Demi-Creator,Tool,Victory Fishing Rod,
+Carpenter,Demi-Creator,Tool,Cutterfly,true
+Carpenter,Demi-Creator,Tool,Plume Saw,true
+Carpenter,Creator,Tool,Sea Cloud Rod,true
+Carpenter,Creator,Tool,Star Fishing Rod,true
+Carpenter,Creator,Tool,Meteor Axe,true
+Carpenter,Creator,Tool,Solar Saw,true
+Carpenter,Creator,Tool,Great Forest Axe,true
+Carpenter,Creator,Tool,Master Saw,true
+Carpenter,Creator,Tool,Marine Rod,true
+Carpenter,Fledgling,Decor,Wooden Box,
+Carpenter,Fledgling,Decor,Rubbish Bin,
+Carpenter,Fledgling,Decor,Wooden Chair,
+Carpenter,Fledgling,Decor,Wooden Low Table,
+Carpenter,Fledgling,Decor,Wooden Dining Table,true
+Carpenter,Fledgling,Decor,Wooden Cabinet,
+Carpenter,Fledgling,Decor,Wooden Sofa,true
+Carpenter,Fledgling,Decor,Wooden Bed,true
+Carpenter,Fledgling,Decor,Wooden Chest,
+Carpenter,Fledgling,Decor,Wooden Wardrobe,
+Carpenter,Apprentice,Decor,Basket,
+Carpenter,Apprentice,Decor,Patched Hole,
+Carpenter,Apprentice,Decor,Barrel,
+Carpenter,Apprentice,Decor,Port Town Chair,
+Carpenter,Apprentice,Decor,Tiled Low Table,
+Carpenter,Apprentice,Decor,Tiled Dining Table,true
+Carpenter,Apprentice,Decor,Tiled Cabinet,
+Carpenter,Apprentice,Decor,Port Town Couch,true
+Carpenter,Apprentice,Decor,Port Town Bed,true
+Carpenter,Apprentice,Decor,Tiled Chest,
+Carpenter,Apprentice,Decor,Port Town Wardrobe,
+Carpenter,Apprentice,Decor,Scarecrow,
+Carpenter,Adept,Decor,Starry Night Chair,
+Carpenter,Adept,Decor,Starry Night Low Table,
+Carpenter,Adept,Decor,Starry Night Dining Table,true
+Carpenter,Adept,Decor,Starry Night Cabinet,
+Carpenter,Adept,Decor,Starry Night Sofa,true
+Carpenter,Adept,Decor,Starry Night Bed,true
+Carpenter,Adept,Decor,Starry Night Chest,
+Carpenter,Adept,Decor,Starry Night Wardrobe,
+Carpenter,Adept,Decor,Pirate Chair,
+Carpenter,Adept,Decor,Pirate Low Table,
+Carpenter,Adept,Decor,Pirate Dining Table,true
+Carpenter,Adept,Decor,Pirate Cabinet,
+Carpenter,Adept,Decor,Pirate Bench,true
+Carpenter,Adept,Decor,Pirate Berth,true
+Carpenter,Adept,Decor,Pirate Chest,
+Carpenter,Adept,Decor,Pirate Wardrobe,
+Carpenter,Expert,Decor,Treasure Chest,
+Carpenter,Expert,Decor,Forest Chair,
+Carpenter,Expert,Decor,Forest Low Table,
+Carpenter,Expert,Decor,Forest Dining Table,true
+Carpenter,Expert,Decor,Forest Cabinet,
+Carpenter,Expert,Decor,Forest Sofa,true
+Carpenter,Expert,Decor,Forest Bed,true
+Carpenter,Expert,Decor,Forest Chest,
+Carpenter,Expert,Decor,Forest Wardrobe,
+Carpenter,Expert,Decor,Chair of Attonement,
+Carpenter,Expert,Decor,Occult Low Table,
+Carpenter,Expert,Decor,Bloodthirsty Table,true
+Carpenter,Expert,Decor,Ominous Cabinet,
+Carpenter,Expert,Decor,Treacherous Sofa,true
+Carpenter,Expert,Decor,Nightmare Bed,true
+Carpenter,Expert,Decor,Darkness-Eating Chest,
+Carpenter,Expert,Decor,Otherworldly Wardobe,
+Carpenter,Master,Decor,Secret Door,
+Carpenter,Master,Decor,Royal Chair,
+Carpenter,Master,Decor,Royal Low Table,
+Carpenter,Master,Decor,Royal Dining Table,true
+Carpenter,Master,Decor,Royal Cabinet,
+Carpenter,Master,Decor,Royal Sofa,true
+Carpenter,Master,Decor,Royal Bed,true
+Carpenter,Master,Decor,Royal Chest,
+Carpenter,Master,Decor,Royal Wardrobe,
+Carpenter,Hero,Decor,Imaginary Window,true
+Carpenter,Hero,Decor,World Map,true
+Carpenter,Legend,Decor,Dragon Skeleton,true
+Carpenter,Demi-Creator,Decor,Fluffkin Window,
+Carpenter,Demi-Creator,Decor,Fluffkin Wardrobe,
+Carpenter,Demi-Creator,Decor,Fluffkin Chair,
+Carpenter,Demi-Creator,Decor,Astral Window,
+Carpenter,Demi-Creator,Decor,Deep Sea Window,
+Carpenter,Demi-Creator,Decor,Rainbow Lamp,
+Carpenter,Demi-Creator,Decor,Cloud Bed,
+Carpenter,Demi-Creator,Decor,Floaty Table,
+Carpenter,Creator,Decor,Dreamy Rocking Chair,true
+Carpenter,Creator,Decor,Portable Patio,true
+Carpenter,Creator,Decor,Dark Sultan's Lamp,
+Carpenter,Creator,Decor,Flower Ball Lamp,
+Carpenter,Creator,Decor,Scholar's Candle Stand,
+Carpenter,Creator,Decor,Great Sword,
+Carpenter,Creator,Decor,Book Stack,
+Cook,Fledgling,Fruit and Veg,Carrot Soup,
+Cook,Fledgling,Fruit and Veg,Apple Juice,
+Cook,Apprentice,Fruit and Veg,Vegetable Stew,
+Cook,Apprentice,Fruit and Veg,Tomato Soup,
+Cook,Apprentice,Fruit and Veg,Boiled Veg,true
+Cook,Adept,Fruit and Veg,Summer Nectar,
+Cook,Adept,Fruit and Veg,Barley Juice,true
+Cook,Adept,Fruit and Veg,Cabbage Rolls,
+Cook,Adept,Fruit and Veg,Pumpkin Soup,
+Cook,Adept,Fruit and Veg,Corn on the Cob,
+Cook,Expert,Fruit and Veg,Sweet Potato Dessert,
+Cook,Expert,Fruit and Veg,Pumpkin Pie,
+Cook,Expert,Fruit and Veg,Magical Milkshake,
+Cook,Expert,Fruit and Veg,Pirate Gumbo,true
+Cook,Expert,Fruit and Veg,Magical Honey Dessert,
+Cook,Expert,Fruit and Veg,Sultan's Stew,true
+Cook,Master,Fruit and Veg,Magical Pie,true
+Cook,Hero,Fruit and Veg,Legendary Corn,true
+Cook,Demi-Creator,Fruit and Veg,Goddess's Frappé,
+Cook,Demi-Creator,Fruit and Veg,Hermit's Drink,
+Cook,Demi-Creator,Fruit and Veg,Rainbow Gelato,true
+Cook,Demi-Creator,Fruit and Veg,Mushroom Medley,true
+Cook,Demi-Creator,Fruit and Veg,Glorious Dinner,true
+Cook,Creator,Fruit and Veg,Lunares Pie,
+Cook,Creator,Fruit and Veg,Strength Candy,true
+Cook,Creator,Fruit and Veg,Vitality Candy,true
+Cook,Creator,Fruit and Veg,Dexterity Candy,true
+Cook,Fledgling,Egg,Boiled Egg,
+Cook,Fledgling,Egg,Egg Roll,
+Cook,Apprentice,Egg,Fluffy Omelette,
+Cook,Apprentice,Egg,Mushroom Quiche,
+Cook,Adept,Egg,Eggy Fried Rice,
+Cook,Adept,Egg,Honey Pudding,
+Cook,Adept,Egg,Giant Fried Egg,true
+Cook,Adept,Egg,Pumpkin Quiche,
+Cook,Expert,Egg,Magical Omelette,true
+Cook,Expert,Egg,Forest Quiche,true
+Cook,Expert,Egg,Magical Pudding,
+Cook,Master,Egg,Royal Omelette,true
+Cook,Master,Egg,Fried Blizzard Egg,true
+Cook,Master,Egg,Electro Egg Rice,true
+Cook,Master,Egg,Occult Roll,true
+Cook,Demi-Creator,Egg,Hot Spring Egg,
+Cook,Demi-Creator,Egg,Golden Omelette,
+Cook,Fledgling,Meat,Roast Mutton,
+Cook,Fledgling,Meat,Shish Kebab,
+Cook,Fledgling,Meat,Winter Stew,true
+Cook,Apprentice,Meat,Well-Done Burger,true
+Cook,Apprentice,Meat,Juicy Mutton,
+Cook,Apprentice,Meat,Tasty Kebab,
+Cook,Adept,Meat,Steak,
+Cook,Adept,Meat,Southern Stew,
+Cook,Adept,Meat,Juicy Burger,true
+Cook,Adept,Meat,T-Rex Leg,true
+Cook,Expert,Meat,Saurus Leg,
+Cook,Expert,Meat,Bandit Steak,
+Cook,Expert,Meat,Dreamy Steak,
+Cook,Expert,Meat,Monstrous Sauté,
+Cook,Expert,Meat,Royal Hamburger,true
+Cook,Expert,Meat,Monster Roast,true
+Cook,Master,Meat,Juicy Monster Meat,true
+Cook,Master,Meat,Sautéed Dragon,true
+Cook,Hero,Meat,Dragon Steak,true
+Cook,Hero,Meat,Roast of Legend,true
+Cook,Demi-Creator,Meat,Fluffy Roast,
+Cook,Demi-Creator,Meat,Valorous Kebab,true
+Cook,Creator,Meat,Heavenly Burger,true
+Cook,Creator,Meat,Heavenly Feast,true
+Cook,Fledgling,Seafood,Grilled Crucian,
+Cook,Fledgling,Seafood,Grilled Sweetfish,
+Cook,Fledgling,Seafood,Fish Soup,
+Cook,Apprentice,Seafood,Rustic Trout,true
+Cook,Apprentice,Seafood,Grilled Tuna Head,true
+Cook,Apprentice,Seafood,Tuna Sashimi,
+Cook,Apprentice,Seafood,Seafood Stew,
+Cook,Apprentice,Seafood,Rice-Stuffed Squid,
+Cook,Adept,Seafood,Sardine Pâté,
+Cook,Adept,Seafood,Hot Prawn Brisque,
+Cook,Adept,Seafood,Prawn Gratin,
+Cook,Adept,Seafood,Grilled Eel,true
+Cook,Adept,Seafood,Rustic Rainbow Trout,true
+Cook,Adept,Seafood,Bream Sashimi,
+Cook,Adept,Seafood,Port Town Gratin,
+Cook,Adept,Seafood,Flying Fish Sushi,
+Cook,Expert,Seafood,Dried Sandfish,
+Cook,Expert,Seafood,Red Soup,
+Cook,Expert,Seafood,Swordfish Head,true
+Cook,Expert,Seafood,Pufferfish Sashimi,true
+Cook,Expert,Seafood,Rustic Swordfish,
+Cook,Expert,Seafood,Fish Soup of Love,
+Cook,Expert,Seafood,Tuna Sushi,
+Cook,Expert,Seafood,Smelt Soup,
+Cook,Expert,Seafood,Sashimi Set,true
+Cook,Master,Seafood,Desert Fish Stew,true
+Cook,Master,Seafood,Frosty Fish Stew,true
+Cook,Master,Seafood,Fiery Fish Stew,true
+Cook,Master,Seafood,Sky Sashimi Set,true
+Cook,Master,Seafood,Golden Fish Head,true
+Cook,Hero,Seafood,Fancy Sashimi Set,true
+Cook,Demi-Creator,Seafood,Rainbow Paella,
+Cook,Demi-Creator,Seafood,Fossil Sashimi Set,true
+Cook,Demi-Creator,Seafood,Dark Giant Stew,true
+Cook,Creator,Seafood,Godly Soup,true
+Cook,Creator,Seafood,Ghastly Stew,true
+Cook,Creator,Seafood,Sea Lord Set,true
+Tailor,Fledgling,Material,Dandelion Cotton,
+Tailor,Fledgling,Material,Woven Straw Fabric,
+Tailor,Apprentice,Material,Silk,
+Tailor,Apprentice,Material,Wool,
+Tailor,Adept,Material,Sunny Cotton,
+Tailor,Adept,Material,Marine Silk,
+Tailor,Adept,Material,Linen,
+Tailor,Expert,Material,Cashmere,
+Tailor,Expert,Material,Flare Wool,
+Tailor,Expert,Material,Black Cashmere,
+Tailor,Master,Material,Angelic Cotton,
+Tailor,Master,Material,Pink Silk,
+Tailor,Master,Material,Stardust Linen,
+Tailor,Demi-Creator,Material,Rainbow Linen,
+Tailor,Demi-Creator,Material,Divine Cashmere,
+Tailor,Fledgling,Top and Bottom,Castele Blouse,
+Tailor,Fledgling,Top and Bottom,Castele Shirt,
+Tailor,Fledgling,Top and Bottom,Castele Skirt,
+Tailor,Fledgling,Top and Bottom,Castele Slacks,
+Tailor,Fledgling,Top and Bottom,Artisan's Appron,true
+Tailor,Fledgling,Top and Bottom,Artisan's Puffy Shorts,
+Tailor,Fledgling,Top and Bottom,Highland Top,
+Tailor,Fledgling,Top and Bottom,Highliand Kilt,
+Tailor,Fledgling,Top and Bottom,Sunshine Skirt,
+Tailor,Apprentice,Top and Bottom,Duelling Outfit,
+Tailor,Apprentice,Top and Bottom,Duelling Bottoms,
+Tailor,Apprentice,Top and Bottom,Harbour Hunny Suit,
+Tailor,Apprentice,Top and Bottom,Harbour Hunny Skirt,
+Tailor,Apprentice,Top and Bottom,Harbour Hunk Suit,
+Tailor,Apprentice,Top and Bottom,Harbour Hunk Slacks,
+Tailor,Apprentice,Top and Bottom,Quilted Coat,true
+Tailor,Apprentice,Top and Bottom,Quilted Bottoms,
+Tailor,Apprentice,Top and Bottom,Striped Skirt,
+Tailor,Apprentice,Top and Bottom,Seafarer's Outfit,
+Tailor,Apprentice,Top and Bottom,Seafarer's Capris,
+Tailor,Apprentice,Top and Bottom,Lined Skirt,
+Tailor,Adept,Top and Bottom,Twin Tail Jacket,true
+Tailor,Adept,Top and Bottom,Watermeloons,
+Tailor,Adept,Top and Bottom,Holiday Top,
+Tailor,Adept,Top and Bottom,Sea Sarong,
+Tailor,Adept,Top and Bottom,Holiday Shirt,
+Tailor,Adept,Top and Bottom,Sea Trunks,
+Tailor,Adept,Top and Bottom,Chic Maajik Loose Top,
+Tailor,Adept,Top and Bottom,Chic Maajik Skirt,
+Tailor,Adept,Top and Bottom,Chic Maajik Top,
+Tailor,Adept,Top and Bottom,Chic Maajik Capris,
+Tailor,Adept,Top and Bottom,Puffy Sleeved Top,
+Tailor,Adept,Top and Bottom,Loose Stripies,
+Tailor,Adept,Top and Bottom,Frilly Skirt,
+Tailor,Adept,Top and Bottom,Twilight Top,
+Tailor,Adept,Top and Bottom,Desert Diva Skirt,
+Tailor,Adept,Top and Bottom,Desert Top,
+Tailor,Adept,Top and Bottom,Loose Trousers,
+Tailor,Adept,Top and Bottom,Linen Tunic,
+Tailor,Adept,Top and Bottom,Linen Bottoms,
+Tailor,Adept,Top and Bottom,Coastal Armor,
+Tailor,Adept,Top and Bottom,Coastal Bottoms,
+Tailor,Adept,Top and Bottom,Frigid Armor,
+Tailor,Adept,Top and Bottom,Frigid Bottoms,
+Tailor,Expert,Top and Bottom,Pretty Princess Outfit,
+Tailor,Expert,Top and Bottom,Tuxedo,
+Tailor,Expert,Top and Bottom,Formal Trousers,
+Tailor,Expert,Top and Bottom,Checkered Skirt,
+Tailor,Expert,Top and Bottom,Maharaja Robe,
+Tailor,Expert,Top and Bottom,Maharaja Bottoms,
+Tailor,Expert,Top and Bottom,Banded Skirt,
+Tailor,Expert,Top and Bottom,Denim Long Skirt,
+Tailor,Expert,Top and Bottom,Sandy Armor,
+Tailor,Expert,Top and Bottom,Sandy Bottoms,
+Tailor,Expert,Top and Bottom,Grotto Armor,
+Tailor,Expert,Top and Bottom,Grotto Bottoms,
+Tailor,Expert,Top and Bottom,Flame Robe,
+Tailor,Expert,Top and Bottom,Aqua Robe,
+Tailor,Master,Top and Bottom,Sky-High Armor,
+Tailor,Master,Top and Bottom,Sky-High Bottoms,
+Tailor,Master,Top and Bottom,Earth Robe,
+Tailor,Master,Top and Bottom,Wind Robe,
+Tailor,Master,Top and Bottom,Polka-Dot Skirt,
+Tailor,Hero,Top and Bottom,Umbral Robe,
+Tailor,Hero,Top and Bottom,Light Robe,
+Tailor,Demi-Creator,Top and Bottom,Origin Island Armor,
+Tailor,Demi-Creator,Top and Bottom,Origin Island Bottoms,
+Tailor,Demi-Creator,Top and Bottom,Rainbow Robe,
+Tailor,Demi-Creator,Top and Bottom,Sacred Robe,
+Tailor,Demi-Creator,Top and Bottom,Sacred Trousers,
+Tailor,Creator,Top and Bottom,Philosopher's Robe,
+Tailor,Creator,Top and Bottom,Freya's Mail,
+Tailor,Creator,Top and Bottom,Freya's Skirt,
+Tailor,Creator,Top and Bottom,Minerva's Mail,
+Tailor,Creator,Top and Bottom,Minerva's Skirt,
+Tailor,Creator,Top and Bottom,Valkyrie Mail,
+Tailor,Creator,Top and Bottom,Valkyrie Skirt,
+Tailor,Creator,Top and Bottom,Heatwave Apron,
+Tailor,Creator,Top and Bottom,Woodland Jacket,
+Tailor,Creator,Top and Bottom,Woodland Trousers,
+Tailor,Creator,Top and Bottom,Grand Miner's Bottoms,
+Tailor,Creator,Top and Bottom,Chief's Apron,
+Tailor,Creator,Top and Bottom,Chief's Breeches,
+Tailor,Creator,Top and Bottom,Famous Fisher's Smock,
+Tailor,Creator,Top and Bottom,Doctor's Garb,
+Tailor,Creator,Top and Bottom,Fashionista's Dress,
+Tailor,Creator,Top and Bottom,Five Star Outfit,
+Tailor,Creator,Top and Bottom,Buccaneer's Coat,
+Tailor,Creator,Top and Bottom,Buccaneer's Shorts,
+Tailor,Creator,Top and Bottom,Sniper Tunic,
+Tailor,Creator,Top and Bottom,Sniper's Culottes,
+Tailor,Creator,Top and Bottom,Grand Magician's Robe,
+Tailor,Creator,Top and Bottom,Monarch Outfit,
+Tailor,Creator,Top and Bottom,Monarch Thighs,
+Tailor,Fledgling,Other,Lowtop Shoes,
+Tailor,Fledgling,Other,Artisan's Hat,
+Tailor,Fledgling,Other,Artisan's Mitts,
+Tailor,Fledgling,Other,Artisan's Shoes,
+Tailor,Fledgling,Other,Highland Beret,
+Tailor,Fledgling,Other,Highland Loafers,
+Tailor,Fledgling,Other,Cape,true
+Tailor,Apprentice,Other,Duelling Boots,
+Tailor,Apprentice,Other,Quilted Hat,
+Tailor,Apprentice,Other,Quilted Mittens,
+Tailor,Apprentice,Other,Quilted Boots,
+Tailor,Apprentice,Other,Netted Hat,
+Tailor,Apprentice,Other,Harbour Sandals,
+Tailor,Apprentice,Other,Warrior's Sandals,
+Tailor,Adept,Other,Mules,
+Tailor,Adept,Other,Beach Sandals,
+Tailor,Adept,Other,Ribbon-Laced Shoes,
+Tailor,Adept,Other,Cup Cap,
+Tailor,Adept,Other,Comfy Slippers,
+Tailor,Adept,Other,Jade Turban,
+Tailor,Adept,Other,Gold Bangles,
+Tailor,Adept,Other,High-Toe Boots,
+Tailor,Adept,Other,Desert Headdress,
+Tailor,Adept,Other,Pair of Babouches,
+Tailor,Adept,Other,Moccasins,
+Tailor,Adept,Other,Long Cape,
+Tailor,Adept,Other,Bat Cape,
+Tailor,Adept,Other,Coastal Headwear,
+Tailor,Adept,Other,Coastal Gloves,
+Tailor,Adept,Other,Coastal Boots,
+Tailor,Adept,Other,Frigid Headwear,
+Tailor,Adept,Other,Frigid Gloves,
+Tailor,Adept,Other,Frigid Boots,
+Tailor,Expert,Other,Castele Heels,
+Tailor,Expert,Other,Formal Dress Shoes,
+Tailor,Expert,Other,Short Cape,
+Tailor,Expert,Other,Maharaja Turban,
+Tailor,Expert,Other,Maharaja Shoes,
+Tailor,Expert,Other,Grinning Hat,
+Tailor,Expert,Other,Magic Mittens,
+Tailor,Expert,Other,Magic Shoes,
+Tailor,Expert,Other,Sandy Headwear,
+Tailor,Expert,Other,Sandy Gloves,
+Tailor,Expert,Other,Sandy Boots,
+Tailor,Expert,Other,Grotto Headwear,
+Tailor,Expert,Other,Grotto Gloves,
+Tailor,Expert,Other,Grotto Boots,
+Tailor,Expert,Other,Flame Hood,
+Tailor,Expert,Other,Aqua Hood,
+Tailor,Expert,Other,Shark Hat,
+Tailor,Master,Other,Sky-High Headwear,
+Tailor,Master,Other,Sky-High Gloves,
+Tailor,Master,Other,Sky-High Boots,
+Tailor,Master,Other,Earth Hood,
+Tailor,Master,Other,Wind Hood,
+Tailor,Hero,Other,Umbral Hood,
+Tailor,Hero,Other,Light Hood,
+Tailor,Demi-Creator,Other,Origin Island Cap,
+Tailor,Demi-Creator,Other,Origin Island Gloves,
+Tailor,Demi-Creator,Other,Origin Island Boots,
+Tailor,Demi-Creator,Other,Tiger Carp Helm,
+Tailor,Demi-Creator,Other,Rainbow Hood,
+Tailor,Demi-Creator,Other,Sacred Hood,
+Tailor,Demi-Creator,Other,Sacred Hand Guards,
+Tailor,Demi-Creator,Other,Sacred Boots,
+Tailor,Demi-Creator,Other,Sacred Cape,
+Tailor,Creator,Other,Philosopher's Hat,
+Tailor,Creator,Other,Philosopher's Mitts,
+Tailor,Creator,Other,Philosopher's Shoes,
+Tailor,Creator,Other,Freya's Helm,
+Tailor,Creator,Other,Freya's Hand Guards,
+Tailor,Creator,Other,Freya's Sandals,
+Tailor,Creator,Other,Freya's Wings,
+Tailor,Creator,Other,Minerva's Helm,
+Tailor,Creator,Other,Minerva's Hand Guards,
+Tailor,Creator,Other,Minerva's Sandals,
+Tailor,Creator,Other,Minerva's Wings,
+Tailor,Creator,Other,Valkyrie Helm,
+Tailor,Creator,Other,Valkyrie Hand Guards,
+Tailor,Creator,Other,Valkyrie Sandals,
+Tailor,Creator,Other,Valkyrie Wings,
+Tailor,Creator,Other,Hammer Head,
+Tailor,Creator,Other,Hammer Gloves,
+Tailor,Creator,Other,Hammer Boots,
+Tailor,Creator,Other,Woodland Beret,
+Tailor,Creator,Other,Woodland Bangles,
+Tailor,Creator,Other,Woodland Boots,
+Tailor,Creator,Other,Grand Miner's Mitts,
+Tailor,Creator,Other,Grand Miner's Boots,
+Tailor,Creator,Other,Chief's Bandana,
+Tailor,Creator,Other,Chief's Hand Guards,
+Tailor,Creator,Other,Chief's Safety Boots,
+Tailor,Creator,Other,Whale Hood,
+Tailor,Creator,Other,Famous Fisher's Gloves,
+Tailor,Creator,Other,Famous Fisher's Sandals,
+Tailor,Creator,Other,Creativity Cap,
+Tailor,Creator,Other,Doctor's Shoes,
+Tailor,Creator,Other,Doctor's Cape,
+Tailor,Creator,Other,Silk Pincushion,
+Tailor,Creator,Other,Fashionista Shoes,
+Tailor,Creator,Other,Five Star Hat,
+Tailor,Creator,Other,Five Star Shoes,
+Tailor,Creator,Other,Crusader's Cape,
+Tailor,Creator,Other,Buccaneer's Boots,
+Tailor,Creator,Other,Buccaneer's Hat,
+Tailor,Creator,Other,Sniper's Hat,
+Tailor,Creator,Other,Sniper's Gloves,
+Tailor,Creator,Other,Sniper's Boots,
+Tailor,Creator,Other,Grand Magician's Hood,
+Tailor,Creator,Other,Grand Magician's Shoes,
+Tailor,Creator,Other,Monarch Crown,
+Tailor,Creator,Other,Monarch Gloves,
+Tailor,Creator,Other,Monarch Loafers,
+Tailor,Fledgling,Decor,Simple Curtains,
+Tailor,Fledgling,Decor,Simple Mat,
+Tailor,Fledgling,Decor,Simple Carpet,
+Tailor,Fledgling,Decor,Teddy Bear,
+Tailor,Apprentice,Decor,Castele Curtains,
+Tailor,Apprentice,Decor,Woven Castele Mat,
+Tailor,Apprentice,Decor,Woven Castele Rug,
+Tailor,Apprentice,Decor,Veggie Plot Rug,
+Tailor,Apprentice,Decor,Rush Rug,
+Tailor,Adept,Decor,Wooden Log Rug,
+Tailor,Adept,Decor,Forest Curtains,
+Tailor,Adept,Decor,Leaf Mat,
+Tailor,Adept,Decor,Lace Curtains,
+Tailor,Adept,Decor,Cuddly Sea Turtle,
+Tailor,Expert,Decor,Port Town Mat,
+Tailor,Expert,Decor,Port Town Rug,
+Tailor,Expert,Decor,Pirate Ship Window,
+Tailor,Expert,Decor,Pirate Mat,
+Tailor,Expert,Decor,Ship Deck Rug,
+Tailor,Expert,Decor,Pirate Flag,
+Tailor,Expert,Decor,Starry Night Curtains,
+Tailor,Expert,Decor,Starry Night Mat,
+Tailor,Expert,Decor,Starry Night Rug,
+Tailor,Expert,Decor,Clover Rug,
+Tailor,Expert,Decor,Toy Camel,
+Tailor,Master,Decor,Netherworldly Curtains,
+Tailor,Master,Decor,Mat of Darkness,
+Tailor,Master,Decor,Underworld Rug,
+Tailor,Master,Decor,Royal Curtains,
+Tailor,Master,Decor,Royal Mat,
+Tailor,Master,Decor,Royal Rug,
+Tailor,Master,Decor,Big Bunny Plushie,
+Tailor,Demi-Creator,Decor,Cloud Curtains,
+Tailor,Demi-Creator,Decor,Fluffkin-Shaped Rug,
+Tailor,Creator,Decor,Fish-for-Life Flag,
+Tailor,Creator,Decor,Plushy Cottage,
+Tailor,Creator,Decor,Plushling Plushie,
