@@ -145,7 +145,7 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
     return ItemValue(state, player, f"{life}:{requirement}")
 
 
-def has_soft_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
+def has_optional_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
     from .Data import rank_names
     from ..Rules import ItemValue
 
@@ -170,10 +170,6 @@ def can_fight(world: World, multiworld: MultiWorld, state: CollectionState, play
 
 def can_cast_magic(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     return has_license(world, multiworld, state, player, f"Fledgling Magician")
-
-
-def can_heal(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    return True
 
 
 def chapter_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int, chapter_str: str):
@@ -220,14 +216,20 @@ def trials_access(world: World, multiworld: MultiWorld, state: CollectionState, 
 
 
 def has_fairy_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
-    if not is_option_enabled(multiworld, player, "bliss"):
+    if not is_option_enabled(multiworld, player, "include_bliss"):
+        return True
+
+    if not is_option_enabled(multiworld, player, "bliss_customization"):
         return True
 
     return state.has("More Customization", player, 3)
 
 
 def has_better_shopping(world: World, multiworld: MultiWorld, state: CollectionState, player: int, number_str: str):
-    if not is_option_enabled(multiworld, player, "bliss"):
+    if not is_option_enabled(multiworld, player, "include_bliss"):
+        return True
+
+    if not is_option_enabled(multiworld, player, "bliss_shopping"):
         return True
 
     number_str = number_str.strip()

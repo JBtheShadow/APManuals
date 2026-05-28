@@ -188,7 +188,7 @@ def after_load_location_file(location_table: list) -> list:
         def build_requires(entry: dict):
             requires = ["{has_license(" + entry["Rank"] + " " + entry["Life"] + ")}"]
             requires += [
-                "{has_soft_license(" + entry["Rank"] + " " + life + ")}"
+                "{has_optional_license(" + entry["Rank"] + " " + life + ")}"
                 for life in [x for x in [
                     entry["Dependency1"], entry["Dependency2"], entry["Dependency3"], entry["Dependency4"]
                 ] if len(x)]
@@ -332,7 +332,8 @@ def after_load_location_file(location_table: list) -> list:
             "region": entry["Region"],
             "category": build_category(entry),
             "requires": build_requires(entry),
-            "dont_place_item_category": ["Shop Keys"]
+            "dont_place_item_category": ["Shop Keys"],
+            "scoutable": True
         } for entry in shops]
     location_table += build_shop_locations()
 
