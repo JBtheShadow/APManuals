@@ -447,6 +447,10 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
     pass
 
+# Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
+def before_create_regions(world: World, multiworld: MultiWorld, player: int):
+    pass
+
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
@@ -653,6 +657,15 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             item_name = f"{skill} Level Pack ({skill_pack_size}x)"
             if is_item_name_enabled(multiworld, player, item_name):
                 starting_inventory.append(item_name)
+
+    # Restricted shop items
+    shops_lives = is_option_enabled(multiworld, player, "shops_lives")
+    shops_story = is_option_enabled(multiworld, player, "shops_story")
+    shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
+    shops_dosh = get_option_value(multiworld, player, "shops_dosh")
+    shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
+    if shops_restricted:
+        item_names_to_remove += list(get_unused_shop_storage_keys(dlc, shops_lives, shops_story, shops_fairy, shops_dosh))
 
     for item_name in item_names_to_remove:
         item = next(i for i in item_pool if i.name == item_name)
