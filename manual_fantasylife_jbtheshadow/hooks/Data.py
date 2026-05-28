@@ -188,7 +188,7 @@ def after_load_location_file(location_table: list) -> list:
         def build_requires(entry: dict):
             requires = ["{has_license(" + entry["Rank"] + " " + entry["Life"] + ")}"]
             requires += [
-                "{has_soft_license(" + entry["Rank"] + " " + life + ")}"
+                "{has_optional_license(" + entry["Rank"] + " " + life + ")}"
                 for life in [x for x in [
                     entry["Dependency1"], entry["Dependency2"], entry["Dependency3"], entry["Dependency4"]
                 ] if len(x)]

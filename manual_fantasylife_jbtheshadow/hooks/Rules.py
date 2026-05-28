@@ -145,7 +145,7 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
     return ItemValue(state, player, f"{life}:{requirement}")
 
 
-def has_soft_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
+def has_optional_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
     from .Data import rank_names
     from ..Rules import ItemValue
 
