@@ -1,0 +1,10 @@
+{
+    "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
+    "Game": { "connects_to": ["Story Mode", "Battle Mode"], "requires": "", "starting": true },
+    "Story Mode": { "connects_to": ["Primeval Era", "Edo Era", "Modern Era", "Super Future", "Hyperspace"], "requires": "|Story Mode|" },
+    "Primeval Era": { "connects_to": [], "requires": "|Primeval Era|" },
+    "Edo Era": { "connects_to": [], "requires": "|Edo Era|" },
+    "Modern Era": { "connects_to": [], "requires": "|Modern Era|" },
+    "Super Future": { "connects_to": [], "requires": "|Super Future|" },
+    "Hyperspace": { "connects_to": [], "requires": "|Hyperspace|" }
+}

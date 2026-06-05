@@ -121,16 +121,10 @@ def after_load_location_file(location_table: list) -> list:
             if len(life or "") > 0 and life != "Any":
                 categories.append(life)
             return categories
-        def build_requires(action, item, rarity):
-            if action == "Find":
-                rarity -= 1
-            if rarity == 0:
-                return ""
-            return "{OptOne(|" + item + " Rarity:" + str(rarity) + "|)}"
         return [{
             "name": build_name(action, item, rarity),
             "category": build_category(item, life),
-            "requires": build_requires(action, item, rarity)
+            "requires": "{has_rarity(" + item + "," + (str(rarity - 1 if action == "Find" else rarity)) + "," + life + ")}"
         } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}
         for rarity in range(1, 6)
         for action in ("Find", "Equip")]
@@ -166,7 +160,7 @@ def after_load_location_file(location_table: list) -> list:
             "name": f"Reached {skill} Level {level}",
             "sort-key": f"skill-{skill_names.index(skill)}-{level:02d}",
             "category": build_category(skill, life, level),
-            "requires": "{has_skill(" + skill + ", " + str(level) + ")}"
+            "requires": "{has_skill(" + skill + "," + str(level) + "," + life + ")}"
         } for (skill, life) in {
             (entry["Skill"], entry["Life"]) for entry in lives if len(entry["Skill"] or "") > 0
         } for level in range(2, 21)]
@@ -183,7 +177,7 @@ def after_load_location_file(location_table: list) -> list:
                 entry["Life"]
             ]
             if len(entry["DLC"]):
-                categories += "DLC"
+                categories += ["DLC"]
             return categories
         def build_requires(entry: dict):
             requires = ["{has_license(" + entry["Rank"] + " " + entry["Life"] + ")}"]
@@ -223,7 +217,7 @@ def after_load_location_file(location_table: list) -> list:
                 entry["Life"]
             ]
             if logic_rank == "Creator":
-                categories += "DLC"
+                categories += ["DLC"]
             return categories
         def build_requires(entry: dict):
             logic_rank = entry["Rank"] if entry["Rank"] != "Demi-Creator" else "Creator"
@@ -514,7 +508,7 @@ def get_other_requests_checks(dlc, request_count, max_rank, available_lives):
 
 def get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
     return {
-        f"{entry["Shop"]} Key" for entry in shops
+        f"{entry["Shop"]} Keys" for entry in shops
         if (with_lives or "Master:" not in entry["Requirement"])
            and (with_story or entry["Group"] != "Story")
            and (with_level or "Level:" not in entry["Requirement"])
@@ -524,7 +518,7 @@ def get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fai
     }
 
 def get_unused_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
-    all_keys = { f"{entry["Shop"]} Key" for entry in shops }
+    all_keys = { f"{entry["Shop"]} Keys" for entry in shops }
     used_keys = get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh)
     return all_keys - used_keys
 

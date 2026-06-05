@@ -660,12 +660,14 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
 
     # Restricted shop items
     shops_lives = is_option_enabled(multiworld, player, "shops_lives")
+    shops_level = is_option_enabled(multiworld, player, "shops_level")
     shops_story = is_option_enabled(multiworld, player, "shops_story")
     shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
-    shops_dosh = get_option_value(multiworld, player, "shops_dosh")
+    shops_dosh = get_option_value(multiworld, player, "shops_dosh") * 10
     shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
+    shops_dlc = is_option_enabled(multiworld, player, "shops_dlc")
     if shops_restricted:
-        item_names_to_remove += list(get_unused_shop_storage_keys(dlc, shops_lives, shops_story, shops_fairy, shops_dosh))
+        item_names_to_remove += list(get_unused_shop_storage_keys(shops_dlc, shops_lives, shops_level, shops_story, shops_fairy, shops_dosh))
 
     for item_name in item_names_to_remove:
         item = next(i for i in item_pool if i.name == item_name)

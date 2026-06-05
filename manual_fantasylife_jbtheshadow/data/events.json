@@ -1,5 +1,15 @@
 {
 	"$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.events.schema.json",
-    "data": []
+    "data": [
+        { "name": "[Chapter 1]", "requires": "{OptOne(|Progressive Chapter:1|)} and {OptOne(|Haniwa Cave Pass|)}" },
+        { "name": "[Chapter 2]", "requires": "{OptOne(|Progressive Chapter:2|)} and {OptOne(|Haniwa Cave Pass|)}" },
+        { "name": "[Chapter 3]", "requires": "{OptOne(|Progressive Chapter:3|)} and {OptOne(|Haniwa Cave Pass|)}" },
+        { "name": "[Chapter 4]", "requires": "{OptOne(|Progressive Chapter:4|)} and {OptOne(|Haniwa Cave Pass|)}" },
+        { "name": "[Chapter 5]", "requires": "{OptOne(|Progressive Chapter:5|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
+        { "name": "[Chapter 6]", "requires": "{OptOne(|Progressive Chapter:6|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
+        { "name": "[Chapter 7]", "requires": "{OptOne(|Progressive Chapter:7|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
+        { "name": "[Chapter 8]", "requires": "{OptOne(|Progressive Chapter:8|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
+        { "name": "[Chapter 9]", "requires": "{OptOne(|Progressive Chapter:9|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" }
+    ]
 }
 
