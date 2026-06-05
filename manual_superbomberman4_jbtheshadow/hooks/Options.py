@@ -1,5 +1,5 @@
 # Object classes from AP that represent different types of options that you can create
-from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions
+from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, OptionList, PerGameCommonOptions
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
 from ..Helpers import is_option_enabled, get_option_value
 from typing import Type, Any
@@ -25,12 +25,44 @@ from typing import Type, Any
 # To add an option, use the before_options_defined hook below and something like this:
 #   options["total_characters_to_win_with"] = TotalCharactersToWinWith
 #
-class TotalCharactersToWinWith(Range):
-    """Instead of having to beat the game with all characters, you can limit locations to a subset of character victory locations."""
-    display_name = "Number of characters to beat the game with before victory"
-    range_start = 10
-    range_end = 50
-    default = 50
+class GameSeed(FreeText):
+    """Sets the game seed."""
+    displayName = "Seed"
+
+class GoalObjectives(OptionList):
+    """Sets the objectives of this run before you're allowed to goal."""
+    display_name = "Goal Objectives"
+    valid_keys = [
+        "Clear Story Mode",
+        "Clear All Battle Stages",
+        "Clear Champion Mode",
+        "Earn Enough Battle Tokens",
+        "Unlock All Battlers"
+    ]
+
+class GameModes(OptionList):
+    """Sets the game modes available for items and locations. Some game modes are required by certain objectives."""
+    display_name = "Game Modes"
+    valid_keys = ["Story", "Battle", "Champion", "Maniac"]
+
+class StoryMode(Toggle):
+    """Enables story mode items and locations."""
+    display_name = "Story Mode"
+
+class BattleMode(Toggle):
+    """Enables battle mode items and locations."""
+    display_name = "Battle Mode"
+
+class ChampionMode(Toggle):
+    """Enables champion mode (a.k.a. battle solo) items and locations."""
+    display_name = "Champion Mode"
+
+class ManiacMode(Toggle):
+    """Enables maniac mode (a.k.a. custom battle) items and locations."""
+    display_name = "Maniac Mode"
+
+
+
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:

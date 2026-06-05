@@ -1,11 +1,84 @@
 {
-  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.items.schema.json",
-  "data": [
-    {
-      "count": 1,
-      "name": "T",
-      "category": [],
-      "filler": true
-    }
-  ]
+    "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.items.schema.json",
+    "data": [
+        { "name": "Story Mode", "category": [ "Game Modes" ], "progression": true },
+        { "name": "Battle Mode", "category": [ "Game Modes" ], "progression": true },
+        { "name": "Champion Mode", "category": [ "Game Modes" ], "progression": true },
+        { "name": "Maniac Mode", "category": [ "Game Modes" ], "progression": true },
+
+        { "name": "Bomb Up", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Fire Up", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Speed Up", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Piercing Bomb", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Remote Control", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Power Glove", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Punch", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Push", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Bomb Kick", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Bomb Pass", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Wall Pass", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Heart", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Vest", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Clock", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Life Up", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Biological Eggs", "category": [ "Power Ups" ], "progression": true },
+        { "name": "Mechanical Eggs", "category": [ "Power Ups" ], "progression": true },
+
+        { "name": "Triceradops", "category": [ "Mounts" ], "progression": true },
+        { "name": "Dogun Jr.", "category": [ "Mounts" ], "progression": true },
+        { "name": "Angora", "category": [ "Mounts" ], "progression": true },
+        { "name": "Ponpon", "category": [ "Mounts" ], "progression": true },
+        { "name": "Swim", "category": [ "Mounts" ], "progression": true },
+        { "name": "Daruman", "category": [ "Mounts" ], "progression": true },
+        { "name": "Pakkunga", "category": [ "Mounts" ], "progression": true },
+        { "name": "Bomb Tank", "category": [ "Mounts" ], "progression": true },
+        { "name": "Gamefurai", "category": [ "Mounts" ], "progression": true },
+        { "name": "Haguhagu", "category": [ "Mounts" ], "progression": true },
+        { "name": "Crazy Balloon", "category": [ "Mounts" ], "progression": true },
+        { "name": "Bobo", "category": [ "Mounts" ], "progression": true },
+        { "name": "Dancing Clown", "category": [ "Mounts" ], "progression": true },
+
+        { "name": "Hammer Bomber Seal", "sort-key": "boss-01", "category": [ "Bosses" ], "progression": true },
+        { "name": "Bazooka Bomber Seal", "sort-key": "boss-02", "category": [ "Bosses" ], "progression": true },
+        { "name": "Lady Bomber Seal", "sort-key": "boss-03", "category": [ "Bosses" ], "progression": true },
+        { "name": "Bazooka Bomber Seal", "sort-key": "boss-04", "category": [ "Bosses" ], "progression": true },
+        { "name": "Brain Bomber Seal", "sort-key": "boss-05", "category": [ "Bosses" ], "progression": true },
+        { "name": "Dogun Seal", "sort-key": "boss-06", "category": [ "Bosses" ], "progression": true },
+        { "name": "Machinder Seal", "sort-key": "boss-07", "category": [ "Bosses" ], "progression": true },
+        { "name": "Rocketeer Joe Seal", "sort-key": "boss-08", "category": [ "Bosses" ], "progression": true },
+        { "name": "Centipeedle Seal", "sort-key": "boss-09", "category": [ "Bosses" ], "progression": true },
+        { "name": "Bagura Seal", "sort-key": "boss-10", "category": [ "Bosses" ], "progression": true },
+
+        { "name": "Primeval Era", "sort-key": "world-1", "category": [ "Story Mode" ], "progression": true },
+        { "name": "Edo Era", "sort-key": "world-2", "category": [ "Story Mode" ], "progression": true },
+        { "name": "Modern Era", "sort-key": "world-3", "category": [ "Story Mode" ], "progression": true },
+        { "name": "Super Future", "sort-key": "world-4", "category": [ "Story Mode" ], "progression": true },
+        { "name": "Hyperspace", "sort-key": "world-5", "category": [ "Story Mode" ], "progression": true },
+
+        { "name": "Bomberman Battler", "sort-key": "battler-01", "category": [ "Battlers" ], "progression": true },
+        { "name": "Hammer Bomber Battler", "sort-key": "battler-02", "category": [ "Battlers" ], "progression": true },
+        { "name": "Jet Bomber Battler", "sort-key": "battler-03", "category": [ "Battlers" ], "progression": true },
+        { "name": "Lady Bomber Battler", "sort-key": "battler-04", "category": [ "Battlers" ], "progression": true },
+        { "name": "Bazooka Bomber Battler", "sort-key": "battler-05", "category": [ "Battlers" ], "progression": true },
+        { "name": "Brain Bomber Battler", "sort-key": "battler-06", "category": [ "Battlers" ], "progression": true },
+
+        { "name": "Battle Stage 1", "sort-key": "battle-01", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 2", "sort-key": "battle-02", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 3", "sort-key": "battle-03", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 4", "sort-key": "battle-04", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 5", "sort-key": "battle-05", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 6", "sort-key": "battle-06", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 7", "sort-key": "battle-07", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 8", "sort-key": "battle-08", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 9", "sort-key": "battle-09", "category": [ "Battle Stages" ], "progression": true },
+        { "name": "Battle Stage 10", "sort-key": "battle-10", "category": [ "Battle Stages" ], "progression": true },
+
+        { "name": "1574 Stage 5-6", "category": [ "Passwords" ], "progression": true },
+        { "name": "7777 Golden Bomber", "category": [ "Passwords" ], "progression": true },
+        { "name": "5656 Infinite B-Special", "category": [ "Passwords" ], "progression": true },
+        { "name": "4622 Alternate Battle Layout", "category": [ "Passwords" ], "progression": true },
+        { "name": "0520 Alternate Battle Layout", "category": [ "Passwords" ], "progression": true },
+        { "name": "0903 Alternate Battle Layout", "category": [ "Passwords" ], "progression": true },
+        { "name": "0164 More Battle Mounts", "category": [ "Passwords" ], "progression": true }
+    ]
 }

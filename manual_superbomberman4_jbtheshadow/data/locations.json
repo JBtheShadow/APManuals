@@ -1,11 +1,84 @@
 {
-  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
-  "data": [
-    {
-      "name": "Goal",
-      "victory": true,
-      "category": [],
-      "requires": ""
-    }
-  ]
+    "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
+    "data": [
+        { "name": "Victory!", "victory": true, "category": ["Goal"], "requires": "" },
+
+        { "name": "Reach Max Bomb Ups", "category": ["Power Ups"], "requires": "|Bomb Up|" },
+        { "name": "Reach Max Fire Ups", "category": ["Power Ups"], "requires": "|Fire Up|" },
+        { "name": "Reach Max Speed Ups", "category": ["Power Ups"], "requires": "|Speed Up|" },
+        { "name": "Collect a Piercing Bomb", "category": ["Power Ups"], "requires": "|Piercing Bomb|" },
+        { "name": "Collect a Remote Control", "category": ["Power Ups"], "requires": "|Remote Control|" },
+        { "name": "Collect a Power Glove", "category": ["Power Ups"], "requires": "|Power Glove|" },
+        { "name": "Collect Punch", "category": ["Power Ups"], "requires": "|Punch|" },
+        { "name": "Collect Push", "category": ["Power Ups"], "requires": "|Push|" },
+        { "name": "Collect Bomb Kick", "category": ["Power Ups"], "requires": "|Bomb Kick|" },
+        { "name": "Collect Bomb Pass", "category": ["Power Ups"], "requires": "|Bomb Pass|" },
+        { "name": "Collect Wall Pass", "category": ["Power Ups"], "requires": "|Wall Pass|" },
+        { "name": "Collect a Heart", "category": ["Power Ups"], "requires": "|Heart|" },
+        { "name": "Collect a Clock", "category": ["Power Ups"], "requires": "|Clock|" },
+        { "name": "Collect a Life Up", "category": ["Power Ups"], "requires": "|Life Up|" },
+        { "name": "Reach 9 Lives", "category": ["Power Ups"], "requires": "|Life Up|" },
+
+        { "name": "Ride a Triceradops", "category": ["Mounts"], "requires": "|Triceradops|" },
+        { "name": "Ride a Dogun Jr.", "category": ["Mounts"], "requires": "|Dogun Jr.|" },
+        { "name": "Ride a Angora", "category": ["Mounts"], "requires": "|Angora|" },
+        { "name": "Ride a Ponpon", "category": ["Mounts"], "requires": "|Ponpon|" },
+        { "name": "Ride a Swim", "category": ["Mounts"], "requires": "|Swim|" },
+        { "name": "Ride a Daruman", "category": ["Mounts"], "requires": "|Daruman|" },
+        { "name": "Ride a Pakkunga", "category": ["Mounts"], "requires": "|Pakkunga|" },
+        { "name": "Ride a Bomb Tank", "category": ["Mounts"], "requires": "|Bomb Tank|" },
+        { "name": "Ride a Gamefurai", "category": ["Mounts"], "requires": "|Gamefurai|" },
+        { "name": "Ride a Haguhagu", "category": ["Mounts"], "requires": "|Haguhagu|" },
+        { "name": "Ride a Crazy Balloon", "category": ["Mounts"], "requires": "|Crazy Balloon|" },
+        { "name": "Ride a Bobo", "category": ["Mounts"], "requires": "|Bobo|" },
+        { "name": "Ride a Dancing Clown", "category": ["Mounts"], "requires": "|Dancing Clown|" },
+
+        { "name": "Clear Stage 1-1", "sort-key": "1-1", "region": "Primeval Era", "category": ["Story Mode World 1"], "requires": "" },
+        { "name": "Clear Stage 1-2", "sort-key": "1-2", "region": "Primeval Era", "category": ["Story Mode World 1"], "requires": "" },
+        { "name": "Clear Stage 1-3", "sort-key": "1-3", "region": "Primeval Era", "category": ["Story Mode World 1"], "requires": "" },
+        { "name": "Clear Stage 1-4", "sort-key": "1-4", "region": "Primeval Era", "category": ["Story Mode World 1"], "requires": "" },
+        { "name": "Clear Stage 1-5", "sort-key": "1-5", "region": "Primeval Era", "category": ["Story Mode World 1"], "requires": "" },
+        { "name": "Clear Stage 1-6", "sort-key": "1-6", "region": "Primeval Era", "category": ["Story Mode World 1"], "requires": "" },
+        { "name": "Defeat Hammer Bomber in Stage 1-7", "sort-key": "1-7", "region": "Primeval Era", "category": ["Story Mode World 1"], "requires": "|Hammer Bomber Seal|" },
+        { "name": "Defeat Dogun in Stage Stage 1-8", "sort-key": "1-8", "region": "Primeval Era", "category": ["Story Mode World 1"], "requires": "|Dogun Seal|" },
+
+        { "name": "Clear Stage 2-1", "sort-key": "2-1", "region": "Edo Era", "category": ["Story Mode World 2"], "requires": "" },
+        { "name": "Clear Stage 2-2", "sort-key": "2-2", "region": "Edo Era", "category": ["Story Mode World 2"], "requires": "" },
+        { "name": "Clear Stage 2-3", "sort-key": "2-3", "region": "Edo Era", "category": ["Story Mode World 2"], "requires": "" },
+        { "name": "Clear Stage 2-4", "sort-key": "2-4", "region": "Edo Era", "category": ["Story Mode World 2"], "requires": "" },
+        { "name": "Clear Stage 2-5", "sort-key": "2-5", "region": "Edo Era", "category": ["Story Mode World 2"], "requires": "" },
+        { "name": "Clear Stage 2-6", "sort-key": "2-6", "region": "Edo Era", "category": ["Story Mode World 2"], "requires": "" },
+        { "name": "Defeat Jet Bomber in Stage 2-7", "sort-key": "2-7", "region": "Edo Era", "category": ["Story Mode World 2"], "requires": "|Jet Bomber Seal|" },
+        { "name": "Defeat Machinder in Stage 2-8", "sort-key": "2-8", "region": "Edo Era", "category": ["Story Mode World 2"], "requires": "|Machinder Seal|" },
+
+        { "name": "Clear Stage 3-1", "sort-key": "3-1", "region": "Modern Era", "category": ["Story Mode World 3"], "requires": "" },
+        { "name": "Clear Stage 3-2", "sort-key": "3-2", "region": "Modern Era", "category": ["Story Mode World 3"], "requires": "" },
+        { "name": "Clear Stage 3-3", "sort-key": "3-3", "region": "Modern Era", "category": ["Story Mode World 3"], "requires": "" },
+        { "name": "Clear Stage 3-4", "sort-key": "3-4", "region": "Modern Era", "category": ["Story Mode World 3"], "requires": "" },
+        { "name": "Clear Stage 3-5", "sort-key": "3-5", "region": "Modern Era", "category": ["Story Mode World 3"], "requires": "" },
+        { "name": "Clear Stage 3-6", "sort-key": "3-6", "region": "Modern Era", "category": ["Story Mode World 3"], "requires": "" },
+        { "name": "Defeat Lady Bomber in Stage 3-7", "sort-key": "3-7", "region": "Modern Era", "category": ["Story Mode World 3"], "requires": "|Lady Bomber Seal|" },
+        { "name": "Defeat Rocketeer Joe in Stage 3-8", "sort-key": "3-8", "region": "Modern Era", "category": ["Story Mode World 3"], "requires": "|Rocketeer Joe Seal|" },
+
+        { "name": "Clear Stage 4-1", "sort-key": "4-1", "region": "Super Future", "category": ["Story Mode World 4"], "requires": "" },
+        { "name": "Clear Stage 4-2", "sort-key": "4-2", "region": "Super Future", "category": ["Story Mode World 4"], "requires": "" },
+        { "name": "Clear Stage 4-3", "sort-key": "4-3", "region": "Super Future", "category": ["Story Mode World 4"], "requires": "" },
+        { "name": "Clear Stage 4-4", "sort-key": "4-4", "region": "Super Future", "category": ["Story Mode World 4"], "requires": "" },
+        { "name": "Clear Stage 4-5", "sort-key": "4-5", "region": "Super Future", "category": ["Story Mode World 4"], "requires": "" },
+        { "name": "Clear Stage 4-6", "sort-key": "4-6", "region": "Super Future", "category": ["Story Mode World 4"], "requires": "" },
+        { "name": "Defeat Bazooka Bomber in Stage 4-7", "sort-key": "4-7", "region": "Super Future", "category": ["Story Mode World 4"], "requires": "|Bazooka Bomber Seal|" },
+        { "name": "Defeat Centibeetle Bomber in Stage 4-8", "sort-key": "4-8", "region": "Super Future", "category": ["Story Mode World 4"], "requires": "|Centibeetle Seal|" },
+
+        { "name": "Defeat Hammer Bomber in Stage 5-1", "sort-key": "5-1", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Hammer Bomber Seal|" },
+        { "name": "Defeat Jet Bomber in Stage 5-2", "sort-key": "5-2", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Jet Bomber Seal|" },
+        { "name": "Defeat Lady Bomber in Stage 5-3", "sort-key": "5-3", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Lady Bomber Seal|" },
+        { "name": "Defeat Bazooka Bomber in Stage 5-4", "sort-key": "5-4", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Bazooka Bomber Seal|" },
+        { "name": "Defeat Brain Bomber in Stage 5-5", "sort-key": "5-5", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Brain Bomber Seal|" },
+        { "name": "Defeat Fake Dogun in Stage 5-6 Boss Rush", "sort-key": "5-6-1", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Dogun Seal|" },
+        { "name": "Defeat Fake Machinder in Stage 5-6 Boss Rush", "sort-key": "5-6-2", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Machinder Seal|" },
+        { "name": "Defeat Fake Rocketeer Joe in Stage 5-6 Boss Rush", "sort-key": "5-6-3", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Rocketeer Joe Seal|" },
+        { "name": "Defeat Fake Centibeetle in Stage 5-6 Boss Rush", "sort-key": "5-6-4", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Centibeetle Seal|" },
+        { "name": "Defeat Bagura Robot in Stage 5-6 Boss Rush", "sort-key": "5-6-5", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Bagura Seal|" },
+        { "name": "Defeat Bagura Head in Stage 5-6 Boss Rush", "sort-key": "5-6-6", "region": "Hyperspace", "category": ["Story Mode World 5"], "requires": "|Bagura Seal|" }
+    ]
 }
