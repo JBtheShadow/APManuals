@@ -120,7 +120,7 @@ East Castele,Llaeth,1,"Gimme Milk!",,,,,,
 East Castele,Llaeth,2,"Gimme More Milk!",,,,,{better_castele_shopping()} or {al_maajik_access()},
 East Castele,Llaeth,3,"Magical Milkshake for Me",,,,,{al_maajik_access()},
 East Castele,Llaeth,4,"Gimme Milk Gel!",,,,,{origin_island_access()},DLC
-West Castele,Hans,1,"Haniwa Cave Gemstones",,,,,{better_castele_shopping()} or {has_license(Fledgling Miner)},
+West Castele,Hans,1,"Haniwa Cave Gemstones",,,,,({better_castele_shopping()} or {has_license(Fledgling Miner)}) and {OptOne(|Haniwa Cave Pass|)},
 West Castele,Hans,2,"Teardrop Gemstones",,,,,{port_puerto_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)}),
 West Castele,Hans,3,"Blood-Red Gemstones",,,,,{port_puerto_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)}),
 West Castele,Hans,4,"Ancient Gemstone",,,,,{trials_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)}),DLC

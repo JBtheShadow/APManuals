@@ -39,19 +39,66 @@ def requiresMelee():
     return "|Figher Level:15| or |Black Belt Level:15| or |Thief Level:15|"
 
 
+prog_level_cap = {0: 5, 1: 10, 2: 15, 3: 20, 4: 25, 5: 30, 6: 35, 7: 99, 8: 150, 9: 200}
 def has_level(world: World, multiworld: MultiWorld, state: CollectionState, player: int, level: str):
-    if not is_option_enabled(multiworld, player, "include_levels"):
-        return True
-    if not is_option_enabled(multiworld, player, "experience_logic"):
-        return True
-    return "{ItemValue(Levels:" + level.strip() + ")}"
+    int_level = int(level.strip())
+    chapter_req = next(ch for ch in range(0, 10) if prog_level_cap[ch] >= int_level)
 
-def has_skill(world: World, multiworld: MultiWorld, state: CollectionState, player: int, skill: str, level: str):
+    if not is_option_enabled(multiworld, player, "include_levels"):
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
+    if not is_option_enabled(multiworld, player, "experience_logic"):
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
+
+    requires = "{ItemValue(Levels:" + level.strip() + ")}"
+    if chapter_req:
+        requires += f" AND |[Chapter {chapter_req}]|"
+    return requires
+
+prog_skill_cap = {0: 2, 1: 3, 2: 5, 3: 7, 4: 9, 5: 11, 6: 13, 7: 15, 8: 17, 9: 20}
+def has_skill(world: World, multiworld: MultiWorld, state: CollectionState, player: int, skill: str, level: str, life: str):
+    int_level = int(level.strip())
+    chapter_req = next(ch for ch in range(0, 10) if prog_skill_cap[ch] >= int_level)
+
     if not is_option_enabled(multiworld, player, "include_skills"):
-        return True
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
     if not is_option_enabled(multiworld, player, "skill_logic"):
-        return True
-    return "{ItemValue(" + skill.strip() + " Levels:" + level.strip() + ")}"
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
+
+    requires = "{ItemValue(" + skill.strip() + " Levels:" + level.strip() + ")}"
+    if is_option_enabled(multiworld, player, "include_licenses"):
+        if not is_option_enabled(multiworld, player, "licenses_progressive"):
+            requires += " AND {OptOne(|" + life + " License|)}|"
+        else:
+            requires += " AND {OptOne(|Progressive " + life + " License|)}"
+    if chapter_req:
+        requires += f" AND |[Chapter {chapter_req}]|"
+    return requires
+
+prog_rarity_cap = {0: -1, 1: 1, 2: 2, 3: 3, 4: 3, 5: 4, 6: 4, 7: 5, 8: 5, 9: 5}
+def has_rarity(world: World, multiworld: MultiWorld, state: CollectionState, player: int, item: str, rarity: str, life: str):
+    int_rarity = int(rarity.strip())
+    chapter_req = next(ch for ch in range(0, 10) if prog_rarity_cap[ch] >= int_rarity)
+
+    if not is_option_enabled(multiworld, player, "include_rarities"):
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
+
+    if not is_option_enabled(multiworld, player, "include_licenses") or life == "Any":
+        if int(rarity.strip()) < 1:
+            return True if not chapter_req else f"|[Chapter {chapter_req}]|"
+        requires = "{OptOne(|" + item + " Rarity:" + rarity + "|)}"
+    elif not is_option_enabled(multiworld, player, "licenses_progressive"):
+        if int(rarity.strip()) < 1:
+            requires = "{OptOne(|" + life + " License|)}"
+        else:
+            requires = "{OptOne(|" + item + " Rarity:" + rarity + "|)} AND {OptOne(|" + life + " License|)}"
+    else:
+        if int(rarity.strip()) < 1:
+            requires = "{OptOne(|Progressive " + life + " License|)}"
+        else:
+            requires = "{OptOne(|" + item + " Rarity:" + rarity + "|)} AND {OptOne(|Progressive " + life + " License|)}"
+    if chapter_req:
+        requires += f" AND |[Chapter {chapter_req}]|"
+    return requires
 
 def goal(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
     story_goal = is_option_enabled(multiworld, player, "story_goal")
@@ -107,6 +154,8 @@ def life_mastery(world: World, multiworld: MultiWorld, state: CollectionState, p
 
     return False
 
+
+prog_license_cap = {0: 1, 1: 2, 2: 2, 3: 3, 4: 3, 5: 4, 6: 4, 7: 5, 8: 8, 9: 8}
 def has_any_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_name: str):
     from .Data import rank_names
     from ..Rules import ItemValue
@@ -115,16 +164,18 @@ def has_any_license(world: World, multiworld: MultiWorld, state: CollectionState
 
     rank = rank_name
     requirement = rank_names.index(rank)
+    chapter_req = next(ch for ch in range(0, 10) if prog_license_cap[ch] >= requirement)
 
     include_licenses = is_option_enabled(multiworld, player, "include_licenses")
     if not include_licenses:
-        return True
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
 
     for life in available_lives:
         if ItemValue(state, player, f"{life}:{requirement}"):
-            return True
+            return True if not chapter_req else f"|[Chapter {chapter_req}]|"
 
     return False
+
 
 def has_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
     from .Data import rank_names
@@ -137,12 +188,16 @@ def has_license(world: World, multiworld: MultiWorld, state: CollectionState, pl
     life = parts[1]
     rank = parts[0]
     requirement = rank_names.index(rank)
+    chapter_req = next(ch for ch in range(0, 10) if prog_license_cap[ch] >= requirement)
 
     include_licenses = is_option_enabled(multiworld, player, "include_licenses")
     if not include_licenses:
-        return True
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
 
-    return ItemValue(state, player, f"{life}:{requirement}")
+    if ItemValue(state, player, f"{life}:{requirement}"):
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
+
+    return False
 
 
 def has_optional_license(world: World, multiworld: MultiWorld, state: CollectionState, player: int, rank_and_life: str):
@@ -156,12 +211,16 @@ def has_optional_license(world: World, multiworld: MultiWorld, state: Collection
     life = parts[1]
     rank = parts[0]
     requirement = rank_names.index(rank)
+    chapter_req = next(ch for ch in range(0, 10) if prog_license_cap[ch] >= requirement)
 
     include_licenses = is_option_enabled(multiworld, player, "include_licenses")
     if not include_licenses or life not in world.available_lives:
-        return True
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
 
-    return ItemValue(state, player, f"{life}:{requirement}")
+    if ItemValue(state, player, f"{life}:{requirement}"):
+        return True if not chapter_req else f"|[Chapter {chapter_req}]|"
+
+    return False
 
 
 def can_fight(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
@@ -179,8 +238,7 @@ def can_heal(world: World, multiworld: MultiWorld, state: CollectionState, playe
 def chapter_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int, chapter_str: str):
     chapter_str = chapter_str.strip()
     chapter = int(chapter_str) if chapter_str.isnumeric() else 1
-    return "{OptOne(|Progressive Chapter:" + str(chapter) + "|)}"
-    #return state.has("Progressive Chapter", player, chapter)
+    return f"|[Chapter {chapter}]|"
 
 
 def west_grassy_plains_access(world: World, multiworld: MultiWorld, state: CollectionState, player: int):
