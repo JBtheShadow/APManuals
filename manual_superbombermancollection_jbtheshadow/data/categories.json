@@ -1,1 +1,11 @@
-{}
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.categories.schema.json",
+  "Bomberman": { "yaml_option": ["games_bomberman"] },
+  "Bomberman 2": { "yaml_option": ["games_bomberman_2"] },
+  "Super Bomberman": { "yaml_option": ["games_super_bomberman"] },
+  "Super Bomberman 2": { "yaml_option": ["games_super_bomberman_2"] },
+  "Super Bomberman 3": { "yaml_option": ["games_super_bomberman_3"] },
+  "Super Bomberman 4": { "yaml_option": ["games_super_bomberman_4"] },
+  "Super Bomberman 5": { "yaml_option": ["games_super_bomberman_5"] },
+  "Panic Bomber W": { "yaml_option": ["games_panic_bomber_w"] }
+}
