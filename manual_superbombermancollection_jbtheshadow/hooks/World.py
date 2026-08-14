@@ -42,15 +42,19 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     This is the earliest hook called during generation, before anything else is done.
     Use it to check or modify incompatible options, or to set up variables for later use.
     """
+    games = ["dummy", "games_bomberman", "games_bomberman_2", "games_super_bomberman", "games_super_bomberman_2",
+             "games_super_bomberman_3", "games_super_bomberman_4", "games_super_bomberman_5", "games_panic_bomber_w"]
     starting_game = get_option_value(multiworld, player, "starting_game")
     if starting_game == 0:
-        starting_game = world.random.randint(1, 8)
+        enabled_games = [key for key, flag in enumerate(games) if key > 0 and is_option_enabled(multiworld, player, flag)]
+        if not len(enabled_games):
+            starting_game = world.random.randint(1, 8)
+        else:
+            starting_game = world.random.choice(enabled_games)
         starting_game_option = getattr(world.options, "starting_game")
         starting_game_option.value = starting_game
         setattr(world.options, "starting_game", starting_game_option)
 
-    games = ["dummy", "games_bomberman", "games_bomberman_2", "games_super_bomberman", "games_super_bomberman_2",
-             "games_super_bomberman_3", "games_super_bomberman_4", "games_super_bomberman_5", "games_panic_bomber_w"]
     game_option = getattr(world.options, games[starting_game])
     game_option.value = True
     setattr(world.options, games[starting_game], game_option)
