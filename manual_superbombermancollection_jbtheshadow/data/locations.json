@@ -163,7 +163,7 @@
     { "name": "SB1 Clear Stage 6-5", "category": ["Super Bomberman", "Story Mode", "Stages"], "region": "SB1-6" },
     { "name": "SB1 Clear Stage 6-6", "category": ["Super Bomberman", "Story Mode", "Stages"], "region": "SB1-6" },
     { "name": "SB1 Clear Stage 6-7", "category": ["Super Bomberman", "Story Mode", "Stages"], "region": "SB1-6" },
-    { "name": "SB1 Clear Stage 6-8", "category": ["Super Bomberman", "Story Mode", "Stages", "Objectives"], "region": "SB1-6", "place_item": ["Objective Medal"] },
+    { "name": "SB1 Clear Stage 6-8", "category": ["Super Bomberman", "Story Mode", "Stages", "Objectives"], "region": "SB1-6", "place_item": ["Objective Medal"], "requires": "{OptOne(SB1 Boxing Glove)}" },
     { "name": "SB2 Clear Stage 1-1", "category": ["Super Bomberman 2", "Story Mode", "Stages"], "region": "SB2-1" },
     { "name": "SB2 Clear Stage 1-2", "category": ["Super Bomberman 2", "Story Mode", "Stages"], "region": "SB2-1" },
     { "name": "SB2 Clear Stage 1-3", "category": ["Super Bomberman 2", "Story Mode", "Stages"], "region": "SB2-1" },

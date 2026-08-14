@@ -15,6 +15,7 @@
       "default": false
     },
     "filler_traps": {
+      "display_name": "Filler Trap Percentage",
       "_comment": "Using values here let you set a 'recommended' filler_trap percentage or even a default percentage",
       "values": {
         "recommended": 20
@@ -24,6 +25,11 @@
   "user": {
     "starting_game": {
       "display_name": "Starting Game",
+      "description": [
+        "Sets the first game you'll have access to.",
+        "This choice will always be included when a specific game is picked.",
+        "Choosing any or random will have it pick among the additional games, if there are any, otherwise it will pick among any of the games listed."
+      ],
       "type": "Choice",
       "values": {
         "Any": 0,
@@ -50,61 +56,71 @@
       "default": 0,
       "group": "Game Options"
     },
+    "bonus_starting_items": {
+      "display_name": "Bonus Starting Items",
+      "description": [
+        "Lets you start with some extra items already collected.",
+        "Items received depend on the starting game."
+      ],
+      "type": "Toggle",
+      "default": true,
+      "group": "Game Options"
+    },
     "games_bomberman": {
       "display_name": "Bomberman",
-      "description": "Includes the game Bomberman for the NES",
+      "description": "Includes the game Bomberman for the NES.",
       "type": "Toggle",
       "default": false,
-      "group": "Included Games"
+      "group": "Additional Games"
     },
     "games_bomberman_2": {
       "display_name": "Bomberman 2",
-      "description": "Includes the game Bomberman 2 for the NES",
+      "description": "Includes the game Bomberman 2 for the NES.",
       "type": "Toggle",
       "default": false,
-      "group": "Included Games"
+      "group": "Additional Games"
     },
     "games_super_bomberman": {
       "display_name": "Super Bomberman",
-      "description": "Includes the game Super Bomberman for the SNES",
+      "description": "Includes the game Super Bomberman for the SNES.",
       "type": "Toggle",
       "default": false,
-      "group": "Included Games"
+      "group": "Additional Games"
     },
     "games_super_bomberman_2": {
       "display_name": "Super Bomberman 2",
-      "description": "Includes the game Super Bomberman 2 for the SNES",
+      "description": "Includes the game Super Bomberman 2 for the SNES.",
       "type": "Toggle",
       "default": false,
-      "group": "Included Games"
+      "group": "Additional Games"
     },
     "games_super_bomberman_3": {
       "display_name": "Super Bomberman 3",
-      "description": "Includes the game Super Bomberman 3 for the SNES",
+      "description": "Includes the game Super Bomberman 3 for the SNES.",
       "type": "Toggle",
       "default": false,
-      "group": "Included Games"
+      "group": "Additional Games"
     },
     "games_super_bomberman_4": {
       "display_name": "Super Bomberman 4",
-      "description": "Includes the game Super Bomberman 4 for the SNES",
+      "description": "Includes the game Super Bomberman 4 for the SNES.",
       "type": "Toggle",
       "default": false,
-      "group": "Included Games"
+      "group": "Additional Games"
     },
     "games_super_bomberman_5": {
       "display_name": "Super Bomberman 5",
-      "description": "Includes the game Super Bomberman 5 for the SNES",
+      "description": "Includes the game Super Bomberman 5 for the SNES.",
       "type": "Toggle",
       "default": false,
-      "group": "Included Games"
+      "group": "Additional Games"
     },
     "games_panic_bomber_w": {
       "display_name": "Panic Bomber W",
-      "description": "Includes the game Super Bomberman: Panic Bomber W for the SNES",
+      "description": "Includes the game Super Bomberman: Panic Bomber W for the SNES.",
       "type": "Toggle",
       "default": false,
-      "group": "Included Games"
+      "group": "Additional Games"
     }
   }
 }
