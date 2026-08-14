@@ -22,59 +22,33 @@
     }
   },
   "user": {
-    "_commented_out_option":{
-      "type": "Toggle",
-      "default": true
-    },
-    "_Example_Toggle":{
-      "description": [
-        "This is a Toggle",
-        "A simple boolean, aka True or False set the initial value with \"default\""
-      ],
-      "type": "Toggle",
-      "default": false,
-      "group": "Example Options"
-    },
-    "_Example_Choice":{
+    "starting_game": {
+      "display_name": "Starting Game",
       "type": "Choice",
-      "description": [
-        "This is a Choice",
-        "Let the user pick from a list of values",
-        "allow_custom_value let a player define their own text value",
-        "Currently the only use for Choice in Manual outside of hooks is the goal"
-      ],
       "values": {
-        "start":0,
-        "test":1
+        "Any": 0,
+        "Bomberman": 1,
+        "Bomberman 2": 2,
+        "Super Bomberman": 3,
+        "Super Bomberman 2": 4,
+        "Super Bomberman 3": 5,
+        "Super Bomberman 4": 6,
+        "Super Bomberman 5": 7,
+        "Panic Bomber W": 8
+      },
+      "aliases": {
+        "rand": 0, "any": 0,
+        "b1": 1, "bomberman": 1,
+        "b2": 2, "bomberman_2": 2,
+        "sb1": 3, "super_bomberman": 3,
+        "sb2": 4, "super_bomberman_2": 4,
+        "sb3": 5, "super_bomberman_3": 5,
+        "sb4": 6, "super_bomberman_4": 6,
+        "sb5": 7, "super_bomberman_5": 7,
+        "pbw": 8, "panic_bomber_w": 8
       },
       "default": 0,
-      "allow_custom_value": false,
-      "group": "Example Options"
-    },
-    "_Example_Range":{
-      "type": "Range",
-      "description": [
-        "This is a Range",
-        "Allow the player to specify a value between 'start' and 'end'",
-        "if you include a \"values\" you can define the label for certain values",
-        "Currently the only use for Range in Manual outside of hooks is 'filler_trap'"
-      ],
-      "range_start": 0,
-      "default": 1,
-      "range_end": 5,
-      "values": {"example": 2},
-      "group": "Example Options"
-    },
-    "_DLC_enabled":{
-      "display_name": "DLC Enabled",
-      "description": "Is the Dlc enabled?",
-      "type": "Toggle",
-      "visibility": [
-        "simple_ui",
-        "complex_ui",
-        "template"
-      ],
-      "default": true
+      "group": "Game Options"
     },
     "games_bomberman": {
       "display_name": "Bomberman",

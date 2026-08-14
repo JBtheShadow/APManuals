@@ -42,27 +42,18 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     This is the earliest hook called during generation, before anything else is done.
     Use it to check or modify incompatible options, or to set up variables for later use.
     """
-    games = {
-        "games_bomberman": False,
-        "games_bomberman_2": False,
-        "games_super_bomberman": False,
-        "games_super_bomberman_2": False,
-        "games_super_bomberman_3": False,
-        "games_super_bomberman_4": False,
-        "games_super_bomberman_5": False,
-        "games_panic_bomber_w": False
-    }
+    starting_game = get_option_value(multiworld, player, "starting_game")
+    if starting_game == 0:
+        starting_game = world.random.randint(1, 8)
+        starting_game_option = getattr(world.options, "starting_game")
+        starting_game_option.value = starting_game
+        setattr(world.options, "starting_game", starting_game_option)
 
-    for game in games.keys():
-        games[game] = is_option_enabled(multiworld, player, game)
-
-    if not any(_ for (_, value) in games.items() if value):
-        game = world.random.choice(list(games.keys()))
-        games[game] = True
-        option = getattr(world.options, game)
-        option.value = True
-        setattr(world.options, game, option)
-    setattr(world, "games", games)
+    games = ["dummy", "games_bomberman", "games_bomberman_2", "games_super_bomberman", "games_super_bomberman_2",
+             "games_super_bomberman_3", "games_super_bomberman_4", "games_super_bomberman_5", "games_panic_bomber_w"]
+    game_option = getattr(world.options, games[starting_game])
+    game_option.value = True
+    setattr(world.options, games[starting_game], game_option)
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
@@ -90,8 +81,10 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
 #       will create 5 items that are the "useful trap" class
 # {"Item Name": {ItemClassification.useful: 5}} <- You can also use the classification directly
 def before_create_items_all(item_config: dict[str, int|dict], world: World, multiworld: MultiWorld, player: int) -> dict[str, int|dict]:
-    games = getattr(world, "games")
-    item_config["Objective Medal"] = { "progression": len([_ for (_, value) in games.items() if value]) }
+    games = ["games_bomberman", "games_bomberman_2", "games_super_bomberman", "games_super_bomberman_2",
+             "games_super_bomberman_3", "games_super_bomberman_4", "games_super_bomberman_5", "games_panic_bomber_w"]
+    count = len([1 for option_name in games if is_option_enabled(multiworld, player, option_name) ])
+    item_config["Objective Medal"] = { "progression": count }
     return item_config
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
@@ -104,25 +97,23 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     itemNamesToRemove: list[str] = [] # List of item names
     startingItems: list[str] = []
 
-    games = getattr(world, "games")
-    candidates = [key for (key, value) in games.items() if value]
-    choice = world.random.choice(candidates)
-    match choice:
-        case "games_bomberman":
+    starting_game = get_option_value(multiworld, player, "starting_game")
+    match starting_game:
+        case 1:
             startingItems += ["Bomberman Game", "B1 Progressive Stage"]
-        case "games_bomberman_2":
+        case 2:
             startingItems += ["Bomberman 2 Game", "B2 Progressive Stage"]
-        case "games_super_bomberman":
+        case 3:
             startingItems += ["Super Bomberman Game", "SB1 Progressive Stage"]
-        case "games_super_bomberman_2":
+        case 4:
             startingItems += ["Super Bomberman 2 Game", "SB2 Progressive Stage"]
-        case "games_super_bomberman_3":
+        case 5:
             startingItems += ["Super Bomberman 3 Game", "SB3 Progressive Stage"]
-        case "games_super_bomberman_4":
+        case 6:
             startingItems += ["Super Bomberman 4 Game", "SB4 Progressive Stage"]
-        case "games_super_bomberman_5":
+        case 7:
             startingItems += ["Super Bomberman 5 Game", "SB5 Progressive Stage"]
-        case "games_panic_bomber_w":
+        case 8:
             startingItems += ["Panic Bomber W Game", "PBW Progressive Stage"]
 
     # Add your code here to calculate which items to remove.
