@@ -105,36 +105,36 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     bonus_starting_items = is_option_enabled(multiworld, player, "bonus_starting_items")
     match starting_game:
         case 1:
-            startingItems += ["Bomberman Game", "B1 Progressive Stage"]
+            startingItems += ["B1 Progressive Stage"]
             if bonus_starting_items:
                 startingItems += ["B1 Fire Up", "B1 Bomb Up", "B1 Speed Up"]
         case 2:
-            startingItems += ["Bomberman 2 Game", "B2 Progressive Stage"]
+            startingItems += ["B2 Progressive Stage"]
             if bonus_starting_items:
                 startingItems += ["B2 Fire Up", "B2 Bomb Up", "B2 Speed Up"]
         case 3:
-            startingItems += ["Super Bomberman Game", "SB1 Progressive Stage"]
+            startingItems += ["SB1 Progressive Stage"]
             if bonus_starting_items:
                 startingItems += ["SB1 Fire Up", "SB1 Bomb Up", "SB1 Speed Up"]
         case 4:
-            startingItems += ["Super Bomberman 2 Game", "SB2 Progressive Stage"]
+            startingItems += ["SB2 Progressive Stage"]
             if bonus_starting_items:
                 startingItems += ["SB2 Fire Up", "SB2 Bomb Up", "SB2 Speed Up"]
         case 5:
-            startingItems += ["Super Bomberman 3 Game", "SB3 Progressive Stage"]
+            startingItems += ["SB3 Progressive Stage"]
             if bonus_starting_items:
                 startingItems += ["SB3 Fire Up", "SB3 Bomb Up", "SB3 Speed Up"]
         case 6:
-            startingItems += ["Super Bomberman 4 Game", "SB4 Progressive Stage"]
+            startingItems += ["SB4 Progressive Stage"]
             if bonus_starting_items:
                 startingItems += ["SB4 Fire Up", "SB4 Bomb Up", "SB4 Speed Up"]
         case 7:
-            startingItems += ["Super Bomberman 5 Game", "SB5 Progressive Stage"]
+            startingItems += ["SB5 Progressive Stage"]
             if bonus_starting_items:
                 startingItems += ["SB5 Fire Up", "SB5 Bomb Up", "SB5 Speed Up"]
         case 8:
             # Sadly no bonus starting items for PBW
-            startingItems += ["Panic Bomber W Game", "PBW Progressive Stage"]
+            startingItems += ["PBW Progressive Stage"]
 
     # Add your code here to calculate which items to remove.
     #

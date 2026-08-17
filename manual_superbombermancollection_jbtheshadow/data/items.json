@@ -10,7 +10,6 @@
 
     { "count": 25, "name": "Objective Medal", "category": ["Objectives"], "progression": true, "local": true },
 
-    { "count": 1, "name": "Bomberman Game", "category": ["Bomberman", "Games"], "progression": true },
     { "count": 10, "name": "B1 Progressive Stage", "category": ["Bomberman", "Stages", "Story Mode"], "progression": true },
     { "classification_count": { "progression": 1, "useful": 3 }, "name": "B1 Fire Up", "category": ["Bomberman", "Story Mode", "Power Ups"] },
     { "classification_count": { "progression": 1, "useful": 8 }, "name": "B1 Bomb Up", "category": ["Bomberman", "Story Mode", "Power Ups"] },
@@ -21,7 +20,6 @@
     { "count": 1, "name": "B1 Flameproof", "category": ["Bomberman", "Story Mode", "Power Ups"], "useful": true },
     { "count": 1, "name": "B1 Mystery", "category": ["Bomberman", "Story Mode", "Power Ups"], "useful": true },
 
-    { "count": 1, "name": "Bomberman 2 Game", "category": ["Bomberman 2", "Games"], "progression": true },
     { "count": 6, "name": "B2 Progressive Stage", "category": ["Bomberman 2", "Story Mode"], "progression": true },
     { "classification_count": { "progression": 1, "useful": 3 }, "name": "B2 Fire Up", "category": ["Bomberman 2", "Story Mode", "Power Ups"] },
     { "classification_count": { "progression": 1, "useful": 6 }, "name": "B2 Bomb Up", "category": ["Bomberman 2", "Story Mode", "Power Ups"] },
@@ -35,7 +33,6 @@
     { "count": 1, "name": "B2 Life Up", "category": ["Bomberman 2", "Story Mode", "Power Ups"], "useful": true },
     { "count": 1, "name": "B2 Dollar", "category": ["Bomberman 2", "Story Mode", "Power Ups"], "filler": true },
 
-    { "count": 1, "name": "Super Bomberman Game", "category": ["Super Bomberman", "Games"], "progression": true },
     { "count": 6, "name": "SB1 Progressive Stage", "category": ["Super Bomberman", "Story Mode"], "progression": true },
     { "classification_count": { "progression": 1, "useful": 8 }, "name": "SB1 Fire Up", "category": ["Super Bomberman", "Story Mode", "Power Ups"] },
     { "classification_count": { "progression": 1, "useful": 8 }, "name": "SB1 Bomb Up", "category": ["Super Bomberman", "Story Mode", "Power Ups"] },
@@ -60,7 +57,6 @@
     { "count": 1, "name": "SB1 Apple", "category": ["Super Bomberman", "Story Mode", "Power Ups"], "filler": true },
     { "count": 1, "name": "SB1 Frozen Pop", "category": ["Super Bomberman", "Story Mode", "Power Ups"], "filler": true },
     
-    { "count": 1, "name": "Super Bomberman 2 Game", "category": ["Super Bomberman 2", "Games"], "progression": true },
     { "count": 5, "name": "SB2 Progressive Stage", "category": ["Super Bomberman 2", "Story Mode"], "progression": true },
     { "classification_count": { "progression": 1, "useful": 7 }, "name": "SB2 Fire Up", "category": ["Super Bomberman 2", "Story Mode", "Power Ups"] },
     { "classification_count": { "progression": 1, "useful": 7 }, "name": "SB2 Bomb Up", "category": ["Super Bomberman 2", "Story Mode", "Power Ups"] },
@@ -79,7 +75,6 @@
     { "count": 1, "name": "SB2 Ice Cream", "category": ["Super Bomberman", "Story Mode", "Power Ups"], "filler": true },
     { "count": 1, "name": "SB2 Apple", "category": ["Super Bomberman", "Story Mode", "Power Ups"], "filler": true },
 
-    { "count": 1, "name": "Super Bomberman 3 Game", "category": ["Super Bomberman 3", "Games"], "progression": true },
     { "count": 6, "name": "SB3 Progressive Stage", "category": ["Super Bomberman 3", "Story Mode"], "progression": true },
     { "classification_count": { "progression": 1, "useful": 5 }, "name": "SB3 Fire Up", "category": ["Super Bomberman 3", "Story Mode", "Power Ups"] },
     { "classification_count": { "progression": 1, "useful": 6 }, "name": "SB3 Bomb Up", "category": ["Super Bomberman 3", "Story Mode", "Power Ups"] },
@@ -105,7 +100,6 @@
     { "count": 1, "name": "SB3 Brown Louie", "category": ["Super Bomberman 3", "Story Mode", "Mounts"], "useful": true },
     { "count": 1, "name": "SB3 Pink Louie", "category": ["Super Bomberman 3", "Story Mode", "Mounts"], "useful": true },
 
-    { "count": 1, "name": "Super Bomberman 4 Game", "category": ["Super Bomberman 4", "Games"], "progression": true },
     { "count": 5, "name": "SB4 Progressive Stage", "category": ["Super Bomberman 4", "Story Mode"], "progression": true },
     { "classification_count": { "progression": 1, "useful": 5 }, "name": "SB4 Fire Up", "category": ["Super Bomberman 4", "Story Mode", "Power Ups"] },
     { "classification_count": { "progression": 1, "useful": 6 }, "name": "SB4 Bomb Up", "category": ["Super Bomberman 4", "Story Mode", "Power Ups"] },
@@ -145,7 +139,6 @@
     { "count": 1, "name": "SB4 Crepe", "category": ["Super Bomberman 4", "Story Mode", "Power Ups"], "filler": true },
     { "count": 1, "name": "SB4 Samurai Ball", "category": ["Super Bomberman 4", "Story Mode", "Power Ups"], "filler": true },
 
-    { "count": 1, "name": "Super Bomberman 5 Game", "category": ["Super Bomberman 5", "Games"], "progression": true },
     { "count": 5, "name": "SB5 Progressive Stage", "category": ["Super Bomberman 5", "Story Mode"], "progression": true },
     { "classification_count": { "progression": 1, "useful": 6 }, "name": "SB5 Bomb Up", "category": ["Super Bomberman 5", "Story Mode", "Power Ups"] },
     { "classification_count": { "progression": 1, "useful": 5 }, "name": "SB5 Fire Up", "category": ["Super Bomberman 5", "Story Mode", "Power Ups"] },
@@ -172,7 +165,6 @@
     { "count": 1, "name": "SB5 Green Louie", "category": ["Super Bomberman 5", "Story Mode", "Mounts"], "useful": true },
     { "count": 1, "name": "SB5 Red Louie", "category": ["Super Bomberman 5", "Story Mode", "Mounts"], "useful": true },
 
-    { "count": 1, "name": "Panic Bomber W Game", "category": ["Panic Bomber W", "Games"], "progression": true },
     { "count": 6, "name": "PBW Progressive Stage", "category": ["Panic Bomber W", "Story Mode"], "progression": true }
   ]
 }

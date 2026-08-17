@@ -12,6 +12,7 @@
       "hidden": false
     },
     "death_link": {
+      "display_name": "Death Link",
       "default": false
     },
     "filler_traps": {
