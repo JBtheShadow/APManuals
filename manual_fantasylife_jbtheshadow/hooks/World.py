@@ -670,7 +670,10 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         item_names_to_remove += list(get_unused_shop_storage_keys(shops_dlc, shops_lives, shops_level, shops_story, shops_fairy, shops_dosh))
 
     for item_name in item_names_to_remove:
-        item = next(i for i in item_pool if i.name == item_name)
+        item = next((i for i in item_pool if i.name == item_name), 0)
+        if not item:
+            logging.warning(f"Could not find item {item_name} to remove from the pool")
+            continue
         remove_specific_item(item_pool, item)
 
     for item_name in starting_inventory:

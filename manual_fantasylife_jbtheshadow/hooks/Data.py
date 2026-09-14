@@ -358,8 +358,8 @@ def after_load_category_file(category_table: dict) -> dict:
     })
 
     category_table.update({
-        f"Shop Price: {10 * price}": { "hidden": True }
-        for price in range(ShopMaxItemCost.range_start, ShopMaxItemCost.range_end + 1)
+        f"Shop Price: {price}": { "hidden": True }
+        for price in range(ShopMaxItemCost.range_start, ShopMaxItemCost.range_end * 10 + 1)
     })
 
     return category_table
