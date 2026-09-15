@@ -670,6 +670,7 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         item = next((i for i in item_pool if i.name == item_name), 0)
         if not item:
             logging.warning(f"Could not find item {item_name} for starting inventory")
+            continue
         multiworld.push_precollected(item)
         remove_specific_item(item_pool, item)
 
