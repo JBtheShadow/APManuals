@@ -9,7 +9,19 @@
         { "name": "[Chapter 6]", "requires": "{OptOne(|Progressive Chapter:6|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
         { "name": "[Chapter 7]", "requires": "{OptOne(|Progressive Chapter:7|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
         { "name": "[Chapter 8]", "requires": "{OptOne(|Progressive Chapter:8|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
-        { "name": "[Chapter 9]", "requires": "{OptOne(|Progressive Chapter:9|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" }
+        { "name": "[Chapter 9]", "requires": "{OptOne(|Progressive Chapter:9|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
+        { "name": "[Paladin Mastery]", "category": ["Paladin", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Paladin License| OR {OptionCount(Progressive Paladin License, life_mastery_rank)}" },
+        { "name": "[Mercenary Mastery]", "category": ["Mercenary", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Mercenary License| OR {OptionCount(Progressive Mercenary License, life_mastery_rank)}" },
+        { "name": "[Hunter Mastery]", "category": ["Hunter", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Hunter License| OR {OptionCount(Progressive Hunter License, life_mastery_rank)}" },
+        { "name": "[Magician Mastery]", "category": ["Magician", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Magician License| OR {OptionCount(Progressive Magician License, life_mastery_rank)}" },
+        { "name": "[Woodcutter Mastery]", "category": ["Woodcutter", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Woodcutter License| OR {OptionCount(Progressive Woodcutter License, life_mastery_rank)}" },
+        { "name": "[Miner Mastery]", "category": ["Miner", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Miner License| OR {OptionCount(Progressive Miner License, life_mastery_rank)}" },
+        { "name": "[Angler Mastery]", "category": ["Angler", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Angler License| OR {OptionCount(Progressive Angler License, life_mastery_rank)}" },
+        { "name": "[Cook Mastery]", "category": ["Cook", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Cook License| OR {OptionCount(Progressive Cook License, life_mastery_rank)}" },
+        { "name": "[Blacksmith Mastery]", "category": ["Blacksmith", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Blacksmith License| OR {OptionCount(Progressive Blacksmith License, life_mastery_rank)}" },
+        { "name": "[Carpenter Mastery]", "category": ["Carpenter", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Carpenter License| OR {OptionCount(Progressive Carpenter License, life_mastery_rank)}" },
+        { "name": "[Tailor Mastery]", "category": ["Tailor", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Tailor License| OR {OptionCount(Progressive Tailor License, life_mastery_rank)}" },
+        { "name": "[Alchemist Mastery]", "category": ["Alchemist", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Alchemist License| OR {OptionCount(Progressive Alchemist License, life_mastery_rank)}" }
     ]
 }
 

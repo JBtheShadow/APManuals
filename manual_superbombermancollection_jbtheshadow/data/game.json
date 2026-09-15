@@ -1,0 +1,8 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
+  "game": "SuperBombermanCollection",
+  "creator": "JBtheShadow",
+  "filler_item_name": "1000 Points",
+  "death_link": true,
+  "starting_items": []
+}

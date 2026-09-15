@@ -527,7 +527,7 @@ def before_create_items_all(
     shops_level = get_option(world, "shops_level", False)
     shops_story = get_option(world, "shops_story", False)
     shops_fairy = get_option(world, "shops_fairy", False)
-    shops_cost = get_option(world, "shops_cost", False)
+    shops_cost = get_option(world, "shops_cost", False) * 10
     shops_restricted = get_option(world, "shops_restricted", False)
 
     if wish_hunt_goal:
@@ -563,6 +563,7 @@ def before_create_items_all(
 
     if shops_restricted:
         for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
+            logging.info(f"{unused_shop_storage_key} unused, being removed")
             item_config[unused_shop_storage_key] = {"progression": 0}
 
     return item_config
@@ -658,23 +659,18 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
             if is_item_name_enabled(multiworld, player, item_name):
                 starting_inventory.append(item_name)
 
-    # Restricted shop items
-    shops_lives = is_option_enabled(multiworld, player, "shops_lives")
-    shops_level = is_option_enabled(multiworld, player, "shops_level")
-    shops_story = is_option_enabled(multiworld, player, "shops_story")
-    shops_fairy = is_option_enabled(multiworld, player, "shops_fairy")
-    shops_dosh = get_option_value(multiworld, player, "shops_dosh") * 10
-    shops_restricted = is_option_enabled(multiworld, player, "shops_restricted")
-    shops_dlc = is_option_enabled(multiworld, player, "shops_dlc")
-    if shops_restricted:
-        item_names_to_remove += list(get_unused_shop_storage_keys(shops_dlc, shops_lives, shops_level, shops_story, shops_fairy, shops_dosh))
-
     for item_name in item_names_to_remove:
-        item = next(i for i in item_pool if i.name == item_name)
+        item = next((i for i in item_pool if i.name == item_name), 0)
+        if not item:
+            logging.warning(f"Could not find item {item_name} to remove from the pool")
+            continue
         remove_specific_item(item_pool, item)
 
     for item_name in starting_inventory:
-        item = next(i for i in item_pool if i.name == item_name)
+        item = next((i for i in item_pool if i.name == item_name), 0)
+        if not item:
+            logging.warning(f"Could not find item {item_name} for starting inventory")
+            continue
         multiworld.push_precollected(item)
         remove_specific_item(item_pool, item)
 
