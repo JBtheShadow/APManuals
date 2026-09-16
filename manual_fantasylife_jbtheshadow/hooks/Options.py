@@ -31,19 +31,20 @@ class GameSeed(FreeText):
 
 class StoryGoal(Toggle):
     """Beating the main story is required for the goal."""
-    display_name = "Beat the Main Story as a Goal Requirement"
+    display_name = "Beat the Main Story"
 
 class DlcGoal(Toggle):
-    """Beating the Origin Island DLC story is required for the goal."""
-    display_name = "Beat the Origin Island DLC Story as a Goal Requirement"
+    """Beating the Origin Island DLC story is required for the goal.
+    Requires including DLC content."""
+    display_name = "Beat the Origin Island DLC Story"
 
 class LifeMasteryGoal(Toggle):
     """Reaching a specified license rank in a number of lives is required for the goal."""
-    display_name = "Life Mastery as a Goal Requirement"
+    display_name = "Life Mastery"
 
 class WishHuntGoal(DefaultOnToggle):
     """Finding a number of lost wishes is required for the goal."""
-    display_name = "Wish Hunt as a Goal Requirement"
+    display_name = "Wish Hunt"
 
 class IncludeDlcContent(Toggle):
     """Adds content and locations for the Origin Island DLC, which includes:
@@ -470,18 +471,26 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
-    groups["Story and DLC"] = [
-        IncludeChapters, IncludeStoryLocations, StoryGoal, IncludeDlcContent, IncludeDlcStoryLocations, DlcGoal
+    groups["Goals"] = [
+        StoryGoal, DlcGoal, WishHuntGoal, LifeMasteryGoal
+    ]
+    groups["Story"] = [
+        IncludeChapters, IncludeStoryLocations
+    ]
+    groups["DLC"] = [
+        IncludeDlcContent, IncludeDlcStoryLocations
     ]
     groups["Wish Hunt"] = [
-        WishHuntGoal, WishHuntTotal, WishHuntRequired, WishHuntLocal
+        WishHuntTotal, WishHuntRequired, WishHuntLocal
     ]
     groups["Life Mastery"] = [
-        LifeMasteryGoal, LifeMasteryRank, LifeMasteryCount
+        LifeMasteryRank, LifeMasteryCount
     ]
-    groups["Lives and Licenses"] = [
-        IncludeLicenses, ProgressiveLicenses, AvailableLicenses, CustomAvailableLicenses,
-        MaxLicenseRank, StartingLicense, IncludeChallengeLocations, IncludeCraftingLocations
+    groups["Life Licenses"] = [
+        IncludeLicenses, ProgressiveLicenses, AvailableLicenses, CustomAvailableLicenses, MaxLicenseRank, StartingLicense
+    ]
+    groups["Other Life Options"] = [
+        IncludeChallengeLocations, IncludeCraftingLocations
     ]
     groups["Other Requests"] = [
         IncludeRequestLocations, OtherRequestsCount, OtherRequestsDlc
@@ -492,7 +501,9 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
         IncludeTheaterBlissBonuses, StartingBlissBonus
     ]
     groups["Levels"] = [
-        IncludeLevelUpLocations, MaxExperienceLevel, IncludeExperienceLevelLogic, LogicalLevelsPerLevelPack,
+        IncludeLevelUpLocations, MaxExperienceLevel, IncludeExperienceLevelLogic, LogicalLevelsPerLevelPack
+    ]
+    groups["Skill Levels"] = [
         IncludeSkillLevelUpLocations, MaxSkillLevel, IncludeSkillLevelLogic, LogicalSkillLevelsPerLevelPack
     ]
     groups["Shops"] = [
