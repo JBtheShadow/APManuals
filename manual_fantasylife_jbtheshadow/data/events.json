@@ -10,6 +10,7 @@
         { "name": "[Chapter 7]", "requires": "{OptOne(|Progressive Chapter:7|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
         { "name": "[Chapter 8]", "requires": "{OptOne(|Progressive Chapter:8|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
         { "name": "[Chapter 9]", "requires": "{OptOne(|Progressive Chapter:9|)} and {OptOne(|Haniwa Cave Pass|)} and {OptOne(|Elderwood Grotto Pass|)}" },
+
         { "name": "[Paladin Mastery]", "category": ["Paladin", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Paladin License| OR {OptionCount(Progressive Paladin License, life_mastery_rank)}" },
         { "name": "[Mercenary Mastery]", "category": ["Mercenary", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Mercenary License| OR {OptionCount(Progressive Mercenary License, life_mastery_rank)}" },
         { "name": "[Hunter Mastery]", "category": ["Hunter", "Mastery"], "requires": "{YamlDisabled(include_licenses)} OR |Hunter License| OR {OptionCount(Progressive Hunter License, life_mastery_rank)}" },

@@ -67,10 +67,16 @@
     "Fairy Shop": { "yaml_option": ["include_shops", "shops_fairy"], "hidden": true },
     "Story Shop": { "yaml_option": ["include_shops", "shops_story"], "hidden": true },
 
-    "Castele Shop": { "hidden": true },
-    "Port Shop": { "hidden": true },
-    "Desert Shop": { "hidden": true },
-    "Other Shop": { "hidden": true },
-    "DLC Shop": { "hidden": true },
-    "Crafting Recipes": { "yaml_option": ["include_crafting"], "hidden": true }
+    "Castele Shop": { "yaml_option": ["include_shops", "shops_castele"], "hidden": true },
+    "Port Shop": { "yaml_option": ["include_shops", "shops_port"], "hidden": true },
+    "Desert Shop": { "yaml_option": ["include_shops", "shops_desert"], "hidden": true },
+    "Other Shop": { "yaml_option": ["include_shops", "shops_other"], "hidden": true },
+    "DLC Shop": { "yaml_option": ["include_shops", "shops_dlc"], "hidden": true },
+    
+    "Crafting Recipes": { "yaml_option": ["include_crafting"], "hidden": true },
+
+    "Bingo": { "yaml_option": ["bingo_goal"] },
+    "Mastery": { "yaml_option": ["life_mastery_goal"] },
+    "Story Goal": { "yaml_option": ["story_goal"], "hidden": true },
+    "Story DLC Goal": { "yaml_option": ["dlc_goal"], "hidden": true }
 }

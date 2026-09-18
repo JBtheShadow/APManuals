@@ -19,6 +19,7 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
     skill_logic = get_option_value(multiworld, player, "skill_logic")
     skill_pack_size = get_option_value(multiworld, player, "skill_pack_size")
     shops_cost = get_option_value(multiworld, player, "shops_cost")
+    bingo_size = get_option_value(multiworld, player, "bingo_size")
     available_lives = multiworld.worlds[player].available_lives
 
     match category_name:
@@ -44,10 +45,13 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
             size = int(x.replace("Skill Level Pack (", "").replace("x)", ""))
             if size != skill_pack_size:
                 return False
-        case x if x.startswith("Shop Price:"):
-            price = int(x.split(":")[1].strip())
+        case x if x.startswith("Shop Price -"):
+            price = int(x.split("-")[1].strip())
             if price > shops_cost * 10:
                 return False
+        case x if x.startswith(("Bingo Row", "Bingo Column")):
+            size = int(x.split(" ")[2])
+            return bingo_size >= size
 
     return None
 

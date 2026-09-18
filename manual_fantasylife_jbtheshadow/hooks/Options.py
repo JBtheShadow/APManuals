@@ -1,5 +1,5 @@
 # Object classes from AP that represent different types of options that you can create
-from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions, OptionList
+from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions, OptionList, OptionSet
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
 from ..Helpers import is_option_enabled, get_option_value
 from typing import Type, Any
@@ -25,9 +25,9 @@ from typing import Type, Any
 # To add an option, use the before_options_defined hook below and something like this:
 #   options["total_characters_to_win_with"] = TotalCharactersToWinWith
 #
-class GameSeed(FreeText):
-    """Seed used for generation, leave blank for a random one."""
-    display_name = "Seed"
+# class GameSeed(FreeText):
+#     """Seed used for generation, leave blank for a random one."""
+#     display_name = "Seed"
 
 class StoryGoal(Toggle):
     """Beating the main story is required for the goal."""
@@ -348,6 +348,20 @@ class StartingBlissBonus(Choice):
     option_useful = 8
     default = 8
 
+class IncludeCasteleShopLocations(DefaultOnToggle):
+    display_name = "Include Castele Shop Locations"
+
+class IncludePortPuertoShopLocations(Toggle):
+    display_name = "Include Port Puerto Shop Locations"
+
+class IncludeAlMaajikShopLocations(Toggle):
+    display_name = "Include Al Maajik Shop Locations"
+
+class IncludeOtherShopLocations(Toggle):
+    """Includes shop locations like wandering traders and other locations outside of the three major cities,
+    like in the Elderwood or over Terra Nimbus."""
+    display_name = "Include Other Shop Locations"
+
 class IncludeStoryShopLocations(Toggle):
     """Includes locations unlocked by beating the story."""
     display_name = "Include Story Shop Locations"
@@ -384,9 +398,35 @@ class IncludeShopRestrictions(Toggle):
     """Restricts shop access behind obtaining their shop inventory first."""
     display_name = "Include Shop Restrictions"
 
+# class BingoGoal(Toggle):
+#     """Complete a bingo board as part of your goal."""
+#     display_name = "Bingo"
+
+# class BingoBoardSize(Choice):
+#     """Set the size of the bingo board"""
+#     display_name = "Board Size"
+#     option_3x3 = 3
+#     option_5x5 = 5
+#     option_7x7 = 7
+#     option_9x9 = 9
+#     default = 5
+
+# class BingoCategories(OptionSet):
+#     """Set which categories can appear as board tiles.
+#     Make sure to enable other relevant options; for example, if Challenges are eligible but life challenges are not included in the pool then
+#     those locations won't ever appear, and thus, cannot be on the board as well.
+
+#     Valid options: ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+    
+#     Leave empty to make all eligible."""
+#     display_name = "Eligible Categories"
+#     valid_keys = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+#     default = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+
+
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
-    options["game_seed"] = GameSeed
+    # options["game_seed"] = GameSeed
 
     options["include_story"] = IncludeStoryLocations
     options["include_chapters"] = IncludeChapters
@@ -437,6 +477,10 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["skill_pack_size"] = LogicalSkillLevelsPerLevelPack
 
     options["include_shops"] = IncludeShopLocations
+    options["shops_castele"] = IncludeCasteleShopLocations
+    options["shops_port"] = IncludePortPuertoShopLocations
+    options["shops_desert"] = IncludeAlMaajikShopLocations
+    options["shops_other"] = IncludeOtherShopLocations
     options["shops_story"] = IncludeStoryShopLocations
     options["shops_dlc"] = IncludeDlcShopLocations
     options["shops_bliss"] = IncludeBlissShopLocations
@@ -453,6 +497,10 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["include_passwords"] = IncludePasswords
     options["include_rarities"] = IncludeItemRarities
     options["include_caves"] = IncludeCaves
+
+    # options["bingo_goal"] = BingoGoal
+    # options["bingo_size"] = BingoBoardSize
+    # options["bingo_categories"] = BingoCategories
 
     return options
 
@@ -472,7 +520,7 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
     groups["Goals"] = [
-        StoryGoal, DlcGoal, WishHuntGoal, LifeMasteryGoal
+        StoryGoal, DlcGoal, WishHuntGoal, LifeMasteryGoal #, BingoGoal
     ]
     groups["Story"] = [
         IncludeChapters, IncludeStoryLocations
@@ -486,6 +534,9 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
     groups["Life Mastery"] = [
         LifeMasteryRank, LifeMasteryCount
     ]
+    # groups["Bingo"] = [
+    #     BingoBoardSize, BingoCategories
+    # ]
     groups["Life Licenses"] = [
         IncludeLicenses, ProgressiveLicenses, AvailableLicenses, CustomAvailableLicenses, MaxLicenseRank, StartingLicense
     ]
@@ -507,7 +558,8 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
         IncludeSkillLevelUpLocations, MaxSkillLevel, IncludeSkillLevelLogic, LogicalSkillLevelsPerLevelPack
     ]
     groups["Shops"] = [
-        IncludeShopLocations, IncludeStoryShopLocations, IncludeDlcShopLocations, IncludeBlissShopLocations,
+        IncludeShopLocations, IncludeCasteleShopLocations, IncludePortPuertoShopLocations, IncludeAlMaajikShopLocations,
+        IncludeOtherShopLocations, IncludeStoryShopLocations, IncludeDlcShopLocations, IncludeBlissShopLocations,
         IncludeFairyShopLocations, IncludeLevelShopLocations, IncludeMasterShopLocations, ShopMaxItemCost,
         IncludeShopRestrictions
     ]
