@@ -349,21 +349,23 @@ class StartingBlissBonus(Choice):
     default = 8
 
 class IncludeCasteleShopLocations(DefaultOnToggle):
+    """Includes shop locations in Castele."""
     display_name = "Include Castele Shop Locations"
 
-class IncludePortPuertoShopLocations(Toggle):
+class IncludePortShopLocations(Toggle):
+    """Includes shop locations in Port Puerto"""
     display_name = "Include Port Puerto Shop Locations"
 
-class IncludeAlMaajikShopLocations(Toggle):
+class IncludeDesertShopLocations(Toggle):
+    """Includes shop locations in Al Maajik."""
     display_name = "Include Al Maajik Shop Locations"
 
 class IncludeOtherShopLocations(Toggle):
-    """Includes shop locations like wandering traders and other locations outside of the three major cities,
-    like in the Elderwood or over Terra Nimbus."""
+    """Includes shop locations for traveling merchants and other locations besides the three main cities."""
     display_name = "Include Other Shop Locations"
 
 class IncludeStoryShopLocations(Toggle):
-    """Includes locations unlocked by beating the story."""
+    """Includes shop locations unlocked by beating the story."""
     display_name = "Include Story Shop Locations"
 
 class IncludeDlcShopLocations(Toggle):
@@ -382,8 +384,13 @@ class IncludeLevelShopLocations(Toggle):
     """Includes locations unlocked by reaching a specific experience level."""
     display_name = "Include Level Shop Locations"
 
+class IncludeLifeShopLocations(Toggle):
+    """Includes locations for shops dedicated to specific lives, whether you've mastered them or not."""
+    display_name = "Include Life Shop Locations"
+
 class IncludeMasterShopLocations(Toggle):
-    """Includes locations unlocked by reaching master rank in a respective life."""
+    """Includes locations unlocked by reaching master rank in a respective life.
+    Does nothing if life shop locations are not enabled."""
     display_name = "Include Master Shop Locations"
 
 class ShopMaxItemCost(Range):
@@ -478,14 +485,15 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
 
     options["include_shops"] = IncludeShopLocations
     options["shops_castele"] = IncludeCasteleShopLocations
-    options["shops_port"] = IncludePortPuertoShopLocations
-    options["shops_desert"] = IncludeAlMaajikShopLocations
+    options["shops_port"] = IncludePortShopLocations
+    options["shops_desert"] = IncludeDesertShopLocations
     options["shops_other"] = IncludeOtherShopLocations
     options["shops_story"] = IncludeStoryShopLocations
     options["shops_dlc"] = IncludeDlcShopLocations
     options["shops_bliss"] = IncludeBlissShopLocations
     options["shops_fairy"] = IncludeFairyShopLocations
     options["shops_level"] = IncludeLevelShopLocations
+    options["shops_life"] = IncludeLifeShopLocations
     options["shops_master"] = IncludeMasterShopLocations
     options["shops_cost"] = ShopMaxItemCost
     options["shops_restricted"] = IncludeShopRestrictions
@@ -558,10 +566,9 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
         IncludeSkillLevelUpLocations, MaxSkillLevel, IncludeSkillLevelLogic, LogicalSkillLevelsPerLevelPack
     ]
     groups["Shops"] = [
-        IncludeShopLocations, IncludeCasteleShopLocations, IncludePortPuertoShopLocations, IncludeAlMaajikShopLocations,
-        IncludeOtherShopLocations, IncludeStoryShopLocations, IncludeDlcShopLocations, IncludeBlissShopLocations,
-        IncludeFairyShopLocations, IncludeLevelShopLocations, IncludeMasterShopLocations, ShopMaxItemCost,
-        IncludeShopRestrictions
+        IncludeShopLocations, IncludeCasteleShopLocations, IncludePortShopLocations, IncludeDesertShopLocations, IncludeOtherShopLocations,
+        IncludeStoryShopLocations, IncludeDlcShopLocations, IncludeBlissShopLocations, IncludeFairyShopLocations, IncludeLevelShopLocations,
+        IncludeLifeShopLocations, IncludeMasterShopLocations, ShopMaxItemCost, IncludeShopRestrictions
     ]
     groups["Chests"] = [
         IncludeChestLocations, IncludeDlcChests, IncludeTrialChests

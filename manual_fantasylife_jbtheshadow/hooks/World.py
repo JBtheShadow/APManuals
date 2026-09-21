@@ -9,8 +9,10 @@ from BaseClasses import MultiWorld, CollectionState, Item
 from ..Items import ManualItem
 from ..Locations import ManualLocation
 
+# from .Data import (life_names, rank_names, skill_names, get_filler_categories, get_filler_items_by_category,
+#                    get_unused_shop_storage_keys, get_wish_hunt_available_location_count)
 from .Data import (life_names, rank_names, skill_names, get_filler_categories, get_filler_items_by_category,
-                   get_unused_shop_storage_keys, get_wish_hunt_available_location_count)
+                   get_wish_hunt_available_location_count)
 
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
@@ -113,7 +115,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     skill_max_level = get_option(world, "skill_max_level", 0)
     skill_logic = get_option(world, "skill_logic", False)
     skill_pack_size = get_option(world, "skill_pack_size", 1)
-    shops_castele = get_option(world, "shops_castele", False)
+    shops_castele = get_option(world, "shops_castele", True)
     shops_port = get_option(world, "shops_port", False)
     shops_desert = get_option(world, "shops_desert", False)
     shops_other = get_option(world, "shops_other", False)
@@ -122,6 +124,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     shops_bliss = get_option(world, "shops_bliss", False)
     shops_fairy = get_option(world, "shops_fairy", False)
     shops_level = get_option(world, "shops_level", False)
+    shops_life = get_option(world, "shops_life", False)
     shops_master = get_option(world, "shops_master", False)
     shops_cost = get_option(world, "shops_cost", 0)
     shops_restricted = get_option(world, "shops_restricted", False)
@@ -161,6 +164,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             set_option(world, "requests_dlc", requests_dlc)
 
         if shops_dlc:
+            logging.warning("Cannot include DLC shop locations without including the DLC.")
             shops_dlc = False
             set_option(world, "shops_dlc", shops_dlc)
 
@@ -353,7 +357,11 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
 
     #region Shops
     if include_shops:
-        if shops_master and licenses_max_rank < RankChoice.option_master:
+        if shops_master and not shops_life:
+            logging.warning("Cannot include master shop locations without including life shops.")
+            shops_master = False
+            set_option(world, "shops_master", shops_master)
+        elif shops_master and licenses_max_rank < RankChoice.option_master:
             logging.warning("Cannot include master shop locations unless the highest license rank available is at Master or higher.")
             shops_master = False
             set_option(world, "shops_master", shops_master)
@@ -583,17 +591,13 @@ def before_create_items_all(
     skill_logic = get_option(world, "skill_logic", False)
     skill_pack_size = get_option(world, "skill_pack_size", 0)
 
-    shops_castele = get_option(world, "shops_castele", False)
-    shops_port = get_option(world, "shops_port", False)
-    shops_desert = get_option(world, "shops_desert", False)
-    shops_other = get_option(world, "shops_other", False)
-    shops_dlc = get_option(world, "shops_dlc", False)
-    shops_master = get_option(world, "shops_master", False)
-    shops_level = get_option(world, "shops_level", False)
-    shops_story = get_option(world, "shops_story", False)
-    shops_fairy = get_option(world, "shops_fairy", False)
-    shops_cost = get_option(world, "shops_cost", False) * 10
-    shops_restricted = get_option(world, "shops_restricted", False)
+    # shops_dlc = get_option(world, "shops_dlc", False)
+    # shops_master = get_option(world, "shops_master", False)
+    # shops_level = get_option(world, "shops_level", False)
+    # shops_story = get_option(world, "shops_story", False)
+    # shops_fairy = get_option(world, "shops_fairy", False)
+    # shops_cost = get_option(world, "shops_cost", False) * 10
+    # shops_restricted = get_option(world, "shops_restricted", False)
 
     if wish_hunt_goal:
         item_config["Lost Wish"] = {"progression": wish_hunt_total}
@@ -626,10 +630,10 @@ def before_create_items_all(
             if is_item_name_enabled(multiworld, player, item_name):
                 item_config[item_name] = {"progression": int(count)}
 
-    if shops_restricted:
-        for unused_shop_storage_key in get_unused_shop_storage_keys(shops_castele, shops_port, shops_desert, shops_other, shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
-            logging.info(f"{unused_shop_storage_key} unused, being removed")
-            item_config[unused_shop_storage_key] = {"progression": 0}
+    # if shops_restricted:
+    #     for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
+    #         logging.info(f"{unused_shop_storage_key} unused, being removed")
+    #         item_config[unused_shop_storage_key] = {"progression": 0}
 
     return item_config
 
@@ -701,12 +705,12 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     licenses_progressive = get_option(world, "licenses_progressive", False)
     include_bliss = get_option(world, "include_bliss", False)
 
-    include_levels = get_option(world, "include_levels", False)
-    include_skills = get_option(world, "include_skills", False)
-    experience_logic = get_option(world, "experience_logic", False)
-    experience_pack_size = get_option(world, "experience_pack_size", 0)
-    skill_logic = get_option(world, "skill_logic", False)
-    skill_pack_size = get_option(world, "skill_pack_size", 0)
+    # include_levels = get_option(world, "include_levels", False)
+    # include_skills = get_option(world, "include_skills", False)
+    # experience_logic = get_option(world, "experience_logic", False)
+    # experience_pack_size = get_option(world, "experience_pack_size", 0)
+    # skill_logic = get_option(world, "skill_logic", False)
+    # skill_pack_size = get_option(world, "skill_pack_size", 0)
 
     starting_life = getattr(world, "starting_life", "")
     starting_bliss = getattr(world, "starting_bliss", "")
@@ -719,15 +723,15 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         item_name = starting_bliss
         starting_inventory.append(item_name)
 
-    if include_levels and experience_logic:
-        item_name = f"Level Pack ({experience_pack_size}x)"
-        starting_inventory.append(item_name)
+    # if include_levels and experience_logic:
+    #     item_name = f"Level Pack ({experience_pack_size}x)"
+    #     starting_inventory.append(item_name)
 
-    if include_skills and skill_logic:
-        for skill in skill_names:
-            item_name = f"{skill} Level Pack ({skill_pack_size}x)"
-            if is_item_name_enabled(multiworld, player, item_name):
-                starting_inventory.append(item_name)
+    # if include_skills and skill_logic:
+    #     for skill in skill_names:
+    #         item_name = f"{skill} Level Pack ({skill_pack_size}x)"
+    #         if is_item_name_enabled(multiworld, player, item_name):
+    #             starting_inventory.append(item_name)
 
     for item_name in item_names_to_remove:
         item = next((i for i in item_pool if i.name == item_name), 0)

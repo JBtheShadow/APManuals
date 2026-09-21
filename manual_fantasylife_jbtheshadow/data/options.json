@@ -2,11 +2,11 @@
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
     "core": {
         "death_link": {
-            "default": false,
-            "visibility": "none"
+            "display_name": "Enable Death Link"
         },
         "filler_traps": {
-            "visibility": "none"
+            "display_name": "Filler Traps",
+            "default": 20
         }
     }
 }

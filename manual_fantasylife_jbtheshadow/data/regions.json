@@ -1,88 +1,630 @@
 {
     "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
-    "Game": { "connects_to": ["Chapters", "World"], "requires": "", "starting": true },
+    "Game": {
+        "connects_to": ["Reveria", "Chapters"],
+        "starting": true
+    },
+    "Chapters": {
+        "connects_to": [
+            "Prologue",
+            "Chapter 1",
+            "Chapter 2",
+            "Chapter 3",
+            "Chapter 4",
+            "Chapter 5",
+            "Chapter 6",
+            "Chapter 7",
+            "DLC Chapter 1",
+            "DLC Chapter 2"
+        ]
+    },
+    "Prologue": {
+        "connects_to": ["Fledgling Challenges"]
+    },
+    "Chapter 1": {
+        "connects_to": ["Apprentice Challenges"],
+        "requires": "|[Chapter 1]|"
+    },
+    "Chapter 2": {
+        "requires": "|[Chapter 2]|"
+    },
+    "Chapter 3": {
+        "connects_to": ["Adept Challenges"],
+        "requires": "|[Chapter 3]|"
+    },
+    "Chapter 4": {
+        "requires": "|[Chapter 4]|"
+    },
+    "Chapter 5": {
+        "connects_to": ["Expert Challenges"],
+        "requires": "|[Chapter 5]|"
+    },
+    "Chapter 6": {
+        "requires": "|[Chapter 6]|"
+    },
+    "Chapter 7": {
+        "connects_to": [
+            "Master Challenges",
+            "Hero Challenges",
+            "Legend Challenges"
+        ],
+        "requires": "|[Chapter 7]|"
+    },
+    "DLC Chapter 1" : {
+        "connects_to": ["Creator Challenges"],
+        "requires": "|[Chapter 8]|"
+    },
+    "DLC Chapter 2" : {
+        "requires": "|[Chapter 9]|"
+    },
+    "Fledgling Challenges": {},
+    "Apprentice Challenges": {},
+    "Adept Challenges": {},
+    "Expert Challenges": {},
+    "Master Challenges": {},
+    "Hero Challenges": {},
+    "Legend Challenges": {},
+    "Creator Challenges": {},
+    "Reveria": {
+        "connects_to": ["Attic Room", "Central Grassland"],
+        "starting": true
+    },
+    "Attic Room": {
+        "connects_to": ["Castele Square"],
+        "starting": true
+    },
+    "Castele Square": {
+        "connects_to": [
+            "Castele Inn",
+            "Castele Fine Arms",
+            "Castele Furniture Store",
+            "Castele General Goods",
+            "Castele Fashion Boutique",
+            "Castele Castle",
+            "Castele Shopping District",
+            "Castele Artisan's District",
+            "South Castele" 
+        ]
+    },
+    "Castele Inn": {},
+    "Castele Fine Arms": {
+        "requires": "{OptOne(|Castele Fine Arms Keys|)}"
+    },
+    "Castele Furniture Store": {
+        "requires": "{OptOne(|Castele Furniture Store Keys|)}"
+    },
+    "Castele General Goods": {
+        "requires": "{OptOne(|Castele General Goods Keys|)}"
+    },
+    "Castele Fashion Boutique": {
+        "requires": "{OptOne(|Castele Fashion Boutique Keys|)}"
+    },
+    "Castele Castle": {
+        "_todo": "Maybe expand this into the other rooms inside the castle"
+    },
+    "Castele Shopping District": {
+        "connects_to": [
+            "Castele Fishmonger",
+            "Castele Butcher",
+            "Castele Greengrocer",
+            "Alfredo's Bistro",
+            "The Crown",
+            "West Castele"
+        ]
+    },
+    "Castele Fishmonger": {
+        "requires": "{OptOne(|Castele Fishmonger Keys|)}"
+    },
+    "Castele Butcher": {
+        "requires": "{OptOne(|Castele Butcher Keys|)}"
+    },
+    "Castele Greengrocer": {
+        "requires": "{OptOne(|Castele Greengrocer Keys|)}"
+    },
+    "Alfredo's Bistro": {
+        "connects_to": ["Alfredo's Bistro Shop"]
+    },
+    "Alfredo's Bistro Shop": {
+        "requires": "{OptOne(|Alfredo's Bistro Shop Keys|)}"
+    },
+    "The Crown": {
+        "connects_to": ["The Crown Shop"]
+    },
+    "The Crown Shop": {
+        "requires": "{OptOne(|The Crown Shop Keys|)}"
+    },
+    "Castele Artisan's District": {
+        "connects_to": [
+            "Castele Buttonhook",
+            "Castele Woods and Leather",
+            "Castele Ores and Metals",
+            "Castele Odds and Ends",
+            "Appleseed Cafe",
+            "East Castele"
+        ]
+    },
+    "Castele Buttonhook": {
+        "requires": "{OptOne(|Castele Buttonhook Keys|)}"
+    },
+    "Castele Woods and Leather": {
+        "requires": "{OptOne(|Castele Woods and Leather Keys|)}"
+    },
+    "Castele Ores and Metals": {
+        "requires": "{OptOne(|Castele Ores and Metals Keys|)}"
+    },
+    "Castele Odds and Ends": {
+        "requires": "{OptOne(|Castele Odds and Ends Keys|)}"
+    },
+    "Appleseed Cafe": {
+        "requires": "{OptOne(|Appleseed Cafe Keys|)}"
+    },
+    "South Castele": {
+        "connects_to": [
+            "East Castele",
+            "West Castele",
+            "Castele Outskirts"
+        ]
+    },
+    "East Castele": {
+        "connects_to": ["South Castele"]
+    },
+    "West Castele": {
+        "connects_to": ["South Castele"]
+    },
+    "Castele Outskirts": {
+        "connects_to": ["East Grassy Plains"]
+    },
+    "East Grassy Plains": {
+        "connects_to": [
+            "Haniwa Cave",
+            "East Grassy Plains Travelling Seller",
+            "West Grassy Plains",
+            "Mount Snowpeak",
+            "Elderwood"
+        ]
+    },
+    "Haniwa Cave": {
+        "requires": "{OptOne(|Haniwa Cave Pass|)}"
+    },
+    "East Grassy Plains Travelling Seller": {
+        "requires": "{OptOne(|East Grassy Plains Travelling Seller Keys|)}"
+    },
+    "West Grassy Plains": {
+        "connects_to": [
+            "Farley's Plantation",
+            "Mysterious Fairy",
+            "Campsite General Items",
+            "Campsite Hunter Life Store",
+            "Port Puerto Beach District",
+            "Al Maajik Outskirts"
+        ],
+        "requires": "|[Chapter 1]|"
+    },
+    "Farley's Plantation": {
+        "connects_to": ["Farley's Plantation Shop"]
+    },
+    "Farley's Plantation Shop": {
+        "requires": "{OptOne(|Farley's Plantation Shop Keys|)}"
+    },
+    "Mysterious Fairy": {
+        "requires": "{OptOne(|Mysterious Fairy Keys|)} AND {has_fairy_access()} AND |[Chapter 7]|"
+    },
+    "Campsite General Items": {
+        "requires": "{OptOne(|Campsite General Items Keys|)}"
+    },
+    "Campsite Hunter Life Store": {
+        "requires": "{OptOne(|Campsite Hunter Life Store Keys|)}"
+    },
+    "Mount Snowpeak": {
+        "connects_to": [
+            "Mount Snowpeak Travelling Seller",
+            "Champion's House Paladin Life Store",
+            "Mount Snowpeak Summit",
+            "Lava Cave",
+            "Waterfall Cave"
+        ],
+        "requires": "|[Chapter 1]|"
+    },
+    "Mount Snowpeak Travelling Seller": {
+        "requires": "{OptOne(|Mount Snowpeak Travelling Seller Keys|)}"
+    },
+    "Champion's House Paladin Life Store": {
+        "requires": "{OptOne(|Champion's House Paladin Life Store Keys|)}"
+    },
+    "Lava Cave": {
+        "connects_to": ["Lava Cave Interior"],
+        "requires": "{OptOne(|Lava Cave Pass|)} AND |[Chapter 3]|"
+    },
+    "Lava Cave Interior": {
+        "connects_to": ["Lava Cave Interior Blacksmith Life Store"]
+    },
+    "Lava Cave Interior Blacksmith Life Store": {
+        "requires": "{OptOne(|Lava Cave Interior Blacksmith Life Store Keys|)}"
+    },
+    "Waterfall Cave": {
+        "requires": "{OptOne(|Waterfall Cave Pass|)}"
+    },
+    "Mount Snowpeak Summit": {
+        "connects_to": [
+            "Royal Cabin Well Miner Life Store",
+            "Royal Cabin Bed",
+            "Mount Snowpeak Summit Travelling Seller",
+            "Napdragon's Nest"
+        ],
+        "requires": "|[Chapter 2]|"
+    },
+    "Royal Cabin Well Miner Life Store": {
+        "requires": "{OptOne(|Royal Cabin Well Miner Life Store Keys|)}"
+    },
+    "Royal Cabin Bed": {},
+    "Mount Snowpeak Summit Travelling Seller": {
+        "requires": "{OptOne(|Mount Snowpeak Summit Travelling Seller Keys|)}"
+    },
+    "Napdragon's Nest": {},
+    "Port Puerto Beach District": {
+        "connects_to": [
+            "Bartender",
+            "Port Puerto Marina",
+            "Tortuga Archipelago"
+        ],
+        "requires": "|[Chapter 3]|"
+    },
+    "Bartender": {
+        "requires": "{OptOne(|Bartender Keys|)}"
+    },
+    "Port Puerto Marina": {
+        "connects_to": [
+            "Port Puerto Inn",
+            "Port Puerto Butcher",
+            "Port Puerto Fishmonger",
+            "Port Puerto Greengrocer",
+            "Port Puerto Buttonhook",
+            "Port Puerto Ores and Metals",
+            "Port Puerto Woods and Leather",
+            "Port Puerto Fine Arms",
+            "Port Puerto Odds and Ends",
+            "Eyepatch and Cutlass Bar",
+            "Port Puerto Palace Way",
+            "Levitania"
+        ]
+    },
+    "Port Puerto Inn": {},
+    "Port Puerto Butcher": {
+        "requires": "{OptOne(|Port Puerto Butcher Keys|)}"
+    },
+    "Port Puerto Fishmonger": {
+        "requires": "{OptOne(|Port Puerto Fishmonger Keys|)}"
+    },
+    "Port Puerto Greengrocer": {
+        "requires": "{OptOne(|Port Puerto Greengrocer Keys|)}"
+    },
+    "Port Puerto Buttonhook": {
+        "requires": "{OptOne(|Port Puerto Buttonhook Keys|)}"
+    },
+    "Port Puerto Ores and Metals": {
+        "requires": "{OptOne(|Port Puerto Ores and Metals Keys|)}"
+    },
+    "Port Puerto Woods and Leather": {
+        "requires": "{OptOne(|Port Puerto Woods and Leather Keys|)}"
+    },
+    "Port Puerto Fine Arms": {
+        "requires": "{OptOne(|Port Puerto Fine Arms Keys|)}"
+    },
+    "Port Puerto Odds and Ends": {
+        "requires": "{OptOne(|Port Puerto Odds and Ends Keys|)}"
+    },
+    "Eyepatch and Cutlass Bar": {
+        "requires": "{OptOne(|Eyepatch and Cutlass Bar Keys|)}"
+    },
+    "Port Puerto Palace Way": {
+        "connects_to": [
+            "Port Puerto Furniture Store",
+            "Snoot's Emporium Item Goods",
+            "Snoot's Emporium Secret Shop",
+            "Cocina Rica Restaurant Main Shop",
+            "Cocina Rica Restaurant Cook Life Store",
+            "Port Puerto Fashion Boutique",
+            "Madame Purl's Tailor Life Store",
+            "Angler's Association Angler Life Store",
+            "Port Puerto Palace"
+        ]
+    },
+    "Port Puerto Furniture Store": {
+        "requires": "{OptOne(|Port Puerto Furniture Store Keys|)}"
+    },
+    "Snoot's Emporium Item Goods": {
+        "requires": "{OptOne(|Snoot's Emporium Item Goods Keys|)}"
+    },
+    "Snoot's Emporium Secret Shop": {
+        "requires": "{OptOne(|Snoot's Emporium Secret Shop Keys|)}"
+    },
+    "Cocina Rica Restaurant Main Shop": {
+        "requires": "{OptOne(|Cocina Rica Restaurant Main Shop Keys|)}"
+    },
+    "Cocina Rica Restaurant Cook Life Store": {
+        "requires": "{OptOne(|Cocina Rica Restaurant Cook Life Store Keys|)}"
+    },
+    "Port Puerto Fashion Boutique": {
+        "requires": "{OptOne(|Port Puerto Fashion Boutique Keys|)}"
+    },
+    "Madame Purl's Tailor Life Store": {
+        "requires": "{OptOne(|Madame Purl's Tailor Life Store Keys|)}"
+    },
+    "Angler's Association Angler Life Store": {
+        "requires": "{OptOne(|Angler's Association Angler Life Store Keys|)}"
+    },
+    "Port Puerto Palace": {},
+    "Tortuga Archipelago": {
+        "connects_to": [
+            "Tortuga Archipelago Merchant",
+            "Deepsea Cave",
+            "Nautilus Cave"
+        ]
+    },
+    "Tortuga Archipelago Merchant": {
+        "requires": "{OptOne(|Tortuga Archipelago Merchant Keys|)}"
+    },
+    "Deepsea Cave": { 
+        "requires": "{OptOne(|Deepsea Cave Pass|)}"
+    },
+    "Nautilus Cave": {
+        "connects_to": ["Forgotten Tunnel"],
+        "requires": "{OptOne(|Nautilus Cave Pass|)}"
+    },
+    "Forgotten Tunnel": {},
+    "Al Maajik Outskirts": {
+        "connects_to": [
+            "Al Maajik Sandtown",
+            "Aridian Desert",
+            "Cacto Cove"
+        ],
+        "requires": "|[Chapter 4]|"
+    },
+    "Al Maajik Sandtown": {
+        "connects_to": [
+            "Al Maajik Inn",
+            "Professor Snooze's Alchemist Life Store",
+            "Al Maajik Odds and Ends",
+            "Al Maajik General Goods",
+            "Al Maajik Fashion Boutique",
+            "The Watering Hole",
+            "Al Maajik Woods and Leather",
+            "Al Maajik Buttonhook",
+            "Al Maajik Ores and Metals",
+            "Al Maajik Furniture Store",
+            "Al Maajik Fine Arms - Weapons",
+            "Al Maajik Fine Arms - Armor",
+            "Al Maajik Spelltown"
+        ]
+    },
+    "Al Maajik Inn": {},
+    "Professor Snooze's Alchemist Life Store": {
+        "requires": "{OptOne(|Professor Snooze's Alchemist Life Store Keys|)}"
+    },
+    "Al Maajik Odds and Ends": {
+        "requires": "{OptOne(|Al Maajik Odds and Ends Keys|)}"
+    },
+    "Al Maajik General Goods": {
+        "requires": "{OptOne(|Al Maajik General Goods Keys|)}"
+    },
+    "Al Maajik Fashion Boutique": {
+        "requires": "{OptOne(|Al Maajik Fashion Boutique Keys|)}"
+    },
+    "The Watering Hole": {
+        "requires": "{OptOne(|The Watering Hole Keys|)}"
+    },
+    "Al Maajik Woods and Leather": {
+        "requires": "{OptOne(|Al Maajik Woods and Leather Keys|)}"
+    },
+    "Al Maajik Buttonhook": {
+        "requires": "{OptOne(|Al Maajik Buttonhook Keys|)}"
+    },
+    "Al Maajik Ores and Metals": {
+        "requires": "{OptOne(|Al Maajik Ores and Metals Keys|)}"
+    },
+    "Al Maajik Furniture Store": {
+        "requires": "{OptOne(|Al Maajik Furniture Store|)}"
+    },
+    "Al Maajik Fine Arms - Weapons": {
+        "requires": "{OptOne(|Al Maajik Fine Arms Keys|)}"
+    },
+    "Al Maajik Fine Arms - Armor": {
+        "requires": "{OptOne(|Al Maajik Fine Arms Keys|)}"
+    },
+    "Al Maajik Spelltown": {
+        "connects_to": [
+            "Al Maajik Merchant Mercenary Life Store",
+            "Esmerelda's Magician Life Store",
+            "Repository of Forbidden Books",
+            "Al Maajik Fishmonger",
+            "Al Maajik Butcher",
+            "Al Maajik Greengrocer",
+            "The Spice Rack",
+            "Dark Sultan's Fortress"
+        ]
+    },
+    "Al Maajik Merchant Mercenary Life Store": {
+        "requires": "{OptOne(|Al Maajik Merchant Mercenary Life Store Keys|)}"
+    },
+    "Esmerelda's Magician Life Store": {
+        "requires": "{OptOne(|Esmerelda's Magician Life Store Keys|)}"
+    },
+    "Repository of Forbidden Books": {
+        "requires": "{OptOne(|Repository of Forbidden Books Shop Keys|)}"
+    },
+    "Al Maajik Fishmonger": {
+        "requires": "{OptOne(|Al Maajik Fishmonger Keys|)}"
+    },
+    "Al Maajik Butcher": {
+        "requires": "{OptOne(|Al Maajik Butcher Keys|)}"
+    },
+    "Al Maajik Greengrocer": {
+        "requires": "{OptOne(|Al Maajik Greengrocer Keys|)}"
+    },
+    "The Spice Rack": {
+        "requires": "{OptOne(|The Spice Rack Keys|)}"
+    },
+    "Dark Sultan's Fortress": {},
+    "Aridian Desert": {
+        "connects_to": [
+            "Aridian Desert Travelling Seller",
+            "Cave of Bones",
+            "Subterranean Lake",
+            "Ancient Ruins"
+        ]
+    },
+    "Aridian Desert Travelling Seller": {
+        "requires": "{OptOne(|Aridian Desert Travelling Seller Keys|)}"
+    },
+    "Cave of Bones": {
+        "connects_to": ["Giant Fossil Hall"],
+        "requires": "{OptOne(|Cave of Bones Pass|)}"
+    },
+    "Giant Fossil Hall": {},
+    "Subterranean Lake": {
+        "requires": "{OptOne(|Subterranean Lake Pass|)}"
+    },
+    "Ancient Ruins": {
+        "connects_to": ["Chamber of Gold"],
+        "requires": "{OptOne(|Ancient Ruins Pass|)}"
+    },
+    "Chamber of Gold": {},
+    "Cacto Cove": {
+        "connects_to": ["Cacto Cove Travelling Seller"],
+        "requires": "{OptOne(|Cacto Cove Pass|)}"
+    },
+    "Cacto Cove Travelling Seller": {
+        "requires": "{OptOne(|Cacto Cove Travelling Seller Keys|)}"
+    },
+    "Elderwood": {
+        "connects_to": ["Deep Elderwood"]
+    },
+    "Deep Elderwood": {
+        "connects_to": ["Elderwood Grotto"],
+        "requires": "|[Chapter 4]|"
+    },
+    "Elderwood Grotto": {
+        "connects_to": ["Elderwood Village"],
+        "requires": "{OptOne(|Elderwood Grotto Pass|)}"
+    },
+    "Elderwood Village": {
+        "connects_to": [
+            "Elderwood Village Inn",
+            "Elderwood Fine Arms and Furniture",
+            "Elderwood General Store",
+            "Elderwood Woodcutter Life Store",
+            "Elderwood Carpenter Life Store",
+            "Spirit Tree"
+        ],
+        "requires": "|[Chapter 5]|"
+    },
+    "Elderwood Village Inn": {},
+    "Elderwood Fine Arms and Furniture": {
+        "requires": "{OptOne(|Elderwood Fine Arms and Furniture Keys|)}"
+    },
+    "Elderwood General Store": {
+        "requires": "{OptOne(|Elderwood General Store Keys|)}"
+    },
+    "Elderwood Woodcutter Life Store": {
+        "requires": "{OptOne(|Elderwood Woodcutter Life Store Keys|)}"
+    },
+    "Elderwood Carpenter Life Store": {
+        "requires": "{OptOne(|Elderwood Carpenter Life Store Keys|)}"
+    },
+    "Spirit Tree": {
+        "connects_to": ["Goddess's Ship"]
+    },
+    "Goddess's Ship": {
+        "connects_to": ["Starlight Garden"]
+    },
+    "Levitania": {
+        "connects_to": [
+            "East Levitania",
+            "West Levitania",
+            "Central Levitania"
+        ],
+        "requires": "|[Chapter 6]|"
+    },
+    "East Levitania": {
+        "connects_to": ["Plushling Camp"]
+    },
+    "West Levitania": {},
+    "Central Levitania": {},
+    "Plushling Camp": {
+        "connects_to": [
+            "Levitania Inn",
+            "Plushling Camp General Store"
+        ]
+    },
+    "Levitania Inn": {},
+    "Plushling Camp General Store": {
+        "requires": "{OptOne(|Plushling Camp General Store Keys|)}"
+    },
+    "Starlight Garden": {
+        "connects_to": ["Starlight Garden Plushling Assistant"],
+        "requires": "|[Chapter 7]|"
+    },
+    "Starlight Garden Plushling Assistant": {
+        "requires": "{OptOne(|Starlight Garden Plushling Assistant Shop Keys|)}"
+    },
 
-    "Chapters" : { "connects_to": [ "Prologue", "Chapter 1", "Chapter 2", "Chapter 3", "Chapter 4", "Chapter 5", "Chapter 6", "Chapter 7", "DLC Chapter 1", "DLC Chapter 2" ], "requires": "" },
-    "Prologue" : { "connects_to": [ "Fledgling Challenges" ], "requires": "" },
-    "Chapter 1" : { "connects_to": [ "Apprentice Challenges" ], "requires": "|[Chapter 1]|" },
-    "Chapter 2" : { "connects_to": [], "requires": "|[Chapter 2]|" },
-    "Chapter 3" : { "connects_to": [ "Adept Challenges" ], "requires": "|[Chapter 3]|" },
-    "Chapter 4" : { "connects_to": [], "requires": "|[Chapter 4]|" },
-    "Chapter 5" : { "connects_to": [ "Expert Challenges" ], "requires": "|[Chapter 5]|" },
-    "Chapter 6" : { "connects_to": [], "requires": "|[Chapter 6]|" },
-    "Chapter 7" : { "connects_to": [ "Master Challenges", "Hero Challenges", "Legend Challenges" ], "requires": "|[Chapter 7]|" },
-    "DLC Chapter 1" : { "connects_to": [ "Creator Challenges" ], "requires": "|[Chapter 8]|" },
-    "DLC Chapter 2" : { "connects_to": [], "requires": "|[Chapter 9]|" },
-
-    "Fledgling Challenges": { "connects_to": [], "requires": [] },
-    "Apprentice Challenges": { "connects_to": [], "requires": [] },
-    "Adept Challenges": { "connects_to": [], "requires": [] },
-    "Expert Challenges": { "connects_to": [], "requires": [] },
-    "Master Challenges": { "connects_to": [], "requires": [] },
-    "Hero Challenges": { "connects_to": [], "requires": [] },
-    "Legend Challenges": { "connects_to": [], "requires": [] },
-    "Creator Challenges": { "connects_to": [], "requires": [] },
-
-    "World": { "connects_to": [ "Castele Square", "Central Grassland" ], "requires": "" },
-    "Castele Square": { "connects_to": [ "Castele Castle", "Castele Shopping District", "Castele Artisan's District", "South Castele" ], "requires": "" },
-    "Castele Castle": { "connects_to": [], "requires": "" },
-    "Castele Shopping District": { "connects_to": [ "West Castele" ], "requires": "" },
-    "Castele Artisan's District": { "connects_to": [ "East Castele" ], "requires": "" },
-    "South Castele": { "connects_to": [ "East Castele", "West Castele", "Castele Outskirts" ], "requires": "" },
-    "East Castele": { "connects_to": [ "South Castele" ], "requires": "" },
-    "West Castele": { "connects_to": [ "South Castele" ], "requires": "" },
-    "Castele Outskirts": { "connects_to": [ "East Grassy Plains" ], "requires": "" },
-    "East Grassy Plains": { "connects_to": [ "Haniwa Cave", "West Grassy Plains", "Mount Snowpeak", "Elderwood" ], "requires": "" },
-    "Haniwa Cave": { "connects_to": [], "requires": "{OptOne(|Haniwa Cave Pass|)}" },
-    "West Grassy Plains": { "connects_to": [ "Farley's Plantation", "Port Puerto Beach District", "Al Maajik Outskirts" ], "requires": "|[Chapter 1]|" },
-    "Farley's Plantation": { "connects_to": [], "requires": "" },
-    "Mount Snowpeak": { "connects_to": [ "Mount Snowpeak Summit", "Lava Cave", "Waterfall Cave" ], "requires": "|[Chapter 1]|" },
-    "Lava Cave": { "connects_to": [ "Lava Cave Interior" ], "requires": "{OptOne(|Lava Cave Pass|)}" },
-    "Lava Cave Interior": { "connects_to": [], "requires": "" },
-    "Waterfall Cave": { "connects_to": [], "requires": "{OptOne(|Waterfall Cave Pass|)}" },
-    "Mount Snowpeak Summit": { "connects_to": [ "Napdragon's Nest" ], "requires": "|[Chapter 2]|" },
-    "Napdragon's Nest": { "connects_to": [], "requires": "" },
-    "Port Puerto Beach District": { "connects_to": [ "Port Puerto Marina", "Tortuga Archipelago" ], "requires": "|[Chapter 3]|" },
-    "Port Puerto Marina": { "connects_to": [ "Port Puerto Palace Way", "Levitania" ], "requires": "" },
-    "Port Puerto Palace Way": { "connects_to": [ "Port Puerto Palace" ], "requires": "" },
-    "Port Puerto Palace": { "connects_to": [], "requires": "" },
-    "Tortuga Archipelago": { "connects_to": [ "Deepsea Cave", "Nautilus Cave" ], "requires": "" },
-    "Deepsea Cave": { "connects_to": [], "requires": "{OptOne(|Deepsea Cave Pass|)}" },
-    "Nautilus Cave": { "connects_to": [ "Forgotten Tunnel" ], "requires": "{OptOne(|Nautilus Cave Pass|)}" },
-    "Forgotten Tunnel": { "connects_to": [], "requires": "" },
-    "Al Maajik Outskirts": { "connects_to": [ "Al Maajik Sandtown", "Aridian Desert", "Cacto Cove" ], "requires": "|[Chapter 4]|" },
-    "Al Maajik Sandtown": { "connects_to": [ "Al Maajik Spelltown" ], "requires": "" },
-    "Al Maajik Spelltown": { "connects_to": [ "Dark Sultan's Fortress" ], "requires": "" },
-    "Dark Sultan's Fortress": { "connects_to": [], "requires": "" },
-    "Cacto Cove": { "connects_to": [], "requires": "{OptOne(|Cacto Cove Pass|)}" },
-    "Aridian Desert": { "connects_to": [ "Cave of Bones", "Subterranean Lake", "Ancient Ruins" ], "requires": "" },
-    "Cave of Bones": { "connects_to": [ "Giant Fossil Hall" ], "requires": "{OptOne(|Cave of Bones Pass|)}" },
-    "Giant Fossil Hall": { "connects_to": [], "requires": "" },
-    "Subterranean Lake": { "connects_to": [], "requires": "{OptOne(|Subterranean Lake Pass|)}" },
-    "Ancient Ruins": { "connects_to": [ "Chamber of Gold" ], "requires": "{OptOne(|Ancient Ruins Pass|)}" },
-    "Chamber of Gold": { "connects_to": [], "requires": "" },
-    "Elderwood": { "connects_to": ["Deep Elderwood"], "requires": "" },
-    "Deep Elderwood": { "connects_to": ["Elderwood Grotto"], "requires": "|[Chapter 4]|" },
-    "Elderwood Grotto": { "connects_to": ["Elderwood Village"], "requires": "{OptOne(|Elderwood Grotto Pass|)}" },
-    "Elderwood Village": { "connects_to": ["Spirit Tree"], "requires": "|[Chapter 5]|" },
-    "Spirit Tree": { "connects_to": ["Goddess's Ship"], "requires": "" },
-    "Goddess's Ship": { "connects_to": ["Starlight Garden"], "requires": "" },
-    "Levitania": { "connects_to": [ "East Levitania", "West Levitania", "Central Levitania" ], "requires": "|[Chapter 6]|" },
-    "East Levitania": { "connects_to": [ "Plushling Camp" ], "requires": "" },
-    "West Levitania": { "connects_to": [], "requires": "" },
-    "Central Levitania": { "connects_to": [], "requires": "" },
-    "Plushling Camp": {"connects_to": [], "requires": "" },
-    "Starlight Garden": { "connects_to": [], "requires": "|[Chapter 7]|"},
-    "Central Grassland": { "connects_to": [ "Forest Shrine", "Penguin Beach", "Rocky Hill Shrine", "Ancient Tower" ], "requires": "|[Chapter 8]|" },
-    "Forest Shrine": { "connects_to": [], "requires": "" },
-    "Penguin Beach": { "connects_to": ["Fluffkin Grotto"], "requires": "" },
-    "Fluffkin Grotto": { "connects_to": [], "requires": "{OptOne(|Fluffkin Grotto Pass|)}" },
-    "Rocky Hill Shrine": { "connects_to": [], "requires": "" },
-    "Ancient Tower": { "connects_to": [ "Trial of Time", "Trial of Darkness", "Trial of Light" ], "requires": "|[Chapter 9]|" },
-    "Trial of Time": { "connects_to": [ "Trial of Time Top Floor" ], "requires": "" },
-    "Trial of Time Top Floor": { "connects_to": [], "requires": "" },
-    "Trial of Darkness": { "connects_to": [ "Trial of Darkness Top Floor" ], "requires": "" },
-    "Trial of Darkness Top Floor": { "connects_to": [], "requires": "" },
-    "Trial of Light": { "connects_to": [ "Trial of Light Top Floor" ], "requires": "" },
-    "Trial of Light Top Floor": { "connects_to": [], "requires": "" }
+    "Central Grassland": {
+        "connects_to": [
+            "Forest Shrine",
+            "Penguin Beach",
+            "Rocky Hill Shrine",
+            "Ancient Tower"
+        ],
+        "requires": "|[Chapter 8]|"
+    },
+    "Forest Shrine": {
+        "connects_to": ["Forest Shrine Shopkeeper"]
+    },
+    "Forest Shrine Shopkeeper": {
+        "requires": "{OptOne(|Forest Shrine Shopkeeper Keys|)}"
+    },
+    "Penguin Beach": {
+        "connects_to": ["Fluffkin Grotto"]
+    },
+    "Fluffkin Grotto": {
+        "connects_to": ["Fluffkin Grotto Shop Clerk"],
+        "requires": "{OptOne(|Fluffkin Grotto Pass|)}"
+    },
+    "Fluffkin Grotto Shop Clerk": {
+        "requires": "{OptOne(|Fluffkin Grotto Shop Clerk Keys|)}"
+    },
+    "Rocky Hill Shrine": {
+        "connects_to": [
+            "Rocky Hill Inn",
+            "Rocky Hill Shrine Shopkeeper"
+        ]
+    },
+    "Rocky Hill Inn": {},
+    "Rocky Hill Shrine Shopkeeper": {
+        "requires": "{OptOne(|Rocky Hill Shrine Shopkeeper Keys|)}"
+    },
+    "Ancient Tower": {
+        "connects_to": [
+            "Ancient Tower Shop",
+            "Trial of Time",
+            "Trial of Darkness",
+            "Trial of Light"
+        ],
+        "requires": "|[Chapter 9]|"
+    },
+    "Ancient Tower Shop": {
+        "requires": "{OptOne(|Ancient Tower Shop Keys|)}"
+    },
+    "Trial of Time": {
+        "connects_to": ["Trial of Time Top Floor"]
+    },
+    "Trial of Time Top Floor": {},
+    "Trial of Darkness": {
+        "connects_to": ["Trial of Darkness Top Floor"]
+    },
+    "Trial of Darkness Top Floor": {},
+    "Trial of Light": {
+        "connects_to": ["Trial of Light Top Floor"]
+    },
+    "Trial of Light Top Floor": {}
 }
