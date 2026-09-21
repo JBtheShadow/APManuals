@@ -648,12 +648,12 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     licenses_progressive = get_option(world, "licenses_progressive", False)
     include_bliss = get_option(world, "include_bliss", False)
 
-    include_levels = get_option(world, "include_levels", False)
-    include_skills = get_option(world, "include_skills", False)
-    experience_logic = get_option(world, "experience_logic", False)
-    experience_pack_size = get_option(world, "experience_pack_size", 0)
-    skill_logic = get_option(world, "skill_logic", False)
-    skill_pack_size = get_option(world, "skill_pack_size", 0)
+    # include_levels = get_option(world, "include_levels", False)
+    # include_skills = get_option(world, "include_skills", False)
+    # experience_logic = get_option(world, "experience_logic", False)
+    # experience_pack_size = get_option(world, "experience_pack_size", 0)
+    # skill_logic = get_option(world, "skill_logic", False)
+    # skill_pack_size = get_option(world, "skill_pack_size", 0)
 
     starting_life = getattr(world, "starting_life", "")
     starting_bliss = getattr(world, "starting_bliss", "")
@@ -666,15 +666,15 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         item_name = starting_bliss
         starting_inventory.append(item_name)
 
-    if include_levels and experience_logic:
-        item_name = f"Level Pack ({experience_pack_size}x)"
-        starting_inventory.append(item_name)
+    # if include_levels and experience_logic:
+    #     item_name = f"Level Pack ({experience_pack_size}x)"
+    #     starting_inventory.append(item_name)
 
-    if include_skills and skill_logic:
-        for skill in skill_names:
-            item_name = f"{skill} Level Pack ({skill_pack_size}x)"
-            if is_item_name_enabled(multiworld, player, item_name):
-                starting_inventory.append(item_name)
+    # if include_skills and skill_logic:
+    #     for skill in skill_names:
+    #         item_name = f"{skill} Level Pack ({skill_pack_size}x)"
+    #         if is_item_name_enabled(multiworld, player, item_name):
+    #             starting_inventory.append(item_name)
 
     for item_name in item_names_to_remove:
         item = next((i for i in item_pool if i.name == item_name), 0)
