@@ -4,6 +4,6 @@
     "creator": "JBtheShadow",
     "filler_item_name": "Make Some Dosh",
     "starting_items": [],
-    "death_link": false,
+    "death_link": true,
     "starting_index": 1
 }
