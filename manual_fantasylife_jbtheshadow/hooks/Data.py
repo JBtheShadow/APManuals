@@ -39,22 +39,6 @@ def after_load_game_file(game_table: dict) -> dict:
 def after_load_item_file(item_table: list) -> list:
     global global_item_table
 
-    #region Item Rarities
-    def build_item_rarities_items():
-        def build_category(life):
-            categories = [ "Item Rarities" ]
-            if len(life or "") > 0 and life != "Any":
-                categories.append(life)
-            return categories
-        return [{
-            "count": 5,
-            "name": f"{item} Rarity",
-            "category": build_category(life),
-            "progression": True
-        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}]
-    item_table += build_item_rarities_items()
-    #endregion
-
     #region Experience Levels
     def build_level_items():
         from .Options import LogicalLevelsPerLevelPack
@@ -101,26 +85,26 @@ def after_load_progressive_item_file(progressive_item_table: list) -> list:
 def after_load_location_file(location_table: list) -> list:
     global global_location_table
 
-    #region Item Rarities
-    def build_item_rarity_locations():
-        def build_name(action, item, rarity):
-            if item == "Consumable" and action == "Equip":
-                action = "Use"
-            return f"{action} a {rarity}-Star {item}"
-        def build_category(item, life):
-            categories = [ "Item Rarities Hidden", f"Item Rarities: {item}" ]
-            if len(life or "") > 0 and life != "Any":
-                categories.append(life)
-            return categories
-        return [{
-            "name": build_name(action, item, rarity),
-            "category": build_category(item, life),
-            "requires": "{has_rarity(" + item + "," + (str(rarity - 1 if action == "Find" else rarity)) + "," + life + ")}"
-        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}
-        for rarity in range(1, 6)
-        for action in ("Find", "Equip")]
-    location_table += build_item_rarity_locations()
-    #endregion
+    # #region Item Rarities
+    # def build_item_rarity_locations():
+    #     def build_name(action, item, rarity):
+    #         if item == "Consumable" and action == "Equip":
+    #             action = "Use"
+    #         return f"{action} a {rarity}-Star {item}"
+    #     def build_category(item, life):
+    #         categories = [ "Item Rarities Hidden", f"Item Rarities: {item}" ]
+    #         if len(life or "") > 0 and life != "Any":
+    #             categories.append(life)
+    #         return categories
+    #     return [{
+    #         "name": build_name(action, item, rarity),
+    #         "category": build_category(item, life),
+    #         "requires": "{has_rarity(" + item + "," + (str(rarity - 1 if action == "Find" else rarity)) + "," + life + ")}"
+    #     } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}
+    #     for rarity in range(1, 6)
+    #     for action in ("Find", "Equip")]
+    # location_table += build_item_rarity_locations()
+    # #endregion
 
     #region Experience Level Up
     def build_level_up_locations():
