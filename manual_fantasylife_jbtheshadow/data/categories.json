@@ -62,15 +62,16 @@
     "Trial Chests": { "yaml_option": ["chests_trials"], "hidden": true },
 
     "Shops": { "yaml_option": ["include_shops"], "hidden": true },
-    "Life Shop": { "hidden": true },
+    "Life Shop": { "yaml_option": ["include_shops", "shops_life"], "hidden": true },
     "Bliss Shop": { "yaml_option": ["include_shops", "shops_bliss"], "hidden": true },
     "Fairy Shop": { "yaml_option": ["include_shops", "shops_fairy"], "hidden": true },
     "Story Shop": { "yaml_option": ["include_shops", "shops_story"], "hidden": true },
 
-    "Castele Shop": { "hidden": true },
-    "Port Shop": { "hidden": true },
-    "Desert Shop": { "hidden": true },
-    "Other Shop": { "hidden": true },
-    "DLC Shop": { "hidden": true },
-    "Crafting Recipes": { "yaml_option": ["include_crafting"], "hidden": true }
+    "Castele Shop": { "yaml_option": ["include_shops", "shops_castele"], "hidden": true },
+    "Port Shop": { "yaml_option": ["include_shops", "shops_port"], "hidden": true },
+    "Desert Shop": { "yaml_option": ["include_shops", "shops_desert"], "hidden": true },
+    "Other Shop": { "yaml_option": ["include_shops", "shops_other"], "hidden": true },
+    "DLC Shop": { "yaml_option": ["include_shops", "shops_dlc"], "hidden": true },
+    "Crafting Recipes": { "yaml_option": ["include_crafting"], "hidden": true },
+    "Mastery": { "yaml_option": ["life_mastery_goal"], "hidden": true }
 }

@@ -43,5 +43,6 @@
             "url": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json"
         }
     ],
-    "python.envFile": "${workspaceFolder}/local.env"
+    "python.envFile": "${workspaceFolder}/local.env",
+    "python-envs.defaultEnvManager": "ms-python.python:system"
 }
