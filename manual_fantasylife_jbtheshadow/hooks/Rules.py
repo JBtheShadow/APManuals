@@ -18,7 +18,7 @@ def format_for_rb(result: str | bool) -> str:
     if isinstance(result, str) and result == "1":
         return ""
     if isinstance(result, bool):
-        return "1" if result else "0"
+        return "" if result else "False"
     return result
 
 

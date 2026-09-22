@@ -16,6 +16,9 @@
     "No DLC Story": { "yaml_option": ["!include_dlc_story"], "hidden": true },
     "DLC Story": { "yaml_option": ["include_dlc", "include_dlc_story"], "hidden": true },
 
+    "Story Goal": { "yaml_option": ["story_goal"], "hidden": true },
+    "DLC Story Goal": { "yaml_option": ["dlc_goal"], "hidden": true },
+
     "Fixed Chapters": { "yaml_option": ["!include_chapters"], "hidden": true },
     "Single Licenses": { "yaml_option": [ "include_licenses", "!licenses_progressive" ], "hidden": true },
     "Progressive Licenses": { "yaml_option": [ "include_licenses", "licenses_progressive" ], "hidden": true },
@@ -30,7 +33,6 @@
     "Other Requests 2": { "hidden": true },
     "Other Requests 3": { "hidden": true },
     "Other Requests 4": { "hidden": true },
-
 
     "Level Up Checks": { "yaml_option": ["include_levels"] },
     "Skill Level Checks": { "yaml_option": ["include_skills"], "hidden": true },

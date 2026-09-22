@@ -310,7 +310,8 @@
         "Bliss Bonuses: Bag Size",
         "Inventory Bonus"
       ],
-      "requires": "|Bigger Bag:1|"
+      "requires": "|Bigger Bag:1|",
+      "scoutable": true
     },
     {
       "name": "Unlock Even Bigger Bag",
@@ -319,7 +320,8 @@
         "Bliss Bonuses: Bag Size",
         "Inventory Bonus"
       ],
-      "requires": "|Bigger Bag:2|"
+      "requires": "|Bigger Bag:2| AND |[Chapter 3]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Amazing Bag",
@@ -328,7 +330,8 @@
         "Bliss Bonuses: Bag Size",
         "Inventory Bonus"
       ],
-      "requires": "|Bigger Bag:3|"
+      "requires": "|Bigger Bag:3| AND |[Chapter 5]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Super Bag!",
@@ -338,7 +341,8 @@
         "DLC",
         "Inventory Bonus"
       ],
-      "requires": "|Bigger Bag:4|"
+      "requires": "|Bigger Bag:4| AND |[Chapter 7]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Maximum Bag!",
@@ -348,7 +352,8 @@
         "DLC",
         "Inventory Bonus"
       ],
-      "requires": "|Bigger Bag:5|"
+      "requires": "|Bigger Bag:5| AND |[Chapter 9]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Bigger Storage",
@@ -357,7 +362,8 @@
         "Bliss Bonuses: Storage Size",
         "Storage Bonus"
       ],
-      "requires": "|Bigger Storage:1|"
+      "requires": "|Bigger Storage:1|",
+      "scoutable": true
     },
     {
       "name": "Unlock Even Bigger Storage",
@@ -366,7 +372,8 @@
         "Bliss Bonuses: Storage Size",
         "Storage Bonus"
       ],
-      "requires": "|Bigger Storage:2|"
+      "requires": "|Bigger Storage:2| AND |[Chapter 3]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Amazing Storage",
@@ -375,7 +382,8 @@
         "Bliss Bonuses: Storage Size",
         "Storage Bonus"
       ],
-      "requires": "|Bigger Storage:3|"
+      "requires": "|Bigger Storage:3| AND |[Chapter 5]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Super Storage!",
@@ -385,7 +393,8 @@
         "DLC",
         "Storage Bonus"
       ],
-      "requires": "|Bigger Storage:4|"
+      "requires": "|Bigger Storage:4| AND |[Chapter 7]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Maximum Storage!",
@@ -395,7 +404,8 @@
         "DLC",
         "Storage Bonus"
       ],
-      "requires": "|Bigger Storage:5|"
+      "requires": "|Bigger Storage:5| AND |[Chapter 9]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Life with a Pet",
@@ -404,7 +414,8 @@
         "Bliss Bonuses: Pets",
         "Pet Bonus"
       ],
-      "requires": "|More Pets:1|"
+      "requires": "|More Pets:1| AND |[Chapter 3]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Life with More Pets",
@@ -413,7 +424,8 @@
         "Bliss Bonuses: Pets",
         "Pet Bonus"
       ],
-      "requires": "|More Pets:2|"
+      "requires": "|More Pets:2| AND |[Chapter 5]|",
+      "scoutable": true
     },
     {
       "name": "Unlock So Many Pets!",
@@ -422,7 +434,8 @@
         "Bliss Bonuses: Pets",
         "Pet Bonus"
       ],
-      "requires": "|More Pets:3|"
+      "requires": "|More Pets:3| AND |[Chapter 7]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Horse Riding",
@@ -431,7 +444,8 @@
         "Bliss Bonuses: Animals",
         "Animal Bonus"
       ],
-      "requires": "|More Animals:1|"
+      "requires": "|More Animals:1| AND |[Chapter 1]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Turtle Riding",
@@ -440,7 +454,8 @@
         "Bliss Bonuses: Animals",
         "Animal Bonus"
       ],
-      "requires": "|More Animals:2|"
+      "requires": "|More Animals:2| AND |[Chapter 3]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Camel Riding",
@@ -449,7 +464,8 @@
         "Bliss Bonuses: Animals",
         "Animal Bonus"
       ],
-      "requires": "|More Animals:3|"
+      "requires": "|More Animals:3| AND |[Chapter 5]|",
+      "scoutable": true
     },
     {
       "name": "Unlock My Own Horsey",
@@ -458,7 +474,8 @@
         "Bliss Bonuses: Animals",
         "Animal Bonus"
       ],
-      "requires": "|More Animals:4|"
+      "requires": "|More Animals:4| AND |[Chapter 7]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Shopping +",
@@ -467,7 +484,8 @@
         "Bliss Bonuses: Shopping",
         "Shopping Bonus"
       ],
-      "requires": "|Better Shopping:1|"
+      "requires": "|Better Shopping:1|",
+      "scoutable": true
     },
     {
       "name": "Unlock Port Shopping +",
@@ -476,7 +494,8 @@
         "Bliss Bonuses: Shopping",
         "Shopping Bonus"
       ],
-      "requires": "|Better Shopping:2|"
+      "requires": "|Better Shopping:2| AND |[Chapter 3]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Desert Shopping +",
@@ -485,7 +504,8 @@
         "Bliss Bonuses: Shopping",
         "Shopping Bonus"
       ],
-      "requires": "|Better Shopping:3|"
+      "requires": "|Better Shopping:3| AND |[Chapter 4]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Shopping on the Go",
@@ -494,7 +514,8 @@
         "Bliss Bonuses: Shopping",
         "Shopping Bonus"
       ],
-      "requires": "|Better Shopping:4|"
+      "requires": "|Better Shopping:4| AND |[Chapter 5]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Hairdressing",
@@ -503,7 +524,8 @@
         "Bliss Bonuses: Customization",
         "Customization Bonus"
       ],
-      "requires": "|More Customization:1|"
+      "requires": "|More Customization:1| AND |[Chapter 3]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Clothes Dyeing",
@@ -512,7 +534,8 @@
         "Bliss Bonuses: Customization",
         "Customization Bonus"
       ],
-      "requires": "|More Customization:2|"
+      "requires": "|More Customization:2| AND |[Chapter 5]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Mystery Fairy",
@@ -521,7 +544,8 @@
         "Bliss Bonuses: Customization",
         "Customization Bonus"
       ],
-      "requires": "|More Customization:3|"
+      "requires": "|More Customization:3| AND |[Chapter 7]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Happy Audio",
@@ -530,7 +554,8 @@
         "Bliss Bonuses: Theatre",
         "Theater Bonus"
       ],
-      "requires": "|Theater:1|"
+      "requires": "|Theater:1| AND |[Chapter 7]|",
+      "scoutable": true
     },
     {
       "name": "Unlock Happy Movies",
@@ -539,7 +564,8 @@
         "Bliss Bonuses: Theatre",
         "Theater Bonus"
       ],
-      "requires": "|Theater:2|"
+      "requires": "|Theater:2| AND |[Chapter 7]|",
+      "scoutable": true
     },
     {
       "name": "Prologue Complete",
@@ -638,7 +664,8 @@
       "region": "Chapter 7",
       "category": [
         "No Story",
-        "Story Chapters"
+        "Story Chapters",
+        "Story Goal"
       ],
       "place_item": [
         "Beat Main Story"
@@ -679,7 +706,8 @@
       "category": [
         "No DLC Story",
         "Story Chapters",
-        "DLC"
+        "DLC",
+        "DLC Story Goal"
       ],
       "place_item": [
         "Beat DLC Story"
@@ -1429,7 +1457,8 @@
       "region": "Chapter 7",
       "category": [
         "Story",
-        "Story: Chapter 7"
+        "Story: Chapter 7",
+        "Story Goal"
       ],
       "place_item": [
         "Beat Main Story"
@@ -1667,7 +1696,8 @@
       "category": [
         "DLC Story",
         "Story: DLC Chapter 2",
-        "DLC"
+        "DLC",
+        "DLC Story Goal"
       ],
       "place_item": [
         "Beat DLC Story"
@@ -26300,6 +26330,3705 @@
       "dont_place_item_category": [
         "Shop Items"
       ]
+    },
+    {
+      "name": "Request for Gramps #1 - A Big Egg for Gramps",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Gramps"
+      ],
+      "region": "Castele Square",
+      "requires": ""
+    },
+    {
+      "name": "Request for Gramps #2 - Old Man's Mustard",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Gramps"
+      ],
+      "region": "Castele Square",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Gramps #3 - Sweetfish Bones",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Gramps",
+        "Fledgling",
+        "Angler"
+      ],
+      "region": "Castele Square",
+      "requires": "{port_puerto_access()} and {has_license(Fledgling Angler)}"
+    },
+    {
+      "name": "Request for Helmut #1 - Sleeping on Duty",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Helmut"
+      ],
+      "region": "Castele Square",
+      "requires": ""
+    },
+    {
+      "name": "Request for Helmut #2 - Sleeping on Duty Again",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Helmut",
+        "Fledgling",
+        "Alchemist"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Fledgling Alchemist)}"
+    },
+    {
+      "name": "Request for Helmut #3 - Still Sleeping on Duty",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Helmut",
+        "Fledgling",
+        "Alchemist"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Fledgling Alchemist)} and ({al_maajik_access()} or {has_license(Fledgling Miner)})"
+    },
+    {
+      "name": "Request for Rooftop Kitty #1 - Crucial Request",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Rooftop Kitty"
+      ],
+      "region": "Castele Square",
+      "requires": ""
+    },
+    {
+      "name": "Request for Rooftop Kitty #2 - Trout for Kitty",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Rooftop Kitty"
+      ],
+      "region": "Castele Square",
+      "requires": "{better_castele_shopping()} or {has_license(Fledgling Angler)} or {elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Rooftop Kitty #3 - Catfish for Kitty",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Rooftop Kitty",
+        "Fledgling",
+        "Angler"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Fledgling Angler)}"
+    },
+    {
+      "name": "Request for Prospero #1 - Drive Away the Bandits",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Prospero"
+      ],
+      "region": "Castele Square",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Prospero #2 - Bring Down the Bandit Leaders",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Prospero"
+      ],
+      "region": "Castele Square",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Prospero #3 - Justice Will Prevail",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Prospero"
+      ],
+      "region": "Castele Square",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Postonby #1 - Postbox of Love",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Postonby",
+        "Expert",
+        "Angler"
+      ],
+      "region": "Castele Square",
+      "requires": "{al_maajik_access()} and {has_license(Expert Angler)}"
+    },
+    {
+      "name": "Request for Postonby #2 - Love Soup",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Postonby",
+        "Expert",
+        "Angler",
+        "Cook"
+      ],
+      "region": "Castele Square",
+      "requires": "{al_maajik_access()} and {has_license(Expert Angler)} and {has_license(Expert Cook)}"
+    },
+    {
+      "name": "Request for Postonby #3 - Explosive Love",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Postonby",
+        "Master",
+        "Angler",
+        "Cook",
+        "Alchemist"
+      ],
+      "region": "Castele Square",
+      "requires": "{al_maajik_access()} and {has_license(Expert Angler)} and {has_license(Expert Cook)} and {has_license(Master Alchemist)}"
+    },
+    {
+      "name": "Request for Paige #1 - Scholarly Curiosity 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Paige"
+      ],
+      "region": "Castele Square",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Paige #2 - Scholarly Curiosity 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Paige"
+      ],
+      "region": "Castele Square",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Paige #3 - Scholarly Curiosity 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Paige"
+      ],
+      "region": "Castele Square",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Paige #4 - Scholarly Curiosity 4",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Square - Paige",
+        "DLC"
+      ],
+      "region": "Castele Square",
+      "requires": "{trials_access()}"
+    },
+    {
+      "name": "Request for Fernando #1 - Castelian Duds 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Fernando",
+        "Apprentice",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Apprentice Tailor)}"
+    },
+    {
+      "name": "Request for Fernando #2 - Castelian Duds 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Fernando",
+        "Apprentice",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Apprentice Tailor)}"
+    },
+    {
+      "name": "Request for Fernando #3 - Castelian Duds 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Fernando",
+        "Apprentice",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Apprentice Tailor)}"
+    },
+    {
+      "name": "Request for Henrietta #1 - Chickie Treats",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Henrietta"
+      ],
+      "region": "Castele Square",
+      "requires": ""
+    },
+    {
+      "name": "Request for Henrietta #2 - More Chickie Treats",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Henrietta"
+      ],
+      "region": "Castele Square",
+      "requires": "{snowpeak_access()}"
+    },
+    {
+      "name": "Request for Henrietta #3 - Don't Cry Henrietta",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Henrietta"
+      ],
+      "region": "Castele Square",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Henrietta #4 - Henrietta's Dinner Party",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Square - Henrietta",
+        "Creator",
+        "Cook",
+        "DLC"
+      ],
+      "region": "Castele Square",
+      "requires": "{origin_island_access()} and {has_license(Creator Cook)}"
+    },
+    {
+      "name": "Request for Celine #1 - Castelian Veggies, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Celine",
+        "Apprentice",
+        "Cook"
+      ],
+      "region": "Castele Square",
+      "requires": "{snowpeak_access()} and {has_license(Apprentice Cook)}"
+    },
+    {
+      "name": "Request for Celine #2 - Castelian Burger, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Celine",
+        "Apprentice",
+        "Cook"
+      ],
+      "region": "Castele Square",
+      "requires": "{snowpeak_access()} and {has_license(Apprentice Cook)} and ({al_maajik_access()} or {better_castele_shopping()})"
+    },
+    {
+      "name": "Request for Celine #3 - Castelian Fish, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Celine",
+        "Adept",
+        "Angler",
+        "Cook"
+      ],
+      "region": "Castele Square",
+      "requires": "{snowpeak_access()} and {has_license(Apprentice Cook)} and {has_license(Adept Angler)} and ({al_maajik_access()} or {better_castele_shopping()})"
+    },
+    {
+      "name": "Request for Timmy #1 - The Bug Boy 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Timmy"
+      ],
+      "region": "Castele Square",
+      "requires": ""
+    },
+    {
+      "name": "Request for Timmy #2 - The Bug Boy 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Timmy"
+      ],
+      "region": "Castele Square",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Timmy #3 - The Bug Boy 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Timmy"
+      ],
+      "region": "Castele Square",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Timmy #4 - The Bug Boy 4",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Square - Timmy",
+        "DLC"
+      ],
+      "region": "Castele Square",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Samantha #1 - Beret Nice",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Samantha",
+        "Fledgling",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Fledgling Tailor)}"
+    },
+    {
+      "name": "Request for Samantha #2 - Flirty Skirt",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Samantha",
+        "Apprentice",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "{port_puerto_access()} and {has_license(Apprentice Tailor)}"
+    },
+    {
+      "name": "Request for Samantha #3 - Sassy Shoes",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Samantha",
+        "Adept",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "{port_puerto_access()} and {has_license(Adept Tailor)}"
+    },
+    {
+      "name": "Request for Tilda #1 - A New Chair, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Tilda",
+        "Fledgling",
+        "Carpenter"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Fledgling Carpenter)}"
+    },
+    {
+      "name": "Request for Tilda #2 - A New Dining Table, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Tilda",
+        "Fledgling",
+        "Carpenter"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Fledgling Carpenter)}"
+    },
+    {
+      "name": "Request for Tilda #3 - A New Bed, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Tilda",
+        "Fledgling",
+        "Carpenter"
+      ],
+      "region": "Castele Square",
+      "requires": "{has_license(Fledgling Carpenter)} and ({better_castele_shopping()} or {has_license(Fledgling Woodcutter)})"
+    },
+    {
+      "name": "Request for Marshal #1 - Shiny Golden Sword",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Marshal",
+        "Expert",
+        "Blacksmith"
+      ],
+      "region": "Castele Square",
+      "requires": "{al_maajik_access()} and {has_license(Expert Blacksmith)}"
+    },
+    {
+      "name": "Request for Marshal #2 - Shiny Captain's Sword",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Marshal",
+        "Expert",
+        "Blacksmith"
+      ],
+      "region": "Castele Square",
+      "requires": "{al_maajik_access()} and {has_license(Expert Blacksmith)}"
+    },
+    {
+      "name": "Request for Marshal #3 - Shiny Crystal Sword",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Marshal",
+        "Master",
+        "Miner",
+        "Blacksmith"
+      ],
+      "region": "Castele Square",
+      "requires": "{terra_nimbus_access()} and {has_license(Master Blacksmith)} and {has_license(Adept Miner)}"
+    },
+    {
+      "name": "Request for Lettina #1 - Lettina's Delivery Service 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Square - Lettina",
+        "Adept",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "({port_puerto_access()} and {better_port_shopping()} or {al_maajik_access()}) and {has_license(Adept Tailor)}"
+    },
+    {
+      "name": "Request for Lettina #2 - Lettina's Delivery Service 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Square - Lettina",
+        "Expert",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "({al_maajik_access()} and {better_desert_shopping()} or {elderwood_village_access()}) and {has_license(Expert Tailor)}"
+    },
+    {
+      "name": "Request for Lettina #3 - Lettina's Delivery Service 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Square - Lettina",
+        "Master",
+        "Tailor"
+      ],
+      "region": "Castele Square",
+      "requires": "({al_maajik_access()} and {better_traveling_shopping()} or {elderwood_village_access()}) and {has_license(Master Tailor)}"
+    },
+    {
+      "name": "Request for Rosemary #1 - The Princess and the Grapes",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Castle - Rosemary"
+      ],
+      "region": "Castele Castle",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Rosemary #2 - Smashing Watermelons",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Castle - Rosemary"
+      ],
+      "region": "Castele Castle",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Rosemary #3 - Strawberry Shortcake",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Castle - Rosemary"
+      ],
+      "region": "Castele Castle",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Rosemary #4 - Origin Apples",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Castle - Rosemary",
+        "DLC"
+      ],
+      "region": "Castele Castle",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Chambers #1 - Scholarly Monocle",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Castle - Chambers"
+      ],
+      "region": "Castele Castle",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Chambers #2 - Relaxing Cactus",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Castle - Chambers"
+      ],
+      "region": "Castele Castle",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Chambers #3 - That Forest Feeling",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Castle - Chambers"
+      ],
+      "region": "Castele Castle",
+      "requires": "{elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Marco #1 - The Charming Paladin 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Castle - Marco",
+        "Fledgling",
+        "Alchemist"
+      ],
+      "region": "Castele Castle",
+      "requires": "{has_license(Fledgling Alchemist)}"
+    },
+    {
+      "name": "Request for Marco #2 - The Charming Paladin 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Castle - Marco",
+        "Adept",
+        "Alchemist"
+      ],
+      "region": "Castele Castle",
+      "requires": "{al_maajik_access()} and {better_desert_shopping()} and {has_license(Adept Alchemist)}"
+    },
+    {
+      "name": "Request for Marco #3 - The Charming Paladin 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Castle - Marco",
+        "Expert",
+        "Alchemist"
+      ],
+      "region": "Castele Castle",
+      "requires": "{finished_storyline()} and {better_desert_shopping()} and {has_license(Expert Alchemist)}"
+    },
+    {
+      "name": "Request for Selma #1 - Eels for Dinner",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Selma",
+        "Fledgling",
+        "Angler"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{west_grassy_plains_access()} and {has_license(Fledgling Angler)}"
+    },
+    {
+      "name": "Request for Selma #2 - Breams for Dinner",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Selma",
+        "Fledgling",
+        "Angler"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{port_puerto_access()} and ({has_license(Fledgling Angler)} and {better_port_shopping()} or {has_license(Apprentice Angler)})"
+    },
+    {
+      "name": "Request for Selma #3 - Puffer Fish for Dinner",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Selma",
+        "Apprentice",
+        "Angler"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{port_puerto_access()} and {has_license(Apprentice Angler)}"
+    },
+    {
+      "name": "Request for Tilly #1 - Lovely Eggs",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Tilly"
+      ],
+      "region": "Castele Shopping District",
+      "requires": ""
+    },
+    {
+      "name": "Request for Tilly #2 - More Lovely Eggs",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Tilly"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Tilly #3 - Even More Lovely Eggs",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Tilly"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Tilly #4 - Lovely Penguin Eggs",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Shopping District - Tilly",
+        "DLC"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Biff #1 - Gimme Mutton",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Biff",
+        "Fledgling",
+        "Cook"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{has_license(Fledgling Cook)}"
+    },
+    {
+      "name": "Request for Biff #2 - Gimme Lamb",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Biff",
+        "Apprentice",
+        "Cook"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{has_license(Apprentice Cook)}"
+    },
+    {
+      "name": "Request for Biff #3 - Gimme Juice",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Biff",
+        "Adept",
+        "Cook"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{elderwood_village_access()} and {has_license(Adept Cook)}"
+    },
+    {
+      "name": "Request for Biff #4 - Gimme Frappe!",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Shopping District - Biff",
+        "Creator",
+        "Cook",
+        "DLC"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{origin_island_access()} and {has_license(Creator Cook)}"
+    },
+    {
+      "name": "Request for Marcel #1 - Dearly Departed Fleas 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Marcel",
+        "Apprentice",
+        "Alchemist"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "({better_castele_shopping()} or {port_puerto_access()}) and {has_license(Apprentice Alchemist)}"
+    },
+    {
+      "name": "Request for Marcel #2 - Dearly Departed Fleas 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Marcel",
+        "Master",
+        "Alchemist"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{terra_nimbus_access()} and {has_license(Master Alchemist)}"
+    },
+    {
+      "name": "Request for Marcel #3 - Dearly Departed Fleas 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Marcel",
+        "Master",
+        "Alchemist"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{terra_nimbus_access()} and {better_traveling_shopping()} and {has_license(Master Alchemist)}"
+    },
+    {
+      "name": "Request for Juliet #1 - Mutton, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Juliet"
+      ],
+      "region": "Castele Shopping District",
+      "requires": ""
+    },
+    {
+      "name": "Request for Juliet #2 - Rice, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Juliet"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Juliet #3 - Sweet Corn, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Juliet"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Harmony #1 - Room of Darkness 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Harmony"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "({al_maajik_access()} and {better_desert_shopping()}) or ({elderwood_village_access()} and {has_license(Expert Carpenter)})"
+    },
+    {
+      "name": "Request for Harmony #2 - Room of Darkness 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Harmony"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "({al_maajik_access()} and {better_desert_shopping()}) or ({elderwood_village_access()} and {has_license(Expert Carpenter)})"
+    },
+    {
+      "name": "Request for Harmony #3 - Room of Darkness 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Harmony"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "({al_maajik_access()} and {better_desert_shopping()}) or ({elderwood_village_access()} and {has_license(Expert Carpenter)} and {has_license(Expert Woodcutter)})"
+    },
+    {
+      "name": "Request for Benedict #1 - Eggs Benedict 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Benedict",
+        "Apprentice",
+        "Cook"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{port_puerto_access()} and {has_license(Apprentice Cook)}"
+    },
+    {
+      "name": "Request for Benedict #2 - Eggs Benedict 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Benedict",
+        "Expert",
+        "Cook"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{al_maajik_access()} and {has_license(Expert Cook)}"
+    },
+    {
+      "name": "Request for Benedict #3 - Eggs Benedict 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Benedict",
+        "Master",
+        "Cook"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{elderwood_village_access()} and {has_license(Master Cook)}"
+    },
+    {
+      "name": "Request for Cassandra #1 - Cursebreaker 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Cassandra",
+        "Master",
+        "Carpenter"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{elderwood_village_access()} and {has_license(Master Carpenter)}"
+    },
+    {
+      "name": "Request for Cassandra #2 - Cursebreaker 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Cassandra",
+        "Master",
+        "Carpenter"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{elderwood_village_access()} and {has_license(Master Carpenter)}"
+    },
+    {
+      "name": "Request for Cassandra #3 - Cursebreaker 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Cassandra",
+        "Master",
+        "Woodcutter",
+        "Carpenter"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{elderwood_village_access()} and {has_license(Master Carpenter)} and {has_license(Master Woodcutter)}"
+    },
+    {
+      "name": "Request for Geoffrey #1 - Redbell Sunset",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Shopping District - Geoffrey"
+      ],
+      "region": "Castele Shopping District",
+      "requires": ""
+    },
+    {
+      "name": "Request for Geoffrey #2 - Bluebell Sky",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Shopping District - Geoffrey"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Geoffrey #3 - Yellowbell Sands",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Shopping District - Geoffrey"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Geoffrey #4 - Pink Sky",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Shopping District - Geoffrey",
+        "DLC"
+      ],
+      "region": "Castele Shopping District",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Tufts #1 - Plushy Iron Hammer",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Artisan's District - Tufts",
+        "Apprentice",
+        "Blacksmith"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{has_license(Apprentice Blacksmith)}"
+    },
+    {
+      "name": "Request for Tufts #2 - Plushy Silver Hammer",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Artisan's District - Tufts",
+        "Adept",
+        "Blacksmith"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{port_puerto_access()} and {has_license(Adept Blacksmith)}"
+    },
+    {
+      "name": "Request for Tufts #3 - Plushy Super Hammer",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Artisan's District - Tufts",
+        "Expert",
+        "Blacksmith"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{port_puerto_access()} and {has_license(Expert Blacksmith)}"
+    },
+    {
+      "name": "Request for Barker #1 - Fangs!",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Artisan's District - Barker"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": ""
+    },
+    {
+      "name": "Request for Barker #2 - Fangs! Fangs!",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Artisan's District - Barker"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{snowpeak_access()}"
+    },
+    {
+      "name": "Request for Barker #3 - Fangs! Fangs! Fangs!",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Artisan's District - Barker"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{snowpeak_access()}"
+    },
+    {
+      "name": "Request for Barker #4 - Fangs! Fangs! Fangs! Fangs!",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Artisan's District - Barker",
+        "DLC"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Mona #1 - A Gift from Granny",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Artisan's District - Mona"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Mona #2 - Another Gift from Granny",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Artisan's District - Mona"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Mona #3 - Yet Another Gift from Granny",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Artisan's District - Mona",
+        "Master",
+        "Tailor"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{port_puerto_access()} and ({has_license(Master Tailor)} or {al_maajik_access()})"
+    },
+    {
+      "name": "Request for Paul #1 - Honey for Pancake Paul 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Castele Artisan's District - Paul"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": ""
+    },
+    {
+      "name": "Request for Paul #2 - Honey for Pancake Paul 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Castele Artisan's District - Paul"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{snowpeak_access()}"
+    },
+    {
+      "name": "Request for Paul #3 - Honey for Pancake Paul 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Castele Artisan's District - Paul"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Paul #4 - Honey for Pancake Paul 4",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Castele Artisan's District - Paul",
+        "DLC"
+      ],
+      "region": "Castele Artisan's District",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Gaites #1 - Bronze Gaites",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - South Castele - Gaites",
+        "Fledgling",
+        "Blacksmith"
+      ],
+      "region": "South Castele",
+      "requires": "{has_license(Fledgling Blacksmith)}"
+    },
+    {
+      "name": "Request for Gaites #2 - Cast-Iron Gaites",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - South Castele - Gaites",
+        "Apprentice",
+        "Blacksmith"
+      ],
+      "region": "South Castele",
+      "requires": "{has_license(Apprentice Blacksmith)}"
+    },
+    {
+      "name": "Request for Gaites #3 - Silver Gaites",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - South Castele - Gaites",
+        "Adept",
+        "Blacksmith"
+      ],
+      "region": "South Castele",
+      "requires": "{port_puerto_access()} and {has_license(Adept Blacksmith)}"
+    },
+    {
+      "name": "Request for Pom #1 - Apples for Pom",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - South Castele - Pom"
+      ],
+      "region": "South Castele",
+      "requires": ""
+    },
+    {
+      "name": "Request for Pom #2 - Rainbow Apples for Pom",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - South Castele - Pom"
+      ],
+      "region": "South Castele",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Pom #3 - 99 Apples for Pom",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - South Castele - Pom"
+      ],
+      "region": "South Castele",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Pom #4 - Galaxy Apples for Pom",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - South Castele - Pom",
+        "DLC"
+      ],
+      "region": "South Castele",
+      "requires": "{trials_access()}"
+    },
+    {
+      "name": "Request for Giles #1 - Carrot Catcher 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - South Castele - Giles"
+      ],
+      "region": "South Castele",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Giles #2 - Carrot Catcher 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - South Castele - Giles"
+      ],
+      "region": "South Castele",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Giles #3 - Carrot Catcher 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - South Castele - Giles"
+      ],
+      "region": "South Castele",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Giles #4 - Carrot Catcher 4",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - South Castele - Giles",
+        "DLC"
+      ],
+      "region": "South Castele",
+      "requires": "{origin_island_access()} and {can_fight()}"
+    },
+    {
+      "name": "Request for Hamsvich #1 - A Shady Request",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - South Castele - Hamsvich"
+      ],
+      "region": "South Castele",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Hamsvich #2 - A Shadier Request",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - South Castele - Hamsvich"
+      ],
+      "region": "South Castele",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Hamsvich #3 - An Even Shadier Request",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - South Castele - Hamsvich"
+      ],
+      "region": "South Castele",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Hamsvich #4 - The Shadiest Request",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - South Castele - Hamsvich",
+        "DLC"
+      ],
+      "region": "South Castele",
+      "requires": "{trials_access()}"
+    },
+    {
+      "name": "Request for Barley #1 - Firewood, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - South Castele - Barley"
+      ],
+      "region": "South Castele",
+      "requires": ""
+    },
+    {
+      "name": "Request for Barley #2 - More Firewood, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - South Castele - Barley"
+      ],
+      "region": "South Castele",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Barley #3 - Yet More Firewood, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - South Castele - Barley"
+      ],
+      "region": "South Castele",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Llaeth #1 - Gimme Milk!",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - East Castele - Llaeth"
+      ],
+      "region": "East Castele",
+      "requires": ""
+    },
+    {
+      "name": "Request for Llaeth #2 - Gimme More Milk!",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - East Castele - Llaeth"
+      ],
+      "region": "East Castele",
+      "requires": "{better_castele_shopping()} or {al_maajik_access()}"
+    },
+    {
+      "name": "Request for Llaeth #3 - Magical Milkshake for Me",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - East Castele - Llaeth"
+      ],
+      "region": "East Castele",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Llaeth #4 - Gimme Milk Gel!",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - East Castele - Llaeth",
+        "DLC"
+      ],
+      "region": "East Castele",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Hans #1 - Haniwa Cave Gemstones",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - West Castele - Hans"
+      ],
+      "region": "West Castele",
+      "requires": "({better_castele_shopping()} or {has_license(Fledgling Miner)}) and {OptOne(|Haniwa Cave Pass|)}"
+    },
+    {
+      "name": "Request for Hans #2 - Teardrop Gemstones",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - West Castele - Hans"
+      ],
+      "region": "West Castele",
+      "requires": "{port_puerto_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)})"
+    },
+    {
+      "name": "Request for Hans #3 - Blood-Red Gemstones",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - West Castele - Hans"
+      ],
+      "region": "West Castele",
+      "requires": "{port_puerto_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)})"
+    },
+    {
+      "name": "Request for Hans #4 - Ancient Gemstone",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - West Castele - Hans",
+        "DLC"
+      ],
+      "region": "West Castele",
+      "requires": "{trials_access()} and ({better_castele_shopping()} or {has_license(Fledgling Miner)})"
+    },
+    {
+      "name": "Request for Reggie #1 - Produce Private Eye",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - West Castele - Reggie"
+      ],
+      "region": "West Castele",
+      "requires": "{west_grassy_plains_access()}"
+    },
+    {
+      "name": "Request for Reggie #2 - Produce Private Eye",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - West Castele - Reggie"
+      ],
+      "region": "West Castele",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Reggie #3 - Produce Private Eye",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - West Castele - Reggie"
+      ],
+      "region": "West Castele",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Reggie #4 - Produce Private Eye",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - West Castele - Reggie",
+        "DLC"
+      ],
+      "region": "West Castele",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Collinsworth #1 - Pie, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - West Castele - Collinsworth",
+        "Expert",
+        "Cook"
+      ],
+      "region": "West Castele",
+      "requires": "{al_maajik_access()} and {has_license(Expert Cook)}"
+    },
+    {
+      "name": "Request for Collinsworth #2 - Pudding, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - West Castele - Collinsworth",
+        "Expert",
+        "Cook"
+      ],
+      "region": "West Castele",
+      "requires": "{al_maajik_access()} and {has_license(Expert Cook)}"
+    },
+    {
+      "name": "Request for Collinsworth #3 - Magical Pie, Please",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - West Castele - Collinsworth",
+        "Master",
+        "Cook"
+      ],
+      "region": "West Castele",
+      "requires": "{al_maajik_access()} and {has_license(Master Cook)}"
+    },
+    {
+      "name": "Request for Hansel #1 - Furious Fowl",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - East Grassy Plains - Hansel"
+      ],
+      "region": "East Grassy Plains",
+      "requires": "{snowpeak_access()} and {can_fight()}"
+    },
+    {
+      "name": "Request for Hansel #2 - Snake Along the Mountain Road",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - East Grassy Plains - Hansel"
+      ],
+      "region": "East Grassy Plains",
+      "requires": "{snowpeak_access()} and {can_fight()}"
+    },
+    {
+      "name": "Request for Hansel #3 - Don't Let It Go Ape",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - East Grassy Plains - Hansel"
+      ],
+      "region": "East Grassy Plains",
+      "requires": "{snowpeak_access()} and {can_fight()}"
+    },
+    {
+      "name": "Request for Hansel #4 - Bowtaur Ruins Holidays",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - East Grassy Plains - Hansel",
+        "DLC"
+      ],
+      "region": "East Grassy Plains",
+      "requires": "{origin_island_access()} and {can_fight()}"
+    },
+    {
+      "name": "Request for Terry #1 - Protector of the Plains",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - East Grassy Plains - Terry"
+      ],
+      "region": "East Grassy Plains",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Terry #2 - Paladin Savior",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - East Grassy Plains - Terry"
+      ],
+      "region": "East Grassy Plains",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Terry #3 - Spooked-Out Paladin",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - East Grassy Plains - Terry",
+        "Magician"
+      ],
+      "region": "East Grassy Plains",
+      "requires": "{can_cast_magic()}"
+    },
+    {
+      "name": "Request for Fluffin #1 - The Serpentine Way of Life",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - West Grassy Plains - Fluffin"
+      ],
+      "region": "West Grassy Plains",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Fluffin #2 - Tale the Bull by the Horns",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - West Grassy Plains - Fluffin"
+      ],
+      "region": "West Grassy Plains",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Fluffin #3 - Cattle Battle",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - West Grassy Plains - Fluffin"
+      ],
+      "region": "West Grassy Plains",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Farley #1 - The Freshest Around",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Farley's Plantation - Farley"
+      ],
+      "region": "Farley's Plantation",
+      "requires": ""
+    },
+    {
+      "name": "Request for Farley #2 - Mountain Freshness",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Farley's Plantation - Farley"
+      ],
+      "region": "Farley's Plantation",
+      "requires": "{snowpeak_access()}"
+    },
+    {
+      "name": "Request for Farley #3 - Water, Water Everywhere",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Farley's Plantation - Farley"
+      ],
+      "region": "Farley's Plantation",
+      "requires": "{port_puerto_access()}"
+    },
+    {
+      "name": "Request for Farley #4 - Hot Stuff",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Farley's Plantation - Farley",
+        "DLC"
+      ],
+      "region": "Farley's Plantation",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Jewel #1 - Huntin' Wadishys",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Farley's Plantation - Jewel"
+      ],
+      "region": "Farley's Plantation",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Jewel #2 - Huntin' a Wadishella",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Farley's Plantation - Jewel"
+      ],
+      "region": "Farley's Plantation",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Jewel #3 - Weggie See, Weggie Do",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Farley's Plantation - Jewel"
+      ],
+      "region": "Farley's Plantation",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Rocco #1 - No Running in the Snow",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Mount Snowpeak Summit - Rocco"
+      ],
+      "region": "Mount Snowpeak Summit",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Rocco #2 - Big Cats in the Snow",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Mount Snowpeak Summit - Rocco"
+      ],
+      "region": "Mount Snowpeak Summit",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Rocco #3 - Snow Hazard",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Mount Snowpeak Summit - Rocco"
+      ],
+      "region": "Mount Snowpeak Summit",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Rocco #4 - Freezing Guard's Last Request",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Mount Snowpeak Summit - Rocco",
+        "DLC"
+      ],
+      "region": "Mount Snowpeak Summit",
+      "requires": "{can_fight()} and {origin_island_access()}"
+    },
+    {
+      "name": "Request for Polkovich #1 - Calumnus's Prophecy 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Beach District - Polkovich"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Polkovich #2 - Calumnus's Prophecy 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Beach District - Polkovich"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Polkovich #3 - Calumnus's Prophecy 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Beach District - Polkovich"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Jack #1 - Archipelago Conservation",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Beach District - Jack"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Jack #2 - Monster-Free Archipelago",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Beach District - Jack"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Jack #3 - Save Tortuga, Spare No Monster",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Beach District - Jack"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Jack #4 - Champion Abroad",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Port Puerto Beach District - Jack",
+        "DLC"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{can_fight()} and {origin_island_access()}"
+    },
+    {
+      "name": "Request for Eduardo #1 - Scurvy Pirate's Proposal",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Beach District - Eduardo",
+        "Apprentice",
+        "Alchemist"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{has_license(Apprentice Alchemist)}"
+    },
+    {
+      "name": "Request for Eduardo #2 - I Be Needin' a Dress",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Beach District - Eduardo",
+        "Expert",
+        "Tailor",
+        "Alchemist"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{has_license(Apprentice Alchemist)} and {has_license(Expert Tailor)}"
+    },
+    {
+      "name": "Request for Eduardo #3 - A Flower fer Me Beauty",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Beach District - Eduardo",
+        "Expert",
+        "Tailor",
+        "Alchemist"
+      ],
+      "region": "Port Puerto Beach District",
+      "requires": "{al_maajik_access()} and {has_license(Apprentice Alchemist)} and {has_license(Expert Tailor)}"
+    },
+    {
+      "name": "Request for Karin #1 - Dino Meat and Greet!",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Marina - Karin"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Karin #2 - A Beastly Feast",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Marina - Karin"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Karin #3 - Meating Demand",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Marina - Karin"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Karin #4 - Mysterious Mythical Meat",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Port Puerto Marina - Karin",
+        "DLC"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{trials_access()}"
+    },
+    {
+      "name": "Request for Sami #1 - Swanky Barrel",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Marina - Sami",
+        "Apprentice",
+        "Carpenter"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{has_license(Apprentice Carpenter)}"
+    },
+    {
+      "name": "Request for Sami #2 - Scarecrow Coat Hanger",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Marina - Sami",
+        "Apprentice",
+        "Carpenter"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{port_puerto_access()} and {has_license(Apprentice Carpenter)} and ({better_port_shopping()} or {al_maajik_access()} or {has_license(Adept Tailor)})"
+    },
+    {
+      "name": "Request for Sami #3 - A Chest for My Treasures",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Marina - Sami",
+        "Expert",
+        "Carpenter"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{al_maajik_access()} and {has_license(Expert Carpenter)}"
+    },
+    {
+      "name": "Request for Sami #4 - Chasing Rainbows",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Port Puerto Marina - Sami",
+        "Creator",
+        "Carpenter",
+        "DLC"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{origin_island_access()} and {has_license(Creator Carpenter)}"
+    },
+    {
+      "name": "Request for Bomba #1 - Let's Play Pirates! Pt. 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Marina - Bomba",
+        "Fledgling",
+        "Alchemist"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{has_license(Fledgling Alchemist)}"
+    },
+    {
+      "name": "Request for Bomba #2 - Let's Play Pirates! Pt. 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Marina - Bomba",
+        "Adept",
+        "Alchemist"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{has_license(Adept Alchemist)}"
+    },
+    {
+      "name": "Request for Bomba #3 - Let's Play Pirates! Pt. 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Marina - Bomba",
+        "Adept",
+        "Alchemist"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{has_license(Adept Alchemist)}"
+    },
+    {
+      "name": "Request for Pepperonita #1 - Cheer Me Up!",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Marina - Pepperonita"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{better_port_shopping()} or {al_maajik_access()} or {has_license(Adept Miner)}"
+    },
+    {
+      "name": "Request for Pepperonita #2 - Crystal Comfort",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Marina - Pepperonita"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{al_maajik_access()} and ({better_desert_shopping()} or {has_license(Adept Miner)})"
+    },
+    {
+      "name": "Request for Pepperonita #3 - Hear My Story",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Marina - Pepperonita"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{al_maajik_access()} and ({better_desert_shopping()} or {has_license(Adept Miner)})"
+    },
+    {
+      "name": "Request for Swabbie #1 - Snakeskin Scallywag",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Marina - Swabbie",
+        "Apprentice",
+        "Blacksmith"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{has_license(Apprentice Blacksmith)}"
+    },
+    {
+      "name": "Request for Swabbie #2 - Snakeskin Scallywag 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Marina - Swabbie",
+        "Apprentice",
+        "Blacksmith"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{has_license(Apprentice Blacksmith)}"
+    },
+    {
+      "name": "Request for Swabbie #3 - Snakeskin Scallywag 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Marina - Swabbie",
+        "Apprentice",
+        "Blacksmith"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{has_license(Apprentice Blacksmith)}"
+    },
+    {
+      "name": "Request for Emilio #1 - A Sea-Scented Elder Log",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Marina - Emilio"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": ""
+    },
+    {
+      "name": "Request for Emilio #2 - Well-Dried Desert Elder Log",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Marina - Emilio"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{al_maajik_access()} and ({has_license(Adept Woodcutter)} or {better_traveling_shopping()})"
+    },
+    {
+      "name": "Request for Emilio #3 - Subterranean Elder Log",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Marina - Emilio"
+      ],
+      "region": "Port Puerto Marina",
+      "requires": "{al_maajik_access()} and ({has_license(Expert Woodcutter)} or {better_traveling_shopping()})"
+    },
+    {
+      "name": "Request for Pepita #1 - Mules for Pepita",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Palace Way - Pepita",
+        "Adept",
+        "Tailor"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{has_license(Adept Tailor)}"
+    },
+    {
+      "name": "Request for Pepita #2 - Sea Sarong for Pepita",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Palace Way - Pepita",
+        "Adept",
+        "Tailor"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{has_license(Adept Tailor)}"
+    },
+    {
+      "name": "Request for Pepita #3 - Holiday Top for Pepita",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Palace Way - Pepita",
+        "Adept",
+        "Tailor"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{has_license(Adept Tailor)}"
+    },
+    {
+      "name": "Request for Honey #1 - Honey, Fetch Me a Bow!",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Palace Way - Honey",
+        "Apprentice",
+        "Carpenter"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{has_license(Apprentice Carpenter)}"
+    },
+    {
+      "name": "Request for Honey #2 - Leave Everything to Honey!",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Palace Way - Honey",
+        "Adept",
+        "Carpenter"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{has_license(Adept Carpenter)} and {al_maajik_access()} and ({better_desert_shopping()} or {elderwood_village_access()})"
+    },
+    {
+      "name": "Request for Honey #3 - Honey Tries Again",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Palace Way - Honey",
+        "Adept",
+        "Carpenter"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{has_license(Adept Carpenter)} and {al_maajik_access()} and ({better_desert_shopping()} or {elderwood_village_access()})"
+    },
+    {
+      "name": "Request for Gibbs #1 - Speedy Postman",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Palace Way - Gibbs"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": ""
+    },
+    {
+      "name": "Request for Gibbs #2 - Lucky Postman",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Palace Way - Gibbs"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": ""
+    },
+    {
+      "name": "Request for Gibbs #3 - Energetic Postman",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Palace Way - Gibbs"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": ""
+    },
+    {
+      "name": "Request for Gibbs #4 - Old-Fashion Postman",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Port Puerto Palace Way - Gibbs",
+        "DLC"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Lilac #1 - The Truth about Crocturtle",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Palace Way - Lilac"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": ""
+    },
+    {
+      "name": "Request for Lilac #2 - Tale of the Beast Tail",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Palace Way - Lilac"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": ""
+    },
+    {
+      "name": "Request for Lilac #3 - Gelatinous Creature",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Palace Way - Lilac"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": ""
+    },
+    {
+      "name": "Request for Lilac #4 - Crab Shell Beauty Tea",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Port Puerto Palace Way - Lilac",
+        "DLC"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Cashew #1 - Quality Lava Prawns",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Palace Way - Cashew"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{better_traveling_shopping()} or {has_license(Adept Angler)}"
+    },
+    {
+      "name": "Request for Cashew #2 - Quality Desert Tuna",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Palace Way - Cashew"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{better_traveling_shopping()} or {has_license(Adept Angler)} and {al_maajik_access()}"
+    },
+    {
+      "name": "Request for Cashew #3 - Quality Icy Squid",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Palace Way - Cashew"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{better_traveling_shopping()} or {has_license(Adept Angler)} and {al_maajik_access()}"
+    },
+    {
+      "name": "Request for Cashew #4 - Quality Fossilfish",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Port Puerto Palace Way - Cashew",
+        "DLC"
+      ],
+      "region": "Port Puerto Palace Way",
+      "requires": "{better_traveling_shopping()} or {has_license(Adept Angler)} and {origin_island_access()}"
+    },
+    {
+      "name": "Request for Polly #1 - Polly Wants Some Palm Nuts",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Port Puerto Palace - Polly"
+      ],
+      "region": "Port Puerto Palace",
+      "requires": ""
+    },
+    {
+      "name": "Request for Polly #2 - Please Feed the Bird",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Port Puerto Palace - Polly"
+      ],
+      "region": "Port Puerto Palace",
+      "requires": "{al_maajik_access()}"
+    },
+    {
+      "name": "Request for Polly #3 - Nuts to You",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Port Puerto Palace - Polly"
+      ],
+      "region": "Port Puerto Palace",
+      "requires": "{elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Shelldon #1 - Zombie Cleanup 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Tortuga Archipelago - Shelldon"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Shelldon #2 - Zombie Cleanup 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Tortuga Archipelago - Shelldon"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Shelldon #3 - Zombie Cleanup 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Tortuga Archipelago - Shelldon"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Danny #1 - Piranha-Free Waters",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Tortuga Archipelago - Danny"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Danny #2 - Shark Removal",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Tortuga Archipelago - Danny"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Danny #3 - Turtanic Shell",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Tortuga Archipelago - Danny"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Alejandro #1 - Help Me, Stranger!",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Tortuga Archipelago - Alejandro",
+        "Hero",
+        "Cook"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{terra_nimbus_access()} and {has_license(Hero Cook)}"
+    },
+    {
+      "name": "Request for Alejandro #2 - Fancy Fish",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Tortuga Archipelago - Alejandro",
+        "Hero",
+        "Angler",
+        "Cook"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{terra_nimbus_access()} and {has_license(Hero Cook)} and {has_license(Hero Angler)}"
+    },
+    {
+      "name": "Request for Alejandro #3 - Roast with the Most",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Tortuga Archipelago - Alejandro",
+        "Hero",
+        "Angler",
+        "Cook"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{terra_nimbus_access()} and {has_license(Hero Cook)} and {has_license(Hero Angler)}"
+    },
+    {
+      "name": "Request for Alejandro #4 - Help Me! Good Friend",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Tortuga Archipelago - Alejandro",
+        "Creator",
+        "Angler",
+        "Cook",
+        "DLC"
+      ],
+      "region": "Tortuga Archipelago",
+      "requires": "{origin_island_access()} and {has_license(Creator Cook)} and {has_license(Hero Angler)}"
+    },
+    {
+      "name": "Request for Simra #1 - Prehistoric Hunting",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Outskirts - Simra"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Simra #2 - Desert Dogfight",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Outskirts - Simra"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Simra #3 - Spooktacular Hunt",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Outskirts - Simra",
+        "Magician"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{can_cast_magic()}"
+    },
+    {
+      "name": "Request for Simra #4 - A Gigataur Task",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Al Maajik Outskirts - Simra",
+        "Magician",
+        "DLC"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{can_cast_magic()} and {origin_island_access()}"
+    },
+    {
+      "name": "Request for Chai #1 - Forest Furnishings 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Outskirts - Chai"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Chai #2 - Forest Furnishings 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Outskirts - Chai"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Chai #3 - Forest Furnishings 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Outskirts - Chai"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Saffron #1 - Desert Patrol 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Outskirts - Saffron"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Saffron #2 - Desert Patrol 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Outskirts - Saffron"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Saffron #3 - Desert Patrol 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Outskirts - Saffron"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Deskovich #1 - Bone Dragon Resurrection 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Outskirts - Deskovich",
+        "Legend",
+        "Miner"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{has_license(Legend Miner)}"
+    },
+    {
+      "name": "Request for Deskovich #2 - Bone Dragon Resurrection 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Outskirts - Deskovich",
+        "Legend",
+        "Miner"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{has_license(Legend Miner)}"
+    },
+    {
+      "name": "Request for Deskovich #3 - Bone Dragon Resurrection 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Outskirts - Deskovich",
+        "Legend",
+        "Miner"
+      ],
+      "region": "Al Maajik Outskirts",
+      "requires": "{has_license(Legend Miner)}"
+    },
+    {
+      "name": "Request for Jem #1 - Cautious Adventuring",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Sandtown - Jem",
+        "Apprentice",
+        "Alchemist"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Apprentice Alchemist)}"
+    },
+    {
+      "name": "Request for Jem #2 - Short and Sweet",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Sandtown - Jem",
+        "Expert",
+        "Tailor",
+        "Alchemist"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Apprentice Alchemist)} and {has_license(Expert Tailor)}"
+    },
+    {
+      "name": "Request for Jem #3 - Fast Track to Friendship",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Sandtown - Jem",
+        "Expert",
+        "Blacksmith",
+        "Tailor",
+        "Alchemist"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Apprentice Alchemist)} and {has_license(Expert Tailor)} and {has_license(Expert Blacksmith)}"
+    },
+    {
+      "name": "Request for Calumnus #1 - Dragonfly Divination",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Sandtown - Calumnus"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Calumnus #2 - Under a Stained-Glass Sky",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Sandtown - Calumnus"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{terra_nimbus_access()}"
+    },
+    {
+      "name": "Request for Calumnus #3 - Champion of the Skies",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Sandtown - Calumnus"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{terra_nimbus_access()}"
+    },
+    {
+      "name": "Request for Calumnus #4 - Demonic Insects",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Al Maajik Sandtown - Calumnus",
+        "DLC"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Vincent #1 - Risky Ravine",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Sandtown - Vincent"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Vincent #2 - Safety in the Sand",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Sandtown - Vincent"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Vincent #3 - Subterranean Safety",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Sandtown - Vincent"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Omar #1 - Al Maajik Medicine Run",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Sandtown - Omar"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Omar #2 - Cacto Cove Medicine Run",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Sandtown - Omar"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Omar #3 - Terra Nimbus Medicine Run",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Sandtown - Omar"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{terra_nimbus_access()}"
+    },
+    {
+      "name": "Request for Mabel #1 - It's All So Blurry",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Sandtown - Mabel",
+        "Adept",
+        "Alchemist"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Adept Alchemist)}"
+    },
+    {
+      "name": "Request for Mabel #2 - Granny Accessorizes",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Sandtown - Mabel",
+        "Expert",
+        "Alchemist"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Alchemist)}"
+    },
+    {
+      "name": "Request for Mabel #3 - Granny's Cool Shades",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Sandtown - Mabel",
+        "Master",
+        "Alchemist"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Master Alchemist)}"
+    },
+    {
+      "name": "Request for Xavier #1 - The World Traveler",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Sandtown - Xavier",
+        "Expert",
+        "Cook"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Cook)}"
+    },
+    {
+      "name": "Request for Xavier #2 - Rough Days Like This...",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Sandtown - Xavier",
+        "Expert",
+        "Cook"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Cook)}"
+    },
+    {
+      "name": "Request for Xavier #3 - The Dragon Within",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Sandtown - Xavier",
+        "Master",
+        "Cook"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Master Cook)}"
+    },
+    {
+      "name": "Request for Richie #1 - Present for Father Dearest",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Sandtown - Richie",
+        "Expert",
+        "Angler"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Angler)}"
+    },
+    {
+      "name": "Request for Richie #2 - Snoot's Tantrum",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Sandtown - Richie",
+        "Expert",
+        "Angler",
+        "Carpenter"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Angler)} and {has_license(Adept Carpenter)}"
+    },
+    {
+      "name": "Request for Richie #3 - Snoot's Legacy",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Sandtown - Richie",
+        "Master",
+        "Angler",
+        "Blacksmith",
+        "Carpenter"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Angler)} and {has_license(Adept Carpenter)} and {has_license(Master Blacksmith)}"
+    },
+    {
+      "name": "Request for Richie #4 - A Son's Love",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Al Maajik Sandtown - Richie",
+        "Creator",
+        "Angler",
+        "Cook",
+        "Blacksmith",
+        "DLC"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Angler)} and {has_license(Adept Carpenter)} and {has_license(Master Blacksmith)} and {has_license(Creator Cook)}"
+    },
+    {
+      "name": "Request for Amir #1 - Log of the Earth",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Sandtown - Amir"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Woodcutter)} or {elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Amir #2 - Waterlogged",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Sandtown - Amir"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Woodcutter)} or {elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Amir #3 - A Log in the Fire",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Sandtown - Amir"
+      ],
+      "region": "Al Maajik Sandtown",
+      "requires": "{has_license(Expert Woodcutter)} or {elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Zerk #1 - Dark Knight Zerk",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Spelltown - Zerk",
+        "Master",
+        "Blacksmith"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": "{has_license(Master Blacksmith)}"
+    },
+    {
+      "name": "Request for Zerk #2 - Maajikal Blacksmith?",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Spelltown - Zerk",
+        "Master",
+        "Blacksmith"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": "{has_license(Master Blacksmith)}"
+    },
+    {
+      "name": "Request for Zerk #3 - The Final Chance",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Spelltown - Zerk",
+        "Master",
+        "Blacksmith"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": "{has_license(Master Blacksmith)}"
+    },
+    {
+      "name": "Request for Khubz #1 - Rainbow Hunter",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Spelltown - Khubz"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Khubz #2 - Rising Rainbow",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Spelltown - Khubz"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Khubz #3 - Over the Rainbow",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Spelltown - Khubz"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Akim #1 - Akim's Kitchen Warfare",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Spelltown - Akim"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Akim #2 - Akim's Food Fight",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Spelltown - Akim"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Akim #3 - Akim's Last Stand",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Spelltown - Akim"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": ""
+    },
+    {
+      "name": "Request for Akim #4 - A Golden Opportunity",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Al Maajik Spelltown - Akim",
+        "DLC"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Libby #1 - Ornately Ornate",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Al Maajik Spelltown - Libby",
+        "Fledgling",
+        "Angler"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": "{has_license(Fledgling Angler)}"
+    },
+    {
+      "name": "Request for Libby #2 - Shiver Me Flounders!",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Al Maajik Spelltown - Libby",
+        "Adept",
+        "Angler"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": "{has_license(Adept Angler)}"
+    },
+    {
+      "name": "Request for Libby #3 - Sandy Seas",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Al Maajik Spelltown - Libby",
+        "Expert",
+        "Angler"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": "{has_license(Expert Angler)}"
+    },
+    {
+      "name": "Request for Libby #4 - Fishy Research",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Al Maajik Spelltown - Libby",
+        "Master",
+        "Angler",
+        "DLC"
+      ],
+      "region": "Al Maajik Spelltown",
+      "requires": "{has_license(Master Angler)} and {trials_access()}"
+    },
+    {
+      "name": "Request for Ruck #1 - Dress to Impress",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Dark Sultan's Fortress - Ruck",
+        "Expert",
+        "Tailor"
+      ],
+      "region": "Dark Sultan's Fortress",
+      "requires": "{has_license(Expert Tailor)}"
+    },
+    {
+      "name": "Request for Ruck #2 - Signs of a True Gentleman",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Dark Sultan's Fortress - Ruck",
+        "Expert",
+        "Tailor"
+      ],
+      "region": "Dark Sultan's Fortress",
+      "requires": "{has_license(Expert Tailor)}"
+    },
+    {
+      "name": "Request for Ruck #3 - New Look, New Life!",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Dark Sultan's Fortress - Ruck",
+        "Expert",
+        "Tailor"
+      ],
+      "region": "Dark Sultan's Fortress",
+      "requires": "{has_license(Expert Tailor)}"
+    },
+    {
+      "name": "Request for Rudy #1 - Mummy's the Word",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Aridian Desert - Rudy"
+      ],
+      "region": "Aridian Desert",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Rudy #2 - Bringing Down the Bats",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Aridian Desert - Rudy"
+      ],
+      "region": "Aridian Desert",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Rudy #3 - The Failed Adventurer",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Aridian Desert - Rudy"
+      ],
+      "region": "Aridian Desert",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Abahkus #1 - The Desert Merchant 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Aridian Desert - Abahkus"
+      ],
+      "region": "Aridian Desert",
+      "requires": "{elderwood_village_access()}"
+    },
+    {
+      "name": "Request for Abahkus #2 - The Desert Merchant 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Aridian Desert - Abahkus",
+        "Master",
+        "Miner"
+      ],
+      "region": "Aridian Desert",
+      "requires": "{elderwood_village_access()} and {has_license(Master Miner)}"
+    },
+    {
+      "name": "Request for Abahkus #3 - The Desert Merchant 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Aridian Desert - Abahkus",
+        "Master",
+        "Miner"
+      ],
+      "region": "Aridian Desert",
+      "requires": "{terra_nimbus_access()} and {has_license(Master Miner)}"
+    },
+    {
+      "name": "Request for Abahkus #4 - The Desert Merchant 4",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Aridian Desert - Abahkus",
+        "Master",
+        "Miner",
+        "Woodcutter",
+        "DLC"
+      ],
+      "region": "Aridian Desert",
+      "requires": "{origin_island_access()} and {has_license(Master Miner)} and {has_license(Master Woodcutter)}"
+    },
+    {
+      "name": "Request for Leif #1 - Raingear Tree",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Elderwood Village - Leif"
+      ],
+      "region": "Elderwood Village",
+      "requires": ""
+    },
+    {
+      "name": "Request for Leif #2 - Sea-Breeze-Scented Tree",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Elderwood Village - Leif"
+      ],
+      "region": "Elderwood Village",
+      "requires": ""
+    },
+    {
+      "name": "Request for Leif #3 - Blooming with Joy",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Elderwood Village - Leif"
+      ],
+      "region": "Elderwood Village",
+      "requires": "{better_castele_shopping()}"
+    },
+    {
+      "name": "Request for Leif #4 - Lovely Little Weeds",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Elderwood Village - Leif",
+        "DLC"
+      ],
+      "region": "Elderwood Village",
+      "requires": "{better_castele_shopping()} and {origin_island_access()}"
+    },
+    {
+      "name": "Request for Kevin #1 - Delicious Dandelion Puff",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Plushling Camp - Kevin"
+      ],
+      "region": "Plushling Camp",
+      "requires": ""
+    },
+    {
+      "name": "Request for Kevin #2 - Scrumptious Sunny Puff",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Plushling Camp - Kevin"
+      ],
+      "region": "Plushling Camp",
+      "requires": ""
+    },
+    {
+      "name": "Request for Kevin #3 - Appetizing Angelic Puff",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Plushling Camp - Kevin"
+      ],
+      "region": "Plushling Camp",
+      "requires": ""
+    },
+    {
+      "name": "Request for Kevin #4 - Detectable Divine Puff",
+      "category": [
+        "Other Requests",
+        "Other Requests 4",
+        "Other Requests - Plushling Camp - Kevin",
+        "DLC"
+      ],
+      "region": "Plushling Camp",
+      "requires": "{origin_island_access()}"
+    },
+    {
+      "name": "Request for Achilles #1 - Floaty Fears",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Central Grassland - Achilles",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Achilles #2 - Super Floaty Fears",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Central Grassland - Achilles",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Achilles #3 - Mega Floaty Fears",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Central Grassland - Achilles",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Daphne #1 - Paladin Maniac",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Central Grassland - Daphne",
+        "Creator",
+        "Tailor",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Creator Tailor)}"
+    },
+    {
+      "name": "Request for Daphne #2 - Knight in Colorful Armor",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Central Grassland - Daphne",
+        "Creator",
+        "Tailor",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Creator Tailor)}"
+    },
+    {
+      "name": "Request for Daphne #3 - Gear for a Goddess",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Central Grassland - Daphne",
+        "Creator",
+        "Tailor",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Creator Tailor)}"
+    },
+    {
+      "name": "Request for Sally #1 - Home, Sweet Marshmall-Home",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Central Grassland - Sally",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": ""
+    },
+    {
+      "name": "Request for Sally #2 - Giga Giga Girl",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Central Grassland - Sally",
+        "Master",
+        "Woodcutter",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Master Woodcutter)}"
+    },
+    {
+      "name": "Request for Sally #3 - Beetle Buddies",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Central Grassland - Sally",
+        "Master",
+        "Woodcutter",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Master Woodcutter)}"
+    },
+    {
+      "name": "Request for Napollon #1 - A Lovers' Tale",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Central Grassland - Napollon",
+        "Master",
+        "Miner",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Master Miner)}"
+    },
+    {
+      "name": "Request for Napollon #2 - A Lovers' Tale",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Central Grassland - Napollon",
+        "Master",
+        "Miner",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Master Miner)}"
+    },
+    {
+      "name": "Request for Napollon #3 - A Lovers' Tale",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Central Grassland - Napollon",
+        "Master",
+        "Miner",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Master Miner)}"
+    },
+    {
+      "name": "Request for Mallow #1 - Like Divine Bees to Honey",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Central Grassland - Mallow",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": ""
+    },
+    {
+      "name": "Request for Mallow #2 - Fashion and Fruit",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Central Grassland - Mallow",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": ""
+    },
+    {
+      "name": "Request for Mallow #3 - Of Boughs and Blades",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Central Grassland - Mallow",
+        "Master",
+        "Woodcutter",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": "{has_license(Master Woodcutter)}"
+    },
+    {
+      "name": "Request for Mana #1 - Claws for Thought",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Central Grassland - Mana",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": ""
+    },
+    {
+      "name": "Request for Mana #2 - Spe-shell Delivery",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Central Grassland - Mana",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": ""
+    },
+    {
+      "name": "Request for Mana #3 - Shelltacular!",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Central Grassland - Mana",
+        "DLC"
+      ],
+      "region": "Central Grassland",
+      "requires": ""
+    },
+    {
+      "name": "Request for Homeros #1 - Tribal Investigations",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Forest Shrine - Homeros",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Homeros #2 - Strongtaur Studies",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Forest Shrine - Homeros",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": "{can_fight()}"
+    },
+    {
+      "name": "Request for Homeros #3 - Shadowy Survey",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Forest Shrine - Homeros",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": "{can_fight()} and {trials_access()}"
+    },
+    {
+      "name": "Request for Gladys #1 - Hip 'n' Healthy",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Forest Shrine - Gladys",
+        "Creator",
+        "Tailor",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": "{has_license(Creator Tailor)}"
+    },
+    {
+      "name": "Request for Gladys #2 - Heavenly Health",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Forest Shrine - Gladys",
+        "Creator",
+        "Tailor",
+        "Alchemist",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": "{has_license(Creator Tailor)} and {has_license(Creator Alchemist)}"
+    },
+    {
+      "name": "Request for Gladys #3 - Hard-Boiled Health",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Forest Shrine - Gladys",
+        "Creator",
+        "Cook",
+        "Tailor",
+        "Alchemist",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": "{has_license(Creator Tailor)} and {has_license(Creator Alchemist)} and {has_license(Creator Cook)}"
+    },
+    {
+      "name": "Request for Tate #1 - Mushroom Munchkin",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Forest Shrine - Tate",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": ""
+    },
+    {
+      "name": "Request for Tate #2 - Truffle Taster",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Forest Shrine - Tate",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": ""
+    },
+    {
+      "name": "Request for Tate #3 - Bring Home the Broccoil",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Forest Shrine - Tate",
+        "DLC"
+      ],
+      "region": "Forest Shrine",
+      "requires": ""
+    },
+    {
+      "name": "Request for Sandor #1 - Fishy Kisses",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Penguin Beach - Sandor",
+        "Expert",
+        "Angler",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{has_license(Expert Angler)}"
+    },
+    {
+      "name": "Request for Sandor #2 - Fishy Rainbows",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Penguin Beach - Sandor",
+        "Expert",
+        "Angler",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{has_license(Expert Angler)}"
+    },
+    {
+      "name": "Request for Sandor #3 - Fishy Love",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Penguin Beach - Sandor",
+        "Expert",
+        "Angler",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{has_license(Expert Angler)}"
+    },
+    {
+      "name": "Request for Furkley #1 - The Solitary Gigaga Gourmet",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Penguin Beach - Furkley",
+        "Creator",
+        "Cook",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{has_license(Creator Cook)}"
+    },
+    {
+      "name": "Request for Furkley #2 - Fishy Giga Gourmet",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Penguin Beach - Furkley",
+        "Creator",
+        "Cook",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{has_license(Creator Cook)}"
+    },
+    {
+      "name": "Request for Furkley #3 - Sashimi Giga Gourmet",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Penguin Beach - Furkley",
+        "Creator",
+        "Cook",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{has_license(Creator Cook)}"
+    },
+    {
+      "name": "Request for Furcasso #1 - Furlassso's Humble Beginnings",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Penguin Beach - Furcasso",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": ""
+    },
+    {
+      "name": "Request for Furcasso #2 - Furlassso in Love",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Penguin Beach - Furcasso",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": ""
+    },
+    {
+      "name": "Request for Furcasso #3 - Furlassso Finds His Muse",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Penguin Beach - Furcasso",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{trials_access()}"
+    },
+    {
+      "name": "Request for Fauna #1 - New Thread",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Penguin Beach - Fauna",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": ""
+    },
+    {
+      "name": "Request for Fauna #2 - Sewing with Confidence",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Penguin Beach - Fauna",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{trials_access()}"
+    },
+    {
+      "name": "Request for Fauna #3 - Reverian Inspiration",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Penguin Beach - Fauna",
+        "Expert",
+        "Tailor",
+        "DLC"
+      ],
+      "region": "Penguin Beach",
+      "requires": "{trials_access()} and {has_license(Expert Tailor)}"
+    },
+    {
+      "name": "Request for Orion #1 - Mighty Helm, Miniature Hero",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Rocky Hill Shrine - Orion",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": ""
+    },
+    {
+      "name": "Request for Orion #2 - Sturdy Shield, Scrawny Soldier",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Rocky Hill Shrine - Orion",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": "{trials_access()}"
+    },
+    {
+      "name": "Request for Orion #3 - Biting Sword, Bite-size Knight",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Rocky Hill Shrine - Orion",
+        "Hero",
+        "Blacksmith",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": "{trials_access()} and {has_license(Hero Blacksmith)}"
+    },
+    {
+      "name": "Request for Maeryn #1 - From a Lady to a Lord 1",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Rocky Hill Shrine - Maeryn",
+        "Creator",
+        "Tailor",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": "{has_license(Creator Tailor)}"
+    },
+    {
+      "name": "Request for Maeryn #2 - From a Lady to a Lord 2",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Rocky Hill Shrine - Maeryn",
+        "Creator",
+        "Carpenter",
+        "Tailor",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": "{has_license(Creator Tailor)} and {has_license(Creator Carpenter)}"
+    },
+    {
+      "name": "Request for Maeryn #3 - From a Lady to a Lord 3",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Rocky Hill Shrine - Maeryn",
+        "Creator",
+        "Carpenter",
+        "Tailor",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": "{has_license(Creator Tailor)} and {has_license(Creator Carpenter)}"
+    },
+    {
+      "name": "Request for Sir Loin #1 - Wild-Beast Meat for Breakfast",
+      "category": [
+        "Other Requests",
+        "Other Requests 1",
+        "Other Requests - Rocky Hill Shrine - Sir Loin",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": ""
+    },
+    {
+      "name": "Request for Sir Loin #2 - Giant-Beast Meat for Lunch",
+      "category": [
+        "Other Requests",
+        "Other Requests 2",
+        "Other Requests - Rocky Hill Shrine - Sir Loin",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": ""
+    },
+    {
+      "name": "Request for Sir Loin #3 - Dragon Meat for Dinner",
+      "category": [
+        "Other Requests",
+        "Other Requests 3",
+        "Other Requests - Rocky Hill Shrine - Sir Loin",
+        "DLC"
+      ],
+      "region": "Rocky Hill Shrine",
+      "requires": ""
     }
   ]
 }

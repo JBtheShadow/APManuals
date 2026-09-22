@@ -224,6 +224,11 @@
         { "count": 0, "name": "Pacifist Trap", "category": ["Traps"], "trap": true },
         { "count": 0, "name": "No Gathering Trap", "category": ["Traps"], "trap": true },
         { "count": 0, "name": "No Crafting Trap", "category": ["Traps"], "trap": true },
-        { "count": 0, "name": "No Items Trap", "category": ["Traps"], "trap": true }
+        { "count": 0, "name": "No Items Trap", "category": ["Traps"], "trap": true },
+        { "count": 0, "name": "No Shopping Trap", "category": ["Traps"], "trap": true },
+        { "count": 0, "name": "Life Change Trap", "category": ["Traps"], "trap": true },
+        { "count": 0, "name": "Teleport Trap", "category": ["Traps"], "trap": true },
+        { "count": 0, "name": "Hunger Trap", "category": ["Traps"], "trap": true },
+        { "count": 0, "name": "Thirst Trap", "category": ["Traps"], "trap": true }
     ]
 }

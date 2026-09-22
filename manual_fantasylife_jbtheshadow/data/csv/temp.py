@@ -1,18 +1,22 @@
+from csv import DictReader
 from json import dumps
 
-lines = []
-with open("lives.csv") as file:
-    lines = file.readlines()
-life_items = set[tuple[str, str]]()
-for line in lines[1:]:
-    [life, _, item] = line.split(",")
-    if len(item):
-        life_items.add((life, item))
-result = []
-for life, item in life_items: 
-    for level in range(0, 6):
-        data = {}
-        data["name"] = f"Find a {level}-Star {item}"
-        data["category"] = ["Item Rarities Hidden", f"Item Rarities: {item}"]
-        if life != "Any":
-            data["category"].append(life)
+requests = []
+with open("requests.csv") as file:
+    csv_reader = DictReader(file, ["region", "issuer", "no", "name", "rank", "life1", "life2", "life3", "requires", "dlc"])
+    for row in csv_reader:
+        request = {}
+        request["name"] = f"Request for {row["issuer"]} #{row["no"]} - {row["name"]}"
+        request["category"] = [
+            f"Other Requests",
+            f"Other Requests {row["no"]}",
+            f"Other Requests - {row["region"]} - {row["issuer"]}"
+        ]
+        for extra in [row["rank"], row["life1"], row["life2"], row["life3"], row["dlc"]]:
+            if len(extra):
+                request["category"].append(extra)
+        request["region"] = row["region"]
+        request["requires"] = row["requires"]
+        requests.append(request)
+
+print(dumps(requests))

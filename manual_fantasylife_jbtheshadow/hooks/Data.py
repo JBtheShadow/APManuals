@@ -5,7 +5,7 @@ global_location_table = []
 global_item_table = []
 # shops = []
 chests = []
-requests = []
+# requests = []
 challenges = []
 lives = []
 filler = []
@@ -19,11 +19,11 @@ skill_names = [None]
 def after_load_game_file(game_table: dict) -> dict:
     # region Extra Data
     from ..Helpers import load_data_csv
-    global chests, requests, challenges, lives, filler, recipes, skill_names
+    global chests, challenges, lives, filler, recipes, skill_names
     # global shops, chests, requests, challenges, lives, filler, recipes, skill_names
     # shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
-    requests = load_data_csv("csv", "requests.csv")
+    # requests = load_data_csv("csv", "requests.csv")
     challenges = load_data_csv("csv", "challenges.csv")
     lives = load_data_csv("csv", "lives.csv")
     filler = load_data_csv("csv", "filler.csv")
@@ -200,24 +200,24 @@ def after_load_location_file(location_table: list) -> list:
         } for entry in recipes]
     location_table += build_recipe_locations()
 
-    def build_request_locations():
-        def build_category(entry: dict):
-            categories = [
-                f"Other Requests",
-                f"Other Requests {entry["#"]}",
-                f"Location - {entry["Region"]} - Requests",
-            ]
-            categories += [extra for extra in [
-                entry["Rank"], entry["Life1"], entry["Life2"], entry["Life3"], entry["DLC"]
-            ] if len(extra) > 0]
-            return categories
-        return [{
-            "name": f"{entry["Issuer"]}'s Request #{entry["#"]} - {entry["Name"]}",
-            "region": entry["Region"],
-            "category": build_category(entry),
-            "requires": entry["Requires"],
-        } for entry in requests ]
-    location_table += build_request_locations()
+    # def build_request_locations():
+    #     def build_category(entry: dict):
+    #         categories = [
+    #             f"Other Requests",
+    #             f"Other Requests {entry["#"]}",
+    #             f"Location - {entry["Region"]} - Requests",
+    #         ]
+    #         categories += [extra for extra in [
+    #             entry["Rank"], entry["Life1"], entry["Life2"], entry["Life3"], entry["DLC"]
+    #         ] if len(extra) > 0]
+    #         return categories
+    #     return [{
+    #         "name": f"{entry["Issuer"]}'s Request #{entry["#"]} - {entry["Name"]}",
+    #         "region": entry["Region"],
+    #         "category": build_category(entry),
+    #         "requires": entry["Requires"],
+    #     } for entry in requests ]
+    # location_table += build_request_locations()
 
     def build_chest_locations():
         def build_category(entry: dict):
@@ -403,17 +403,24 @@ def get_life_recipe_checks(dlc, max_rank, strict_lives):
     ])
 
 def get_other_requests_checks(dlc, request_count, max_rank, available_lives):
-    formated_lives = [name for name in life_names if name in available_lives]
-    formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
-    request_locations = [
-        entry["Name"] for entry in requests
-        if (dlc or "DLC" not in entry["DLC"])
-           and (request_count >= int(entry["#"]))
-           and (len(entry["Rank"] or "") == 0 or entry["Rank"] in formated_ranks)
-           and (len(entry["Life1"] or "") == 0 or entry["Life1"] in formated_lives)
-           and (len(entry["Life2"] or "") == 0 or entry["Life2"] in formated_lives)
-           and (len(entry["Life3"] or "") == 0 or entry["Life3"] in formated_lives)
-    ]
+    request_numbers = {f"Other Requests {i}" for i in range(1, request_count + 1)}
+    request_ranks = {rank_names[i] for i in range(1, max_rank + 1)}
+    all_lives = {life for life in life_names if life != None}
+
+    request_locations = []
+    for location in global_location_table:
+        if "Other Requests" not in location["category"]:
+            continue
+        if not dlc and "DLC" in location["category"]:
+            continue
+        if not len(request_numbers.intersection(location["category"])):
+            continue
+        if not len(request_ranks.intersection(location["category"])):
+            continue
+        lives = all_lives.intersection(location["category"])
+        if len(lives) > len(lives.intersection(available_lives)):
+            continue
+        request_locations.append(location["name"])
 
     return len(request_locations)
 

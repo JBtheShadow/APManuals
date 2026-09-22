@@ -25,10 +25,6 @@ from typing import Type, Any
 # To add an option, use the before_options_defined hook below and something like this:
 #   options["total_characters_to_win_with"] = TotalCharactersToWinWith
 #
-# class GameSeed(FreeText):
-#     """Seed used for generation, leave blank for a random one."""
-#     display_name = "Seed"
-
 class StoryGoal(Toggle):
     """Beating the main story is required for the goal."""
     display_name = "Beat the Main Story"
@@ -433,8 +429,6 @@ class IncludeShopRestrictions(Toggle):
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
-    # options["game_seed"] = GameSeed
-
     options["include_story"] = IncludeStoryLocations
     options["include_chapters"] = IncludeChapters
     options["story_goal"] = StoryGoal
