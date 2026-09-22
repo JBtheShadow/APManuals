@@ -164,7 +164,7 @@ def after_load_location_file(location_table: list) -> list:
             ]
             return " and ".join(requires)
         return [{
-            "name": f"{entry["Rank"]} {entry["Life"]} - {entry["Name"]}",
+            "name": f"{entry["Rank"]} {entry["Life"]} Challenge - {entry["Name"]}",
             "region": f"{entry["Rank"]} Challenges",
             "category": build_category(entry),
             "requires": build_requires(entry),
