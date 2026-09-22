@@ -50,6 +50,9 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
             if price > shops_cost * 10:
                 return False
         case x if x.startswith(("Bingo Row", "Bingo Column")):
+            parts = x.split(" ")
+            if len(parts) < 3:
+                return None
             size = int(x.split(" ")[2])
             return bingo_size >= size
 

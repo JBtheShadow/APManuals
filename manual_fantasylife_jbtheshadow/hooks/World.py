@@ -72,7 +72,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     dlc_goal = get_option(world, "dlc_goal", False)
     life_mastery_goal = get_option(world, "life_mastery_goal", False)
     wish_hunt_goal = get_option(world, "wish_hunt_goal", False)
-    # bingo_goal = get_option(world, "bingo_goal", False)
+    bingo_goal = get_option(world, "bingo_goal", False)
     include_chapters = get_option(world, "include_chapters", False)
     include_dlc = get_option(world, "include_dlc", False)
     include_story = get_option(world, "include_story", False)
@@ -374,7 +374,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     #endregion
 
     #region Goals
-    if not story_goal and not dlc_goal and not life_mastery_goal and not wish_hunt_goal: # and not bingo_goal:
+    if not story_goal and not dlc_goal and not life_mastery_goal and not wish_hunt_goal and not bingo_goal:
         logging.warning("At least one goal option must be chosen, defaulting to story goal.")
         story_goal = True
         set_option(world, "story_goal", story_goal)
@@ -501,58 +501,6 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
             for skill in skill_names
             if level < skill_min_level or level > skill_max_level
         ]
-
-        # bingo_goal = is_option_enabled(multiworld, player, "bingo_goal")
-        # if bingo_goal:
-        #     from .Options import BingoBoardSize, BingoCategories
-        #     bingo_size: int = get_option(world, "bingo_size", BingoBoardSize.default)
-        #     bingo_categories: list[str] = get_option(world, "bingo_categories", BingoCategories.default)
-        #     if not len(bingo_categories):
-        #         bingo_categories = BingoCategories.valid_keys
-        #     cand_loc_names = set()
-        #     if "Passwords" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Passwords"])
-        #     if "Bliss Bonuses" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Bliss Bonuses"])
-        #     if "Story" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Story"])
-        #         cand_loc_names.update(world.location_name_groups["No Story"])
-        #         cand_loc_names.update(world.location_name_groups["DLC Story"])
-        #         cand_loc_names.update(world.location_name_groups["No DLC Story"])
-        #     if "Extras" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Extras"])
-        #     if "Locations" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Cave Passes"])
-        #     if "Ranks" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Life Ranks"])
-        #     if "Challenges" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Life Challenges"])
-        #     if "Recipes" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Crafting Recipes"])
-        #     if "Other Requests" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Other Requests"])
-        #     if "Chests" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Treasure Chests"])
-        #     if "Shops" in bingo_categories:
-        #         cand_loc_names.update(world.location_name_groups["Shops"])
-
-        #     world.bingo_board = {}
-        #     locations = [loc for loc in world.get_locations() if loc.name in cand_loc_names]
-        #     for row in range(1, bingo_size + 1):
-        #         world.bingo_board[row] = {}
-        #         for col in range(1, bingo_size + 1):
-        #             rand_location = world.random.choice(locations)
-        #             locations.remove(rand_location)
-
-        #             bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
-        #             bingo_location.access_rule = rand_location.access_rule
-        #             bingo_location.parent_region = rand_location.parent_region
-
-        #             event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
-        #             event_location.access_rule = rand_location.access_rule
-        #             event_location.parent_region = rand_location.parent_region
-
-        #             world.bingo_board[row][col] = rand_location.name
 
     for region in multiworld.regions:
         if region.player == player:
@@ -779,6 +727,59 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
         # CollectionState is defined in BaseClasses
         return True
 
+    if not getattr(multiworld, "generation_is_fake", False):
+        bingo_goal = is_option_enabled(multiworld, player, "bingo_goal")
+        if bingo_goal:
+            from .Options import BingoBoardSize, BingoCategories
+            bingo_size: int = get_option(world, "bingo_size", BingoBoardSize.default)
+            bingo_categories: list[str] = get_option(world, "bingo_categories", BingoCategories.default)
+            if not len(bingo_categories):
+                bingo_categories = BingoCategories.valid_keys
+            cand_loc_names = set()
+            if "Passwords" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Passwords"])
+            if "Bliss Bonuses" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Bliss Bonuses"])
+            if "Story" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Story"])
+                cand_loc_names.update(world.location_name_groups["No Story"])
+                cand_loc_names.update(world.location_name_groups["DLC Story"])
+                cand_loc_names.update(world.location_name_groups["No DLC Story"])
+            if "Extras" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Extras"])
+            if "Locations" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Cave Passes"])
+            if "Ranks" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Life Ranks"])
+            if "Challenges" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Life Challenges"])
+            if "Recipes" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Crafting Recipes"])
+            if "Other Requests" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Other Requests"])
+            if "Chests" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Treasure Chests"])
+            if "Shops" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Shops"])
+
+            world.bingo_board = {}
+            locations = [loc for loc in world.get_locations() if loc.name in cand_loc_names]
+            for row in range(1, bingo_size + 1):
+                world.bingo_board[row] = {}
+                for col in range(1, bingo_size + 1):
+                    rand_location = world.random.choice(locations)
+                    locations.remove(rand_location)
+
+                    bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
+                    bingo_location.access_rule = rand_location.access_rule
+                    bingo_location.parent_region = rand_location.parent_region
+
+                    event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
+                    event_location.access_rule = rand_location.access_rule
+                    event_location.parent_region = rand_location.parent_region
+
+                    world.bingo_board[row][col] = rand_location.name
+
     ## Common functions:
     # location = world.get_location(location_name, player)
     # location.access_rule = Example_Rule
@@ -831,8 +832,8 @@ def after_remove_item(world: World, state: CollectionState, Changed: bool, item:
 # This is called before slot data is set and provides an empty dict ({}), in case you want to modify it before Manual does
 def before_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld, player: int) -> dict:
     if not getattr(multiworld, "generation_is_fake", False):
-        # if getattr(world, "bingo_board", 0):
-        #     slot_data["bingo_board"] = world.bingo_board
+        if getattr(world, "bingo_board", 0):
+            slot_data["bingo_board"] = world.bingo_board
         if getattr(world, "available_lives", 0):
             slot_data["available_lives"] = world.available_lives
         if getattr(world, "starting_life", 0):
@@ -860,26 +861,25 @@ def before_extend_hint_information(
 ) -> None:
 
     ### Example way to use this hook:
-    # if player not in hint_data:
-    #     hint_data.update({player: {}})
-    # for location in multiworld.get_locations(player):
-    #     if not location.address:
-    #         continue
+    if player not in hint_data:
+        hint_data.update({player: {}})
+    for location in multiworld.get_locations(player):
+        if not location.address:
+            continue
     
-    #     # use this section to calculate the hint string
-    #     if not location.name.startswith("Bingo Board"):
-    #         continue
+        # use this section to calculate the hint string
+        if not location.name.startswith("Bingo Board"):
+            continue
 
-    #     parts = location.name.split(" ")
-    #     if len(parts) != 6:
-    #         continue
+        parts = location.name.split(" ")
+        if len(parts) != 6:
+            continue
 
-    #     row = int(parts[3])
-    #     col = int(parts[5])
-    #     hint_string = world.bingo_board[row][col]
+        row = int(parts[3])
+        col = int(parts[5])
+        hint_string = world.bingo_board[row][col]
     
-    #     hint_data[player][location.address] = hint_string
-    pass
+        hint_data[player][location.address] = hint_string
 
 
 def after_extend_hint_information(
@@ -892,17 +892,17 @@ def hook_interpret_slot_data(world: World, player: int, slot_data: dict[str, Any
         Called when Universal Tracker wants to perform a fake generation
         Use this if you want to use or modify the slot_data for passed into re_gen_passthrough
     """
-    # if "bingo_board" in slot_data:
-    #     world.bingo_board = slot_data["bingo_board"]
-    #     for row, row_data in slot_data["bingo_board"].items():
-    #         for col, loc_name in row_data.items():
-    #             bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
-    #             event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
-    #             rand_location = world.get_location(loc_name)
-    #             bingo_location.access_rule = rand_location.access_rule
-    #             bingo_location.parent_region = rand_location.parent_region
-    #             event_location.access_rule = rand_location.access_rule
-    #             event_location.parent_region = rand_location.parent_region
+    if "bingo_board" in slot_data:
+        world.bingo_board = slot_data["bingo_board"]
+        for row, row_data in slot_data["bingo_board"].items():
+            for col, loc_name in row_data.items():
+                bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
+                event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
+                rand_location = world.get_location(loc_name)
+                bingo_location.access_rule = rand_location.access_rule
+                bingo_location.parent_region = rand_location.parent_region
+                event_location.access_rule = rand_location.access_rule
+                event_location.parent_region = rand_location.parent_region
 
     if "available_lives" in slot_data:
         world.available_lives = slot_data["available_lives"]

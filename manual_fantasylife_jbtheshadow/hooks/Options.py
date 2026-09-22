@@ -401,30 +401,30 @@ class IncludeShopRestrictions(Toggle):
     """Restricts shop access behind obtaining their shop inventory first."""
     display_name = "Include Shop Restrictions"
 
-# class BingoGoal(Toggle):
-#     """Complete a bingo board as part of your goal."""
-#     display_name = "Bingo"
+class BingoGoal(Toggle):
+    """Complete a bingo board as part of your goal."""
+    display_name = "Bingo"
 
-# class BingoBoardSize(Choice):
-#     """Set the size of the bingo board"""
-#     display_name = "Board Size"
-#     option_3x3 = 3
-#     option_5x5 = 5
-#     option_7x7 = 7
-#     option_9x9 = 9
-#     default = 5
+class BingoBoardSize(Choice):
+    """Set the size of the bingo board"""
+    display_name = "Board Size"
+    option_3x3 = 3
+    option_5x5 = 5
+    option_7x7 = 7
+    option_9x9 = 9
+    default = 5
 
-# class BingoCategories(OptionSet):
-#     """Set which categories can appear as board tiles.
-#     Make sure to enable other relevant options; for example, if Challenges are eligible but life challenges are not included in the pool then
-#     those locations won't ever appear, and thus, cannot be on the board as well.
+class BingoCategories(OptionSet):
+    """Set which categories can appear as board tiles.
+    Make sure to enable other relevant options; for example, if Challenges are eligible but life challenges are not included in the pool then
+    those locations won't ever appear, and thus, cannot be on the board as well.
 
-#     Valid options: ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+    Valid options: ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
     
-#     Leave empty to make all eligible."""
-#     display_name = "Eligible Categories"
-#     valid_keys = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
-#     default = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+    Leave empty to make all eligible."""
+    display_name = "Eligible Categories"
+    valid_keys = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+    default = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
 
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
@@ -500,9 +500,9 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["include_rarities"] = IncludeItemRarities
     options["include_caves"] = IncludeCaves
 
-    # options["bingo_goal"] = BingoGoal
-    # options["bingo_size"] = BingoBoardSize
-    # options["bingo_categories"] = BingoCategories
+    options["bingo_goal"] = BingoGoal
+    options["bingo_size"] = BingoBoardSize
+    options["bingo_categories"] = BingoCategories
 
     return options
 
@@ -522,7 +522,7 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
     groups["Goals"] = [
-        StoryGoal, DlcGoal, WishHuntGoal, LifeMasteryGoal #, BingoGoal
+        StoryGoal, DlcGoal, WishHuntGoal, LifeMasteryGoal, BingoGoal
     ]
     groups["Story"] = [
         IncludeChapters, IncludeStoryLocations
@@ -536,9 +536,9 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
     groups["Life Mastery"] = [
         LifeMasteryRank, LifeMasteryCount
     ]
-    # groups["Bingo"] = [
-    #     BingoBoardSize, BingoCategories
-    # ]
+    groups["Bingo"] = [
+        BingoBoardSize, BingoCategories
+    ]
     groups["Life Licenses"] = [
         IncludeLicenses, ProgressiveLicenses, AvailableLicenses, CustomAvailableLicenses, MaxLicenseRank, StartingLicense
     ]

@@ -108,7 +108,7 @@ def goal(world: World, state: CollectionState, player: int) -> str | bool:
     dlc_goal = world.options.dlc_goal.value
     life_mastery_goal = world.options.life_mastery_goal.value
     wish_hunt_goal = world.options.wish_hunt_goal.value
-    # bingo_goal = world.options.bingo_goal.value
+    bingo_goal = world.options.bingo_goal.value
 
     requires = []
     if story_goal:
@@ -119,8 +119,8 @@ def goal(world: World, state: CollectionState, player: int) -> str | bool:
         requires.append(wish_hunt(world))
     if life_mastery_goal:
         requires.append(life_mastery(world, state, player))
-    # if bingo_goal:
-    #     requires.append(complete_bingo())
+    if bingo_goal:
+        requires.append(complete_bingo())
 
     return True if not len(requires) else " AND ".join(requires)
 
@@ -157,8 +157,8 @@ def life_mastery(world: World, state: CollectionState, player: int) -> str | boo
 
     return False
 
-# def complete_bingo():
-#     return f"|Bingo Complete|"
+def complete_bingo():
+    return f"|Bingo Complete|"
 
 if use_rulebuilder:
     from rule_builder.rules import HasFromList, And, Has, Rule, False_
@@ -192,10 +192,10 @@ if use_rulebuilder:
 
             return HasFromList(*masteries, count=life_mastery_count).resolve(world)
 
-    # @dataclass()
-    # class complete_bingoRule(Rule["ManualWorld"], game=game_name):
-    #     def _instantiate(self, world: "ManualWorld") -> Rule.Resolved:
-    #         return Has("Bingo Complete").resolve(world)
+    @dataclass()
+    class complete_bingoRule(Rule["ManualWorld"], game=game_name):
+        def _instantiate(self, world: "ManualWorld") -> Rule.Resolved:
+            return Has("Bingo Complete").resolve(world)
 
     @dataclass()
     class goalRule(Rule["ManualWorld"], game=game_name):
@@ -205,7 +205,7 @@ if use_rulebuilder:
             dlc_goal = world.options.dlc_goal.value
             life_mastery_goal = world.options.life_mastery_goal.value
             wish_hunt_goal = world.options.wish_hunt_goal.value
-            # bingo_goal = world.options.bingo_goal.value
+            bingo_goal = world.options.bingo_goal.value
 
             rules = []
             if story_goal:
@@ -216,8 +216,8 @@ if use_rulebuilder:
                 rules.append(wish_huntRule())
             if life_mastery_goal:
                 rules.append(life_masteryRule())
-            # if bingo_goal:
-            #     rules.append(complete_bingoRule())
+            if bingo_goal:
+                rules.append(complete_bingoRule())
 
             return And(*rules).resolve(world)
 

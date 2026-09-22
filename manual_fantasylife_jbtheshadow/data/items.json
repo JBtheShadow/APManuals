@@ -46,7 +46,7 @@
 
         { "count": 9, "name": "Progressive Chapter", "category": [ "Story Progression" ], "progression_skip_balancing": true },
         { "count": 1, "name": "Beat Main Story", "category": [ "Story Progression", "Story Goal" ], "progression_skip_balancing": true },
-        { "count": 1, "name": "Beat DLC Story", "category": [ "Story Progression", "DLC", "Story DLC Goal" ], "progression_skip_balancing": true },
+        { "count": 1, "name": "Beat DLC Story", "category": [ "Story Progression", "DLC", "DLC Story Goal" ], "progression_skip_balancing": true },
         { "count": 1, "name": "Bingo Complete", "category": [ "Bingo" ], "progression_skip_balancing": true },
 
         { "count": 5, "name": "Bigger Bag", "category": [ "Bliss Bonuses", "Inventory Bonus" ], "progression": true },

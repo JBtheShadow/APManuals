@@ -75,5 +75,7 @@
     "Other Shop": { "yaml_option": ["include_shops", "shops_other"], "hidden": true },
     "DLC Shop": { "yaml_option": ["include_shops", "shops_dlc"], "hidden": true },
     "Crafting Recipes": { "yaml_option": ["include_crafting"], "hidden": true },
-    "Mastery": { "yaml_option": ["life_mastery_goal"], "hidden": true }
+    "Mastery": { "yaml_option": ["life_mastery_goal"], "hidden": true },
+
+    "Bingo": { "yaml_option": ["bingo_goal"] }
 }
