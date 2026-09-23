@@ -3,9 +3,9 @@ import logging
 
 global_location_table = []
 global_item_table = []
-shops = []
+# shops = []
 chests = []
-requests = []
+# requests = []
 challenges = []
 lives = []
 filler = []
@@ -19,10 +19,11 @@ skill_names = [None]
 def after_load_game_file(game_table: dict) -> dict:
     # region Extra Data
     from ..Helpers import load_data_csv
-    global shops, chests, requests, challenges, lives, filler, recipes, skill_names
-    shops = load_data_csv("csv", "shops.csv")
+    global chests, challenges, lives, filler, recipes, skill_names
+    # global shops, chests, requests, challenges, lives, filler, recipes, skill_names
+    # shops = load_data_csv("csv", "shops.csv")
     chests = load_data_csv("csv", "chests.csv")
-    requests = load_data_csv("csv", "requests.csv")
+    # requests = load_data_csv("csv", "requests.csv")
     challenges = load_data_csv("csv", "challenges.csv")
     lives = load_data_csv("csv", "lives.csv")
     filler = load_data_csv("csv", "filler.csv")
@@ -37,22 +38,6 @@ def after_load_game_file(game_table: dict) -> dict:
 # if you need access to the items after processing to add ids, etc., you should use the hooks in World.py
 def after_load_item_file(item_table: list) -> list:
     global global_item_table
-
-    #region Item Rarities
-    def build_item_rarities_items():
-        def build_category(life):
-            categories = [ "Item Rarities" ]
-            if len(life or "") > 0 and life != "Any":
-                categories.append(life)
-            return categories
-        return [{
-            "count": 5,
-            "name": f"{item} Rarity",
-            "category": build_category(life),
-            "progression": True
-        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}]
-    item_table += build_item_rarities_items()
-    #endregion
 
     #region Experience Levels
     def build_level_items():
@@ -87,16 +72,6 @@ def after_load_item_file(item_table: list) -> list:
     item_table += build_skill_level_items()
     #endregion
 
-    #region Shop Items
-    def build_shop_items():
-        return [{
-            "name": f"{name} Keys",
-            "category": ["Shop Keys"],
-            "progression": True
-        } for name in { entry["Shop"] for entry in shops }]
-    item_table += build_shop_items()
-    #endregion
-
     global_item_table = item_table
     return item_table
 
@@ -110,26 +85,26 @@ def after_load_progressive_item_file(progressive_item_table: list) -> list:
 def after_load_location_file(location_table: list) -> list:
     global global_location_table
 
-    #region Item Rarities
-    def build_item_rarity_locations():
-        def build_name(action, item, rarity):
-            if item == "Consumable" and action == "Equip":
-                action = "Use"
-            return f"{action} a {rarity}-Star {item}"
-        def build_category(item, life):
-            categories = [ "Item Rarities Hidden", f"Item Rarities: {item}" ]
-            if len(life or "") > 0 and life != "Any":
-                categories.append(life)
-            return categories
-        return [{
-            "name": build_name(action, item, rarity),
-            "category": build_category(item, life),
-            "requires": "{has_rarity(" + item + "," + (str(rarity - 1 if action == "Find" else rarity)) + "," + life + ")}"
-        } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}
-        for rarity in range(1, 6)
-        for action in ("Find", "Equip")]
-    location_table += build_item_rarity_locations()
-    #endregion
+    # #region Item Rarities
+    # def build_item_rarity_locations():
+    #     def build_name(action, item, rarity):
+    #         if item == "Consumable" and action == "Equip":
+    #             action = "Use"
+    #         return f"{action} a {rarity}-Star {item}"
+    #     def build_category(item, life):
+    #         categories = [ "Item Rarities Hidden", f"Item Rarities: {item}" ]
+    #         if len(life or "") > 0 and life != "Any":
+    #             categories.append(life)
+    #         return categories
+    #     return [{
+    #         "name": build_name(action, item, rarity),
+    #         "category": build_category(item, life),
+    #         "requires": "{has_rarity(" + item + "," + (str(rarity - 1 if action == "Find" else rarity)) + "," + life + ")}"
+    #     } for (item, life) in {(entry["Item"], entry["Life"]) for entry in lives if len(entry["Item"] or "") > 0}
+    #     for rarity in range(1, 6)
+    #     for action in ("Find", "Equip")]
+    # location_table += build_item_rarity_locations()
+    # #endregion
 
     #region Experience Level Up
     def build_level_up_locations():
@@ -150,7 +125,7 @@ def after_load_location_file(location_table: list) -> list:
     #region Skill Level Up
     def build_skill_level_up_locations():
         def build_category(skill, life, level):
-            categories = [ "Skill Level Checks", f"Level Up Checks: {skill}" ]
+            categories = [ "Skill Level Checks", f"Level Up Checks - {skill}" ]
             if len(life or "") > 0 and life != "Any":
                 categories.append(life)
             if level > 15:
@@ -172,7 +147,7 @@ def after_load_location_file(location_table: list) -> list:
         def build_category(entry: dict):
             categories = [
                 "Life Challenges",
-                f"Challenges: {entry["Rank"]} {entry["Life"]}",
+                f"Challenges - {entry["Rank"]} {entry["Life"]}",
                 entry["Rank"],
                 entry["Life"]
             ]
@@ -189,7 +164,7 @@ def after_load_location_file(location_table: list) -> list:
             ]
             return " and ".join(requires)
         return [{
-            "name": f"{entry["Rank"]} {entry["Life"]}: {entry["Name"]}",
+            "name": f"{entry["Rank"]} {entry["Life"]} Challenge - {entry["Name"]}",
             "region": f"{entry["Rank"]} Challenges",
             "category": build_category(entry),
             "requires": build_requires(entry),
@@ -200,19 +175,12 @@ def after_load_location_file(location_table: list) -> list:
 
     def build_recipe_locations():
         def build_name(entry: dict):
-            pronoun = "a" if entry["Item"].startswith("Pair of") else \
-                      "some" if entry["Item"].endswith("s") else \
-                      "an" if entry["Item"].startswith("A") or \
-                              entry["Item"].startswith("E") or \
-                              entry["Item"].startswith("I") or \
-                              entry["Item"].startswith("O") or \
-                              entry["Item"].startswith("U") else "a"
-            return f"Craft {pronoun} {entry['Item']}"
+            return entry["Rank"] + " " + entry["Life"] + " Crafting - " + entry["Item"]
         def build_category(entry: dict):
             logic_rank = entry["Rank"] if entry["Rank"] != "Demi-Creator" else "Creator"
             categories = [
                 "Crafting Recipes",
-                f"Crafting: {entry["Rank"]} {entry["Life"]}",
+                f"Crafting - {entry["Rank"]} {entry["Life"]}",
                 logic_rank,
                 entry["Life"]
             ]
@@ -232,30 +200,30 @@ def after_load_location_file(location_table: list) -> list:
         } for entry in recipes]
     location_table += build_recipe_locations()
 
-    def build_request_locations():
-        def build_category(entry: dict):
-            categories = [
-                f"Other Requests",
-                f"Other Requests {entry["#"]}",
-                f"Location: {entry["Region"]} - Requests",
-            ]
-            categories += [extra for extra in [
-                entry["Rank"], entry["Life1"], entry["Life2"], entry["Life3"], entry["DLC"]
-            ] if len(extra) > 0]
-            return categories
-        return [{
-            "name": f"{entry["Issuer"]}'s Request #{entry["#"]}: {entry["Name"]}",
-            "region": entry["Region"],
-            "category": build_category(entry),
-            "requires": entry["Requires"],
-        } for entry in requests ]
-    location_table += build_request_locations()
+    # def build_request_locations():
+    #     def build_category(entry: dict):
+    #         categories = [
+    #             f"Other Requests",
+    #             f"Other Requests {entry["#"]}",
+    #             f"Location - {entry["Region"]} - Requests",
+    #         ]
+    #         categories += [extra for extra in [
+    #             entry["Rank"], entry["Life1"], entry["Life2"], entry["Life3"], entry["DLC"]
+    #         ] if len(extra) > 0]
+    #         return categories
+    #     return [{
+    #         "name": f"{entry["Issuer"]}'s Request #{entry["#"]} - {entry["Name"]}",
+    #         "region": entry["Region"],
+    #         "category": build_category(entry),
+    #         "requires": entry["Requires"],
+    #     } for entry in requests ]
+    # location_table += build_request_locations()
 
     def build_chest_locations():
         def build_category(entry: dict):
             category = [
                 "Treasure Chests",
-                f"Location: {entry["Region"]} - Red Chest"
+                f"Red Chests - {entry["Region"]}"
             ]
             if "DLC" in entry["DLC"]:
                 category += ["DLC", "DLC Chests"]
@@ -263,72 +231,11 @@ def after_load_location_file(location_table: list) -> list:
                 category.append("Trial Chests")
             return category
         return [{
-            "name": f"{entry["Region"]} Red Chest: {entry["Item"]}",
+            "name": f"{entry["Region"]} Red Chest - {entry["Item"]}",
             "region": entry["Region"],
             "category": build_category(entry),
         } for entry in chests]
     location_table += build_chest_locations()
-
-    def build_shop_locations():
-        def build_category(entry: dict):
-            category = [
-                "Shops",
-                f"Shop Price: {entry["Dosh"]}",
-                f"Shops: {entry["Region"]}"
-            ]
-            if entry["Group"] == "DLC" or "DLC" in entry["Requirement"]:
-                category.append("DLC")
-            if entry["Requirement"].startswith("Master:"):
-                category += ["Master", entry["Requirement"].split(":")[1].strip()]
-            if entry["Group"] == "Life":
-                category.append("Life Shop")
-            if entry["Requirement"] == "Bliss":
-                category.append("Bliss Shop")
-            if entry["Group"] == "Fairy":
-                category.append("Fairy Shop")
-            if entry["Group"] == "Story":
-                category.append("Story Shop")
-            match entry["Group"]:
-                case "Castele":
-                    category.append("Castele Shop")
-                case "Port Puerto":
-                    category.append("Port Shop")
-                case "Al Maajik":
-                    category.append("Desert Shop")
-                case "DLC":
-                    category.append("DLC Shop")
-                case _:
-                    category.append("Other Shop")
-            return category
-        def build_requires(entry: dict):
-            require_list = [ f"{{OptOne(|{entry["Shop"]} Keys|)}}" ]
-            if entry["Requirement"].startswith("Master:"):
-                require_list.append(f"{{has_license(Master {entry["Requirement"].split(":")[1].strip()})}}")
-            if entry["Requirement"] == "Bliss":
-                match entry["Group"]:
-                    case "Castele":
-                        require_list.append("{better_castele_shopping()}")
-                    case "Port Puerto":
-                        require_list.append("{better_port_shopping()}")
-                    case "Al Maajik":
-                        require_list.append("{better_desert_shopping()}")
-                    case "Other":
-                        require_list.append("{better_traveling_shopping()}")
-            if "Level:" in entry["Requirement"]:
-                require_list.append("{OptOne(|Progressive Chapter:9|)}" if "DLC" in entry["Requirement"] else "{OptOne(|Progressive Chapter:7|)}")
-            elif "DLC" in entry["Requirement"]:
-                require_list.append("{OptOne(|Progressive Chapter:9|)}")
-            if entry["Group"] == "Fairy":
-                require_list.append("{has_fairy_access()}")
-            return " and ".join(require_list)
-        return [{
-            "name": f"{entry["Shop"]}: Purchased {entry["Item Name"]}",
-            "region": entry["Region"],
-            "category": build_category(entry),
-            "requires": build_requires(entry),
-            "dont_place_item_category": ["Shop Keys"]
-        } for entry in shops]
-    location_table += build_shop_locations()
 
     global_location_table = location_table
     return location_table
@@ -358,7 +265,7 @@ def after_load_category_file(category_table: dict) -> dict:
     })
 
     category_table.update({
-        f"Shop Price: {price}": { "hidden": True }
+        f"Shop Price - {price}": { "hidden": True }
         for price in range(ShopMaxItemCost.range_start, ShopMaxItemCost.range_end * 10 + 1)
     })
 
@@ -402,6 +309,10 @@ def get_wish_hunt_available_location_count(
         skill_max_level = 200,
         skill_logic = False,
         skill_pack_size = 1,
+        shops_castele = False,
+        shops_port = False,
+        shops_desert = False,
+        shops_other = False,
         shops_dlc = False,
         shops_bliss = False,
         shops_fairy = False,
@@ -412,8 +323,12 @@ def get_wish_hunt_available_location_count(
         shops_restricted = False,
         chests_dlc = False,
         chests_trials = False,
+        chests_filter = None,
         available_lives = None
 ):
+    if chests_filter is None:
+        chests_filter = []
+
     if available_lives is None:
         available_lives = []
 
@@ -455,14 +370,19 @@ def get_wish_hunt_available_location_count(
         })
 
     if include_chests:
+        chests_filter = [
+            region.replace("(DLC)", "").replace("(Trials)", "").strip()
+            for region in chests_filter
+        ]
         count += len([
             entry for entry in chests
             if (chests_dlc or "DLC" not in entry["DLC"])
             and (chests_trials or "Trial" not in entry["Region"])
+            and (not len(chests_filter) or entry["Region"] in chests_filter)
         ])
 
-    if include_shops:
-        count += get_available_shop_checks(shops_dlc, shops_bliss, shops_master, shops_level, licenses_max_rank, shops_story, shops_fairy, shops_cost * 10, shops_restricted, available_lives)
+    # if include_shops:
+    #     count += get_available_shop_checks(shops_dlc, shops_bliss, shops_master, shops_level, licenses_max_rank, shops_story, shops_fairy, shops_cost * 10, shops_restricted, available_lives)
 
     return count
 
@@ -492,48 +412,55 @@ def get_life_recipe_checks(dlc, max_rank, strict_lives):
     ])
 
 def get_other_requests_checks(dlc, request_count, max_rank, available_lives):
-    formated_lives = [name for name in life_names if name in available_lives]
-    formated_ranks = [rank_names[i] for i in range(1, max_rank + 1)]
-    request_locations = [
-        entry["Name"] for entry in requests
-        if (dlc or "DLC" not in entry["DLC"])
-           and (request_count >= int(entry["#"]))
-           and (len(entry["Rank"] or "") == 0 or entry["Rank"] in formated_ranks)
-           and (len(entry["Life1"] or "") == 0 or entry["Life1"] in formated_lives)
-           and (len(entry["Life2"] or "") == 0 or entry["Life2"] in formated_lives)
-           and (len(entry["Life3"] or "") == 0 or entry["Life3"] in formated_lives)
-    ]
+    request_numbers = {f"Other Requests {i}" for i in range(1, request_count + 1)}
+    request_ranks = {rank_names[i] for i in range(1, max_rank + 1)}
+    all_lives = {life for life in life_names if life != None}
+
+    request_locations = []
+    for location in global_location_table:
+        if "Other Requests" not in location["category"]:
+            continue
+        if not dlc and "DLC" in location["category"]:
+            continue
+        if not len(request_numbers.intersection(location["category"])):
+            continue
+        if not len(request_ranks.intersection(location["category"])):
+            continue
+        lives = all_lives.intersection(location["category"])
+        if len(lives) > len(lives.intersection(available_lives)):
+            continue
+        request_locations.append(location["name"])
 
     return len(request_locations)
 
-def get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
-    return {
-        f"{entry["Shop"]} Keys" for entry in shops
-        if (with_lives or "Master:" not in entry["Requirement"])
-           and (with_story or entry["Group"] != "Story")
-           and (with_level or "Level:" not in entry["Requirement"])
-           and (with_fairy or entry["Group"] != "Fairy")
-           and (max_dosh >= int(entry["Dosh"]))
-           and (dlc or entry["Group"] != "DLC")
-    }
+# def get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
+#     return {
+#         f"{entry["Shop"]} Keys" for entry in shops
+#         if (with_lives or "Master:" not in entry["Requirement"])
+#            and (with_story or entry["Group"] != "Story")
+#            and (with_level or "Level:" not in entry["Requirement"])
+#            and (with_fairy or entry["Group"] != "Fairy")
+#            and (max_dosh >= int(entry["Dosh"]))
+#            and (dlc or entry["Group"] != "DLC")
+#     }
 
-def get_unused_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
-    all_keys = { f"{entry["Shop"]} Keys" for entry in shops }
-    used_keys = get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh)
-    return all_keys - used_keys
+# def get_unused_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh):
+#     all_keys = { f"{entry["Shop"]} Keys" for entry in shops }
+#     used_keys = get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh)
+#     return all_keys - used_keys
 
-def get_available_shop_checks(dlc, with_bliss, with_lives, with_level, max_rank, with_story, with_fairy, max_dosh, shops_restricted, available_lives):
-    formated_lives = [f"Master: {x}" for x in available_lives]
-    total_checks = len([
-        entry for entry in shops
-        if (dlc or (entry["Group"] != "DLC" and "DLC" not in entry["Requirement"]))
-           and (with_bliss or "Bliss" not in entry["Requirement"])
-           and (with_level or "Level:" not in entry["Requirement"])
-           and (with_lives and max_rank >= 5 and entry["Requirement"] in formated_lives or "Master:" not in entry["Requirement"])
-           and (with_story or entry["Group"] != "Story")
-           and (with_fairy or entry["Group"] != "Fairy")
-           and (max_dosh >= int(entry["Dosh"]))
-    ])
-    if shops_restricted:
-        total_checks -= len(get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh))
-    return total_checks
+# def get_available_shop_checks(dlc, with_bliss, with_lives, with_level, max_rank, with_story, with_fairy, max_dosh, shops_restricted, available_lives):
+#     formated_lives = [f"Master: {x}" for x in available_lives]
+#     total_checks = len([
+#         entry for entry in shops
+#         if (dlc or (entry["Group"] != "DLC" and "DLC" not in entry["Requirement"]))
+#            and (with_bliss or "Bliss" not in entry["Requirement"])
+#            and (with_level or "Level:" not in entry["Requirement"])
+#            and (with_lives and max_rank >= 5 and entry["Requirement"] in formated_lives or "Master:" not in entry["Requirement"])
+#            and (with_story or entry["Group"] != "Story")
+#            and (with_fairy or entry["Group"] != "Fairy")
+#            and (max_dosh >= int(entry["Dosh"]))
+#     ])
+#     if shops_restricted:
+#         total_checks -= len(get_used_shop_storage_keys(dlc, with_lives, with_level, with_story, with_fairy, max_dosh))
+#     return total_checks

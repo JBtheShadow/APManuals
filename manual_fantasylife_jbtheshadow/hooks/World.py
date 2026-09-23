@@ -9,8 +9,10 @@ from BaseClasses import MultiWorld, CollectionState, Item
 from ..Items import ManualItem
 from ..Locations import ManualLocation
 
+# from .Data import (life_names, rank_names, skill_names, get_filler_categories, get_filler_items_by_category,
+#                    get_unused_shop_storage_keys, get_wish_hunt_available_location_count)
 from .Data import (life_names, rank_names, skill_names, get_filler_categories, get_filler_items_by_category,
-                   get_unused_shop_storage_keys, get_wish_hunt_available_location_count)
+                   get_wish_hunt_available_location_count)
 
 # Raw JSON data from the Manual apworld, respectively:
 #          data/game.json, data/items.json, data/locations.json, data/regions.json
@@ -65,11 +67,12 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     This is the earliest hook called during generation, before anything else is done.
     Use it to check or modify incompatible options, or to set up variables for later use.
     """
-    game_seed = get_option(world, "game_seed", "")
+    # game_seed = get_option(world, "game_seed", "")
     story_goal = get_option(world, "story_goal", False)
     dlc_goal = get_option(world, "dlc_goal", False)
     life_mastery_goal = get_option(world, "life_mastery_goal", False)
     wish_hunt_goal = get_option(world, "wish_hunt_goal", False)
+    bingo_goal = get_option(world, "bingo_goal", False)
     include_chapters = get_option(world, "include_chapters", False)
     include_dlc = get_option(world, "include_dlc", False)
     include_story = get_option(world, "include_story", False)
@@ -83,6 +86,10 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     include_chests = get_option(world, "include_chests", False)
     chests_dlc = get_option(world, "chests_dlc", False)
     chests_trials = get_option(world, "chests_trials", False)
+    chests_filter = get_option(world, "chests_filter", [])
+    chests_filter = [region.replace("(DLC)", "").replace("(Trials)", "").strip()
+                     for region in chests_filter]
+    world.chests_filter = chests_filter
     life_mastery_rank = get_option(world, "life_mastery_rank", 0)
     life_mastery_count = get_option(world, "life_mastery_count", 0)
     wish_hunt_total = get_option(world, "wish_hunt_total", 0)
@@ -112,11 +119,16 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     skill_max_level = get_option(world, "skill_max_level", 0)
     skill_logic = get_option(world, "skill_logic", False)
     skill_pack_size = get_option(world, "skill_pack_size", 1)
+    shops_castele = get_option(world, "shops_castele", True)
+    shops_port = get_option(world, "shops_port", False)
+    shops_desert = get_option(world, "shops_desert", False)
+    shops_other = get_option(world, "shops_other", False)
     shops_story = get_option(world, "shops_story", False)
     shops_dlc = get_option(world, "shops_dlc", False)
     shops_bliss = get_option(world, "shops_bliss", False)
     shops_fairy = get_option(world, "shops_fairy", False)
     shops_level = get_option(world, "shops_level", False)
+    shops_life = get_option(world, "shops_life", False)
     shops_master = get_option(world, "shops_master", False)
     shops_cost = get_option(world, "shops_cost", 0)
     shops_restricted = get_option(world, "shops_restricted", False)
@@ -124,11 +136,9 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     fake_gen = getattr(multiworld, "generation_is_fake", False)
 
     #region Seed
-    if not game_seed:
-        game_seed = str(world.random.randint(1, 999999999999))
-        set_option(world, "game_seed", game_seed)
-    seed = hash(game_seed)
-    world.random.seed(seed)
+    import time
+    world.game_seed = time.time()
+    world.random.seed(world.game_seed)
     #endregion
 
     #region DLC
@@ -158,6 +168,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             set_option(world, "requests_dlc", requests_dlc)
 
         if shops_dlc:
+            logging.warning("Cannot include DLC shop locations without including the DLC.")
             shops_dlc = False
             set_option(world, "shops_dlc", shops_dlc)
 
@@ -350,14 +361,24 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
 
     #region Shops
     if include_shops:
-        if shops_master and licenses_max_rank < RankChoice.option_master:
+        if shops_master and not shops_life:
+            logging.warning("Cannot include master shop locations without including life shops.")
+            shops_master = False
+            set_option(world, "shops_master", shops_master)
+        elif shops_master and licenses_max_rank < RankChoice.option_master:
             logging.warning("Cannot include master shop locations unless the highest license rank available is at Master or higher.")
             shops_master = False
             set_option(world, "shops_master", shops_master)
+
+        if not shops_castele and not shops_port and not shops_desert and not shops_other and not shops_dlc:
+            logging.warning("Must include at least one type of shop among Castele, Port Puerto, Al Maajik, Other or DLC.")
+            logging.warning("Disabling include_shops")
+            include_shops = False
+            set_option(world, "include_shops", include_shops)
     #endregion
 
     #region Goals
-    if not story_goal and not dlc_goal and not life_mastery_goal and not wish_hunt_goal:
+    if not story_goal and not dlc_goal and not life_mastery_goal and not wish_hunt_goal and not bingo_goal:
         logging.warning("At least one goal option must be chosen, defaulting to story goal.")
         story_goal = True
         set_option(world, "story_goal", story_goal)
@@ -406,6 +427,10 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             skill_max_level,
             skill_logic,
             skill_pack_size,
+            shops_castele,
+            shops_port,
+            shops_desert,
+            shops_other,
             shops_dlc,
             shops_bliss,
             shops_fairy,
@@ -416,6 +441,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             shops_restricted,
             chests_dlc,
             chests_trials,
+            chests_filter,
             world.available_lives,
         )
 
@@ -447,43 +473,39 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
     pass
 
-# Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
-def before_create_regions(world: World, multiworld: MultiWorld, player: int):
-    pass
-
 # Called after regions and locations are created, in case you want to see or modify that information. Victory location is included.
 def after_create_regions(world: World, multiworld: MultiWorld, player: int):
     # Use this hook to remove locations from the world
     location_names_to_remove: list[str] = []  # List of location names
 
     # Add your code here to calculate which locations to remove
+    if not getattr(multiworld, "generation_is_fake", False):
+        from .Options import LevelRange, SkillLevelRange
 
-    from .Options import LevelRange, SkillLevelRange
+        include_dlc = get_option(world, "include_dlc", False)
 
-    include_dlc = get_option(world, "include_dlc", False)
+        experience_min_level = LevelRange.range_start
+        experience_max_level = get_option(world, "experience_max_level", LevelRange.range_end if include_dlc else LevelRange.range_end_vanilla)
+        location_names_to_remove += [
+            f"Reached Level {level}"
+            for level in range(
+                LevelRange.range_start,
+                (LevelRange.range_end if include_dlc else LevelRange.range_end_vanilla) + 1
+            )
+            if level < experience_min_level or level > experience_max_level
+        ]
 
-    experience_min_level = LevelRange.range_start
-    experience_max_level = get_option(world, "experience_max_level", LevelRange.range_end if include_dlc else LevelRange.range_end_vanilla)
-    location_names_to_remove += [
-        f"Reached Level {level}"
-        for level in range(
-            LevelRange.range_start,
-            (LevelRange.range_end if include_dlc else LevelRange.range_end_vanilla) + 1
-        )
-        if level < experience_min_level or level > experience_max_level
-    ]
-
-    skill_min_level = SkillLevelRange.range_start
-    skill_max_level = get_option(world, "skill_max_level", SkillLevelRange.range_end if include_dlc else SkillLevelRange.range_end_vanilla)
-    location_names_to_remove += [
-        f"Reached {skill} Level {level}"
-        for level in range(
-            SkillLevelRange.range_start,
-            (SkillLevelRange.range_end if include_dlc else SkillLevelRange.range_end_vanilla) + 1
-        )
-        for skill in skill_names
-        if level < skill_min_level or level > skill_max_level
-    ]
+        skill_min_level = SkillLevelRange.range_start
+        skill_max_level = get_option(world, "skill_max_level", SkillLevelRange.range_end if include_dlc else SkillLevelRange.range_end_vanilla)
+        location_names_to_remove += [
+            f"Reached {skill} Level {level}"
+            for level in range(
+                SkillLevelRange.range_start,
+                (SkillLevelRange.range_end if include_dlc else SkillLevelRange.range_end_vanilla) + 1
+            )
+            for skill in skill_names
+            if level < skill_min_level or level > skill_max_level
+        ]
 
     for region in multiworld.regions:
         if region.player == player:
@@ -522,13 +544,13 @@ def before_create_items_all(
     skill_logic = get_option(world, "skill_logic", False)
     skill_pack_size = get_option(world, "skill_pack_size", 0)
 
-    shops_dlc = get_option(world, "shops_dlc", False)
-    shops_master = get_option(world, "shops_master", False)
-    shops_level = get_option(world, "shops_level", False)
-    shops_story = get_option(world, "shops_story", False)
-    shops_fairy = get_option(world, "shops_fairy", False)
-    shops_cost = get_option(world, "shops_cost", False) * 10
-    shops_restricted = get_option(world, "shops_restricted", False)
+    # shops_dlc = get_option(world, "shops_dlc", False)
+    # shops_master = get_option(world, "shops_master", False)
+    # shops_level = get_option(world, "shops_level", False)
+    # shops_story = get_option(world, "shops_story", False)
+    # shops_fairy = get_option(world, "shops_fairy", False)
+    # shops_cost = get_option(world, "shops_cost", False) * 10
+    # shops_restricted = get_option(world, "shops_restricted", False)
 
     if wish_hunt_goal:
         item_config["Lost Wish"] = {"progression": wish_hunt_total}
@@ -561,12 +583,17 @@ def before_create_items_all(
             if is_item_name_enabled(multiworld, player, item_name):
                 item_config[item_name] = {"progression": int(count)}
 
-    if shops_restricted:
-        for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
-            logging.info(f"{unused_shop_storage_key} unused, being removed")
-            item_config[unused_shop_storage_key] = {"progression": 0}
+    # if shops_restricted:
+    #     for unused_shop_storage_key in get_unused_shop_storage_keys(shops_dlc, shops_master, shops_level, shops_story, shops_fairy, shops_cost):
+    #         logging.info(f"{unused_shop_storage_key} unused, being removed")
+    #         item_config[unused_shop_storage_key] = {"progression": 0}
 
     return item_config
+
+
+# The item pool before place_item(_category) are processed, in case you want to see the raw item pool at that stage
+def before_create_items_place_items(item_pool: list, world: World, multiworld: MultiWorld, player: int) -> list:
+    return item_pool
 
 
 # The item pool before starting items are processed, in case you want to see the raw item pool at that stage
@@ -581,45 +608,45 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     starting_inventory = []
 
     # region Place_item Override
-    if not getattr(multiworld, "generation_is_fake", False):
-        locations = multiworld.get_unfilled_locations(player)
-        for location in locations:
-            manual_loc = world.location_name_to_location.get(location.name, {})
-            p_items_names = manual_loc.get("place_item", manual_loc.get("make_place_item", []))
+    # if not getattr(multiworld, "generation_is_fake", False):
+    #     locations = multiworld.get_unfilled_locations(player)
+    #     for location in locations:
+    #         manual_loc = world.location_name_to_location.get(location.name, {})
+    #         p_items_names = manual_loc.get("place_item", manual_loc.get("make_place_item", []))
 
-            # category
-            for cat in manual_loc.get("place_item_category", []):
-                p_items_names.extend(world.item_name_groups.get(cat, []))
+    #         # category
+    #         for cat in manual_loc.get("place_item_category", []):
+    #             p_items_names.extend(world.item_name_groups.get(cat, []))
 
-            if p_items_names:
-                if not manual_loc.get("make_place_item"):
-                    logging.debug(f"Found the Manual location '{location.name}' that will get a fix to its place_item")
-                # forbidding
-                forbid_names: list[str] = manual_loc.get("dont_place_item", [])
-                for cat in manual_loc.get("dont_place_item_category", []):
-                    forbid_names.extend(world.item_name_groups.get(cat, []))
+    #         if p_items_names:
+    #             if not manual_loc.get("make_place_item"):
+    #                 logging.debug(f"Found the Manual location '{location.name}' that will get a fix to its place_item")
+    #             # forbidding
+    #             forbid_names: list[str] = manual_loc.get("dont_place_item", [])
+    #             for cat in manual_loc.get("dont_place_item_category", []):
+    #                 forbid_names.extend(world.item_name_groups.get(cat, []))
 
-                for name in forbid_names:
-                    if name in p_items_names:
-                        p_items_names.remove(name)
+    #             for name in forbid_names:
+    #                 if name in p_items_names:
+    #                     p_items_names.remove(name)
 
-                # Grabbing the existing items
-                p_items = [i for i in item_pool if i.name in p_items_names]
-                if not p_items:  # empty
-                    raise ValueError(
-                        f"location {location.name} could not have any forced placed item from this list [{p_items_names}] none could be found in item_pool")
-                p_item = world.random.choice(p_items)
-                location.place_locked_item(p_item)
-                remove_specific_item(item_pool, p_item)
+    #             # Grabbing the existing items
+    #             p_items = [i for i in item_pool if i.name in p_items_names]
+    #             if not p_items:  # empty
+    #                 raise ValueError(
+    #                     f"location {location.name} could not have any forced placed item from this list [{p_items_names}] none could be found in item_pool")
+    #             p_item = world.random.choice(p_items)
+    #             location.place_locked_item(p_item)
+    #             remove_specific_item(item_pool, p_item)
 
-                manual_loc.pop("place_item", None)
-                manual_loc.pop("place_item_category", None)
-                manual_loc.pop("dont_place_item_category", None)
-                manual_loc.pop("dont_place_item", None)
+    #             manual_loc.pop("place_item", None)
+    #             manual_loc.pop("place_item_category", None)
+    #             manual_loc.pop("dont_place_item_category", None)
+    #             manual_loc.pop("dont_place_item", None)
 
-                # make_place_item exists so other players will still get the item placement just pre processed
-                manual_loc["make_place_item"] = p_items_names
-                pass
+    #             # make_place_item exists so other players will still get the item placement just pre processed
+    #             manual_loc["make_place_item"] = p_items_names
+    #             pass
     # endregion
 
     # Add your code here to calculate which items to remove.
@@ -631,12 +658,12 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     licenses_progressive = get_option(world, "licenses_progressive", False)
     include_bliss = get_option(world, "include_bliss", False)
 
-    include_levels = get_option(world, "include_levels", False)
-    include_skills = get_option(world, "include_skills", False)
-    experience_logic = get_option(world, "experience_logic", False)
-    experience_pack_size = get_option(world, "experience_pack_size", 0)
-    skill_logic = get_option(world, "skill_logic", False)
-    skill_pack_size = get_option(world, "skill_pack_size", 0)
+    # include_levels = get_option(world, "include_levels", False)
+    # include_skills = get_option(world, "include_skills", False)
+    # experience_logic = get_option(world, "experience_logic", False)
+    # experience_pack_size = get_option(world, "experience_pack_size", 0)
+    # skill_logic = get_option(world, "skill_logic", False)
+    # skill_pack_size = get_option(world, "skill_pack_size", 0)
 
     starting_life = getattr(world, "starting_life", "")
     starting_bliss = getattr(world, "starting_bliss", "")
@@ -649,15 +676,15 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
         item_name = starting_bliss
         starting_inventory.append(item_name)
 
-    if include_levels and experience_logic:
-        item_name = f"Level Pack ({experience_pack_size}x)"
-        starting_inventory.append(item_name)
+    # if include_levels and experience_logic:
+    #     item_name = f"Level Pack ({experience_pack_size}x)"
+    #     starting_inventory.append(item_name)
 
-    if include_skills and skill_logic:
-        for skill in skill_names:
-            item_name = f"{skill} Level Pack ({skill_pack_size}x)"
-            if is_item_name_enabled(multiworld, player, item_name):
-                starting_inventory.append(item_name)
+    # if include_skills and skill_logic:
+    #     for skill in skill_names:
+    #         item_name = f"{skill} Level Pack ({skill_pack_size}x)"
+    #         if is_item_name_enabled(multiworld, player, item_name):
+    #             starting_inventory.append(item_name)
 
     for item_name in item_names_to_remove:
         item = next((i for i in item_pool if i.name == item_name), 0)
@@ -704,6 +731,59 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
         # True if the player can access the location
         # CollectionState is defined in BaseClasses
         return True
+
+    if not getattr(multiworld, "generation_is_fake", False):
+        bingo_goal = is_option_enabled(multiworld, player, "bingo_goal")
+        if bingo_goal:
+            from .Options import BingoBoardSize, BingoCategories
+            bingo_size: int = get_option(world, "bingo_size", BingoBoardSize.default)
+            bingo_categories: list[str] = get_option(world, "bingo_categories", BingoCategories.default)
+            if not len(bingo_categories):
+                bingo_categories = BingoCategories.valid_keys
+            cand_loc_names = set()
+            if "Passwords" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Passwords"])
+            if "Bliss Bonuses" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Bliss Bonuses"])
+            if "Story" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Story"])
+                cand_loc_names.update(world.location_name_groups["No Story"])
+                cand_loc_names.update(world.location_name_groups["DLC Story"])
+                cand_loc_names.update(world.location_name_groups["No DLC Story"])
+            if "Extras" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Extras"])
+            if "Locations" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Cave Passes"])
+            if "Ranks" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Life Ranks"])
+            if "Challenges" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Life Challenges"])
+            if "Recipes" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Crafting Recipes"])
+            if "Other Requests" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Other Requests"])
+            if "Chests" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Treasure Chests"])
+            if "Shops" in bingo_categories:
+                cand_loc_names.update(world.location_name_groups["Shops"])
+
+            world.bingo_board = {}
+            locations = [loc for loc in world.get_locations() if loc.name in cand_loc_names]
+            for row in range(1, bingo_size + 1):
+                world.bingo_board[row] = {}
+                for col in range(1, bingo_size + 1):
+                    rand_location = world.random.choice(locations)
+                    locations.remove(rand_location)
+
+                    bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
+                    bingo_location.access_rule = rand_location.access_rule
+                    bingo_location.parent_region = rand_location.parent_region
+
+                    event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
+                    event_location.access_rule = rand_location.access_rule
+                    event_location.parent_region = rand_location.parent_region
+
+                    world.bingo_board[row][col] = rand_location.name
 
     ## Common functions:
     # location = world.get_location(location_name, player)
@@ -756,6 +836,17 @@ def after_remove_item(world: World, state: CollectionState, Changed: bool, item:
 
 # This is called before slot data is set and provides an empty dict ({}), in case you want to modify it before Manual does
 def before_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld, player: int) -> dict:
+    if not getattr(multiworld, "generation_is_fake", False):
+        if getattr(world, "bingo_board", 0):
+            slot_data["bingo_board"] = world.bingo_board
+        if getattr(world, "available_lives", 0):
+            slot_data["available_lives"] = world.available_lives
+        if getattr(world, "starting_life", 0):
+            slot_data["starting_life"] = world.starting_life
+        if getattr(world, "starting_bliss", 0):
+            slot_data["starting_bliss"] = world.starting_bliss
+        if getattr(world, "game_seed", 0):
+            slot_data["game_seed"] = world.game_seed
     return slot_data
 
 
@@ -775,17 +866,25 @@ def before_extend_hint_information(
 ) -> None:
 
     ### Example way to use this hook:
-    # if player not in hint_data:
-    #     hint_data.update({player: {}})
-    # for location in multiworld.get_locations(player):
-    #     if not location.address:
-    #         continue
-    #
-    #     use this section to calculate the hint string
-    #
-    #     hint_data[player][location.address] = hint_string
+    if player not in hint_data:
+        hint_data.update({player: {}})
+    for location in multiworld.get_locations(player):
+        if not location.address:
+            continue
+    
+        # use this section to calculate the hint string
+        if not location.name.startswith("Bingo Board"):
+            continue
 
-    pass
+        parts = location.name.split(" ")
+        if len(parts) != 6:
+            continue
+
+        row = int(parts[3])
+        col = int(parts[5])
+        hint_string = world.bingo_board[row][col]
+    
+        hint_data[player][location.address] = hint_string
 
 
 def after_extend_hint_information(
@@ -798,4 +897,29 @@ def hook_interpret_slot_data(world: World, player: int, slot_data: dict[str, Any
         Called when Universal Tracker wants to perform a fake generation
         Use this if you want to use or modify the slot_data for passed into re_gen_passthrough
     """
+    if "bingo_board" in slot_data:
+        world.bingo_board = slot_data["bingo_board"]
+        for row, row_data in slot_data["bingo_board"].items():
+            for col, loc_name in row_data.items():
+                bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
+                event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
+                rand_location = world.get_location(loc_name)
+                bingo_location.access_rule = rand_location.access_rule
+                bingo_location.parent_region = rand_location.parent_region
+                event_location.access_rule = rand_location.access_rule
+                event_location.parent_region = rand_location.parent_region
+
+    if "available_lives" in slot_data:
+        world.available_lives = slot_data["available_lives"]
+
+    if "starting_life" in slot_data:
+        world.starting_life = slot_data["starting_life"]
+
+    if "starting_bliss" in slot_data:
+        world.starting_bliss = slot_data["starting_bliss"]
+
+    if "game_seed" in slot_data:
+        world.game_seed = slot_data["game_seed"]
+        world.random.seed(world.game_seed)
+
     return slot_data

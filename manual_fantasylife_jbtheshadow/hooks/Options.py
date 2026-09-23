@@ -1,5 +1,5 @@
 # Object classes from AP that represent different types of options that you can create
-from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions, OptionList
+from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions, OptionList, OptionSet
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
 from ..Helpers import is_option_enabled, get_option_value
 from typing import Type, Any
@@ -25,25 +25,22 @@ from typing import Type, Any
 # To add an option, use the before_options_defined hook below and something like this:
 #   options["total_characters_to_win_with"] = TotalCharactersToWinWith
 #
-class GameSeed(FreeText):
-    """Seed used for generation, leave blank for a random one."""
-    display_name = "Seed"
-
 class StoryGoal(Toggle):
     """Beating the main story is required for the goal."""
-    display_name = "Beat the Main Story as a Goal Requirement"
+    display_name = "Beat the Main Story"
 
 class DlcGoal(Toggle):
-    """Beating the Origin Island DLC story is required for the goal."""
-    display_name = "Beat the Origin Island DLC Story as a Goal Requirement"
+    """Beating the Origin Island DLC story is required for the goal.
+    Requires including DLC content."""
+    display_name = "Beat the Origin Island DLC Story"
 
 class LifeMasteryGoal(Toggle):
     """Reaching a specified license rank in a number of lives is required for the goal."""
-    display_name = "Life Mastery as a Goal Requirement"
+    display_name = "Life Mastery"
 
 class WishHuntGoal(DefaultOnToggle):
     """Finding a number of lost wishes is required for the goal."""
-    display_name = "Wish Hunt as a Goal Requirement"
+    display_name = "Wish Hunt"
 
 class IncludeDlcContent(Toggle):
     """Adds content and locations for the Origin Island DLC, which includes:
@@ -131,6 +128,47 @@ class IncludeDlcChests(Toggle):
 class IncludeTrialChests(Toggle):
     """Requires DLC chests to be included. Toggle to include chests found within each of the Ancient Tower trials. Not recommended."""
     display_name = "Include Ancient Tower Chests"
+
+class ChestLocationsFilter(OptionSet):
+    """Use this to further customize which areas with red chests should be considered by the randomizer.
+    Areas from the DLC require the corresponding toggle to be one too.
+    Any of the trial areas also require their corresponding toggle.
+    Pass an empty list to disable the filter."""
+    display_name = "Areas to Include"
+    valid_keys = [
+        "East Grassy Plains",
+        "Haniwa Cave",
+        "West Grassy Plains",
+        "Mount Snowpeak",
+        "Waterfall Cave",
+        "Lava Cave",
+        "Mount Snowpeak Summit",
+        "Napdragon's Nest",
+        "Tortuga Archipelago",
+        "Deepsea Cave",
+        "Nautilus Cave",
+        "Forgotten Tunnel",
+        "Aridian Desert",
+        "Cave of Bones",
+        "Giant Fossil Hall",
+        "Subterranean Lake",
+        "Ancient Ruins",
+        "Chamber of Gold",
+        "East Levitania",
+        "Central Levitania",
+        "West Levitania",
+        "Central Grassland (DLC)",
+        "Rocky Hill Shrine (DLC)",
+        "Forest Shrine (DLC)",
+        "Penguin Beach (DLC)",
+        "Trial of Time (DLC) (Trials)",
+        "Trial of Time Top Floor (DLC) (Trials)",
+        "Trial of Darkness (DLC) (Trials)",
+        "Trial of Darkness Top Floor (DLC) (Trials)",
+        "Trial of Light (DLC) (Trials)",
+        "Trial of Light Top Floor (DLC) (Trials)"
+    ]
+    default = valid_keys
 
 class RankChoice(Choice):
     option_fledgling = 1
@@ -347,8 +385,24 @@ class StartingBlissBonus(Choice):
     option_useful = 8
     default = 8
 
+class IncludeCasteleShopLocations(DefaultOnToggle):
+    """Includes shop locations in Castele."""
+    display_name = "Include Castele Shop Locations"
+
+class IncludePortShopLocations(Toggle):
+    """Includes shop locations in Port Puerto"""
+    display_name = "Include Port Puerto Shop Locations"
+
+class IncludeDesertShopLocations(Toggle):
+    """Includes shop locations in Al Maajik."""
+    display_name = "Include Al Maajik Shop Locations"
+
+class IncludeOtherShopLocations(Toggle):
+    """Includes shop locations for traveling merchants and other locations besides the three main cities."""
+    display_name = "Include Other Shop Locations"
+
 class IncludeStoryShopLocations(Toggle):
-    """Includes locations unlocked by beating the story."""
+    """Includes shop locations unlocked by beating the story."""
     display_name = "Include Story Shop Locations"
 
 class IncludeDlcShopLocations(Toggle):
@@ -367,8 +421,13 @@ class IncludeLevelShopLocations(Toggle):
     """Includes locations unlocked by reaching a specific experience level."""
     display_name = "Include Level Shop Locations"
 
+class IncludeLifeShopLocations(Toggle):
+    """Includes locations for shops dedicated to specific lives, whether you've mastered them or not."""
+    display_name = "Include Life Shop Locations"
+
 class IncludeMasterShopLocations(Toggle):
-    """Includes locations unlocked by reaching master rank in a respective life."""
+    """Includes locations unlocked by reaching master rank in a respective life.
+    Does nothing if life shop locations are not enabled."""
     display_name = "Include Master Shop Locations"
 
 class ShopMaxItemCost(Range):
@@ -383,10 +442,34 @@ class IncludeShopRestrictions(Toggle):
     """Restricts shop access behind obtaining their shop inventory first."""
     display_name = "Include Shop Restrictions"
 
+class BingoGoal(Toggle):
+    """Complete a bingo board as part of your goal."""
+    display_name = "Bingo"
+
+class BingoBoardSize(Choice):
+    """Set the size of the bingo board"""
+    display_name = "Board Size"
+    option_3x3 = 3
+    option_5x5 = 5
+    option_7x7 = 7
+    option_9x9 = 9
+    default = 5
+
+class BingoCategories(OptionSet):
+    """Set which categories can appear as board tiles.
+    Make sure to enable other relevant options; for example, if Challenges are eligible but life challenges are not included in the pool then
+    those locations won't ever appear, and thus, cannot be on the board as well.
+
+    Valid options: ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+    
+    Leave empty to make all eligible."""
+    display_name = "Eligible Categories"
+    valid_keys = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+    default = valid_keys
+
+
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
-    options["game_seed"] = GameSeed
-
     options["include_story"] = IncludeStoryLocations
     options["include_chapters"] = IncludeChapters
     options["story_goal"] = StoryGoal
@@ -436,11 +519,16 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["skill_pack_size"] = LogicalSkillLevelsPerLevelPack
 
     options["include_shops"] = IncludeShopLocations
+    options["shops_castele"] = IncludeCasteleShopLocations
+    options["shops_port"] = IncludePortShopLocations
+    options["shops_desert"] = IncludeDesertShopLocations
+    options["shops_other"] = IncludeOtherShopLocations
     options["shops_story"] = IncludeStoryShopLocations
     options["shops_dlc"] = IncludeDlcShopLocations
     options["shops_bliss"] = IncludeBlissShopLocations
     options["shops_fairy"] = IncludeFairyShopLocations
     options["shops_level"] = IncludeLevelShopLocations
+    options["shops_life"] = IncludeLifeShopLocations
     options["shops_master"] = IncludeMasterShopLocations
     options["shops_cost"] = ShopMaxItemCost
     options["shops_restricted"] = IncludeShopRestrictions
@@ -448,10 +536,15 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["include_chests"] = IncludeChestLocations
     options["chests_dlc"] = IncludeDlcChests
     options["chests_trials"] = IncludeTrialChests
+    options["chests_filter"] = ChestLocationsFilter
 
     options["include_passwords"] = IncludePasswords
     options["include_rarities"] = IncludeItemRarities
     options["include_caves"] = IncludeCaves
+
+    options["bingo_goal"] = BingoGoal
+    options["bingo_size"] = BingoBoardSize
+    options["bingo_categories"] = BingoCategories
 
     return options
 
@@ -470,18 +563,27 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
-    groups["Story and DLC"] = [
-        IncludeChapters, IncludeStoryLocations, StoryGoal, IncludeDlcContent, IncludeDlcStoryLocations, DlcGoal
+    groups["Goals"] = [
+        StoryGoal, DlcGoal, WishHuntGoal, LifeMasteryGoal, BingoGoal
+    ]
+    groups["Story"] = [
+        IncludeChapters, IncludeStoryLocations
+    ]
+    groups["DLC"] = [
+        IncludeDlcContent, IncludeDlcStoryLocations
     ]
     groups["Wish Hunt"] = [
-        WishHuntGoal, WishHuntTotal, WishHuntRequired, WishHuntLocal
+        WishHuntTotal, WishHuntRequired, WishHuntLocal
     ]
     groups["Life Mastery"] = [
-        LifeMasteryGoal, LifeMasteryRank, LifeMasteryCount
+        LifeMasteryRank, LifeMasteryCount
     ]
-    groups["Lives and Licenses"] = [
-        IncludeLicenses, ProgressiveLicenses, AvailableLicenses, CustomAvailableLicenses,
-        MaxLicenseRank, StartingLicense, IncludeChallengeLocations, IncludeCraftingLocations
+    groups["Bingo"] = [
+        BingoBoardSize, BingoCategories
+    ]
+    groups["Life Licenses"] = [
+        IncludeLicenses, ProgressiveLicenses, IncludeChallengeLocations, IncludeCraftingLocations,
+        AvailableLicenses, CustomAvailableLicenses, MaxLicenseRank, StartingLicense
     ]
     groups["Other Requests"] = [
         IncludeRequestLocations, OtherRequestsCount, OtherRequestsDlc
@@ -492,16 +594,18 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
         IncludeTheaterBlissBonuses, StartingBlissBonus
     ]
     groups["Levels"] = [
-        IncludeLevelUpLocations, MaxExperienceLevel, IncludeExperienceLevelLogic, LogicalLevelsPerLevelPack,
+        IncludeLevelUpLocations, MaxExperienceLevel, IncludeExperienceLevelLogic, LogicalLevelsPerLevelPack
+    ]
+    groups["Skill Levels"] = [
         IncludeSkillLevelUpLocations, MaxSkillLevel, IncludeSkillLevelLogic, LogicalSkillLevelsPerLevelPack
     ]
     groups["Shops"] = [
-        IncludeShopLocations, IncludeStoryShopLocations, IncludeDlcShopLocations, IncludeBlissShopLocations,
-        IncludeFairyShopLocations, IncludeLevelShopLocations, IncludeMasterShopLocations, ShopMaxItemCost,
-        IncludeShopRestrictions
+        IncludeShopLocations, IncludeCasteleShopLocations, IncludePortShopLocations, IncludeDesertShopLocations, IncludeOtherShopLocations,
+        IncludeStoryShopLocations, IncludeDlcShopLocations, IncludeBlissShopLocations, IncludeFairyShopLocations, IncludeLevelShopLocations,
+        IncludeLifeShopLocations, IncludeMasterShopLocations, ShopMaxItemCost, IncludeShopRestrictions
     ]
     groups["Chests"] = [
-        IncludeChestLocations, IncludeDlcChests, IncludeTrialChests
+        IncludeChestLocations, IncludeDlcChests, IncludeTrialChests, ChestLocationsFilter
     ]
     groups["Miscellaneous"] = [
         IncludePasswords, IncludeItemRarities, IncludeCaves
