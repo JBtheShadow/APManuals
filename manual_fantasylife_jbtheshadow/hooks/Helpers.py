@@ -21,6 +21,7 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
     shops_cost = get_option_value(multiworld, player, "shops_cost")
     bingo_size = get_option_value(multiworld, player, "bingo_size")
     available_lives = multiworld.worlds[player].available_lives
+    chests_filter = multiworld.worlds[player].chests_filter
 
     match category_name:
         case x if x in rank_names and licenses_max_rank < rank_names.index(x):
@@ -55,6 +56,10 @@ def before_is_category_enabled(multiworld: MultiWorld, player: int, category_nam
                 return None
             size = int(x.split(" ")[2])
             return bingo_size >= size
+        case x if x.startswith("Red Chests - ") and len(chests_filter):
+            region = x.split("-")[1].strip()
+            if region not in chests_filter:
+                return False
 
     return None
 

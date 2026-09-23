@@ -223,7 +223,7 @@ def after_load_location_file(location_table: list) -> list:
         def build_category(entry: dict):
             category = [
                 "Treasure Chests",
-                f"Location - {entry["Region"]} - Red Chest"
+                f"Red Chests - {entry["Region"]}"
             ]
             if "DLC" in entry["DLC"]:
                 category += ["DLC", "DLC Chests"]
@@ -323,8 +323,12 @@ def get_wish_hunt_available_location_count(
         shops_restricted = False,
         chests_dlc = False,
         chests_trials = False,
+        chests_filter = None,
         available_lives = None
 ):
+    if chests_filter is None:
+        chests_filter = []
+
     if available_lives is None:
         available_lives = []
 
@@ -366,10 +370,15 @@ def get_wish_hunt_available_location_count(
         })
 
     if include_chests:
+        chests_filter = [
+            region.replace("(DLC)", "").replace("(Trials)", "").strip()
+            for region in chests_filter
+        ]
         count += len([
             entry for entry in chests
             if (chests_dlc or "DLC" not in entry["DLC"])
             and (chests_trials or "Trial" not in entry["Region"])
+            and (not len(chests_filter) or entry["Region"] in chests_filter)
         ])
 
     # if include_shops:

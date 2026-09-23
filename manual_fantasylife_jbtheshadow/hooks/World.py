@@ -86,6 +86,10 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     include_chests = get_option(world, "include_chests", False)
     chests_dlc = get_option(world, "chests_dlc", False)
     chests_trials = get_option(world, "chests_trials", False)
+    chests_filter = get_option(world, "chests_filter", [])
+    chests_filter = [region.replace("(DLC)", "").replace("(Trials)", "").strip()
+                     for region in chests_filter]
+    world.chests_filter = chests_filter
     life_mastery_rank = get_option(world, "life_mastery_rank", 0)
     life_mastery_count = get_option(world, "life_mastery_count", 0)
     wish_hunt_total = get_option(world, "wish_hunt_total", 0)
@@ -437,6 +441,7 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             shops_restricted,
             chests_dlc,
             chests_trials,
+            chests_filter,
             world.available_lives,
         )
 

@@ -129,6 +129,47 @@ class IncludeTrialChests(Toggle):
     """Requires DLC chests to be included. Toggle to include chests found within each of the Ancient Tower trials. Not recommended."""
     display_name = "Include Ancient Tower Chests"
 
+class ChestLocationsFilter(OptionSet):
+    """Use this to further customize which areas with red chests should be considered by the randomizer.
+    Areas from the DLC require the corresponding toggle to be one too.
+    Any of the trial areas also require their corresponding toggle.
+    Pass an empty list to disable the filter."""
+    display_name = "Areas to Include"
+    valid_keys = [
+        "East Grassy Plains",
+        "Haniwa Cave",
+        "West Grassy Plains",
+        "Mount Snowpeak",
+        "Waterfall Cave",
+        "Lava Cave",
+        "Mount Snowpeak Summit",
+        "Napdragon's Nest",
+        "Tortuga Archipelago",
+        "Deepsea Cave",
+        "Nautilus Cave",
+        "Forgotten Tunnel",
+        "Aridian Desert",
+        "Cave of Bones",
+        "Giant Fossil Hall",
+        "Subterranean Lake",
+        "Ancient Ruins",
+        "Chamber of Gold",
+        "East Levitania",
+        "Central Levitania",
+        "West Levitania",
+        "Central Grassland (DLC)",
+        "Rocky Hill Shrine (DLC)",
+        "Forest Shrine (DLC)",
+        "Penguin Beach (DLC)",
+        "Trial of Time (DLC) (Trials)",
+        "Trial of Time Top Floor (DLC) (Trials)",
+        "Trial of Darkness (DLC) (Trials)",
+        "Trial of Darkness Top Floor (DLC) (Trials)",
+        "Trial of Light (DLC) (Trials)",
+        "Trial of Light Top Floor (DLC) (Trials)"
+    ]
+    default = valid_keys
+
 class RankChoice(Choice):
     option_fledgling = 1
     option_apprentice = 2
@@ -424,7 +465,7 @@ class BingoCategories(OptionSet):
     Leave empty to make all eligible."""
     display_name = "Eligible Categories"
     valid_keys = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
-    default = ["Passwords", "Bliss Bonuses", "Story", "Extras", "Locations", "Ranks", "Challenges", "Recipes", "Other Requests", "Chests", "Shops"]
+    default = valid_keys
 
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
@@ -495,6 +536,7 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["include_chests"] = IncludeChestLocations
     options["chests_dlc"] = IncludeDlcChests
     options["chests_trials"] = IncludeTrialChests
+    options["chests_filter"] = ChestLocationsFilter
 
     options["include_passwords"] = IncludePasswords
     options["include_rarities"] = IncludeItemRarities
@@ -540,10 +582,8 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
         BingoBoardSize, BingoCategories
     ]
     groups["Life Licenses"] = [
-        IncludeLicenses, ProgressiveLicenses, AvailableLicenses, CustomAvailableLicenses, MaxLicenseRank, StartingLicense
-    ]
-    groups["Other Life Options"] = [
-        IncludeChallengeLocations, IncludeCraftingLocations
+        IncludeLicenses, ProgressiveLicenses, IncludeChallengeLocations, IncludeCraftingLocations,
+        AvailableLicenses, CustomAvailableLicenses, MaxLicenseRank, StartingLicense
     ]
     groups["Other Requests"] = [
         IncludeRequestLocations, OtherRequestsCount, OtherRequestsDlc
@@ -565,7 +605,7 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
         IncludeLifeShopLocations, IncludeMasterShopLocations, ShopMaxItemCost, IncludeShopRestrictions
     ]
     groups["Chests"] = [
-        IncludeChestLocations, IncludeDlcChests, IncludeTrialChests
+        IncludeChestLocations, IncludeDlcChests, IncludeTrialChests, ChestLocationsFilter
     ]
     groups["Miscellaneous"] = [
         IncludePasswords, IncludeItemRarities, IncludeCaves

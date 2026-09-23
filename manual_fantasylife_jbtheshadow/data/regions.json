@@ -75,6 +75,7 @@
     },
     "Castele Square": {
         "connects_to": [
+            "Castele Post Office",
             "Castele Inn",
             "Castele Fine Arms",
             "Castele Furniture Store",
@@ -86,6 +87,7 @@
             "South Castele" 
         ]
     },
+    "Castele Post Office": {},
     "Castele Inn": {},
     "Castele Fine Arms": {
         "requires": "{OptOne(|Castele Fine Arms Keys|)}"
