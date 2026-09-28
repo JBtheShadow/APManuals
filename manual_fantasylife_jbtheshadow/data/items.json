@@ -228,7 +228,7 @@
         { "count": 0, "name": "No Shopping Trap", "category": ["Traps"], "trap": true },
         { "count": 0, "name": "Life Change Trap", "category": ["Traps"], "trap": true },
         { "count": 0, "name": "Teleport Trap", "category": ["Traps"], "trap": true },
-        { "count": 0, "name": "Hunger Trap", "category": ["Traps"], "trap": true },
-        { "count": 0, "name": "Thirst Trap", "category": ["Traps"], "trap": true }
+        { "count": 0, "name": "Famine Trap", "category": ["Traps"], "trap": true },
+        { "count": 0, "name": "Hydration Trap", "category": ["Traps"], "trap": true }
     ]
 }

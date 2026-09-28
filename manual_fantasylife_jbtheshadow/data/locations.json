@@ -2,10 +2,10 @@
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
   "data": [
     {
-      "name": "Goal",
+      "name": "Victory - Complete your goal",
       "region": "Reveria",
       "category": [
-        "Goal"
+        "Victory"
       ],
       "victory": true,
       "requires": "{goal()}"
