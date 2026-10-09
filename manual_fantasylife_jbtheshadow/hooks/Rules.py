@@ -15,11 +15,12 @@ if TYPE_CHECKING:
 
 
 def format_for_rb(result: str | bool) -> str:
-    if isinstance(result, str) and result == "1":
+    if result == "0" or result == False:
+        return "{False_()}"
+    elif result == "1" or result == True:
         return ""
-    if isinstance(result, bool):
-        return "" if result else "False"
-    return result
+    else:
+        return result
 
 
 prog_level_cap = {0: 5, 1: 10, 2: 15, 3: 20, 4: 25, 5: 30, 6: 35, 7: 99, 8: 150, 9: 200}
