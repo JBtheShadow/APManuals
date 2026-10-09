@@ -1,7 +1,136 @@
 {
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
-  "undefined": {
-    "connects_to": [],
-    "requires": ""
-  }
+
+  "Attic Room": {
+    "starting": true,
+    "connects_to": ["Castele Square"]
+  },
+  "Castele Square": {
+    "connects_to": [
+      "Homes by Pam",
+      "Guild Office",
+      "Castele Inn",
+      "Post Office",
+      "Royal Castele Library",
+      "Paladin's Hold",
+      "Castele Fashion Boutique",
+      "Castele Fine Arms",
+      "Castele Furniture Store",
+      "Castele General Goods",
+      "Castele Castle Reception Hall",
+      "Castele's Artisan District",
+      "Castele's Shopping District",
+      "South Castele"
+    ]
+  },
+  "Homes by Pam": {},
+  "Guild Office": {},
+  "Castele Inn": {},
+  "Post Office": {},
+  "Royal Castele Library": {},
+  "Paladin's Hold": {},
+  "Castele Fashion Boutique": {},
+  "Castele Fine Arms": {},
+  "Castele Furniture Store": {},
+  "Castele General Goods": {},
+  "Castele Castle Reception Hall": {
+    "connects_to": [
+      "Castele Castle Throne Room",
+      "Castele Castle Inner Garden",
+      "Castele Castele Great Hall"
+    ]
+  },
+  "Castele Castle Throne Room": {
+    "connects_to": ["Castele Castle Inner Garden"]
+  },
+  "Castele Castle Great Hall": {},
+  "Castele Castle Inner Garden": {
+    "connects_to": [
+      "King Erik's Chamber",
+      "Laura's Chamber",
+      "Hughes's Room"
+    ]
+  },
+  "King Erik's Chamber": {},
+  "Laura's Chamber": {},
+  "Hughes's Room": {},
+  "Castele's Artisan District": {
+    "connects_to": [
+      "Royal Workshop",
+      "Dilapidated House",
+      "Steele's House",
+      "Duglas's House",
+      "Woody and Cherry's House",
+      "Castele Buttonhook",
+      "Castele Woods and Leather",
+      "Castele Ores and Metals",
+      "Castele Oddities and Ends",
+      "Appleseed Cafe",
+      "East Castele"
+    ]
+  },
+  "Royal Workshop": {},
+  "Dilapidated House": {},
+  "Steele's House": {},
+  "Duglas's House": {},
+  "Woody and Cherry's House": {},
+  "Castele Buttonhook": {},
+  "Castele Woods and Leather": {},
+  "Castele Ores and Metals": {},
+  "Castele Oddities and Ends": {},
+  "Appleseed Cafe": {},
+  "Castele's Shopping District": {
+    "connects_to": [
+      "Castele Fishmonger",
+      "Castele Butcher",
+      "Castele Greengrocer",
+      "Alfredo's Bistro",
+      "The Crown",
+      "West Castele"
+    ]
+  },
+  "South Castele": {},
+
+
+
+
+  "Reveria": {
+    "connects_to": [
+      "Castele",
+      "Origin Island"
+    ],
+    "starting": true
+  },
+  "Castele": {
+    "connects_to": [
+      "Grassy Plains"
+    ]
+  },
+  "Grassy Plains": {
+    "connects_to": [
+      "Snowpeak",
+      "Port Puerto",
+      "Al Maajik",
+      "Elderwood"
+    ]
+  },
+  "Snowpeak": {},
+  "Port Puerto": {
+    "connects_to": [
+      "Beach",
+      "Terra Nimbus"
+    ]
+  },
+  "Al Maajik": {
+    "connects_to": [
+      "Desert"
+    ]
+  },
+  "Elderwood": {
+    "connects_to": [
+      "Lunares"
+    ]
+  },
+  "Lunares": {},
+  "Origin Island": {}
 }

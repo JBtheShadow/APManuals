@@ -1,5 +1,5 @@
 # Object classes from AP that represent different types of options that you can create
-from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions
+from Options import Option, FreeText, NumericOption, Toggle, DefaultOnToggle, Choice, TextChoice, Range, NamedRange, OptionGroup, PerGameCommonOptions, OptionSet
 # These helper methods allow you to determine if an option has been set, or what its value is, for any player in the multiworld
 from ..Helpers import is_option_enabled, get_option_value
 from typing import Type, Any
@@ -31,6 +31,75 @@ class TotalCharactersToWinWith(Range):
     range_start = 10
     range_end = 50
     default = 50
+
+
+class AreasIncluded(OptionSet):
+    display_name = "Areas to Include"
+    valid_keys = [
+        "Castele",
+        "Grassy Plains",
+        "Snowpeak",
+        "Port Puerto",
+        "Al Maajik",
+        "Elderwood",
+        "Levitania",
+        "Lunares"
+    ]
+    default = valid_keys
+
+
+class DlcAreasIncluded(OptionSet):
+    display_name = "DLC Areas to Include"
+    valid_keys = [
+        "Central Grassland",
+        "Forest Shrine",
+        "Penguin Beach",
+        "Rocky Hill Shrine",
+        "Ancient Tower",
+        "Furlin Grotto"
+    ]
+    default = valid_keys
+
+
+class TasksIncluded(OptionSet):
+    display_name = "Tasks Types to Include"
+    valid_keys = [
+        "Chests",
+        "Shops",
+        "Gathering",
+        "Crafting",
+        "Fighting",
+        "Bounties"
+    ]
+    default = valid_keys
+
+
+class LicensesIncluded(OptionSet):
+    display_name = "Licenses to Include"
+    valid_keys = [
+        "Fledgling",
+        "Apprentice",
+        "Adept",
+        "Expert",
+        "Master",
+        "Hero",
+        "Legend"
+    ]
+    default = valid_keys
+
+
+class DlcLicensesIncluded(OptionSet):
+    display_name = "DLC Licenses to Include"
+    valid_keys = [
+        "Demi-Creator",
+        "Creator"
+    ]
+    default = valid_keys
+
+
+class RestrictionsIncluded(OptionSet):
+    display_name = "Restrictions to Include"
+
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
