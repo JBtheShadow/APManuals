@@ -1,0 +1,12 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
+  "data": [
+    {
+      "name": "Victory - complete all of your tasks",
+      "category": [
+        "Victory"
+      ],
+      "requires": ""
+    }
+  ]
+}
