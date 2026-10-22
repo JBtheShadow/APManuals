@@ -1,0 +1,8 @@
+Type,Target,Amount,Rank,Life,Area,Stars,Unlock
+Ability,Spinning Attack,10,Fledgling,Paladin,,30,
+Fight,Caterpillo,1,Fledgling,Paladin,East Grassy Plains,40,
+Fight,Caterpillo,5,Fledgling,Paladin,East Grassy Plains,50,
+Fight,Bandit,1,Fledgling,Paladin,East Grassy Plains,60,
+Fight,Bandit,3,Fledgling,Paladin,East Grassy Plains,90,
+Fight,Bandit Leader,1,Fledgling,Paladin,East Grassy Plains,100,Tad
+Gather,Castele Apple,10,Fledgling,Paladin,South Castele,50,Apfel
