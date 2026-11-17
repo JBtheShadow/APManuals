@@ -42,9 +42,9 @@ class ShuffleHuntersSplitTrevor(Toggle):
     """Should Trevor, Grant and Sypha be considered separate characters?"""
     display_name = "Split Trevor"
 
-class ShuffleHuntersSouls(Toggle):
+class MonsterSouls(Toggle):
     """Should monster souls be included?
-    This only matters if Soma is among the shuffled hunters."""
+    This only matters if you're using Soma or if he is among the shuffled hunters."""
     display_name = "Include Monster Souls"
 
 class ShuffleHuntersType(Choice):
@@ -176,11 +176,10 @@ class ShieldDice(Toggle):
     Some cards list extra effects on landing on specific results, like a counter or a karma coin. If there are overlapping effects or colors,
     choose whether you're adding these dice to the existing card's roll or if rolling independently.
     
-    When rolled independently or without overlapping effects, rolling a karma coin grants one of the following (choose one):
-    - Restore 1 heart per primary hit
-    - Restore 1 health per primary hit
-    - Free combat reroll, count only primary hits
-    - Block all damage and counter all enemy hits with primary hits"""
+    When rolled independently or without overlapping effects, rolling a karma coin grants one of the following:
+    - Pink Die: Blocks all enemy hits and restores 1 health per blocked hit
+    - Yellow Die: Blocks all enemy hits and gain 1 treasure if at least one enemy hit was blocked
+    - Black Die: Blocks all enemy hits and counters with 1 primary hit per enemy hit blocked"""
     display_name = "Shield Dice"
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
@@ -188,11 +187,11 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["shuffle_stages"] = ShuffleStages
     options["shuffle_hunters"] = ShuffleHunters
     options["shuffle_hunters_split_trevor"] = ShuffleHuntersSplitTrevor
-    options["shuffle_hunters_souls"] = ShuffleHuntersSouls
     options["shuffle_hunters_type"] = ShuffleHuntersType
     options["shuffle_hunters_count"] = ShuffleHuntersCount
     options["shuffle_hunters_custom"] = ShuffleHuntersCustom
     options["boardsanity"] = Boardsanity
+    options["monster_souls"] = MonsterSouls
     options["fire_ability"] = FireAbility
     options["common_abilities"] = CommonAbilities
     options["extra_abilities"] = ExtraAbilities
@@ -215,7 +214,7 @@ def after_options_defined(options: Type[PerGameCommonOptions]):
 # Use this Hook if you want to add your Option to an Option group (existing or not)
 def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> dict[str, list[Type[Option[Any]]]]:
     # Uses the format groups['GroupName'] = [TotalCharactersToWinWith]
-    groups["Hunters"] = [ShuffleHunters, ShuffleHuntersSplitTrevor, ShuffleHuntersSouls, ShuffleHuntersType, ShuffleHuntersCount, ShuffleHuntersCustom]
+    groups["Hunters"] = [ShuffleHunters, ShuffleHuntersSplitTrevor, ShuffleHuntersType, ShuffleHuntersCount, ShuffleHuntersCustom]
     groups["Permanent Upgrades"] = [FireAbility, CommonAbilities, ExtraAbilities, Immunities, ShieldDice]
     return groups
 

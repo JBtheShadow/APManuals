@@ -5,13 +5,6 @@ from BaseClasses import MultiWorld
 # Use this if you want to override the default behavior of is_option_enabled
 # Return True to enable the category, False to disable it, or None to use the default behavior
 def before_is_category_enabled(multiworld: MultiWorld, player: int, category_name: str) -> Optional[bool]:
-    if category_name == "Souls":
-        if not multiworld.worlds[player].options.shuffle_hunters.value:
-            return False
-        if not multiworld.worlds[player].options.shuffle_hunters_souls.value:
-            return False
-        if hasattr(multiworld.worlds[player], "hunters"):
-            return "Soma" in multiworld.worlds[player].hunters
     return None
 
 # Use this if you want to override the default behavior of is_option_enabled

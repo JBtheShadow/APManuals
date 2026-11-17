@@ -123,12 +123,12 @@
     { "name": "Water Immunity", "category": ["Permanent Upgrades", "Immunities"], "useful": true },
     { "name": "Whip Immunity", "category": ["Permanent Upgrades", "Immunities"], "useful": true },
     
-    { "name": "Yellow Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
-    { "name": "Black Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
-    { "name": "White Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
-    { "name": "Blue Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
-    { "name": "Green Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
-    { "name": "Pink Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
+    { "count": 2, "name": "Yellow Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
+    { "count": 2, "name": "Black Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
+    { "count": 2, "name": "White Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
+    { "count": 2, "name": "Blue Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
+    { "count": 2, "name": "Green Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
+    { "count": 2, "name": "Pink Shield Die", "category": ["Permanent Upgrades", "Shield Dice"], "useful": true },
 
     { "count": 0, "name": "Advance Curse Clock by 1 Hour", "category": ["Traps"], "trap": true },
     { "count": 0, "name": "Petrify Trap", "category": ["Traps"], "trap": true },
