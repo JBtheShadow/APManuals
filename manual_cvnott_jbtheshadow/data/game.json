@@ -1,0 +1,11 @@
+{
+    "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
+    "game": "CVNotT",
+    "creator": "JBtheShadow",
+    "filler_item_name": "Treasure",
+    "starting_items": [
+        { "items": ["Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6"], "yaml_option": ["shuffle_stages"] }
+    ],
+    "death_link": true,
+    "starting_index": 1
+}

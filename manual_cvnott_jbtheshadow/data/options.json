@@ -1,0 +1,12 @@
+{
+    "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
+    "core": {
+        "death_link": {
+            "display_name": "Enable Death Link"
+        },
+        "filler_traps": {
+            "display_name": "Filler Traps",
+            "default": 0
+        }
+    }
+}

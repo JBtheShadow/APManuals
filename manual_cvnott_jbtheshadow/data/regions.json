@@ -1,0 +1,9 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
+  "Stage 1": { "requires": "{YamlDisabled(shuffle_stages)} OR |Stage 1|" },
+  "Stage 2": { "requires": "({YamlDisabled(shuffle_stages)} AND |@Vlad Relics:1|) OR |Stage 2|" },
+  "Stage 3": { "requires": "({YamlDisabled(shuffle_stages)} AND |@Vlad Relics:2|) OR |Stage 3|" },
+  "Stage 4": { "requires": "({YamlDisabled(shuffle_stages)} AND |@Vlad Relics:3|) OR |Stage 4|" },
+  "Stage 5": { "requires": "({YamlDisabled(shuffle_stages)} AND |@Vlad Relics:4|) OR |Stage 5|" },
+  "Stage 6": { "requires": "({YamlDisabled(shuffle_stages)} AND |@Vlad Relics:5|) OR |Stage 6|" }
+}
