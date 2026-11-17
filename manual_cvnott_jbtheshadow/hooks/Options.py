@@ -120,23 +120,24 @@ class CommonAbilities(Toggle):
     - Reach high places
     - Pass through walls like mist
     - Open locked doors (except blue doors)
+    - Open blue doors
+    - Escape monsters without needing to roll
     Some hunters have access to some of these via level-ups."""
     display_name = "Common Abilities"
 
 class ExtraAbilities(Toggle):
-    """Should unusual but helpful abilities be included as permanent upgrades?
-    This adds permanent items that, once received, give any of the hunters one of the following abilities:
-    - Open blue doors
-    - Escape monsters without needing to roll
-    - Health regeneration at the start of the turn
-    - Heart regeneration at the start of the turn
-    - Less XP required to level up
-    - Deal double damage
-    - Damage taken reduced to 1
-    - Heart cost reduced to 1
-    - Heart recovery doubled
-    - Health recovery doubled
-    These are usually provided by certain abilities, items or events."""
+    """Should some helpful, kind of cheaty abilities be included as permanent upgrades?
+    This adds progressive permanent items that, once received, give any of the hunters one of the following abilities:
+    - Health regeneration at the start of the turn (+1/+2/+3)
+    - Heart regeneration at the start of the turn (+1/+2/+3)
+    - Less XP required to level up (-1/-2/-3)
+    - Deal increased damage (1.5x/2.0x/2.5x)
+    - Reduced damage taken (0.5x/0.25x/set to 1)
+    - Reduced heart cost (0.5x/0.25x/set to 1)
+    - Increased heart recovery (+2/+3/+5)
+    - Increased health recovery (+2/+3/+5)
+    - Reusable items (1/2/3 charges per turn)
+    Some of these may be found within certain items or abilities in a different form."""
     display_name = "Extra Abilities"
 
 class Immunities(Toggle):
