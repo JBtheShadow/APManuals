@@ -95,8 +95,8 @@
     { "name": "Pass Through Walls Like Mist", "category": ["Permanent Upgrades", "Abilities", "Common Abilities"], "useful": true },
     { "name": "Open Locked Doors", "category": ["Permanent Upgrades", "Abilities", "Common Abilities"], "useful": true },
     { "name": "Open Blue Doors", "category": ["Permanent Upgrades", "Abilities", "Common Abilities"], "useful": true },
-    { "name": "No Damage from Escaping Encounters", "category": ["Permanent Upgrades", "Abilities", "Common Abilities"], "useful": true },
     
+    { "count": 3, "name": "Escape Encounters More Easily", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
     { "count": 3, "name": "+1 Health Regen at Start of Turn", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
     { "count": 3, "name": "+1 Heart Regen at Start of Turn", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
     { "count": 3, "name": "Level-Ups Require 1 Less XP", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
@@ -105,7 +105,8 @@
     { "count": 3, "name": "Reduce Heart Cost", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
     { "count": 3, "name": "Increased Health Recovery", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
     { "count": 3, "name": "Increased Heart Recovery", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
-    { "count": 3, "name": "Duplicator", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
+    { "count": 3, "name": "Item Duplicator", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
+    { "count": 3, "name": "Double Shot", "category": ["Permanent Upgrades", "Abilities", "Extra Abilities"], "useful": true },
 
     { "name": "Axe Immunity", "category": ["Permanent Upgrades", "Immunities"], "useful": true },
     { "name": "Crushing Immunity", "category": ["Permanent Upgrades", "Immunities"], "useful": true },

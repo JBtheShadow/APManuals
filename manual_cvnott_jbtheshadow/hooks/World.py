@@ -44,19 +44,32 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     Use it to check or modify incompatible options, or to set up variables for later use.
     """
     if world.options.shuffle_hunters.value:
-        from .Options import ShuffleHuntersType, ShuffleHuntersCustom
-        candidates = list(ShuffleHuntersCustom.valid_keys)
+        from .Options import ShuffleHuntersAvailable, ShuffleHuntersStart
+        
+        candidates = list(world.options.shuffle_hunters_available.value)
+        if not len(candidates):
+            candidates = list(ShuffleHuntersAvailable.valid_keys)
         if not world.options.shuffle_hunters_split_trevor.value:
-            candidates.remove("Grant")
-            candidates.remove("Sypha")
-        if world.options.shuffle_hunters_type.value == ShuffleHuntersType.option_count:
-            if world.options.shuffle_hunters_count.value > len(candidates):
-                world.options.shuffle_hunters_count.value = len(candidates)
+            for name in ("Grant", "Sypha"):
+                if name in candidates:
+                    candidates.remove(name)
+            if world.options.shuffle_hunters_start.value in (ShuffleHuntersStart.option_grant, ShuffleHuntersStart.option_sypha):
+                world.options.shuffle_hunters_start.value = ShuffleHuntersStart.option_trevor
+        
+        hunter_names = ["Any"] + list(ShuffleHuntersAvailable.valid_keys)
+        starting_hunter = hunter_names[world.options.shuffle_hunters_start.value]
+        if starting_hunter != "Any" and starting_hunter not in candidates:
+            world.options.shuffle_hunters_available.value.update(starting_hunter)
+            candidates.append(starting_hunter)
+        if world.options.shuffle_hunters_count.value > len(candidates):
+            world.options.shuffle_hunters_count.value = len(candidates)
+
+        if not getattr(multiworld, "generation_is_fake", False):
             world.hunters = world.random.sample(candidates, world.options.shuffle_hunters_count.value)
-        if world.options.shuffle_hunters_type.value == ShuffleHuntersType.option_custom:
-            if not len(world.options.shuffle_hunters_custom.value):
-                world.options.shuffle_hunters_custom.value = candidates
-            world.hunters = world.options.shuffle_hunters_custom.value
+
+            if starting_hunter == "Any":
+                starting_hunter = world.random.choice(world.hunters)
+            world.starting_hunter = starting_hunter
     pass
 
 def before_create_regions(world: World, multiworld: MultiWorld, player: int):
@@ -93,10 +106,12 @@ def after_create_regions(world: World, multiworld: MultiWorld, player: int):
 # {"Item Name": {ItemClassification.useful: 5}} <- You can also use the classification directly
 def before_create_items_all(item_config: dict[str, int|dict], world: World, multiworld: MultiWorld, player: int) -> dict[str, int|dict]:
     if hasattr(world, "hunters"):
-        from .Options import ShuffleHuntersCustom
-        to_remove = [name for name in ShuffleHuntersCustom.valid_keys if name not in world.hunters]
+        from .Options import ShuffleHuntersAvailable
+        to_remove = [name for name in ShuffleHuntersAvailable.valid_keys if name not in world.hunters]
         for name in to_remove:
             item_config[name] = 0
+    if hasattr(world, "starting_hunter"):
+        item_config[world.starting_hunter] = {"progression": 1}
     return item_config
 
 # The item pool before place_item(_category) are processed, in case you want to see the raw item pool at that stage
@@ -117,11 +132,9 @@ def before_create_items_filler(item_pool: list, world: World, multiworld: MultiW
     # Because multiple copies of an item can exist, you need to add an item name
     # to the list multiple times if you want to remove multiple copies of it.
 
-    if hasattr(world, "hunters"):
-        starting_hunter = world.random.choice(list(world.hunters))
-        itemNamesToRemove.append(starting_hunter)
-
-        item = next(i for i in item_pool if i.name == starting_hunter)
+    if hasattr(world, "starting_hunter"):
+        itemNamesToRemove.append(world.starting_hunter)
+        item = next(i for i in item_pool if i.name == world.starting_hunter)
         world.push_precollected(item)
 
     for itemName in itemNamesToRemove:
@@ -197,6 +210,11 @@ def after_remove_item(world: World, state: CollectionState, Changed: bool, item:
 
 # This is called before slot data is set and provides an empty dict ({}), in case you want to modify it before Manual does
 def before_fill_slot_data(slot_data: dict, world: World, multiworld: MultiWorld, player: int) -> dict:
+    if not getattr(multiworld, "generation_is_fake", False):
+        if hasattr(world, "hunters"):
+            slot_data["hunters"] = world.hunters
+        if hasattr(world, "starting_hunter"):
+            slot_data["starting_hunter"] = world.starting_hunter
     return slot_data
 
 # This is called after slot data is set and provides the slot data at the time, in case you want to check and modify it after Manual is done with it
@@ -231,4 +249,10 @@ def hook_interpret_slot_data(world: World, player: int, slot_data: dict[str, Any
         Called when Universal Tracker wants to perform a fake generation
         Use this if you want to use or modify the slot_data for passed into re_gen_passthrough
     """
+    hunters = slot_data.get("hunters", [])
+    if len(hunters):
+        world.hunters = hunters
+    starting_hunter = slot_data.get("starting_hunter", "")
+    if len(starting_hunter):
+        world.starting_hunter = starting_hunter
     return slot_data
