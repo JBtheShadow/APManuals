@@ -2,11 +2,11 @@
     "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.categories.schema.json",
     "Stages": { "yaml_option": ["shuffle_stages"] },
     "Hunters": { "yaml_option": ["shuffle_hunters"] },
-    "Souls": { "yaml_option": ["monster_souls"] },
     "Fire Ability": { "yaml_option": ["fire_ability"] },
     "Common Abilities": { "yaml_option": ["common_abilities"] },
     "Extra Abilities": { "yaml_option": ["extra_abilities"] },
     "Immunities": { "yaml_option": ["immunities"] },
     "Shield Dice": { "yaml_option": ["shield_dice"] },
-    "Boardsanity": { "yaml_option": ["boardsanity"] }
+    "Boardsanity": { "yaml_option": ["boardsanity"] },
+    "Souls": {}
 }
