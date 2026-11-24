@@ -56,7 +56,7 @@ def has_skill(world: World, skill: str, level: str, life: str) -> str | bool:
     requires = "{ItemValue(" + skill.strip() + " Levels:" + level.strip() + ")}"
     if world.options.include_licenses.value:
         if not world.options.licenses_progressive.value:
-            requires += " AND {OptOne(|" + life + " License|)}|"
+            requires += " AND {OptOne(|" + life + " License|)}"
         else:
             requires += " AND {OptOne(|Progressive " + life + " License|)}"
     if chapter_req:
@@ -121,7 +121,7 @@ def goal(world: World, state: CollectionState, player: int) -> str | bool:
     if life_mastery_goal:
         requires.append(life_mastery(world, state, player))
     if bingo_goal:
-        requires.append(complete_bingo())
+        requires.append(complete_bingo(world, state, player))
 
     return True if not len(requires) else " AND ".join(requires)
 
@@ -158,11 +158,33 @@ def life_mastery(world: World, state: CollectionState, player: int) -> str | boo
 
     return False
 
-def complete_bingo():
-    return f"|Bingo Complete|"
+def complete_bingo(world: World, state: CollectionState, player: int) -> str | bool:
+    bingo_count = world.options.bingo_count.value
+
+    #return ""
+
+    if bingo_count == 0:
+        return "[Bingo Board Complete]"
+
+    return state.has_from_list(*world.item_and_event_name_groups["Bingo Line"], player, bingo_count)
+
+    # return "||[Bingo Board Complete]"
+
+    # event_names = (["[Bingo Board Row {row}]" for row in range(1, 10)] +
+    #     ["[Bingo Board Column {col}]" for col in range(1, 10)] +
+    #     ["Bingo Board First Diagonal", "Bingo Board Second Diagonal"])
+    
+    # event_count = 0
+    # for event_name in event_names:
+    #     if state.has(event_name, player):
+    #         event_count += 1
+    #     if event_count >= bingo_count:
+    #         return True
+
+    # return False
 
 if use_rulebuilder:
-    from rule_builder.rules import HasFromList, And, Has, Rule, False_
+    from rule_builder.rules import HasGroup, HasFromList, And, Has, Rule, True_
     @dataclass()
     class beat_storyRule(Rule["ManualWorld"], game=game_name):
         def _instantiate(self, world: "ManualWorld") -> Rule.Resolved:
@@ -186,7 +208,7 @@ if use_rulebuilder:
 
             include_licenses = world.options.include_licenses.value
             if not include_licenses:
-                return False_().resolve(world)
+                return True_().resolve(world)
 
             life_mastery_count = world.options.life_mastery_count.value
             masteries = [f"[{life} Mastery]" for life in life_names if life is not None]
@@ -196,7 +218,20 @@ if use_rulebuilder:
     @dataclass()
     class complete_bingoRule(Rule["ManualWorld"], game=game_name):
         def _instantiate(self, world: "ManualWorld") -> Rule.Resolved:
-            return Has("Bingo Complete").resolve(world)
+
+            #return True_().resolve(world)
+
+            bingo_count = world.options.bingo_count.value
+            if bingo_count == 0:
+                return Has("[Bingo Board Complete]").resolve(world)
+
+            # return Has("[Bingo Board Complete]").resolve(world)
+
+            # event_names = (["[Bingo Board Row {row}]" for row in range(1, 10)] +
+            #     ["[Bingo Board Column {col}]" for col in range(1, 10)] +
+            #     ["Bingo Board First Diagonal", "Bingo Board Second Diagonal"])
+
+            return HasFromList(*world.item_and_event_name_groups["Bingo Line"], count=bingo_count).resolve(world)
 
     @dataclass()
     class goalRule(Rule["ManualWorld"], game=game_name):

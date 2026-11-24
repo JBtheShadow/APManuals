@@ -31382,8 +31382,8 @@
         "Bingo Complete"
       ],
       "requires": "{OptOne([Bingo Board Row 1])} AND {OptOne([Bingo Board Row 2])} AND {OptOne([Bingo Board Row 3])} AND {OptOne([Bingo Board Row 4])} AND {OptOne([Bingo Board Row 5])} AND {OptOne([Bingo Board Row 6])} AND {OptOne([Bingo Board Row 7])} AND {OptOne([Bingo Board Row 8])} AND {OptOne([Bingo Board Row 9])}",
-      "place_item": [
-        "Bingo Complete"
+      "dont_place_item_category": [
+        "Traps"
       ]
     }
   ]

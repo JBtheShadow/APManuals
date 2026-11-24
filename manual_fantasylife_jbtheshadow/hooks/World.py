@@ -73,6 +73,8 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
     life_mastery_goal = get_option(world, "life_mastery_goal", False)
     wish_hunt_goal = get_option(world, "wish_hunt_goal", False)
     bingo_goal = get_option(world, "bingo_goal", False)
+    bingo_size = get_option(world, "bingo_size", 5)
+    bingo_count = get_option(world, "bingo_count", 0)
     include_chapters = get_option(world, "include_chapters", False)
     include_dlc = get_option(world, "include_dlc", False)
     include_story = get_option(world, "include_story", False)
@@ -467,6 +469,14 @@ def before_generate_early(world: World, multiworld: MultiWorld, player: int) -> 
             set_option(world, "wish_hunt_total", wish_hunt_total)
             set_option(world, "wish_hunt_required", wish_hunt_required)
 
+    if bingo_goal:
+        max_lines = 2 * bingo_size + 2
+        if bingo_count > max_lines:
+            logging.warning("There are more lines required than available for Bingo goal.")
+            logging.warning("Changing setting to Blackout.")
+            bingo_count = 0
+            set_option(world, "bingo_count", bingo_count)
+
     #endregion
 
 # Called before regions and locations are created. Not clear why you'd want this, but it's here. Victory location is included, but Victory event is not placed yet.
@@ -767,23 +777,28 @@ def after_set_rules(world: World, multiworld: MultiWorld, player: int):
             if "Shops" in bingo_categories:
                 cand_loc_names.update(world.location_name_groups["Shops"])
 
-            world.bingo_board = {}
+            world.bingo_board = {row: {} for row in range(1, bingo_size + 1)}
             locations = [loc for loc in world.get_locations() if loc.name in cand_loc_names]
-            for row in range(1, bingo_size + 1):
-                world.bingo_board[row] = {}
-                for col in range(1, bingo_size + 1):
-                    rand_location = world.random.choice(locations)
-                    locations.remove(rand_location)
+            row_col_pairs = [(row, col) for row in range(1, bingo_size + 1) for col in range(1, bingo_size + 1)]
+            world.random.shuffle(row_col_pairs)
 
-                    bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
-                    bingo_location.access_rule = rand_location.access_rule
-                    bingo_location.parent_region = rand_location.parent_region
+            for (row, col) in row_col_pairs:
+                if not len(locations):
+                    world.bingo_board[row][col] = "[Free Space]"
+                    continue
 
-                    event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
-                    event_location.access_rule = rand_location.access_rule
-                    event_location.parent_region = rand_location.parent_region
+                rand_location = world.random.choice(locations)
+                locations.remove(rand_location)
 
-                    world.bingo_board[row][col] = rand_location.name
+                bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
+                bingo_location.access_rule = rand_location.access_rule
+                bingo_location.parent_region = rand_location.parent_region
+
+                event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
+                event_location.access_rule = rand_location.access_rule
+                event_location.parent_region = rand_location.parent_region
+
+                world.bingo_board[row][col] = rand_location.name
 
     ## Common functions:
     # location = world.get_location(location_name, player)
@@ -901,6 +916,9 @@ def hook_interpret_slot_data(world: World, player: int, slot_data: dict[str, Any
         world.bingo_board = slot_data["bingo_board"]
         for row, row_data in slot_data["bingo_board"].items():
             for col, loc_name in row_data.items():
+                if loc_name == "[Free Space]":
+                    continue
+
                 bingo_location = world.get_location(f"Bingo Board Row {row} Column {col}")
                 event_location = next(loc for loc in world.get_locations() if loc.name.endswith(f"[BINGO_BOARD_ROW_{row}_COLUMN_{col}]"))
                 rand_location = world.get_location(loc_name)
