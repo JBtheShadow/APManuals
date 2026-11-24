@@ -455,6 +455,20 @@ class BingoBoardSize(Choice):
     option_9x9 = 9
     default = 5
 
+class BingoGoalCount(NamedRange):
+    """How many completed lines are required for the goal.
+    Pick 0 or Blackout if you want the entire board to be required."""
+    display_name = "Bingo Count"
+    range_start = 0
+    range_end = 20
+    special_range_names = {
+        "blackout": 0,
+        "single": 1,
+        "double": 2,
+        "triple": 3
+    }
+    default = 0
+
 class BingoCategories(OptionSet):
     """Set which categories can appear as board tiles.
     Make sure to enable other relevant options; for example, if Challenges are eligible but life challenges are not included in the pool then
@@ -544,6 +558,7 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
 
     options["bingo_goal"] = BingoGoal
     options["bingo_size"] = BingoBoardSize
+    options["bingo_count"] = BingoGoalCount
     options["bingo_categories"] = BingoCategories
 
     return options
@@ -579,7 +594,7 @@ def before_option_groups_created(groups: dict[str, list[Type[Option[Any]]]]) -> 
         LifeMasteryRank, LifeMasteryCount
     ]
     groups["Bingo"] = [
-        BingoBoardSize, BingoCategories
+        BingoBoardSize, BingoGoalCount, BingoCategories
     ]
     groups["Life Licenses"] = [
         IncludeLicenses, ProgressiveLicenses, IncludeChallengeLocations, IncludeCraftingLocations,
