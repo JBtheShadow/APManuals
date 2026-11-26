@@ -1,0 +1,49 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
+  "data": [
+    { "name": "Goal", "category": ["Victory"], "requires": "|World 5 - Hyperspace| OR |Progressive World:5|", "victory": true },
+
+    { "name": "Clear Stage 1-1", "category": ["Story Mode", "Stage Clear", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Clear Stage 1-2", "category": ["Story Mode", "Stage Clear", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Clear Stage 1-3", "category": ["Story Mode", "Stage Clear", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Clear Stage 1-4", "category": ["Story Mode", "Stage Clear", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Clear Stage 1-5", "category": ["Story Mode", "Stage Clear", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Clear Stage 1-6", "category": ["Story Mode", "Stage Clear", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Clear Stage 1-7: Hammer Bomber", "category": ["Story Mode", "Stage Clear", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Clear Stage 1-8: Dogun", "category": ["Story Mode", "Stage Clear", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    
+    { "name": "Clear Stage 2-1", "category": ["Story Mode", "Stage Clear", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Clear Stage 2-2", "category": ["Story Mode", "Stage Clear", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Clear Stage 2-3", "category": ["Story Mode", "Stage Clear", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Clear Stage 2-4", "category": ["Story Mode", "Stage Clear", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Clear Stage 2-5", "category": ["Story Mode", "Stage Clear", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Clear Stage 2-6", "category": ["Story Mode", "Stage Clear", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Clear Stage 2-7: Jet Bomber", "category": ["Story Mode", "Stage Clear", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Clear Stage 2-8: Machinder", "category": ["Story Mode", "Stage Clear", "World 2 - Edo Era"], "region": "Edo Era" },
+    
+    { "name": "Clear Stage 3-1", "category": ["Story Mode", "Stage Clear", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Clear Stage 3-2", "category": ["Story Mode", "Stage Clear", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Clear Stage 3-3", "category": ["Story Mode", "Stage Clear", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Clear Stage 3-4", "category": ["Story Mode", "Stage Clear", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Clear Stage 3-5", "category": ["Story Mode", "Stage Clear", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Clear Stage 3-6", "category": ["Story Mode", "Stage Clear", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Clear Stage 3-7: Lady Bomber", "category": ["Story Mode", "Stage Clear", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Clear Stage 3-8: Rocketeer Joe", "category": ["Story Mode", "Stage Clear", "World 3 - Modern Era"], "region": "Modern Era" },
+    
+    { "name": "Clear Stage 4-1", "category": ["Story Mode", "Stage Clear", "World 4 - Super Future"], "region": "Super Future" },
+    { "name": "Clear Stage 4-2", "category": ["Story Mode", "Stage Clear", "World 4 - Super Future"], "region": "Super Future" },
+    { "name": "Clear Stage 4-3", "category": ["Story Mode", "Stage Clear", "World 4 - Super Future"], "region": "Super Future" },
+    { "name": "Clear Stage 4-4", "category": ["Story Mode", "Stage Clear", "World 4 - Super Future"], "region": "Super Future" },
+    { "name": "Clear Stage 4-5", "category": ["Story Mode", "Stage Clear", "World 4 - Super Future"], "region": "Super Future" },
+    { "name": "Clear Stage 4-6", "category": ["Story Mode", "Stage Clear", "World 4 - Super Future"], "region": "Super Future" },
+    { "name": "Clear Stage 4-7: Bazooka Bomber", "category": ["Story Mode", "Stage Clear", "World 4 - Super Future"], "region": "Super Future" },
+    { "name": "Clear Stage 4-8: Centipeedle", "category": ["Story Mode", "Stage Clear", "World 4 - Super Future"], "region": "Super Future" },
+    
+    { "name": "Clear Stage 5-1: Hammer Bomber Rematch", "category": ["Story Mode", "Stage Clear", "World 5 - Hyperspace"], "region": "Hyperspace" },
+    { "name": "Clear Stage 5-2: Jet Bomber Rematch", "category": ["Story Mode", "Stage Clear", "World 5 - Hyperspace"], "region": "Hyperspace" },
+    { "name": "Clear Stage 5-3: Lady Bomber Rematch", "category": ["Story Mode", "Stage Clear", "World 5 - Hyperspace"], "region": "Hyperspace" },
+    { "name": "Clear Stage 5-4: Jet Bomber Rematch", "category": ["Story Mode", "Stage Clear", "World 5 - Hyperspace"], "region": "Hyperspace" },
+    { "name": "Clear Stage 5-5: Great Bomber", "category": ["Story Mode", "Stage Clear", "World 5 - Hyperspace"], "region": "Hyperspace" },
+    { "name": "Clear Stage 5-6: Boss Rematches and Bagura", "category": ["Story Mode", "Stage Clear", "World 5 - Hyperspace"], "region": "Hyperspace" }
+  ]
+}

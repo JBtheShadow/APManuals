@@ -1,0 +1,11 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.items.schema.json",
+  "data": [
+    { "name": "World 1 - Primeval Era", "category": ["Story Mode", "Worlds", "Random Worlds"], "progression": true },
+    { "name": "World 2 - Edo Era", "category": ["Story Mode", "Worlds", "Random Worlds"], "progression": true },
+    { "name": "World 3 - Modern Era", "category": ["Story Mode", "Worlds", "Random Worlds"], "progression": true },
+    { "name": "World 4 - Super Future", "category": ["Story Mode", "Worlds", "Random Worlds"], "progression": true },
+    { "name": "World 5 - Hyperspace", "category": ["Story Mode", "Worlds", "Random Worlds"], "progression": true },
+    { "count": 5, "name": "Progressive World", "category": ["Story Mode", "Worlds", "Progressive Worlds"], "progression": true }
+  ]
+}

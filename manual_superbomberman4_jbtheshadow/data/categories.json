@@ -1,0 +1,6 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.categories.schema.json",
+
+  "Random Worlds": { "yaml_option": ["!progressive_worlds"], "hidden": true },
+  "Progressive Worlds": { "yaml_option": ["progressive_worlds"], "hidden": true }
+}

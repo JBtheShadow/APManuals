@@ -1,0 +1,23 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.game.schema.json",
+  "game": "SuperBomberman4",
+  "creator": "JBtheShadow",
+  "filler_item_name": ["100 Points", "200 Points", "500 Points", "1000 Points", "2000 Points"],
+  "starting_items": [
+    {
+      "items": ["Progressive World"],
+      "random": 1,
+      "yaml_option": ["progressive_worlds"]
+    },
+    {
+      "items": [
+        "World 1 - Primeval Era",
+        "World 2 - Edo Era",
+        "World 3 - Modern Era",
+        "World 4 - Super Future"
+      ],
+      "random": 1,
+      "yaml_option": ["!progressive_worlds"]
+    }
+  ]
+}
