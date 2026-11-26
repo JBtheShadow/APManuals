@@ -1,4 +1,16 @@
 {
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.events.schema.json",
-  "data": []
+  "data": [
+    { "name": "Hammer Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Hammer Bomber Soul|" },
+    { "name": "Jet Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Jet Bomber Soul|" },
+    { "name": "Lady Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Lady Bomber Soul|" },
+    { "name": "Bazooka Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Bazooka Bomber Soul|" },
+    { "name": "Great Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Great Bomber Soul|" },
+    
+    { "name": "Dogun Access", "requires": "{YamlDisabled(boss_souls)} OR |Dogun Soul|" },
+    { "name": "Machinder Access", "requires": "{YamlDisabled(boss_souls)} OR |Machinder Soul|" },
+    { "name": "Rocketeer Joe Access", "requires": "{YamlDisabled(boss_souls)} OR |Rocketeer Joe Soul|" },
+    { "name": "Centibeetle Access", "requires": "{YamlDisabled(boss_souls)} OR |Centibeetle Soul|" },
+    { "name": "Bagura Access", "requires": "{YamlDisabled(boss_souls)} OR (|Dogun Soul| AND |Machinder Soul| AND |Rocketeer Joe Soul| AND |Bagura Soul|)" }
+  ]
 }

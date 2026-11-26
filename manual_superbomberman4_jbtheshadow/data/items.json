@@ -6,6 +6,18 @@
     { "name": "World 3 - Modern Era", "category": ["Story Mode", "Worlds", "Random Worlds"], "progression": true },
     { "name": "World 4 - Super Future", "category": ["Story Mode", "Worlds", "Random Worlds"], "progression": true },
     { "name": "World 5 - Hyperspace", "category": ["Story Mode", "Worlds", "Random Worlds"], "progression": true },
-    { "count": 5, "name": "Progressive World", "category": ["Story Mode", "Worlds", "Progressive Worlds"], "progression": true }
+    { "count": 5, "name": "Progressive World", "category": ["Story Mode", "Worlds", "Progressive Worlds"], "progression": true },
+
+    { "name": "Hammer Bomber Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    { "name": "Jet Bomber Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    { "name": "Lady Bomber Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    { "name": "Bazooka Bomber Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    { "name": "Great Bomber Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    
+    { "name": "Dogun Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    { "name": "Machinder Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    { "name": "Rocketeer Joe Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    { "name": "Centibeetle Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
+    { "name": "Bagura Soul", "category": ["Story Mode", "Boss Souls"], "progression": true }
   ]
 }

@@ -33,12 +33,20 @@ class TotalCharactersToWinWith(Range):
     default = 50
 
 class ProgressiveWorlds(DefaultOnToggle):
-    """Replaces the individual story mode world unlocks with a progressive item. Disable this to receive them in any order."""
+    """Replaces the individual story mode world unlocks with a progressive item. Disable this to receive them in any order.
+    
+    Recommended using password 1574 to warp to stage 5-6 then intentionally get a game over then continue to have free stage access."""
     display_name = "Progressive World Unlocking"
+
+class BossSouls(Toggle):
+    """Bosses will require their respective soul before they can be faced, adding an extra requirement to stages 7 and 8 for worlds 1 through 4
+    as well as the entirety of world 5."""
+    display_name = "Boss Souls"
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
     options["progressive_worlds"] = ProgressiveWorlds
+    options["boss_souls"] = BossSouls
     return options
 
 # This is called after any manual options are defined, in case you want to see what options are defined or want to modify the defined options
