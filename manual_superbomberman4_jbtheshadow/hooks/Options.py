@@ -56,6 +56,9 @@ class ShufflePlayerTwo(Toggle):
     """Shuffles a Player 2 item into the multiworld, making bonus stages or extra item panels to logically require it."""
     display_name = "Shuffle Player 2"
 
+class ShufflePowerUps(Toggle):
+    """Shuffles power up access into the multiworld. Each item lets you pick up any number of panels of their respective power up (or down)."""
+    display_name = "Shuffle Power Ups"
 
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
@@ -63,6 +66,7 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["boss_souls"] = BossSouls
     options["bonus_stages"] = BonusStages
     options["player_two"] = ShufflePlayerTwo
+    options["power_ups"] = ShufflePowerUps
     return options
 
 # This is called after any manual options are defined, in case you want to see what options are defined or want to modify the defined options

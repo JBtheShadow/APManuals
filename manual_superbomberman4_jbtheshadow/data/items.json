@@ -20,6 +20,26 @@
     { "name": "Centibeetle Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
     { "name": "Bagura Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
 
-    { "name": "Player 2", "category": ["Story Mode", "Player 2"], "progression": true }
+    { "name": "Player 2", "category": ["Story Mode", "Player 2"], "progression": true },
+
+    { "name": "Bomb Up", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Fire Up", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Speed Up", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Piercing Bomb", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Remote Control", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Power Glove", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Punch", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Push", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Bomb Kick", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Bomb Pass", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Wall Pass", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Heart", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Vest", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Clock", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Life Up", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Biological Eggs", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Mechanical Eggs", "category": [ "Power Ups" ], "progression": true },
+    { "name": "Geta", "category": [ "Power Ups" ], "progression": true, "trap": true },
+    { "name": "Skull", "category": [ "Power Ups" ], "progression": true, "trap": true }
   ]
 }

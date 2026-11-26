@@ -15,7 +15,11 @@
 
     { "name": "World 5 Access", "requires": "|World 5 - Hyperspace| OR |Progressive World:5|" },
 
-    { "name": "Push Bonus Access", "requires": "{YamlDisabled(player_two)} OR |Player 2|", "category": ["Bonus Stages"] },
-    { "name": "Throw Bonus Access", "requires": "{YamlDisabled(player_two)} OR |Player 2|", "category": ["Bonus Stages"] }
+    { "name": "Can Push", "requires": "{YamlDisabled(power_ups)} OR |Push|" },
+    { "name": "Can Throw", "requires": "{YamlDisabled(power_ups)} OR |Power Glove|" },
+
+    { "name": "Bonus Access", "requires": "{YamlDisabled(player_two)} OR |Player 2|", "category": ["Bonus Stages"] },
+    { "name": "Push Bonus Access", "requires": "|Bonus Access| AND |Can Push|", "category": ["Bonus Stages"] },
+    { "name": "Throw Bonus Access", "requires": "|Bonus Access| AND |Can Throw|", "category": ["Bonus Stages"] }
   ]
 }
