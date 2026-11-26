@@ -3,6 +3,7 @@
 
   "Random Worlds": { "yaml_option": ["!progressive_worlds"], "hidden": true },
   "Progressive Worlds": { "yaml_option": ["progressive_worlds"], "hidden": true },
-
-  "Boss Souls": { "yaml_option": ["boss_souls"] }
+  "Boss Souls": { "yaml_option": ["boss_souls"] },
+  "Bonus Stages": { "yaml_option": ["bonus_stages"] },
+  "Player 2": { "yaml_option": ["player_two"] }
 }

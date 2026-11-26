@@ -43,10 +43,26 @@ class BossSouls(Toggle):
     as well as the entirety of world 5."""
     display_name = "Boss Souls"
 
+class BonusStages(Toggle):
+    """Includes locations for entering bonus stages. There are two ways of reaching them:
+    - Some bonus stage entrances are always visible, typically enclosed in hard blocks and require the power glove to throw a bomber in
+    - Some bonus stage entrances are hidden under hard blocks and require two bombers to push against it at the same time
+      - It's worth pointing out some of these can sit right next to the stage exit, making them inaccessible if you kill all enemies
+    
+    Both types logically require a second player as well as the appropriate power up."""
+    display_name = "Include Bonus Stages"
+
+class ShufflePlayerTwo(Toggle):
+    """Shuffles a Player 2 item into the multiworld, making bonus stages or extra item panels to logically require it."""
+    display_name = "Shuffle Player 2"
+
+
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
     options["progressive_worlds"] = ProgressiveWorlds
     options["boss_souls"] = BossSouls
+    options["bonus_stages"] = BonusStages
+    options["player_two"] = ShufflePlayerTwo
     return options
 
 # This is called after any manual options are defined, in case you want to see what options are defined or want to modify the defined options

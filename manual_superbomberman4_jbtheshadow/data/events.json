@@ -11,6 +11,11 @@
     { "name": "Machinder Access", "requires": "{YamlDisabled(boss_souls)} OR |Machinder Soul|" },
     { "name": "Rocketeer Joe Access", "requires": "{YamlDisabled(boss_souls)} OR |Rocketeer Joe Soul|" },
     { "name": "Centibeetle Access", "requires": "{YamlDisabled(boss_souls)} OR |Centibeetle Soul|" },
-    { "name": "Bagura Access", "requires": "{YamlDisabled(boss_souls)} OR (|Dogun Soul| AND |Machinder Soul| AND |Rocketeer Joe Soul| AND |Bagura Soul|)" }
+    { "name": "Bagura Access", "requires": "{YamlDisabled(boss_souls)} OR (|Dogun Soul| AND |Machinder Soul| AND |Rocketeer Joe Soul| AND |Bagura Soul|)" },
+
+    { "name": "World 5 Access", "requires": "|World 5 - Hyperspace| OR |Progressive World:5|" },
+
+    { "name": "Push Bonus Access", "requires": "{YamlDisabled(player_two)} OR |Player 2|", "category": ["Bonus Stages"] },
+    { "name": "Throw Bonus Access", "requires": "{YamlDisabled(player_two)} OR |Player 2|", "category": ["Bonus Stages"] }
   ]
 }
