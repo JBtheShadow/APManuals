@@ -9,8 +9,8 @@
     { "name": "Clear Stage 1-4", "category": ["Story Mode", "Stage Clear", "Stage 1-4", "World 1 - Primeval Era"], "region": "Primeval Era" },
     { "name": "Clear Stage 1-5", "category": ["Story Mode", "Stage Clear", "Stage 1-5", "World 1 - Primeval Era"], "region": "Primeval Era" },
     { "name": "Clear Stage 1-6", "category": ["Story Mode", "Stage Clear", "Stage 1-6", "World 1 - Primeval Era"], "region": "Primeval Era" },
-    { "name": "Clear Stage 1-7: Hammer Bomber", "category": ["Story Mode", "Stage Clear", "Stage 1-7", "World 1 - Primeval Era"], "region": "Primeval Era", "requires": "|Hammer Bomber Access|" },
-    { "name": "Clear Stage 1-8: Dogun", "category": ["Story Mode", "Stage Clear", "Stage 1-8", "World 1 - Primeval Era"], "region": "Primeval Era", "requires": "|Dogun Access|" },
+    { "name": "Clear Stage 1-7: Hammer Bomber", "category": ["Story Mode", "Stage Clear", "Stage 1-7", "World 1 - Primeval Era"], "region": "Primeval Era", "requires": "|Hammer Bomber Access| AND |Decent Firepower|" },
+    { "name": "Clear Stage 1-8: Dogun", "category": ["Story Mode", "Stage Clear", "Stage 1-8", "World 1 - Primeval Era"], "region": "Primeval Era", "requires": "|Dogun Access| AND |Decent Firepower|" },
     
     { "name": "Clear Stage 2-1", "category": ["Story Mode", "Stage Clear", "Stage 2-1", "World 2 - Edo Era"], "region": "Edo Era" },
     { "name": "Clear Stage 2-2", "category": ["Story Mode", "Stage Clear", "Stage 2-2", "World 2 - Edo Era"], "region": "Edo Era" },
@@ -18,8 +18,8 @@
     { "name": "Clear Stage 2-4", "category": ["Story Mode", "Stage Clear", "Stage 2-4", "World 2 - Edo Era"], "region": "Edo Era" },
     { "name": "Clear Stage 2-5", "category": ["Story Mode", "Stage Clear", "Stage 2-5", "World 2 - Edo Era"], "region": "Edo Era" },
     { "name": "Clear Stage 2-6", "category": ["Story Mode", "Stage Clear", "Stage 2-6", "World 2 - Edo Era"], "region": "Edo Era" },
-    { "name": "Clear Stage 2-7: Jet Bomber", "category": ["Story Mode", "Stage Clear", "Stage 2-7",  "World 2 - Edo Era"], "region": "Edo Era", "requires": "|Jet Bomber Access|" },
-    { "name": "Clear Stage 2-8: Machinder", "category": ["Story Mode", "Stage Clear", "Stage 2-8", "World 2 - Edo Era"], "region": "Edo Era", "requires": "|Machinder Access|" },
+    { "name": "Clear Stage 2-7: Jet Bomber", "category": ["Story Mode", "Stage Clear", "Stage 2-7",  "World 2 - Edo Era"], "region": "Edo Era", "requires": "|Jet Bomber Access| AND |Decent Firepower|" },
+    { "name": "Clear Stage 2-8: Machinder", "category": ["Story Mode", "Stage Clear", "Stage 2-8", "World 2 - Edo Era"], "region": "Edo Era", "requires": "|Machinder Access| AND |Decent Firepower|" },
     
     { "name": "Clear Stage 3-1", "category": ["Story Mode", "Stage Clear", "Stage 3-1", "World 3 - Modern Era"], "region": "Modern Era" },
     { "name": "Clear Stage 3-2", "category": ["Story Mode", "Stage Clear", "Stage 3-2", "World 3 - Modern Era"], "region": "Modern Era" },
@@ -27,8 +27,8 @@
     { "name": "Clear Stage 3-4", "category": ["Story Mode", "Stage Clear", "Stage 3-4", "World 3 - Modern Era"], "region": "Modern Era" },
     { "name": "Clear Stage 3-5", "category": ["Story Mode", "Stage Clear", "Stage 3-5", "World 3 - Modern Era"], "region": "Modern Era" },
     { "name": "Clear Stage 3-6", "category": ["Story Mode", "Stage Clear", "Stage 3-6", "World 3 - Modern Era"], "region": "Modern Era" },
-    { "name": "Clear Stage 3-7: Lady Bomber", "category": ["Story Mode", "Stage Clear", "Stage 3-7", "World 3 - Modern Era"], "region": "Modern Era", "requires": "|Lady Bomber Access|" },
-    { "name": "Clear Stage 3-8: Rocketeer Joe", "category": ["Story Mode", "Stage Clear", "Stage 3-8", "World 3 - Modern Era"], "region": "Modern Era", "requires": "|Rocketeer Joe Access|" },
+    { "name": "Clear Stage 3-7: Lady Bomber", "category": ["Story Mode", "Stage Clear", "Stage 3-7", "World 3 - Modern Era"], "region": "Modern Era", "requires": "|Lady Bomber Access| AND |Decent Firepower|" },
+    { "name": "Clear Stage 3-8: Rocketeer Joe", "category": ["Story Mode", "Stage Clear", "Stage 3-8", "World 3 - Modern Era"], "region": "Modern Era", "requires": "|Rocketeer Joe Access| AND |Decent Firepower|" },
     
     { "name": "Clear Stage 4-1", "category": ["Story Mode", "Stage Clear", "Stage 4-1", "World 4 - Super Future"], "region": "Super Future" },
     { "name": "Clear Stage 4-2", "category": ["Story Mode", "Stage Clear", "Stage 4-2", "World 4 - Super Future"], "region": "Super Future" },
@@ -36,8 +36,8 @@
     { "name": "Clear Stage 4-4", "category": ["Story Mode", "Stage Clear", "Stage 4-4", "World 4 - Super Future"], "region": "Super Future" },
     { "name": "Clear Stage 4-5", "category": ["Story Mode", "Stage Clear", "Stage 4-5", "World 4 - Super Future"], "region": "Super Future" },
     { "name": "Clear Stage 4-6", "category": ["Story Mode", "Stage Clear", "Stage 4-6", "World 4 - Super Future"], "region": "Super Future" },
-    { "name": "Clear Stage 4-7: Bazooka Bomber", "category": ["Story Mode", "Stage Clear", "Stage 4-7", "World 4 - Super Future"], "region": "Super Future", "requires": "|Bazooka Bomber Access|" },
-    { "name": "Clear Stage 4-8: Centibeetle", "category": ["Story Mode", "Stage Clear", "Stage 4-8", "World 4 - Super Future"], "region": "Super Future", "requires": "|Centibeetle Access|" },
+    { "name": "Clear Stage 4-7: Bazooka Bomber", "category": ["Story Mode", "Stage Clear", "Stage 4-7", "World 4 - Super Future"], "region": "Super Future", "requires": "|Bazooka Bomber Access| AND |Decent Firepower|" },
+    { "name": "Clear Stage 4-8: Centibeetle", "category": ["Story Mode", "Stage Clear", "Stage 4-8", "World 4 - Super Future"], "region": "Super Future", "requires": "|Centibeetle Access| AND |Decent Firepower|" },
     
     { "name": "Clear Stage 5-1: Hammer Bomber Rematch", "category": ["Story Mode", "Stage Clear", "Stage 5-1", "World 5 - Hyperspace"], "region": "Hyperspace", "requires": "|Hammer Bomber Access|" },
     { "name": "Clear Stage 5-2: Jet Bomber Rematch", "category": ["Story Mode", "Stage Clear", "Stage 5-2", "World 5 - Hyperspace"], "region": "Hyperspace", "requires": "|Jet Bomber Access|" },

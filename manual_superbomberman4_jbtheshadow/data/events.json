@@ -15,6 +15,7 @@
 
     { "name": "World 5 Access", "requires": "|World 5 - Hyperspace| OR |Progressive World:5|" },
 
+    { "name": "Decent Firepower", "requires": "{YamlDisabled(power_ups)} OR (|Bomb Up| AND |Fire Up| AND |Speed Up| AND |Heart| AND |Life Up| AND (|Piercing Bomb| OR |Remote Control|))" },
     { "name": "Can Push", "requires": "{YamlDisabled(power_ups)} OR |Push|" },
     { "name": "Can Throw", "requires": "{YamlDisabled(power_ups)} OR |Power Glove|" },
 

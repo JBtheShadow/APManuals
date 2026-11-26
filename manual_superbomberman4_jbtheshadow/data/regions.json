@@ -28,5 +28,5 @@
   "Edo Era": {},
   "Modern Era": {},
   "Super Future": {},
-  "Hyperspace": {}
+  "Hyperspace": { "requires": "|Decent Firepower|"}
 }
