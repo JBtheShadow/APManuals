@@ -34,7 +34,7 @@
     { "name": "Clear Stage 4-2", "category": ["Story Mode", "Stage Clear", "Stage 4-2", "World 4 - Super Future"], "region": "Super Future" },
     { "name": "Clear Stage 4-3", "category": ["Story Mode", "Stage Clear", "Stage 4-3", "World 4 - Super Future"], "region": "Super Future" },
     { "name": "Clear Stage 4-4", "category": ["Story Mode", "Stage Clear", "Stage 4-4", "World 4 - Super Future"], "region": "Super Future" },
-    { "name": "Clear Stage 4-5", "category": ["Story Mode", "Stage Clear", "Stage 4-5", "World 4 - Super Future"], "region": "Super Future" },
+    { "name": "Clear Stage 4-5", "category": ["Story Mode", "Stage Clear", "Stage 4-5", "World 4 - Super Future"], "region": "Super Future", "requires": "|Ranged Remote Bombs|", "_reason": "Screw Psycho Man" },
     { "name": "Clear Stage 4-6", "category": ["Story Mode", "Stage Clear", "Stage 4-6", "World 4 - Super Future"], "region": "Super Future" },
     { "name": "Clear Stage 4-7: Bazooka Bomber", "category": ["Story Mode", "Stage Clear", "Stage 4-7", "World 4 - Super Future"], "region": "Super Future", "requires": "|Bazooka Bomber Access| AND |Decent Firepower|" },
     { "name": "Clear Stage 4-8: Centibeetle", "category": ["Story Mode", "Stage Clear", "Stage 4-8", "World 4 - Super Future"], "region": "Super Future", "requires": "|Centibeetle Access| AND |Decent Firepower|" },
