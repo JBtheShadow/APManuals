@@ -5,6 +5,14 @@ from BaseClasses import MultiWorld
 # Use this if you want to override the default behavior of is_option_enabled
 # Return True to enable the category, False to disable it, or None to use the default behavior
 def before_is_category_enabled(multiworld: MultiWorld, player: int, category_name: str) -> Optional[bool]:
+    from .Options import ShuffleMounts
+    world = multiworld.worlds[player]
+    if category_name == "Mounts" and world.options.mounts.value == ShuffleMounts.option_no:
+        return False
+    if category_name == "Egg Type" and world.options.mounts.value != ShuffleMounts.option_egg_type:
+        return False
+    if category_name == "Mount Type" and world.options.mounts.value != ShuffleMounts.option_mount_type:
+        return False
     return None
 
 # Use this if you want to override the default behavior of is_option_enabled

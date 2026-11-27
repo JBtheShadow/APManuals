@@ -60,6 +60,20 @@ class ShufflePowerUps(Toggle):
     """Shuffles power up access into the multiworld. Each item lets you pick up any number of panels of their respective power up (or down)."""
     display_name = "Shuffle Power Ups"
 
+class ShuffleMounts(Choice):
+    """Shuffles the ability to ride mounts. May also includes locations for riding each type of mount once.
+    - [no]: No items nor locations are shuffled. Mounts are free to ride.
+    - [egg_type]: Two items are shuffled in. Mounts are unlocked as their respective egg type is received.
+    - [mount_type]: There's an item for each of the different mounts.
+    
+    If either type of shuffling is used then extra locations for riding them are included to ensure there are enough
+    locations in the multiworld."""
+    display_name = "Shuffle Mounts"
+    option_no = 0
+    option_egg_type = 1
+    option_mount_type = 2
+    default = 0
+
 # This is called before any manual options are defined, in case you want to define your own with a clean slate or let Manual define over them
 def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, Type[Option[Any]]]:
     options["progressive_worlds"] = ProgressiveWorlds
@@ -67,6 +81,7 @@ def before_options_defined(options: dict[str, Type[Option[Any]]]) -> dict[str, T
     options["bonus_stages"] = BonusStages
     options["player_two"] = ShufflePlayerTwo
     options["power_ups"] = ShufflePowerUps
+    options["mounts"] = ShuffleMounts
     return options
 
 # This is called after any manual options are defined, in case you want to see what options are defined or want to modify the defined options

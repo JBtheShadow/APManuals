@@ -6,5 +6,8 @@
   "Boss Souls": { "yaml_option": ["boss_souls"] },
   "Bonus Stages": { "yaml_option": ["bonus_stages"] },
   "Player 2": { "yaml_option": ["player_two"] },
-  "Power Ups": { "yaml_option": ["power_ups"] }
+  "Power Ups": { "yaml_option": ["power_ups"] },
+  "Mounts": {},
+  "Egg Type": { "hidden": true },
+  "Mount Type": { "hidden": true }
 }

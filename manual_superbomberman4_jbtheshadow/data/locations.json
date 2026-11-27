@@ -83,6 +83,20 @@
     { "name": "Stage 4-3: Visit Hidden Bonus Stage C", "category": ["Story Mode", "Bonus Stages", "Stage 4-3", "World 4 - Super Future"], "region": "Super Future", "requires": "|Push Bonus Access|" },
     { "name": "Stage 4-4: Visit Bonus Stage B (Left)", "category": ["Story Mode", "Bonus Stages", "Stage 4-4", "World 4 - Super Future"], "region": "Super Future", "requires": "|Throw Bonus Access|" },
     { "name": "Stage 4-4: Visit Hidden Bonus Stage D (Center)", "category": ["Story Mode", "Bonus Stages", "Stage 4-4", "World 4 - Super Future"], "region": "Super Future", "requires": "|Push Bonus Access|" },
-    { "name": "Stage 4-4: Visit Bonus Stage I (Right)", "category": ["Story Mode", "Bonus Stages", "Stage 4-4", "World 4 - Super Future"], "region": "Super Future", "requires": "|Throw Bonus Access|" }
+    { "name": "Stage 4-4: Visit Bonus Stage I (Right)", "category": ["Story Mode", "Bonus Stages", "Stage 4-4", "World 4 - Super Future"], "region": "Super Future", "requires": "|Throw Bonus Access|" },
+
+    { "name": "Ride a Triceradops", "category": ["Story Mode", "Mounts", "Stage 1-1", "Stage 1-3", "World 1 - Primeval Era"], "region": "Primeval Era", "requires": "|Biological Eggs| OR |Triceradops Egg|" },
+    { "name": "Ride a Dogun Jr.", "category": ["Story Mode", "Mounts", "Stage 1-5", "World 1 - Primeval Era"], "region": "Primeval Era", "requires": "|Mechanical Eggs| OR |Dogun Jr. Egg|" },
+    { "name": "Ride an Angora", "category": ["Story Mode", "Mounts", "Stage 1-6", "World 1 - Primeval Era"], "region": "Primeval Era", "requires": "|Biological Eggs| OR |Angora Egg|" },
+    { "name": "Ride a Ponpon", "category": ["Story Mode", "Mounts", "Stage 2-4", "World 2 - Edo Era"], "region": "Edo Era", "requires": "|Mechanical Eggs| OR |Ponpon Egg|" },
+    { "name": "Ride a Swim", "category": ["Story Mode", "Mounts", "Stage 2-5", "World 2 - Edo Era"], "region": "Edo Era", "requires": "|Biological Eggs| OR |Swim Egg|" },
+    { "name": "Ride a Daruman", "category": ["Story Mode", "Mounts", "Stage 2-5", "World 2 - Edo Era"], "region": "Edo Era", "requires": "|Mechanical Eggs| OR |Daruman Egg|" },
+    { "name": "Ride a Pakkunga", "category": ["Story Mode", "Mounts", "Stage 2-6", "World 2 - Edo Era"], "region": "Edo Era", "requires": "|Mechanical Eggs| OR |Pakkunga Egg|" },
+    { "name": "Ride a Fly Turtle", "category": ["Story Mode", "Mounts", "Stage 3-1", "Stage 3-2", "Stage 3-3", "World 3 - Modern Era"], "region": "Modern Era", "requires": "|Mechanical Eggs| OR |Fly Turtle Egg|" },
+    { "name": "Ride a Bomb Tank", "category": ["Story Mode", "Mounts", "Stage 3-2", "Stage 3-4", "Stage 3-5", "World 3 - Modern Era"], "region": "Modern Era", "requires": "|Mechanical Eggs| OR |Bomb Tank Egg|" },
+    { "name": "Ride a Haguhagu", "category": ["Story Mode", "Mounts", "Stage 3-5", "World 3 - Modern Era"], "region": "Modern Era", "requires": "|Biological Eggs| OR |Haguhagu Egg|" },
+    { "name": "Ride a Crazy Balloon", "category": ["Story Mode", "Mounts", "Stage 4-2", "Stage 4-3", "World 4 - Super Future"], "region": "Super Future", "requires": "|Biological Eggs| OR |Crazy Balloon Egg|" },
+    { "name": "Ride a Bobo", "category": ["Story Mode", "Mounts", "Stage 4-3", "Stage 4-4", "World 4 - Super Future"], "region": "Super Future", "requires": "|Biological Eggs| OR |Bobo Egg|" },
+    { "name": "Ride a Dancing Clown", "category": ["Story Mode", "Mounts", "Stage 4-6", "World 4 - Super Future"], "region": "Super Future", "requires": "|Mechanical Eggs| OR |Dancing Clown Egg|" }
   ]
 }
