@@ -9,6 +9,11 @@
       "random": 1
     },
     {
+      "items": ["Bomb Up", "Fire Up", "Fire Up", "Speed Up"],
+      "random": 4,
+      "yaml_option": ["power_ups"]
+    },
+    {
       "items": ["Progressive World"],
       "random": 1,
       "yaml_option": ["progressive_worlds"]

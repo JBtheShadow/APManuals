@@ -22,9 +22,10 @@
 
     { "name": "Player 2", "category": ["Story Mode", "Co-Op"], "progression": true },
 
-    { "name": "Bomb Up", "category": ["Power Ups"], "progression": true },
-    { "name": "Fire Up", "category": ["Power Ups"], "progression": true },
-    { "name": "Speed Up", "category": ["Power Ups"], "progression": true },
+    { "count": 8, "name": "Bomb Up", "category": ["Power Ups"], "progression": true },
+    { "count": 8, "name": "Fire Up", "category": ["Power Ups"], "progression": true },
+    { "name": "Full Fire", "category": ["Power Ups"], "progression": true },
+    { "count": 6, "name": "Speed Up", "category": ["Power Ups"], "progression": true },
     { "name": "Piercing Bomb", "category": ["Power Ups"], "progression": true },
     { "name": "Remote Control", "category": ["Power Ups"], "progression": true },
     { "name": "Power Glove", "category": ["Power Ups"], "progression": true },

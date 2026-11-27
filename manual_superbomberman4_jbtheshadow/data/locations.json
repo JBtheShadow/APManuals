@@ -1,7 +1,7 @@
 {
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.locations.schema.json",
   "data": [
-    { "name": "Goal", "category": ["Victory"], "requires": "|World 5 Access| AND |Bagura Access|", "victory": true },
+    { "name": "Goal", "category": ["Victory"], "requires": "|Hyperspace Access| AND |Bagura Access|", "region": "Game", "victory": true },
 
     { "name": "Clear Stage 1-1", "category": ["Story Mode", "Stage Clear", "Stage 1-1", "World 1 - Primeval Era"], "region": "Primeval Era" },
     { "name": "Clear Stage 1-2", "category": ["Story Mode", "Stage Clear", "Stage 1-2", "World 1 - Primeval Era"], "region": "Primeval Era" },
@@ -106,6 +106,26 @@
     { "name": "Stage 2-6: Rescue Kotetsu", "category": ["Story Mode", "Rescue Bombers", "Stage 2-6", "World 2 - Edo Era"], "region": "Edo Era" },
     { "name": "Stage 3-2: Rescue Orange Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 3-2", "World 3 - Modern Era"], "region": "Modern Era" },
     { "name": "Stage 3-6: Rescue Honey", "category": ["Story Mode", "Rescue Bombers", "Stage 3-6", "World 3 - Modern Era"], "region": "Modern Era" },
-    { "name": "Stage 4-6: Rescue Gold Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 4-6", "World 4 - Super Future"], "region": "Super Future" }
+    { "name": "Stage 4-6: Rescue Gold Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 4-6", "World 4 - Super Future"], "region": "Super Future" },
+
+    { "name": "Power Ups: Collect a Bomb Up", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Bomb Up:2|" },
+    { "name": "Power Ups: Max Out Your Bombs", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Bomb Up:8|" },
+    { "name": "Power Ups: Collect a Fire Up", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Fire Up:3|" },
+    { "name": "Power Ups: Max Out Your Fire", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Fire Up:8| OR |Full Fire|" },
+    { "name": "Power Ups: Collect a Speed Up", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Speed Up:2|" },
+    { "name": "Power Ups: Max Out Your Speed", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Speed Up:6|" },
+    { "name": "Power Ups: Collect a Piercing Bomb", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Piercing Bomb| AND (|Primeval Era Access| OR |Modern Era Access|)" },
+    { "name": "Power Ups: Collect a Remote Control", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Remote Control| AND ((|Edo Era Access| AND |Jet Bomber Access| AND |Decent Firepower|) OR |Modern Era Access| OR |Super Future Access|)" },
+    { "name": "Power Ups: Collect a Power Glove", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Power Glove|" },
+    { "name": "Power Ups: Collect a Punch", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Punch|" },
+    { "name": "Power Ups: Collect a Push", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Push| AND ((|Primeval Era Access| AND |Hammer Bomber Access| AND |Decent Firepower|) OR |Edo Era Access| OR |Modern Era Access| OR |Super Future Access|)" },
+    { "name": "Power Ups: Collect a Bomb Kick", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Bomb Kick|" },
+    { "name": "Power Ups: Collect a Bomb Pass", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Bomb Pass| AND (|Edo Era Access| OR |Modern Era Access|)" },
+    { "name": "Power Ups: Collect a Wall Pass", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Wall Pass| AND (|Edo Era Access| OR |Modern Era Access|)" },
+    { "name": "Power Ups: Collect a Heart", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Heart| AND (|Primeval Era Access| OR |Edo Era Access| OR |Modern Era Access|)" },
+    { "name": "Power Ups: Collect a Vest", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Vest| AND |Super Future Access|" },
+    { "name": "Power Ups: Collect a Clock", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Clock| AND (|Primeval Era Access| OR |Edo Era Access| OR |Modern Era Access|)" },
+    { "name": "Power Ups: Collect a Life Up", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Life Up| AND (|Edo Era Access| OR |Modern Era Access|)" },
+    { "name": "Power Ups: Max Out Your Lives", "category": ["Story Mode", "Power Ups"], "region": "Game", "requires": "|Life Up| AND (|Edo Era Access| OR |Modern Era Access|)" }
   ]
 }

@@ -57,7 +57,9 @@ class ShufflePlayerTwo(Toggle):
     display_name = "Shuffle Player 2"
 
 class ShufflePowerUps(Toggle):
-    """Shuffles power up access into the multiworld. Each item lets you pick up any number of panels of their respective power up (or down)."""
+    """Shuffles power up access into the multiworld. Includes locations inspired on RetroAchievements for picking up each of the power ups or maxing out 
+    bombs, fire or speed. Starts you out with 1 Bomb Up (out of 8), 2 Fire Ups (out of 8) and 1 Speed Up (out of 6), with each unit increasing the allowed 
+    bomb count, fire range or speed by one."""
     display_name = "Shuffle Power Ups"
 
 class ShuffleMounts(Choice):

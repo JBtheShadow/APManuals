@@ -1,8 +1,11 @@
 {
   "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
 
+  "Game": {
+    "connects_to": ["Story Mode Worlds"], "starting": true
+  },
   "Story Mode Worlds": {
-    "connects_to": ["Random Worlds", "Progressive Worlds"], "starting": true
+    "connects_to": ["Random Worlds", "Progressive Worlds"]
   },
   "Random Worlds": {
     "connects_to": ["Primeval Era", "Edo Era", "Modern Era", "Super Future", "Hyperspace"],
