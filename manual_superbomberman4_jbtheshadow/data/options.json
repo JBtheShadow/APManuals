@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/ManualForArchipelago/Manual/main/schemas/Manual.options.schema.json",
     "_comment": "Add a _ before an option name to comment it out and it wont be added to the apworld",
-    "core": {
+    "_core": {
         "goal":{
             "_comment": [
                 "Using 'goal' as the name of an option let you override some of the generated goal parameters"
@@ -21,7 +21,7 @@
             }
         }
     },
-    "user": {
+    "_user": {
         "_commented_out_option":{
             "type": "Toggle",
             "default": true
