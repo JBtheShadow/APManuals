@@ -20,7 +20,7 @@
     { "name": "Centibeetle Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
     { "name": "Bagura Soul", "category": ["Story Mode", "Boss Souls"], "progression": true },
 
-    { "name": "Player 2", "category": ["Story Mode", "Player 2"], "progression": true },
+    { "name": "Player 2", "category": ["Story Mode", "Co-Op"], "progression": true },
 
     { "name": "Bomb Up", "category": ["Power Ups"], "progression": true },
     { "name": "Fire Up", "category": ["Power Ups"], "progression": true },
