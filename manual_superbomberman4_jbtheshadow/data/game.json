@@ -5,6 +5,10 @@
   "filler_item_name": ["100 Points", "200 Points", "500 Points", "1000 Points", "2000 Points", "5000 Points"],
   "starting_items": [
     {
+      "items": ["Password 1574 - Warp to Stage 5-6"],
+      "random": 1
+    },
+    {
       "items": ["Progressive World"],
       "random": 1,
       "yaml_option": ["progressive_worlds"]
