@@ -97,6 +97,15 @@
     { "name": "Ride a Haguhagu", "category": ["Story Mode", "Mounts", "Stage 3-5", "World 3 - Modern Era"], "region": "Modern Era", "requires": "|Biological Eggs| OR |Haguhagu Egg|" },
     { "name": "Ride a Crazy Balloon", "category": ["Story Mode", "Mounts", "Stage 4-2", "Stage 4-3", "World 4 - Super Future"], "region": "Super Future", "requires": "|Biological Eggs| OR |Crazy Balloon Egg|" },
     { "name": "Ride a Bobo", "category": ["Story Mode", "Mounts", "Stage 4-3", "Stage 4-4", "World 4 - Super Future"], "region": "Super Future", "requires": "|Biological Eggs| OR |Bobo Egg|" },
-    { "name": "Ride a Dancing Clown", "category": ["Story Mode", "Mounts", "Stage 4-6", "World 4 - Super Future"], "region": "Super Future", "requires": "|Mechanical Eggs| OR |Dancing Clown Egg|" }
+    { "name": "Ride a Dancing Clown", "category": ["Story Mode", "Mounts", "Stage 4-6", "World 4 - Super Future"], "region": "Super Future", "requires": "|Mechanical Eggs| OR |Dancing Clown Egg|" },
+
+    { "name": "Stage 1-2: Rescue Red Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 1-2", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Stage 1-4: Rescue Blue Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 1-4", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Stage 1-6: Rescue Green Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 1-6", "World 1 - Primeval Era"], "region": "Primeval Era" },
+    { "name": "Stage 2-5: Rescue Cyan Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 2-5", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Stage 2-6: Rescue Kotetsu", "category": ["Story Mode", "Rescue Bombers", "Stage 2-6", "World 2 - Edo Era"], "region": "Edo Era" },
+    { "name": "Stage 3-2: Rescue Orange Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 3-2", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Stage 3-6: Rescue Honey", "category": ["Story Mode", "Rescue Bombers", "Stage 3-6", "World 3 - Modern Era"], "region": "Modern Era" },
+    { "name": "Stage 4-6: Rescue Gold Bomber", "category": ["Story Mode", "Rescue Bombers", "Stage 4-6", "World 4 - Super Future"], "region": "Super Future" }
   ]
 }
