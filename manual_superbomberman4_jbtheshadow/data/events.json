@@ -20,7 +20,7 @@
     { "name": "Hyperspace Access", "requires": "|World 5 - Hyperspace| OR |Progressive World:5|" },
 
     { "name": "Ranged Remote Bombs", "requires": "{YamlDisabled(power_ups)} OR (|Power Glove| AND |Remote Control|)" },
-    { "name": "Decent Firepower", "requires": "{YamlDisabled(power_ups)} OR (|Bomb Up| AND |Fire Up| AND |Speed Up| AND |Heart| AND |Life Up| AND (|Piercing Bomb| OR |Remote Control|))" },
+    { "name": "Decent Firepower", "requires": "{YamlDisabled(power_ups)} OR (|Bomb Up:5| AND |Fire Up:5| AND |Speed Up:3| AND |Heart| AND (|Piercing Bomb| OR |Remote Control|))" },
     { "name": "Can Push", "requires": "{YamlDisabled(power_ups)} OR |Push|" },
     { "name": "Can Throw", "requires": "{YamlDisabled(power_ups)} OR |Power Glove|" },
 
