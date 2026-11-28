@@ -1,0 +1,31 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.events.schema.json",
+  "data": [
+    { "name": "Hammer Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Hammer Bomber Soul|" },
+    { "name": "Jet Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Jet Bomber Soul|" },
+    { "name": "Lady Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Lady Bomber Soul|" },
+    { "name": "Bazooka Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Bazooka Bomber Soul|" },
+    { "name": "Great Bomber Access", "requires": "{YamlDisabled(boss_souls)} OR |Great Bomber Soul|" },
+    
+    { "name": "Dogun Access", "requires": "{YamlDisabled(boss_souls)} OR |Dogun Soul|" },
+    { "name": "Machinder Access", "requires": "{YamlDisabled(boss_souls)} OR |Machinder Soul|" },
+    { "name": "Rocketeer Joe Access", "requires": "{YamlDisabled(boss_souls)} OR |Rocketeer Joe Soul|" },
+    { "name": "Centibeetle Access", "requires": "{YamlDisabled(boss_souls)} OR |Centibeetle Soul|" },
+    { "name": "Bagura Access", "requires": "{YamlDisabled(boss_souls)} OR (|Dogun Soul| AND |Machinder Soul| AND |Rocketeer Joe Soul| AND |Bagura Soul|)" },
+
+    { "name": "Primeval Era Access", "requires": "|World 1 - Primeval Era| OR |Progressive World|" },
+    { "name": "Edo Era Access", "requires": "|World 2 - Edo Era| OR |Progressive World:2|" },
+    { "name": "Modern Era Access", "requires": "|World 3 - Modern Era| OR |Progressive World:3|" },
+    { "name": "Super Future Access", "requires": "|World 4 - Super Future| OR |Progressive World:4|" },
+    { "name": "Hyperspace Access", "requires": "|World 5 - Hyperspace| OR |Progressive World:5|" },
+
+    { "name": "Ranged Remote Bombs", "requires": "{YamlDisabled(power_ups)} OR (|Power Glove| AND |Remote Control|)" },
+    { "name": "Decent Firepower", "requires": "{YamlDisabled(power_ups)} OR (|Bomb Up:5| AND |Fire Up:5| AND |Speed Up:3| AND |Heart| AND (|Piercing Bomb| OR |Remote Control|))" },
+    { "name": "Can Push", "requires": "{YamlDisabled(power_ups)} OR |Push|" },
+    { "name": "Can Throw", "requires": "{YamlDisabled(power_ups)} OR |Power Glove|" },
+
+    { "name": "Bonus Access", "requires": "{YamlDisabled(player_two)} OR |Player 2|", "category": ["Bonus Stages"] },
+    { "name": "Push Bonus Access", "requires": "|Bonus Access| AND |Can Push|", "category": ["Bonus Stages"] },
+    { "name": "Throw Bonus Access", "requires": "|Bonus Access| AND |Can Throw|", "category": ["Bonus Stages"] }
+  ]
+}

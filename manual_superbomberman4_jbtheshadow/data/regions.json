@@ -1,0 +1,35 @@
+{
+  "$schema": "https://github.com/ManualForArchipelago/Manual/raw/main/schemas/Manual.regions.schema.json",
+
+  "Game": {
+    "connects_to": ["Story Mode Worlds"], "starting": true
+  },
+  "Story Mode Worlds": {
+    "connects_to": ["Random Worlds", "Progressive Worlds"]
+  },
+  "Random Worlds": {
+    "connects_to": ["Primeval Era", "Edo Era", "Modern Era", "Super Future", "Hyperspace"],
+    "exit_requires": {
+      "Primeval Era": "|World 1 - Primeval Era|",
+      "Edo Era": "|World 2 - Edo Era|",
+      "Modern Era": "|World 3 - Modern Era|",
+      "Super Future": "|World 4 - Super Future|",
+      "Hyperspace": "|World 5 - Hyperspace|"
+    }
+  },
+  "Progressive Worlds": {
+    "connects_to": ["Primeval Era", "Edo Era", "Modern Era", "Super Future", "Hyperspace"],
+    "exit_requires": {
+      "Primeval Era": "|Progressive World:1|",
+      "Edo Era": "|Progressive World:2|",
+      "Modern Era": "|Progressive World:3|",
+      "Super Future": "|Progressive World:4|",
+      "Hyperspace": "|Progressive World:5|"
+    }
+  },
+  "Primeval Era": {},
+  "Edo Era": {},
+  "Modern Era": {},
+  "Super Future": {},
+  "Hyperspace": { "requires": "|Decent Firepower|"}
+}
